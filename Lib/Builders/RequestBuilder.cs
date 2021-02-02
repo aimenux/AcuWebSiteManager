@@ -106,6 +106,7 @@ namespace Lib.Builders
             const string attribute = "Value";
             const string logFileXpath = @"Root/logfile";
             var logFileDir = _xmlHelper.GetAttributeValue(xmlDoc, logFileXpath, attribute);
+            if (string.IsNullOrWhiteSpace(logFileDir)) return null;
             var exeDir = Path.GetFullPath(Path.Combine(logFileDir, @".."));
             return Path.GetFullPath(Path.Combine(exeDir, @"Data\ac.exe"));
         }
