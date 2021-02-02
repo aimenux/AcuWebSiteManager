@@ -1,0 +1,755 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<data-set>
+  <relations format-version="3" relations-version="20160101" main-table="AUDefinition">
+    <link from="AUDefinitionDetail (DefinitionID)" to="AUDefinition (DefinitionID)" />
+    <link from="AUCombo (TableName)" to="AUDefinitionDetail (TableName)" />
+    <link from="AUAction (ScreenID)" to="AUDefinitionDetail (ScreenID)" />
+    <link from="AUStep (ScreenID)" to="AUDefinitionDetail (ScreenID)" />
+    <link from="AUStepFilter (ScreenID, StepID)" to="AUStep (ScreenID, StepID)" />
+    <link from="AUStepFill (ScreenID, StepID)" to="AUStep (ScreenID, StepID)" />
+    <link from="AUStepAction (ScreenID, StepID)" to="AUStep (ScreenID, StepID)" />
+    <link from="AUStepField (ScreenID, StepID)" to="AUStep (ScreenID, StepID)" />
+    <link from="AUStepCombo (ScreenID, StepID)" to="AUStep (ScreenID, StepID)" />
+  </relations>
+  <layout>
+    <table name="AUDefinition">
+      <table name="AUDefinitionDetail" uplink="(DefinitionID) = (DefinitionID)">
+        <table name="AUCombo" uplink="(TableName) = (TableName)" />
+        <table name="AUAction" uplink="(ScreenID) = (ScreenID)" />
+        <table name="AUStep" uplink="(ScreenID) = (ScreenID)">
+          <table name="AUStepFilter" uplink="(ScreenID, StepID) = (ScreenID, StepID)" />
+          <table name="AUStepFill" uplink="(ScreenID, StepID) = (ScreenID, StepID)" />
+          <table name="AUStepAction" uplink="(ScreenID, StepID) = (ScreenID, StepID)" />
+          <table name="AUStepField" uplink="(ScreenID, StepID) = (ScreenID, StepID)" />
+          <table name="AUStepCombo" uplink="(ScreenID, StepID) = (ScreenID, StepID)" />
+        </table>
+      </table>
+    </table>
+  </layout>
+  <data>
+    <AUDefinition>
+      <row DefinitionID="EP Default" NoteID="55037e2a-ff50-4251-a1b2-c29207a4b930">
+        <column name="DetailsXml"><![CDATA[<?xml version="1.0" encoding="utf-8"?>
+<Screens>
+	<Screen ScreenID="EP301000">
+		<Menu ActionName="Action">
+			<MenuItem Text="Release" />
+			<MenuItem Text="Approve" />
+			<MenuItem Text="Reject" />
+			<MenuItem Text="Submit" />
+			<MenuItem Text="Edit" />
+		</Menu>
+		<Step StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TimeStampName="tstamp">
+			<Filter FieldName="Approved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="Released" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" AutoSave="4">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+		</Step>
+		<Step StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TimeStampName="tstamp">
+			<Filter FieldName="Hold" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+		</Step>
+		<Step StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TimeStampName="tstamp">
+			<Filter FieldName="Hold" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="Rejected" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="O" />
+			</Action>
+		</Step>
+		<Step StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TimeStampName="tstamp">
+			<Filter FieldName="Rejected" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="C" />
+			</Action>
+		</Step>
+		<Step StepID="Released" Description="Released" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TimeStampName="tstamp">
+			<Filter FieldName="Released" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="R" />
+			</Action>
+		</Step>
+	</Screen>
+	<Screen ScreenID="EP301020">
+		<Menu ActionName="Action">
+			<MenuItem Text="Submit" />
+			<MenuItem Text="Approve" />
+			<MenuItem Text="Reject" />
+			<MenuItem Text="Put on Hold" />
+		</Menu>
+		<Step StepID="Hold" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Hold" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="Status" Condition="Equals" Value="H" Operator="And" />
+			<Action ActionName="Action" MenuText="Submit" AutoSave="4">
+				<Fill FieldName="Hold" Value="False" />
+			</Action>
+		</Step>
+		<Step StepID="Hold-Open" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Hold" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="Status" Condition="Equals" Value="H" Operator="And" />
+			<Action ActionName="*" IsDefault="1">
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+		</Step>
+		<Step StepID="Hold-Pending Approval" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter OpenBrackets="1" FieldName="Status" Condition="Equals" Value="H" Operator="Or" />
+			<Filter FieldName="Status" Condition="Equals" Value="A" CloseBrackets="1" Operator="And" />
+			<Filter FieldName="Hold" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="*" IsDefault="1">
+				<Fill FieldName="Status" Value="O" />
+			</Action>
+		</Step>
+		<Step StepID="Open" Description="Open Receipt in not Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="A" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="False" Value2="False" Operator="And" />
+		</Step>
+		<Step StepID="Open HC" Description="Open receipt in Hold Claim and not matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="A" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Null" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" AutoSave="4">
+				<Fill FieldName="Approved" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+		</Step>
+		<Step StepID="Open HC Matched" Description="Open receipt in Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="A" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Not Null" Operator="And" />
+		</Step>
+		<Step StepID="PendingApproval" Description="PendingApproval Receit in not Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="O" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Null" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" IsDisabled="1">
+				<Fill FieldName="Approved" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+			<Action ActionName="Action" MenuText="Submit" IsDisabled="1" />
+			<Action ActionName="Action" MenuText="Approve" AutoSave="4">
+				<Fill FieldName="Approved" Value="True" />
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" AutoSave="4">
+				<Fill FieldName="Rejected" Value="True" />
+				<Fill FieldName="Status" Value="C" />
+			</Action>
+		</Step>
+		<Step StepID="PendingApproval HC" Description="PendingApproval Receipt in Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="O" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Null" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" AutoSave="4">
+				<Fill FieldName="Approved" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+			<Action ActionName="Action" MenuText="Submit" IsDisabled="1" />
+			<Action ActionName="Action" MenuText="Approve" AutoSave="4">
+				<Fill FieldName="Approved" Value="True" />
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" AutoSave="4">
+				<Fill FieldName="Rejected" Value="True" />
+				<Fill FieldName="Status" Value="C" />
+			</Action>
+		</Step>
+		<Step StepID="PendingApproval HC Matched" Description="PendingApproval Receipt in Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="O" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Not Null" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" IsDisabled="1">
+				<Fill FieldName="Approved" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+			<Action ActionName="Action" MenuText="Submit" IsDisabled="1" />
+			<Action ActionName="Action" MenuText="Approve" />
+			<Action ActionName="Action" MenuText="Reject" IsDisabled="1" />
+		</Step>
+		<Step StepID="PendingApproval Matched" Description="PendingApproval Receit in not Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="O" Operator="And" />
+			<Filter FieldName="Approved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="BankTranDate" Condition="Is Not Null" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" IsDisabled="1">
+				<Fill FieldName="Approved" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+			<Action ActionName="Action" MenuText="Submit" />
+			<Action ActionName="Action" MenuText="Approve" IsDisabled="1" />
+			<Action ActionName="Action" MenuText="Reject" IsDisabled="1" />
+		</Step>
+		<Step StepID="Reject" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="C" Operator="And" />
+			<Filter FieldName="HoldClaim" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Put on Hold" AutoSave="4">
+				<Fill FieldName="Rejected" Value="False" />
+				<Fill FieldName="Hold" Value="True" />
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+		</Step>
+		<Step StepID="Release" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Released" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="Status" Condition="Does Not Equal" Value="R" Operator="And" />
+			<Action ActionName="*" IsDefault="1">
+				<Fill FieldName="Status" Value="R" />
+			</Action>
+		</Step>
+		<Step StepID="Released" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TimeStampName="tstamp">
+			<Filter FieldName="Status" Condition="Equals" Value="R" Operator="And" />
+		</Step>
+	</Screen>
+	<Screen ScreenID="EP305000">
+		<Menu ActionName="Action">
+			<MenuItem Text="Release" />
+			<MenuItem Text="Approve" />
+			<MenuItem Text="Reject" />
+			<MenuItem Text="Correct" />
+			<MenuItem Text="Submit" />
+			<MenuItem Text="Edit" />
+		</Menu>
+		<Step StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsApproved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="IsReleased" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Correct" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+		</Step>
+		<Step StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsHold" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Correct" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+		</Step>
+		<Step StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsHold" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="IsApproved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="IsRejected" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Correct" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="O" />
+			</Action>
+		</Step>
+		<Step StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsRejected" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Correct" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="C" />
+			</Action>
+		</Step>
+		<Step StepID="Released" Description="Released" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsReleased" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Correct" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="R" />
+			</Action>
+		</Step>
+	</Screen>
+	<Screen ScreenID="EP308000">
+		<Menu ActionName="Action">
+			<MenuItem Text="Release" />
+			<MenuItem Text="Approve" />
+			<MenuItem Text="Reject" />
+			<MenuItem Text="Submit" />
+			<MenuItem Text="Edit" />
+		</Menu>
+		<Step StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsApproved" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Filter FieldName="IsReleased" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Assign" MenuText="Assign" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="A" />
+			</Action>
+		</Step>
+		<Step StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsHold" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Assign" MenuText="Assign" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="H" />
+			</Action>
+		</Step>
+		<Step StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsHold" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="IsApproved" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Filter FieldName="IsRejected" Condition="Equals" Value="False" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" AutoSave="4" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" AutoSave="4" />
+			<Action ActionName="Assign" MenuText="Assign" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="O" />
+			</Action>
+		</Step>
+		<Step StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsRejected" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Assign" MenuText="Assign" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" AutoSave="4" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="C" />
+			</Action>
+		</Step>
+		<Step StepID="Released" Description="Released" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TimeStampName="tstamp">
+			<Filter FieldName="IsReleased" Condition="Equals" Value="True" Value2="False" Operator="And" />
+			<Action ActionName="Action" MenuText="Approve" IsActive="0" />
+			<Action ActionName="Action" MenuText="Correct" />
+			<Action ActionName="Action" MenuText="Release" IsActive="0">
+				<Fill FieldName="@actionName" Value="release" />
+			</Action>
+			<Action ActionName="Action" MenuText="Reject" IsActive="0" />
+			<Action ActionName="Assign" MenuText="Assign" IsActive="0" />
+			<Action ActionName="Action" MenuText="Submit" IsActive="0" />
+			<Action ActionName="Action" MenuText="Edit" IsActive="0" />
+			<Action ActionName="*" IsDefault="1" AutoSave="4">
+				<Fill FieldName="Status" Value="R" />
+			</Action>
+		</Step>
+	</Screen>
+</Screens>]]></column>
+        <AUDefinitionDetail ScreenID="EP308000" TableName="PX.Objects.EP.EPEquipmentTimeCard" NoteID="18958d28-c2e7-4bb3-aabb-76238380ba97">
+          <AUAction ActionName="Assign" MenuText="Assign" RefCntr="5" RowNbr="4" OrderNbr="0" />
+          <AUAction ActionName="Action" MenuText="Submit" RefCntr="5" RowNbr="5" OrderNbr="3" />
+          <AUAction ActionName="Action" MenuText="Release" RefCntr="5" RowNbr="2" OrderNbr="0" />
+          <AUAction ActionName="Action" MenuText="Reject" RefCntr="5" RowNbr="3" OrderNbr="2" />
+          <AUAction ActionName="Action" MenuText="Edit" RefCntr="5" RowNbr="6" OrderNbr="4" />
+          <AUAction ActionName="Action" MenuText="Approve" RefCntr="5" RowNbr="1" OrderNbr="1" />
+          <AUStep StepID="Released" Description="Released" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPEquipmentTimeCard" BqlTableName="PX.Objects.EP.EPEquipmentTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="3c8d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsReleased" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="3d8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="29" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="30" IsActive="1" FieldName="Status" IsRelative="0" Value="R" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="8" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="448d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="7" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="438d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="428d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Assign" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Assign" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="418d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="408d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="d5d21aff-62ad-489e-a672-bc7ea2895077" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="3f8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP308000" FailStepID="Released" NoteID="3e8d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPEquipmentTimeCard" BqlTableName="PX.Objects.EP.EPEquipmentTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="338d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsRejected" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="348d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="27" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="28" IsActive="1" FieldName="Status" IsRelative="0" Value="C" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="3b8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="3a8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="398d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Assign" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Assign" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="388d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="378d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="368d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP308000" FailStepID="Rejected" NoteID="358d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPEquipmentTimeCard" BqlTableName="PX.Objects.EP.EPEquipmentTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="3" FieldCntr="0" ActionCntr="7" NoteID="288d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="IsRejected" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="2b8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="IsApproved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="2a8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsHold" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="298d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="25" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="26" IsActive="1" FieldName="Status" IsRelative="0" Value="O" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="328d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="318d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="308d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Assign" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Assign" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="2f8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="2e8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="2d8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP308000" FailStepID="PendingApproval" NoteID="2c8d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPEquipmentTimeCard" BqlTableName="PX.Objects.EP.EPEquipmentTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="1f8d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsHold" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="208d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="23" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="24" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="278d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="268d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="258d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Assign" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Assign" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="248d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="238d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="228d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP308000" FailStepID="Hold" NoteID="218d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.EquipmentTimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPEquipmentTimeCard" BqlTableName="PX.Objects.EP.EPEquipmentTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="7" NoteID="158d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="IsReleased" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="178d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsApproved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="168d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="21" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="22" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="1e8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="1d8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="1c8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Assign" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Assign" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="1b8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="1a8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="198d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP308000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP308000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP308000" FailStepID="Approved" NoteID="188d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+        </AUDefinitionDetail>
+        <AUDefinitionDetail ScreenID="EP305000" TableName="PX.Objects.EP.EPTimeCard" NoteID="d7258451-2a00-4453-93ad-7ee3b27d2ffd">
+          <AUAction ActionName="Action" MenuText="Submit" RefCntr="5" RowNbr="5" OrderNbr="4" />
+          <AUAction ActionName="Action" MenuText="Release" RefCntr="5" RowNbr="3" OrderNbr="0" />
+          <AUAction ActionName="Action" MenuText="Reject" RefCntr="5" RowNbr="4" OrderNbr="2" />
+          <AUAction ActionName="Action" MenuText="Edit" RefCntr="5" RowNbr="6" OrderNbr="5" />
+          <AUAction ActionName="Action" MenuText="Correct" RefCntr="5" RowNbr="2" OrderNbr="3" />
+          <AUAction ActionName="Action" MenuText="Approve" RefCntr="5" RowNbr="1" OrderNbr="1" />
+          <AUStep StepID="Released" Description="Released" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPTimeCard" BqlTableName="PX.Objects.EP.EPTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="0b8d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsReleased" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="0c8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="19" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="20" IsActive="1" FieldName="Status" IsRelative="0" Value="R" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="138d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="128d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="118d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="108d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="0f8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="0e8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP305000" FailStepID="Released" NoteID="0d8d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPTimeCard" BqlTableName="PX.Objects.EP.EPTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="028d1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsRejected" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="038d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="17" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="18" IsActive="1" FieldName="Status" IsRelative="0" Value="C" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="0a8d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="098d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="088d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="078d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="068d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="058d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP305000" FailStepID="Rejected" NoteID="048d1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPTimeCard" BqlTableName="PX.Objects.EP.EPTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="3" FieldCntr="0" ActionCntr="7" NoteID="f78c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="IsRejected" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="fa8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="IsApproved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="f98c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsHold" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="f88c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="15" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="16" IsActive="1" FieldName="Status" IsRelative="0" Value="O" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="018d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="008d1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="ff8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="fe8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="fd8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="fc8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP305000" FailStepID="PendingApproval" NoteID="fb8c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPTimeCard" BqlTableName="PX.Objects.EP.EPTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="7" NoteID="ee8c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsHold" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="ef8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="13" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="14" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f68c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f58c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f48c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f38c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f28c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f18c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP305000" FailStepID="Hold" NoteID="f08c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.TimeCardMaint" ViewName="Document" TableName="PX.Objects.EP.EPTimeCard" BqlTableName="PX.Objects.EP.EPTimeCard" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="7" NoteID="e48c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="IsReleased" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="e68c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="IsApproved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="e58c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="11" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="12" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="7" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="ed8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="ec8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="eb8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="ea8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="e98c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Correct" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="e88c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP305000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP305000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP305000" FailStepID="Approved" NoteID="e78c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+        </AUDefinitionDetail>
+        <AUDefinitionDetail ScreenID="EP301020" TableName="PX.Objects.EP.EPExpenseClaimDetails" NoteID="4cbefbab-3e93-e911-9fec-00e18cdcf077">
+          <AUAction ActionName="Action" MenuText="Submit" RefCntr="8" RowNbr="2" OrderNbr="0" />
+          <AUAction ActionName="Action" MenuText="Reject" RefCntr="7" RowNbr="4" OrderNbr="4" />
+          <AUAction ActionName="Action" MenuText="Put on Hold" RefCntr="9" RowNbr="1" OrderNbr="5" />
+          <AUAction ActionName="Action" MenuText="Approve" RefCntr="7" RowNbr="3" OrderNbr="3" />
+          <AUStep StepID="Released" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="4" NoteID="379fdcaf-9176-e711-b291-10c37b4f1b71">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="R" CloseBrackets="0" Operator="0" NoteID="3d9fdcaf-9176-e711-b291-10c37b4f1b71" />
+          </AUStep>
+          <AUStep StepID="Release" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="2" NoteID="c03ad279-168b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="2" IsRelative="0" Value="R" CloseBrackets="0" Operator="0" NoteID="011a5bbe-9176-e711-b291-10c37b4f1b71" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Released" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="c43ad279-168b-e611-b654-acfdced161a8" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="1" IsActive="1" FieldName="Status" IsRelative="0" Value="R" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Release" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Release" IsFailActive="0" FailScreenID="EP301020" FailStepID="Release" NoteID="b0249290-168b-e611-b654-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Reject" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="1" NoteID="3719aa44-168b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="0ddb844d-168b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="C" CloseBrackets="0" Operator="0" NoteID="3b19aa44-168b-e611-b654-acfdced161a8" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Rejected" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Put on Hold" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Reject" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Reject" IsFailActive="0" FailScreenID="EP301020" FailStepID="Reject" NoteID="3919aa44-168b-e611-b654-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="PendingApproval Matched" Description="PendingApproval Receit in not Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="4" NoteID="d38e01af-af92-e911-9fec-00e18cdcf077">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="13" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="92666112-b092-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="209ce3df-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="6a2835d8-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="O" CloseBrackets="0" Operator="0" NoteID="72930ad0-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Approved" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval Matched" NoteID="d88e01af-af92-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval Matched" NoteID="d78e01af-af92-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval Matched" NoteID="d68e01af-af92-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Put on Hold" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval Matched" NoteID="d58e01af-af92-e911-9fec-00e18cdcf077" />
+          </AUStep>
+          <AUStep StepID="PendingApproval HC Matched" Description="PendingApproval Receipt in Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="4" NoteID="2c849dbe-b092-e911-9fec-00e18cdcf077">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="13" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="fa18dd05-b192-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="f818dd05-b192-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="9753c3fe-b092-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="O" CloseBrackets="0" Operator="0" NoteID="e0aed8f7-b092-e911-9fec-00e18cdcf077" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Approved" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC Matched" NoteID="31849dbe-b092-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC Matched" NoteID="30849dbe-b092-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC Matched" NoteID="2f849dbe-b092-e911-9fec-00e18cdcf077" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Put on Hold" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC Matched" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC Matched" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC Matched" NoteID="2e849dbe-b092-e911-9fec-00e18cdcf077" />
+          </AUStep>
+          <AUStep StepID="PendingApproval HC" Description="PendingApproval Receipt in Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="4" NoteID="9d566307-cda1-e611-b658-acfdced161a8">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="12" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="4c370450-b292-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="b8a2d017-cda1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="2e39b20f-cda1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="O" CloseBrackets="0" Operator="0" NoteID="2c39b20f-cda1-e611-b658-acfdced161a8" />
+            <AUStepFill ActionName="Action" MenuText="Reject" RowNbr="7" IsActive="1" FieldName="Status" IsRelative="0" Value="C" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Reject" RowNbr="6" IsActive="1" FieldName="Rejected" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Approved" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Approve" RowNbr="5" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Approve" RowNbr="4" IsActive="1" FieldName="Approved" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC" NoteID="a2566307-cda1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC" NoteID="a1566307-cda1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC" NoteID="a0566307-cda1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Put on Hold" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval HC" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval HC" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval HC" NoteID="9f566307-cda1-e611-b658-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="PendingApproval" Description="PendingApproval Receit in not Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="4" NoteID="e2c79dcc-cca1-e611-b658-acfdced161a8">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="12" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="ddf2a61e-b092-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="210945dd-cca1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="e6c83cd6-cca1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="O" CloseBrackets="0" Operator="0" NoteID="e4c83cd6-cca1-e611-b658-acfdced161a8" />
+            <AUStepFill ActionName="Action" MenuText="Reject" RowNbr="7" IsActive="1" FieldName="Status" IsRelative="0" Value="C" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Reject" RowNbr="6" IsActive="1" FieldName="Rejected" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Approved" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Approve" RowNbr="5" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Approve" RowNbr="4" IsActive="1" FieldName="Approved" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval" NoteID="eb7aedea-cca1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval" NoteID="e97aedea-cca1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval" NoteID="e5c79dcc-cca1-e611-b658-acfdced161a8" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="1" BatchMode="0" MenuText="Put on Hold" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301020" FailStepID="PendingApproval" NoteID="e4c79dcc-cca1-e611-b658-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Open HC Matched" Description="Open receipt in Hold Claim and matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="3" NoteID="070e3ee6-ae92-e911-9fec-00e18cdcf077">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="13" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="25d6e445-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="32b1913d-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="2b62f727-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="A" CloseBrackets="0" Operator="0" NoteID="06866300-af92-e911-9fec-00e18cdcf077" />
+          </AUStep>
+          <AUStep StepID="Open HC" Description="Open receipt in Hold Claim and not matched to Bank Tran" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="1" NoteID="4507f8ae-158b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="BankTranDate" Condition="12" IsRelative="0" CloseBrackets="0" Operator="0" NoteID="46405d6a-af92-e911-9fec-00e18cdcf077" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="f3ec23bf-158b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="adde66b7-158b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="A" CloseBrackets="0" Operator="0" NoteID="abde66b7-158b-e611-b654-acfdced161a8" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="3" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="2" IsActive="1" FieldName="Hold" IsRelative="0" Value="True" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="Action" MenuText="Put on Hold" RowNbr="1" IsActive="1" FieldName="Approved" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Put on Hold" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Open HC" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Open HC" IsFailActive="0" FailScreenID="EP301020" FailStepID="Open HC" NoteID="4707f8ae-158b-e611-b654-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Open" Description="Open Receipt in not Hold Claim" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="3" FieldCntr="0" ActionCntr="1" NoteID="d1ca2fe9-158b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="HoldClaim" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="57c2e3ff-158b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="edfe03f7-158b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="A" CloseBrackets="0" Operator="0" NoteID="ebfe03f7-158b-e611-b654-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Hold-Pending Approval" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="4" FieldCntr="0" ActionCntr="2" NoteID="8b8b2e61-caa1-e611-b658-acfdced161a8">
+            <AUStepFilter RowNbr="4" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="9380a586-caa1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="Hold" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="a0324380-caa1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="A" CloseBrackets="1" Operator="0" NoteID="d912da77-caa1-e611-b658-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="1" FieldName="Status" Condition="1" IsRelative="0" Value="H" CloseBrackets="0" Operator="1" NoteID="1cf42e70-caa1-e611-b658-acfdced161a8" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="1" IsActive="1" FieldName="Status" IsRelative="0" Value="O" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Hold-Pending Approval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Hold-Pending Approval" IsFailActive="0" FailScreenID="EP301020" FailStepID="Hold-Pending Approval" NoteID="59d35f9a-caa1-e611-b658-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Hold-Open" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="3" FieldCntr="0" ActionCntr="1" NoteID="e11d69d6-148b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="H" CloseBrackets="0" Operator="0" NoteID="1d2376e4-148b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="1b2376e4-148b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Hold" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="d1244ade-148b-e611-b654-acfdced161a8" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="1" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Hold-Open" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Hold-Open" IsFailActive="0" FailScreenID="EP301020" FailStepID="Hold-Open" NoteID="8c8ce6f6-148b-e611-b654-acfdced161a8" />
+          </AUStep>
+          <AUStep StepID="Hold" GraphName="PX.Objects.EP.ExpenseClaimDetailEntry" ViewName="ClaimDetails" TableName="PX.Objects.EP.EPExpenseClaimDetails" BqlTableName="PX.Objects.EP.EPExpenseClaimDetails" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="1" NoteID="7a1b8a64-148b-e611-b654-acfdced161a8">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Status" Condition="1" IsRelative="0" Value="H" CloseBrackets="0" Operator="0" NoteID="bd43a172-148b-e611-b654-acfdced161a8" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Hold" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="bb43a172-148b-e611-b654-acfdced161a8" />
+            <AUStepFill ActionName="Action" MenuText="Submit" RowNbr="1" IsActive="1" FieldName="Hold" IsRelative="0" Value="False" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301020" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301020" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301020" FailStepID="Hold" NoteID="7c1b8a64-148b-e611-b654-acfdced161a8" />
+          </AUStep>
+        </AUDefinitionDetail>
+        <AUDefinitionDetail ScreenID="EP301000" TableName="PX.Objects.EP.EPExpenseClaim" NoteID="6e92542d-d016-498c-b0ba-f32aa3c07aa0">
+          <AUAction ActionName="Action" MenuText="Submit" RefCntr="5" RowNbr="4" OrderNbr="3" />
+          <AUAction ActionName="Action" MenuText="Release" RefCntr="5" RowNbr="2" OrderNbr="0" />
+          <AUAction ActionName="Action" MenuText="Reject" RefCntr="5" RowNbr="3" OrderNbr="2" />
+          <AUAction ActionName="Action" MenuText="Edit" RefCntr="5" RowNbr="5" OrderNbr="4" />
+          <AUAction ActionName="Action" MenuText="Approve" RefCntr="5" RowNbr="1" OrderNbr="1" />
+          <AUStep StepID="Released" Description="Released" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TableName="PX.Objects.EP.EPExpenseClaim" BqlTableName="PX.Objects.EP.EPExpenseClaim" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="6" NoteID="db8c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Released" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="dc8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="9" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="10" IsActive="1" FieldName="Status" IsRelative="0" Value="R" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="e28c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="e18c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="e08c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="df8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="de8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Released" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Released" IsFailActive="0" FailScreenID="EP301000" FailStepID="Released" NoteID="dd8c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Rejected" Description="Rejected" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TableName="PX.Objects.EP.EPExpenseClaim" BqlTableName="PX.Objects.EP.EPExpenseClaim" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="6" NoteID="d38c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Rejected" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="d48c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="7" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="8" IsActive="1" FieldName="Status" IsRelative="0" Value="C" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="da8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="d98c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="d88c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="d78c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="d68c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Rejected" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Rejected" IsFailActive="0" FailScreenID="EP301000" FailStepID="Rejected" NoteID="d58c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="PendingApproval" Description="Pending Approval" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TableName="PX.Objects.EP.EPExpenseClaim" BqlTableName="PX.Objects.EP.EPExpenseClaim" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="3" FieldCntr="0" ActionCntr="6" NoteID="c98c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="3" IsActive="1" OpenBrackets="0" FieldName="Rejected" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="cc8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="cb8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Hold" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="ca8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="5" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="6" IsActive="1" FieldName="Status" IsRelative="0" Value="O" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="d28c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="d18c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="d08c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="cf8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="ce8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="PendingApproval" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="PendingApproval" IsFailActive="0" FailScreenID="EP301000" FailStepID="PendingApproval" NoteID="cd8c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Hold" Description="On Hold" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TableName="PX.Objects.EP.EPExpenseClaim" BqlTableName="PX.Objects.EP.EPExpenseClaim" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="1" FieldCntr="0" ActionCntr="6" NoteID="c18c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Hold" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="c28c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="3" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="4" IsActive="1" FieldName="Status" IsRelative="0" Value="H" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c88c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c78c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c68c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c58c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c48c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Hold" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Hold" IsFailActive="0" FailScreenID="EP301000" FailStepID="Hold" NoteID="c38c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+          <AUStep StepID="Approved" Description="Approved" GraphName="PX.Objects.EP.ExpenseClaimEntry" ViewName="ExpenseClaim" TableName="PX.Objects.EP.EPExpenseClaim" BqlTableName="PX.Objects.EP.EPExpenseClaim" TimeStampName="tstamp" IsActive="1" IsStart="1" FilterCntr="2" FieldCntr="0" ActionCntr="6" NoteID="b88c1905-8c48-e411-80c2-00155d017e00">
+            <AUStepFilter RowNbr="2" IsActive="1" OpenBrackets="0" FieldName="Released" Condition="1" IsRelative="0" Value="False" Value2="False" CloseBrackets="0" Operator="0" NoteID="ba8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFilter RowNbr="1" IsActive="1" OpenBrackets="0" FieldName="Approved" Condition="1" IsRelative="0" Value="True" Value2="False" CloseBrackets="0" Operator="0" NoteID="b98c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepFill ActionName="Action" MenuText="Release" RowNbr="1" IsActive="1" FieldName="@actionName" IsRelative="0" Value="release" IsDelayed="0" IgnoreError="0" />
+            <AUStepFill ActionName="*" MenuText="" RowNbr="2" IsActive="1" FieldName="Status" IsRelative="0" Value="A" IsDelayed="0" IgnoreError="0" />
+            <AUStepAction RowNbr="6" IsActive="1" ActionName="*" IsAutomatic="0" IsDefault="1" IsDisabled="0" BatchMode="0" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="c08c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="5" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Edit" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="bf8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="4" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Submit" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="be8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="3" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Reject" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="bd8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="2" IsActive="1" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Release" AutoSave="4" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="bc8c1905-8c48-e411-80c2-00155d017e00" />
+            <AUStepAction RowNbr="1" IsActive="0" ActionName="Action" IsAutomatic="0" IsDefault="0" IsDisabled="0" BatchMode="0" MenuText="Approve" AutoSave="0" SplitByValues="0" IsRetryActive="0" RetryScreenID="EP301000" RetryStepID="Approved" RetryCntr="0" IsSuccessActive="0" SuccessScreenID="EP301000" SuccessStepID="Approved" IsFailActive="0" FailScreenID="EP301000" FailStepID="Approved" NoteID="bb8c1905-8c48-e411-80c2-00155d017e00" />
+          </AUStep>
+        </AUDefinitionDetail>
+      </row>
+    </AUDefinition>
+  </data>
+</data-set>

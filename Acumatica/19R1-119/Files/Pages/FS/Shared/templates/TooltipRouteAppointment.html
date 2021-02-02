@@ -1,0 +1,169 @@
+﻿<textarea id="tooltip-appointment" class="x-hidden-display">   
+    <div class = 'eventTip ap-tooltip'> 
+        <div class = 'ap-tooltip-title text-center'> {RefNbr} </div>
+        <tpl if="TimeWarningFlag==true">
+            <!-- TODO: set warning message class -->
+            <div class = 'warning-node text-center'> <strong>Warning:</strong> Time Warning Message </div>
+        </tpl>
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header x-fieldset-header-default">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            Service Order Info
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <b>Service Order ID:</b> {SORefNbr}
+            <br/> 
+            <div class='ellipsify'>
+                <b>Description:</b> 
+                <tpl for="serviceOrder">
+                    {DocDesc:ellipsis(120, true)}
+                </tpl>
+            </div>
+            <!--Customer-->
+            <tpl if="CustomerName!=''">
+                <b>Customer:</b> {CustomerName} <br/>
+            </tpl>
+
+            <!--Contact-->
+            <tpl if="ContactName!=''">
+                <b>Contact:</b> {ContactName} <br/>
+
+            </tpl>
+
+            <!--Phone-->
+            <tpl if="ContactPhone!=''">
+                <b>Phone:</b> {ContactPhone} <br/>
+            </tpl>
+        </fieldset>
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header x-fieldset-header-default">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            Details 
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <b>Compnay Location:</b> {cpnyLocationDesc:ellipsis(120, true)} <br/>
+            <div class='tool-tip-float-left'><b>Status:</b> 
+                <tpl if="Status=='S'">
+                    NOT STARTED
+                </tpl>
+                <tpl if="Status=='P'">
+                    IN_PROCESS
+                </tpl>
+                <tpl if="Status=='X'">
+                    CANCELED
+                </tpl>
+                <tpl if="Status=='C'">
+                    COMPLETED
+                </tpl>
+            </div>
+            <div class='tool-tip-float-right'><b>Confirmation:</b>
+                <tpl if="Confirmed==true">
+                    <img src="../../shared/img/general/confirmed-yes.gif" alt="Confirmed" height="12" width="10">
+		        </tpl>  
+                <tpl if="Confirmed==false">
+				    <img src="../../shared/img/general/confirmed-no.png" alt="Waiting Confirm" height="12" width="10">
+		        </tpl>
+            </div>
+            <div class='tool-tip-float-left'><b>Start:</b> {ScheduledDateTimeBegin:date('Y-m-d H:i')}</div>
+            <div class='tool-tip-float-right'><b>End:</b> {ScheduledDateTimeEnd:date('Y-m-d H:i')}</div>
+
+            <!--LongDescr-->
+            <tpl if="DocDesc!=''">
+                <div class='ellipsify'>
+                    <b>Description:</b>
+                    {DocDesc:ellipsis(120, true)}
+                </div>
+            </tpl>
+
+        </fieldset>
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header x-fieldset-header-default">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            Services
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="services.length==0">
+					<b>None </b> 
+				</tpl> 
+				<tpl for="services">
+					<li>
+						<b>{service.InventoryCD} </b> 
+						<ul class = 'sc-tooltip-list-inner'> 
+							<li>Description: {service.Descr}</li> 
+							<li>Duration:   {estimatedDuration} </li> 
+						</ul> 
+					</li>
+				</tpl>
+			</ul> 
+        </fieldset>
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header x-fieldset-header-default">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            Employees
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="employees.length==0">
+					<b>None </b> 
+				</tpl> 
+                <tpl if="employees.length!=0">
+                    <li style="list-style: none;">
+				        <tpl for="employees">
+				            <ul class = 'sc-tooltip-list-inner'> 
+						        <li>{AcctName}</li> 
+					        </ul> 
+				        </tpl>
+                    </li>
+                </tpl>
+			</ul> 
+        </fieldset>
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset  tooltip-fieldset-last" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header x-fieldset-header-default">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            Resources
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="resources.length==0">
+					<b>None </b> 
+				</tpl>
+                <tpl if="resources.length!=0"> 
+                    <li style="list-style: none;">
+				        <tpl for="resources">
+                            <ul class = 'sc-tooltip-list-inner'> 
+						        <li>{EquipmentCD}</li> 
+					        </ul> 
+				        </tpl>
+                    </li>
+                </tpl>
+			</ul> 
+        </fieldset>
+        <tpl if="Confirmed==true">
+            <!-- TODO: set warning message class -->
+            <div class = 'text-center confirmed-appointment-warning'> This Appointment can't be moved because it's already confirmed </div>
+        </tpl>
+    </div>
+</textarea>
+
+

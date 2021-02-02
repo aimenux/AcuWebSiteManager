@@ -1,0 +1,942 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>@DSelect</DataField>
+      <OpenBraces>2</OpenBraces>
+      <Value>TDATE</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>PRPayment.TransactionDate</DataField>
+      <Value>@DateFrom</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>LessOrEqual</Condition>
+      <DataField>PRPayment.TransactionDate</DataField>
+      <Operator>Or</Operator>
+      <Value>@DateTo</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@DSelect</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>PDATE</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>PRPayment.StartDate</DataField>
+      <Value>@DateFrom</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>2</CloseBraces>
+      <Condition>LessOrEqual</Condition>
+      <DataField>PRPayment.EndDate</DataField>
+      <Value>@DateTo</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPayment.Released</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@InclUnrel</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>PRPayment.Voided</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPayment.EmployeeID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@EmplID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@EmplID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>PRPayment.DocType</DataField>
+      <Value>VCK</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>2px, 2px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Landscape>True</Landscape>
+    <Margins></Margins>
+    <PaperKind>Letter</PaperKind>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>TDATE</DefaultValue>
+      <Name>DSelect</Name>
+      <Prompt>Select by</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Transaction Date</Label>
+          <Value>TDATE</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Period Start/End Date</Label>
+          <Value>PDATE</Value>
+        </ParameterValue>
+      </ValidValues>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>DateFrom</Name>
+      <Prompt>Date From</Prompt>
+      <Required>True</Required>
+      <Type>DateTime</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>DateTo</Name>
+      <Prompt>Date To</Prompt>
+      <Required>True</Required>
+      <Type>DateTime</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>State</Name>
+      <Prompt>State</Prompt>
+      <Required>True</Required>
+      <ViewName>=[PRDeductCode.State]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>InclUnrel</Name>
+      <Prompt>Include Unreleased</Prompt>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>EmplID</Name>
+      <Prompt>Employee ID</Prompt>
+      <ViewName>=[PRPayment.EmployeeID]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>WCCode</Name>
+      <Prompt>WC Code</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>EXCODE</Name>
+      <Prompt>EXEMPT Code</Prompt>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>PRPaymentWCPremium</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>PRPaymentWCPremium.RefNbr</ChildField>
+          <ParentField>PRPayment.RefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>PRPaymentWCPremium.DocType</ChildField>
+          <ParentField>PRPayment.DocType</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PRPayment</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PMWorkCode</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>PMWorkCode.WorkCodeID</ChildField>
+          <ParentField>PRPaymentWCPremium.WorkCodeID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PRPaymentWCPremium</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PRDeductCode</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>PRDeductCode.CodeID</ChildField>
+          <ParentField>PRPaymentWCPremium.DeductCodeID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PRPaymentWCPremium</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/AcumaticaDB0021</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>PRPayment.EmployeeID</DataField>
+    </SortExp>
+  </Sorting>
+  <StyleSheet>
+    <StyleRule>
+      <Name>NormalFixed</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+        </Font>
+      </Style>
+    </StyleRule>
+  </StyleSheet>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PRPayment">
+      <Fields>
+        <ReportField Name="ApplyOvertimeRules">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AverageRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="Calculated">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CashAccountID"></ReportField>
+        <ReportField Name="CashAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="CashAccountID_description"></ReportField>
+        <ReportField Name="CATranID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="ChkCreateNew">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ChkReprintType"></ReportField>
+        <ReportField Name="ChkVoidType"></ReportField>
+        <ReportField Name="Closed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocDesc"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="DrCr"></ReportField>
+        <ReportField Name="EmployeeID"></ReportField>
+        <ReportField Name="EmployeeID_description"></ReportField>
+        <ReportField Name="EmployeeID_PREmployee_acctName"></ReportField>
+        <ReportField Name="EmployeeID_Segment1"></ReportField>
+        <ReportField Name="EndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EndDate_Day"></ReportField>
+        <ReportField Name="EndDate_Hour"></ReportField>
+        <ReportField Name="EndDate_Month"></ReportField>
+        <ReportField Name="EndDate_Quarter"></ReportField>
+        <ReportField Name="ExemptFromOvertimeRules">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="GrossAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="HasUpdatedGL">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPrintChecksPaymentMethod">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsWeeklyOrBiWeeklyPeriod">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LiabilityPartiallyPaid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NetAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="NetAmountToWords"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrigDocType"></ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+        <ReportField Name="PayBatchNbr"></ReportField>
+        <ReportField Name="PayGroupID"></ReportField>
+        <ReportField Name="PayGroupID_description"></ReportField>
+        <ReportField Name="PayGroupID_PRPayGroup_description"></ReportField>
+        <ReportField Name="PaymentDocAndRef"></ReportField>
+        <ReportField Name="PaymentMethodID"></ReportField>
+        <ReportField Name="PaymentMethodID_description"></ReportField>
+        <ReportField Name="PaymentMethodID_PaymentMethod_descr"></ReportField>
+        <ReportField Name="PayPeriodID"></ReportField>
+        <ReportField Name="Printed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StartDate_Day"></ReportField>
+        <ReportField Name="StartDate_Hour"></ReportField>
+        <ReportField Name="StartDate_Month"></ReportField>
+        <ReportField Name="StartDate_Quarter"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TotalHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TransactionDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TransactionDate_Day"></ReportField>
+        <ReportField Name="TransactionDate_Hour"></ReportField>
+        <ReportField Name="TransactionDate_Month"></ReportField>
+        <ReportField Name="TransactionDate_Quarter"></ReportField>
+        <ReportField Name="Voided">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPayment</FullName>
+    </ReportTable>
+    <ReportTable Name="PRPaymentWCPremium">
+      <Fields>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DeductCodeID"></ReportField>
+        <ReportField Name="DeductCodeID_description"></ReportField>
+        <ReportField Name="DeductCodeID_PRDeductCode_description"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="OvertimeWageBaseAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OvertimeWageBaseHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Rate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="RegularWageBaseAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RegularWageBaseHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="WageBaseAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WageBaseHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WorkCodeID"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPaymentWCPremium</FullName>
+    </ReportTable>
+    <ReportTable Name="PMWorkCode">
+      <Fields>
+        <ReportField Name="CostCodeFrom"></ReportField>
+        <ReportField Name="CostCodeFrom_Segment1"></ReportField>
+        <ReportField Name="CostCodeFrom_Segment2"></ReportField>
+        <ReportField Name="CostCodeTo"></ReportField>
+        <ReportField Name="CostCodeTo_Segment1"></ReportField>
+        <ReportField Name="CostCodeTo_Segment2"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="WorkCodeID"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMWorkCode</FullName>
+    </ReportTable>
+    <ReportTable Name="PRDeductCode">
+      <Fields>
+        <ReportField Name="AcaApplicable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AffectsTaxes">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BAccountID_Segment1"></ReportField>
+        <ReportField Name="BAccountID_Vendor_acctName"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_description"></ReportField>
+        <ReportField Name="BenefitExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="BenefitExpenseSubID"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_description"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="BenefitExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="BenefitLiabilityAcctID"></ReportField>
+        <ReportField Name="BenefitLiabilityAcctID_Account_description"></ReportField>
+        <ReportField Name="BenefitLiabilityAcctID_description"></ReportField>
+        <ReportField Name="BenefitLiabilityAcctID_Segment1"></ReportField>
+        <ReportField Name="BenefitLiabilitySubID"></ReportField>
+        <ReportField Name="BenefitLiabilitySubID_description"></ReportField>
+        <ReportField Name="BenefitLiabilitySubID_Segment1"></ReportField>
+        <ReportField Name="BenefitLiabilitySubID_Segment2"></ReportField>
+        <ReportField Name="BenefitLiabilitySubID_Sub_description"></ReportField>
+        <ReportField Name="BenefitTypeCD"></ReportField>
+        <ReportField Name="BenefitTypeCD_description"></ReportField>
+        <ReportField Name="BenefitTypeCD_PRDynType_description"></ReportField>
+        <ReportField Name="CntAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CntCalcType"></ReportField>
+        <ReportField Name="CntMaxAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CntMaxFreqType"></ReportField>
+        <ReportField Name="CntPercent">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CntReportType"></ReportField>
+        <ReportField Name="CntReportType_description"></ReportField>
+        <ReportField Name="CntReportType_PRDynType_description"></ReportField>
+        <ReportField Name="CodeCD"></ReportField>
+        <ReportField Name="CodeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContribType"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DedCalcType"></ReportField>
+        <ReportField Name="DedInvDescrType"></ReportField>
+        <ReportField Name="DedLiabilityAcctID"></ReportField>
+        <ReportField Name="DedLiabilityAcctID_Account_description"></ReportField>
+        <ReportField Name="DedLiabilityAcctID_description"></ReportField>
+        <ReportField Name="DedLiabilityAcctID_Segment1"></ReportField>
+        <ReportField Name="DedLiabilitySubID"></ReportField>
+        <ReportField Name="DedLiabilitySubID_description"></ReportField>
+        <ReportField Name="DedLiabilitySubID_Segment1"></ReportField>
+        <ReportField Name="DedLiabilitySubID_Segment2"></ReportField>
+        <ReportField Name="DedLiabilitySubID_Sub_description"></ReportField>
+        <ReportField Name="DedMaxAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DedMaxFreqType"></ReportField>
+        <ReportField Name="DedPercent">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DedReportType"></ReportField>
+        <ReportField Name="DedReportType_description"></ReportField>
+        <ReportField Name="DedReportType_PRDynType_description"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="IncludeType"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsGarnishment">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsWorkersCompensation">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="MinimumIndividualContribution">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="State"></ReportField>
+        <ReportField Name="State_description"></ReportField>
+        <ReportField Name="State_State_name"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="VndInvDescr"></ReportField>
+        <ReportField Name="WorkCodeID"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRDeductCode</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>6.78125in</Width>
+  <Sections>
+    <ReportHeader Name="reportHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.6875in</Height>
+      <ProcessOrder>Always</ProcessOrder>
+      <Items>
+        <TextBox Name="textBox13">
+          <Location>88px, 32px</Location>
+          <Size>120px, 32px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>Employee Name</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Location>296px, 32px</Location>
+          <Size>120px, 32px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>= 'WC Not Appl. Payroll' + '{br}' + '(State of ' + [@State] +')'</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Location>528px, 32px</Location>
+          <Size>115px, 32px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>='WC Appl. Payroll' + '{br}' + '(State of ' + [@State] +')'</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Location>416px, 32px</Location>
+          <Size>112px, 32px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>='WC Exempt Amt'+ '{br}' + '(State of ' + [@State] +')'</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Location>5px, 32px</Location>
+          <Size>83px, 32px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>Employee ID</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Location>0px, 8px</Location>
+          <Size>488px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=UCASE('Summary of Employee Wages')#010;</Value>
+        </TextBox>
+        <TextBox Name="textBox53">
+          <Location>208px, 32px</Location>
+          <Size>88px, 32px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Heading1BCColoredR</StyleName>
+          <Value>Gross Payroll</Value>
+        </TextBox>
+      </Items>
+    </ReportHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.03in</Height>
+      <ProcessOrder>Always</ProcessOrder>
+      <Style>
+        <BackColor>Transparent</BackColor>
+      </Style>
+      <Variables>
+        <ReportVariable>
+          <Name>Rep_total</Name>
+          <ProcessOrder>Always</ProcessOrder>
+          <ValueExpr>=$Rep_total+$empDed_YTD</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </ReportFooter>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.10417in</Height>
+      <Visible>False</Visible>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.16667in</Height>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox1">
+          <Format>N</Format>
+          <Location>531px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([PRDeductCode.State]=[@State] AND [PRPaymentWCPremium.WorkCodeID]&lt;&gt;[@EXCODE],[PRPaymentWCPremium.WageBaseAmount],0)</Value>
+        </TextBox>
+        <TextBox Name="textBox10">
+          <Format>N</Format>
+          <Location>416px, 0px</Location>
+          <Size>112px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([PRDeductCode.State]=[@State] AND ([PRPaymentWCPremium.WorkCodeID]=[@EXCODE] or [PRPaymentWCPremium.WorkCodeID]=null),[PRPaymentWCPremium.WageBaseAmount],0)</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.10417in</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpEmpl">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PRPayment.EmployeeID]</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>FirstDetail</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.02in</Height>
+          <KeepTogether>False</KeepTogether>
+          <ProcessOrder>Always</ProcessOrder>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.22in</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <VisibleExpr>=($emplWCAppl&gt;0) </VisibleExpr>
+          <Items>
+            <TextBox Name="textBox11">
+              <Location>88px, 3px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.EmployeeID_description]</Value>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <Format>N</Format>
+              <Location>416px, 3px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$emplWCExmpt</Value>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Format>N</Format>
+              <Location>208px, 3px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$emplGrossPay</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Format>N</Format>
+              <Location>296px, 3px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$emplWCNotApl</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>5px, 3px</Location>
+              <Size>83px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.EmployeeID]</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Format>N</Format>
+              <Location>528px, 3px</Location>
+              <Size>115px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$emplWCAppl</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="grpCheck">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PRPayment.DocType]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[PRPayment.RefNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.1875in</Height>
+          <Style>
+            <BackColor>224, 224, 224</BackColor>
+          </Style>
+          <Variables>
+            <ReportVariable>
+              <Name>emplGrossPay</Name>
+              <ResetGroup>grpEmpl</ResetGroup>
+              <ValueExpr>=$emplGrossPay+[PRPayment.GrossAmount]</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>emplWCNotApl</Name>
+              <ResetGroup>grpEmpl</ResetGroup>
+              <ValueExpr>=$emplWCNotApl + [PRPayment.GrossAmount]-SUM(IIF([PRDeductCode.State]=[@State] AND [PRPaymentWCPremium.WorkCodeID]&lt;&gt;[@EXCODE],[PRPaymentWCPremium.WageBaseAmount],0))-SUM(IIF([PRDeductCode.State]=[@State] AND ([PRPaymentWCPremium.WorkCodeID]=[@EXCODE] or [PRPaymentWCPremium.WorkCodeID]=null),[PRPaymentWCPremium.WageBaseAmount],0))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>emplWCAppl</Name>
+              <ResetGroup>grpEmpl</ResetGroup>
+              <ValueExpr>=$emplWCAppl + SUM(IIF([PRDeductCode.State]=[@State] AND [PRPaymentWCPremium.WorkCodeID]&lt;&gt;[@EXCODE],[PRPaymentWCPremium.WageBaseAmount],0))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>emplWCExmpt</Name>
+              <ResetGroup>grpEmpl</ResetGroup>
+              <ValueExpr>=$emplWCExmpt + SUM(IIF([PRDeductCode.State]=[@State] AND ([PRPaymentWCPremium.WorkCodeID]=[@EXCODE] or [PRPaymentWCPremium.WorkCodeID]=null),[PRPaymentWCPremium.WageBaseAmount],0))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>emplNunofChks</Name>
+              <ResetGroup>grpEmpl</ResetGroup>
+              <ValueExpr>=$emplNunofChks+1</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox12">
+              <Format>N</Format>
+              <Location>280px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.GrossAmount]-SUM(IIF([PRDeductCode.State]=[@State] AND [PRPaymentWCPremium.WorkCodeID]&lt;&gt;[@EXCODE],[PRPaymentWCPremium.WageBaseAmount],0))-SUM(IIF([PRDeductCode.State]=[@State] AND ([PRPaymentWCPremium.WorkCodeID]=[@EXCODE] or [PRPaymentWCPremium.WorkCodeID]=null),[PRPaymentWCPremium.WageBaseAmount],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <Format>N</Format>
+              <Location>520px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM(IIF([PRDeductCode.State]=[@State] AND [PRPaymentWCPremium.WorkCodeID]&lt;&gt;[@EXCODE],[PRPaymentWCPremium.WageBaseAmount],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <Format>N</Format>
+              <Location>400px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=SUM(IIF([PRDeductCode.State]=[@State] AND ([PRPaymentWCPremium.WorkCodeID]=[@EXCODE] or [PRPaymentWCPremium.WorkCodeID]=null),[PRPaymentWCPremium.WageBaseAmount],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <Location>5px, 0px</Location>
+              <Size>83px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.EmployeeID]</Value>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>160px, 0px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.GrossAmount]</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Location>96px, 0px</Location>
+              <Size>56px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PRPayment.RefNbr]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.10417in</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

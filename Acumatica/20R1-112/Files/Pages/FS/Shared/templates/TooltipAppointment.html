@@ -1,0 +1,238 @@
+﻿<textarea id="tooltip-appointment" class="x-hidden-display">   
+    <div class = 'eventTip ap-tooltip'> 
+        <div class = 'ap-tooltip-title text-center'> 
+            {RefNbr} 
+        </div>
+
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset" style="border-width: 1px; width: 100%;">
+
+            <legend class="x-fieldset-header">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            {Messages.TOOLTIP_BOX_SERVICE_ORDER_INFO}
+                        </div>
+                    </div>
+                </span>
+            </legend>
+
+            <!--Service Order-->
+            <tpl if="!Ext.isEmpty(SORefNbr)">
+                <b>{Messages.TOOLTIP_BOX_SERVICE_ORDER_ID}:</b> {SORefNbr}
+            </tpl>
+
+            <br/>
+
+            <!--Service Order Type-->
+            <div class='ellipsify'>
+                <b>{Messages.TOOLTIP_BOX_SERVICE_ORDER_TYPE}:</b>
+                <tpl if="!Ext.isEmpty(SrvOrdTypeDesc)">
+                    {SrvOrdTypeDesc:ellipsis(120, true)}
+                <tpl else>
+                    {SrvOrdType:ellipsis(120, true)}
+                </tpl>
+            </div>
+
+            <!--Description-->
+            <tpl if="!Ext.isEmpty(serviceOrder)">
+                <tpl if="!Ext.isEmpty(serviceOrder.DocDesc)">
+                    <div class='ellipsify'>
+                        <b>{Messages.TOOLTIP_BOX_DESCRIPTION}:</b>
+                        {serviceOrder.DocDesc:ellipsis(120, true)}
+                    </div>
+                </tpl>
+            </tpl>
+
+            <!--Customer-->
+            <tpl if="!Ext.isEmpty(CustomerName)">
+                <b>{Messages.TOOLTIP_BOX_CUSTOMER}:</b> {CustomerName} <br/>
+            </tpl>
+
+            <!--Contact-->
+            <tpl if="!Ext.isEmpty(ContactName)">
+                <b>{Messages.TOOLTIP_BOX_CONTACT}:</b> {ContactName} <br/>
+
+            </tpl>
+
+            <!--Phone-->
+            <tpl if="!Ext.isEmpty(ContactPhone)">
+                <b>{Messages.TOOLTIP_BOX_PHONE}:</b> {ContactPhone} <br/>
+            </tpl>
+
+        </fieldset>
+
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            {Messages.TOOLTIP_BOX_DETAILS}
+                        </div>
+                    </div>
+                </span>
+            </legend>
+
+            <!--Branch Location-->
+            <tpl if="!Ext.isEmpty(BranchLocationDesc)">
+                <b>{Messages.TOOLTIP_BOX_BRANCH_LOCATION}:</b> {BranchLocationDesc:ellipsis(120, true)} <br/>
+            </tpl>
+
+            <!--Room-->
+            <tpl if="!Ext.isEmpty(RoomDesc)">
+                <b>{Messages.TOOLTIP_BOX_ROOM}:</b> {RoomDesc:ellipsis(120, true)} <br/>
+            </tpl>
+
+            <div class='tool-tip-float-left'><b>{Messages.TOOLTIP_BOX_STATUS}:</b> 
+
+                <tpl if="Status=='S' || Status=='A'">
+                    {Messages.APPOINTMENT_STATUS_MANUAL_SCHEDULED}
+                </tpl>
+                <tpl if="Status=='P'">
+                    {Messages.APPOINTMENT_STATUS_IN_PROCESS}
+                </tpl>
+                <tpl if="Status=='X'">
+                    {Messages.APPOINTMENT_STATUS_CANCELED}
+                </tpl>
+                <tpl if="Status=='C'">
+                    {Messages.APPOINTMENT_STATUS_COMPLETED}
+                </tpl>
+            </div>
+
+            <div class='tool-tip-float-right'><b>{Messages.TOOLTIP_BOX_CONFIRMATION}:
+                <tpl if="Confirmed==true">
+                    <span class="x-fa fa-check-circle" style="width: 18px;" data-qtip="{Messages.TOOLTIP_BOX_CONFIRMED}"></span>
+		        </tpl>  
+                <tpl if="Confirmed==false">
+                    <span class="x-fa fa-minus-circle" style="width: 18px;" data-qtip="{Messages.TOOLTIP_BOX_NOT_CONFIRMED}"></span>
+                </tpl>
+                </b>
+            </div>
+
+            <div class='tool-tip-float-left'><b>{Messages.TOOLTIP_BOX_START}:</b> {ScheduledDateTimeBegin:date('Y-m-d H:i')}</div>
+            <div class='tool-tip-float-right'><b>{Messages.TOOLTIP_BOX_END}:</b> {ScheduledDateTimeEnd:date('Y-m-d H:i')}</div>
+
+            <!--LongDescr-->
+            <tpl if="!Ext.isEmpty(DocDesc)">
+                <div class='ellipsify'>
+                    <b>{Messages.TOOLTIP_BOX_DESCRIPTION}:</b>
+                    {DocDesc:ellipsis(120, true)}
+                </div>
+            </tpl>
+
+        </fieldset>
+
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            {Messages.TOOLTIP_BOX_SERVICES}
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="services.length==0">
+					<b>{Messages.TOOLTIP_BOX_NONE} </b> 
+				</tpl> 
+				<tpl for="services">
+					<li>
+						<b>{service.InventoryCD} </b> 
+						<ul class = 'sc-tooltip-list-inner'>
+                            <tpl if="itemClass!=null">
+                                <tpl if="!Ext.isEmpty(itemClass.Descr)">
+                                    <li>{parent.Messages.TOOLTIP_BOX_ITEM_CLASS}: {itemClass.Descr}</li>
+                                <tpl else>
+                                    <li>{parent.Messages.TOOLTIP_BOX_ITEM_CLASS}: {itemClass.ItemClassCD}</li>
+                                </tpl>
+                            </tpl>
+                            <tpl if="!Ext.isEmpty(service.Descr)">
+                                <li>{parent.Messages.TOOLTIP_BOX_DESCRIPTION}: {service.Descr}</li>
+                            </tpl>
+                            <tpl if="!Ext.isEmpty(estimatedDuration)">
+                                <li>{parent.Messages.TOOLTIP_BOX_DURATION}:   {estimatedDuration}</li>
+                            </tpl>
+						</ul>
+					</li>
+				</tpl>
+			</ul> 
+        </fieldset>
+
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            {Messages.TOOLTIP_BOX_STAFF}
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="employees.length==0">
+					<b>{Messages.TOOLTIP_BOX_NONE} </b> 
+				</tpl> 
+                <tpl if="employees.length!=0">
+                    <li style="list-style: none;">
+				        <tpl for="employees">
+				            <ul class = 'sc-tooltip-list-inner'> 
+						        <li>{AcctName}</li> 
+					        </ul> 
+				        </tpl>
+                    </li>
+                </tpl>
+			</ul> 
+        </fieldset>
+
+        <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset" style="border-width: 1px; width: 100%;">
+            <legend class="x-fieldset-header">
+                <span style="display:table;">
+                    <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                        <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                            {Messages.TOOLTIP_BOX_RESOURCES}
+                        </div>
+                    </div>
+                </span>
+            </legend>
+            <ul class = 'sc-tooltip-list'> 
+				<tpl if="resources.length==0">
+					<b>{Messages.TOOLTIP_BOX_NONE} </b> 
+				</tpl>
+                <tpl if="resources.length!=0"> 
+                    <li style="list-style: none;">
+				        <tpl for="resources">
+                            <ul class = 'sc-tooltip-list-inner'> 
+						        <li>{RefNbr} - {Descr}</li> 
+					        </ul> 
+				        </tpl>
+                    </li>
+                </tpl>
+			</ul> 
+        </fieldset>
+
+        <tpl if="WarningAppointmentValidFlag || WarningResourceAvailableFlag">
+            <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset  tooltip-fieldset-last" style="border-width: 1px; width: 100%;">
+                <legend class="x-fieldset-header">
+                    <span style="display:table;">
+                        <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                            <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                                {Messages.TOOLTIP_BOX_WARNINGS}
+                            </div>
+                        </div>
+                    </span>
+                </legend>
+                <ul class = 'sc-tooltip-list'>
+                    <li style="list-style: none;">
+                        <tpl for="warningMessages">
+                            <ul class = 'sc-tooltip-list-inner'>
+                                <li>{.}</li>
+                            </ul>
+                        </tpl>
+                    </li>
+                </ul>
+            </fieldset>
+        </tpl>
+    </div>
+</textarea>
+
+

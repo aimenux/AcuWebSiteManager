@@ -1,0 +1,537 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <DrawGrid>False</DrawGrid>
+  <Filters>
+    <FilterExp>
+      <DataField>RowWikiDescriptor.Name</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@WikiName</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@WikiName</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowWikiPageForReport.StatusID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@StatusID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@StatusID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowWikiPageForReport.CreatedByID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@UserID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@UserID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowWikiPageLanguage.Language</DataField>
+      <Value>@Language</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <ItemFactory></ItemFactory>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <Name>WikiName</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Wiki</Prompt>
+      <ViewName>=Report.GetFieldSchema('WikiArticlesbyStatusReport.Name')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>StatusID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Status</Prompt>
+      <Type>Integer</Type>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Hold</Label>
+          <Value>0</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Pending</Label>
+          <Value>1</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Rejected</Label>
+          <Value>2</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Published</Label>
+          <Value>3</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Deleted</Label>
+          <Value>4</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>UserID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Created By</Prompt>
+      <ViewName>=Report.GetFieldSchema('Users.Username')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>en-US</DefaultValue>
+      <Name>Language</Name>
+      <Prompt>Language</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('WikiArticlesbyStatusReport.Language')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowWikiDescriptor</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>PageID</ChildField>
+          <ParentField>WikiID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowWikiPageForReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowWikiPageLanguage</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>PageID</ChildField>
+          <ParentField>PageID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>Language</ChildField>
+          <ParentField>@Language</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowWikiPageForReport</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://px2/test/Api/Interface.asmx?WSDL</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>RowWikiDescriptor.Name</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>RowWikiPageForReport.StatusID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>RowWikiPageForReport.CreatedByID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="RowWikiPageLanguage">
+      <Fields>
+        <ReportField Name="PageID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Language"></ReportField>
+        <ReportField Name="LastRevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastPublishedID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastPublishedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowWikiPageForReport">
+      <Fields>
+        <ReportField Name="PageID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="WikiID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ArticleType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ParentUID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Number">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Name"></ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="Summary"></ReportField>
+        <ReportField Name="Keywords"></ReportField>
+        <ReportField Name="Versioned">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Folder">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CategoryID"></ReportField>
+        <ReportField Name="TagID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="Language"></ReportField>
+        <ReportField Name="PageRevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionCreatedByID"></ReportField>
+        <ReportField Name="PublishedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Content"></ReportField>
+        <ReportField Name="OldStatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ApprovalGroupID"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowWikiDescriptor">
+      <Fields>
+        <ReportField Name="PageID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Name"></ReportField>
+        <ReportField Name="WikiArticleType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="UrlEdit"></ReportField>
+        <ReportField Name="DeletedID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ArticleType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Number">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Versioned">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="HoldEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SiteMapTagID"></ReportField>
+        <ReportField Name="Folder">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CategoryID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Language"></ReportField>
+        <ReportField Name="Content"></ReportField>
+        <ReportField Name="RequestApproval">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CssID"></ReportField>
+        <ReportField Name="CssPrintID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="WikiID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ParentUID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="Summary"></ReportField>
+        <ReportField Name="Keywords"></ReportField>
+        <ReportField Name="TagID"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionCreatedByID"></ReportField>
+        <ReportField Name="PublishedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OldStatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ApprovalGroupID"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>1.69312cm</Height>
+      <Items>
+        <Panel Name="panel1">
+          <Location>4px, 48px</Location>
+          <Size>1004px, 16px</Size>
+          <Style>
+            <BorderColor>
+              <Bottom>Black</Bottom>
+              <Top>Black</Top>
+            </BorderColor>
+            <BorderStyle>
+              <Bottom>Solid</Bottom>
+              <Top>Solid</Top>
+            </BorderStyle>
+            <BorderWidth>
+              <Bottom>1px</Bottom>
+              <Top>1px</Top>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox1">
+              <Location>100px, 1px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Article Name</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Location>0px, 1px</Location>
+              <Size>84px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Article ID</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Location>436px, 1px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Created By</Value>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Location>356px, 1px</Location>
+              <Size>76px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Status</Value>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Location>540px, 1px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Modified By</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>644px, 1px</Location>
+              <Size>84px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Created Date</Value>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Location>820px, 1px</Location>
+              <Size>84px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Modif. Date</Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Location>732px, 1px</Location>
+              <Size>84px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Published</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+        <TextBox Name="textBox10">
+          <Location>676px, 16px</Location>
+          <Size>148px, 15px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.IntToUI('RowReportUsers.FriendlyName', @UserID)</Value>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Location>8px, 0px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Location>90px, 0px</Location>
+          <Size>168px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Location>888px, 16px</Location>
+          <Size>36px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>888px, 0px</Location>
+          <Size>36px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Location>8px, 16px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Location>924px, 0px</Location>
+          <Size>84px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Location>90px, 16px</Location>
+          <Size>168px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Location>924px, 16px</Location>
+          <Size>84px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Today()</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Location>568px, 16px</Location>
+          <Size>104px, 15px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Selected User:</Value>
+          <VisibleExpr>=([@UserID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>292px, 0px</Location>
+          <Size>104px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Wiki:</Value>
+          <VisibleExpr>=([@WikiID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Location>400px, 0px</Location>
+          <Size>148px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@WikiName]</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Location>8px, 32px</Location>
+          <Size>206px, 14px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Articles by Status</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>15px</Height>
+      <Items>
+        <TextBox Name="textBox2">
+          <Location>104px, 0px</Location>
+          <Size>256px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageLanguage.Title]</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Location>544px, 0px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.LastModifiedByID_Modifier_Username]</Value>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Location>4px, 0px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.Name]</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Location>648px, 0px</Location>
+          <Size>84px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.CreatedDateTime]</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Location>360px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.StatusID]</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Location>440px, 0px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.CreatedByID_Creator_Username]</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Location>824px, 0px</Location>
+          <Size>84px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageForReport.LastModifiedDateTime]</Value>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Location>736px, 0px</Location>
+          <Size>84px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowWikiPageLanguage.LastPublishedDateTime]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+</Report>

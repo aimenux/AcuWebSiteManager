@@ -1,0 +1,224 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Tables>
+    <ReportTable Name="RowRolesInGraph">
+      <Fields>
+        <ReportField Name="ScreenID"></ReportField>
+        <ReportField Name="Rolename"></ReportField>
+        <ReportField Name="ApplicationName"></ReportField>
+        <ReportField Name="Accessrights">
+          <DataType>Int16</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowSiteMap">
+      <Fields>
+        <ReportField Name="Title"></ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <NavigationTree>False</NavigationTree>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Sorting>
+    <SortExp>
+      <DataField>RowRolesInGraph.ScreenID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>RowRolesInGraph.Rolename</DataField>
+    </SortExp>
+  </Sorting>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowSiteMap</ChildName>
+      <ParentName>RowRolesInGraph</ParentName>
+      <Links>
+        <RelationRow>
+          <ChildField>ScreenID</ChildField>
+          <ParentField>ScreenID</ParentField>
+        </RelationRow>
+      </Links>
+    </ReportRelation>
+  </Relations>
+  <GridSize>4px, 4px</GridSize>
+  <DrawGrid>False</DrawGrid>
+  <Filters>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>RowRolesInGraph.Accessrights</DataField>
+      <Value>-1</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>RowRolesInGraph.Accessrights</DataField>
+      <Value>5</Value>
+    </FilterExp>
+  </Filters>
+  <SchemaUrl>http://px2/test/Api/Interface.asmx?WSDL</SchemaUrl>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>1.69312cm</Height>
+      <Items>
+        <Panel Name="panel1">
+          <Location>4px, 48px</Location>
+          <Size>676px, 16px</Size>
+          <Style>
+            <BorderColor>
+              <Top>Black</Top>
+              <Bottom>Black</Bottom>
+            </BorderColor>
+            <BorderStyle>
+              <Top>Solid</Top>
+              <Bottom>Solid</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Top>1px</Top>
+              <Bottom>1px</Bottom>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox3">
+              <Size>100px, 14px</Size>
+              <Value>Access Rights</Value>
+              <Location>576px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox1">
+              <Size>84px, 14px</Size>
+              <Value>Screen ID</Value>
+              <Location>0px, 1px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Size>84px, 14px</Size>
+              <Value>Screen Title</Value>
+              <Location>100px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Size>112px, 14px</Size>
+              <Value>Role Name</Value>
+              <Location>424px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+          </Items>
+        </Panel>
+        <TextBox Name="textBox9">
+          <Size>206px, 14px</Size>
+          <Value>Access by Screen</Value>
+          <Location>8px, 32px</Location>
+          <StyleName>Report Name</StyleName>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Size>76px, 16px</Size>
+          <Value>Company:</Value>
+          <Location>8px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Size>168px, 16px</Size>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+          <Location>90px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Size>36px, 16px</Size>
+          <Value>Date:</Value>
+          <Location>560px, 16px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Size>36px, 16px</Size>
+          <Value>Page:</Value>
+          <Location>560px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Size>76px, 16px</Size>
+          <Value>User:</Value>
+          <Location>8px, 16px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Size>84px, 16px</Size>
+          <Value>=[PageOf]</Value>
+          <Location>596px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Size>168px, 16px</Size>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+          <Location>90px, 16px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Size>84px, 16px</Size>
+          <Value>=Today()</Value>
+          <Location>596px, 16px</Location>
+          <StyleName>Report Params</StyleName>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Items>
+        <TextBox Name="textBox4">
+          <Size>100px, 14px</Size>
+          <Value>=IIF([RowRolesInGraph.Accessrights]=0,'Revoked',IIF([RowRolesInGraph.Accessrights]=1,'View Only',IIF([RowRolesInGraph.Accessrights]=2,'Edit',IIF([RowRolesInGraph.Accessrights]=3,'Insert',IIF([RowRolesInGraph.Accessrights]=4,'Delete','Not Set')))))</Value>
+          <Location>580px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Size>80px, 14px</Size>
+          <Value>=Report.IntToUI('RowSiteMap.ScreenID', [RowRolesInGraph.ScreenID.Raw])</Value>
+          <Location>4px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox30">
+          <Size>304px, 14px</Size>
+          <Value>=[RowSiteMap.Title]</Value>
+          <Location>104px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Size>112px, 14px</Size>
+          <Value>=[RowRolesInGraph.Rolename]</Value>
+          <Location>428px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowRolesInGraph.ScreenID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>RowRolesInGraph.Rolename</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

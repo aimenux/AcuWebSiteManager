@@ -1,0 +1,1530 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>13</item>
+    <item>13</item>
+    <item>14</item>
+    <item>13</item>
+    <item>12</item>
+    <item>12</item>
+    <item>12</item>
+    <item>41</item>
+    <item>20</item>
+    <item>20</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>Account.AccountCD</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@AccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@AccountID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Sub.SubCD</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@SubID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@SubID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>TaxTran.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@Format</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>O</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>TaxTran.TaxType</DataField>
+      <Operator>Or</Operator>
+      <Value>A</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@Format</DataField>
+      <Value>I</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>TaxTran.TaxType</DataField>
+      <Value>B</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@FinPeriodID</DataField>
+      <OpenBraces>1</OpenBraces>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>SVATConversionHistExt.Processed</DataField>
+      <Operator>Or</Operator>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNotNull</Condition>
+      <DataField>@FinPeriodID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>LessOrEqual</Condition>
+      <DataField>SVATConversionHistExt.AdjdFinPeriodID</DataField>
+      <Value>@FinPeriodID</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <NavigationDepth>2</NavigationDepth>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>O</DefaultValue>
+      <Name>Format</Name>
+      <Prompt>Report Format</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Output VAT</Label>
+          <Value>O</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Input VAT</Label>
+          <Value>I</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodIDByBAccount')</DefaultValue>
+      <Name>FinPeriodID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Financial Period</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>AccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Account</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.AccountID,OrgBAccountID,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>SubID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Subaccount</Prompt>
+      <ViewName>=Report.GetFieldSchema('GLTran.SubID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>CA</DefaultValue>
+      <Name>moduleCA</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>AP</DefaultValue>
+      <Name>moduleAP</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>AR</DefaultValue>
+      <Name>moduleAR</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>D</DefaultValue>
+      <Name>onDocuments</Name>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>P</DefaultValue>
+      <Name>onPayments</Name>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>1</DefaultValue>
+      <Name>int1</Name>
+      <Type>Integer</Type>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>TaxTran</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>Module</ChildField>
+          <ParentField>Module</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>AdjdBranchID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TaxID</ChildField>
+          <ParentField>TaxID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TranType</ChildField>
+          <ParentField>AdjdDocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>RefNbr</ChildField>
+          <ParentField>AdjdRefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TranType</ChildField>
+          <ParentField>AdjgDocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>RefNbr</ChildField>
+          <ParentField>AdjgRefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>VendorID</ChildField>
+          <OpenBraces>1</OpenBraces>
+          <Operator>Or</Operator>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <Condition>IsNull</Condition>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <CloseBraces>1</CloseBraces>
+          <Condition>IsNull</Condition>
+          <ParentField>TaxTran.VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>SVATConversionHistExt</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Tax</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>TaxID</ChildField>
+          <ParentField>TaxID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxTran</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Account</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>AccountID</ChildField>
+          <ParentField>AccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxTran</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Sub</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>SubID</ChildField>
+          <ParentField>SubID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxTran</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>SVATConversionHist</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>Module</ChildField>
+          <ParentField>Module</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjdBranchID</ChildField>
+          <ParentField>AdjdBranchID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjdDocType</ChildField>
+          <ParentField>AdjdDocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjdRefNbr</ChildField>
+          <ParentField>AdjdRefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>VendorID</ChildField>
+          <OpenBraces>1</OpenBraces>
+          <Operator>Or</Operator>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <Condition>IsNull</Condition>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <CloseBraces>1</CloseBraces>
+          <Condition>IsNull</Condition>
+          <ParentField>SVATConversionHist.VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TaxID</ChildField>
+          <ParentField>TaxID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>Processed</ChildField>
+          <ParentField>@int1</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>@onPayments</ChildField>
+          <ParentField>ReversalMethod</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjgDocType</ChildField>
+          <Condition>NotEqual</Condition>
+          <OpenBraces>1</OpenBraces>
+          <Operator>Or</Operator>
+          <ParentField>SVATConversionHist.AdjdDocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjgRefNbr</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <Condition>NotEqual</Condition>
+          <ParentField>SVATConversionHist.AdjdRefNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjgFinPeriodID</ChildField>
+          <Condition>GreaterOrEqual</Condition>
+          <OpenBraces>1</OpenBraces>
+          <Operator>Or</Operator>
+          <ParentField>@FinPeriodID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <CloseBraces>1</CloseBraces>
+          <Condition>IsNull</Condition>
+          <ParentField>@FinPeriodID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>SVATConversionHistExt</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Branch</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxTran</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/Pure/</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="Account">
+      <Fields>
+        <ReportField Name="AccountCD"></ReportField>
+        <ReportField Name="AccountClassID"></ReportField>
+        <ReportField Name="AccountClassID_AccountClass_descr"></ReportField>
+        <ReportField Name="AccountClassID_description"></ReportField>
+        <ReportField Name="AccountGroupID"></ReportField>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Box1099">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="COAOrder">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DirectPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GLConsolAccountCD"></ReportField>
+        <ReportField Name="GLConsolAccountCD_description"></ReportField>
+        <ReportField Name="GLConsolAccountCD_GLConsolAccount_description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCashAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoSubDetail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PostOption"></ReportField>
+        <ReportField Name="ReadableActive">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RequireUnits">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevalCuryRateTypeId"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="TransactionsForGivenCurrencyExists">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="TypeTotal"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Account</FullName>
+    </ReportTable>
+    <ReportTable Name="Sub">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsoSubCode"></ReportField>
+        <ReportField Name="ConsoSubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubCD"></ReportField>
+        <ReportField Name="SubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Sub</FullName>
+    </ReportTable>
+    <ReportTable Name="Tax">
+      <Fields>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DeductibleVAT">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="DirectTax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ExemptTax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ExpenseAccountID"></ReportField>
+        <ReportField Name="ExpenseAccountID_Account_description"></ReportField>
+        <ReportField Name="ExpenseAccountID_description"></ReportField>
+        <ReportField Name="ExpenseSubID"></ReportField>
+        <ReportField Name="ExpenseSubID_description"></ReportField>
+        <ReportField Name="ExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="IncludeInTaxable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsExternal">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsImported">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OutDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Outdated">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PendingPurchTaxAcctID"></ReportField>
+        <ReportField Name="PendingPurchTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="PendingPurchTaxAcctID_description"></ReportField>
+        <ReportField Name="PendingPurchTaxSubID"></ReportField>
+        <ReportField Name="PendingPurchTaxSubID_description"></ReportField>
+        <ReportField Name="PendingPurchTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="PendingSalesTaxAcctID"></ReportField>
+        <ReportField Name="PendingSalesTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="PendingSalesTaxAcctID_description"></ReportField>
+        <ReportField Name="PendingSalesTaxSubID"></ReportField>
+        <ReportField Name="PendingSalesTaxSubID_description"></ReportField>
+        <ReportField Name="PendingSalesTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="PendingTax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PurchTaxAcctID"></ReportField>
+        <ReportField Name="PurchTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="PurchTaxAcctID_description"></ReportField>
+        <ReportField Name="PurchTaxSubID"></ReportField>
+        <ReportField Name="PurchTaxSubID_description"></ReportField>
+        <ReportField Name="PurchTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="ReportExpenseToSingleAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReverseTax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SalesTaxAcctID"></ReportField>
+        <ReportField Name="SalesTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="SalesTaxAcctID_description"></ReportField>
+        <ReportField Name="SalesTaxSubID"></ReportField>
+        <ReportField Name="SalesTaxSubID_description"></ReportField>
+        <ReportField Name="SalesTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="StatisticalTax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxApplyTermsDisc"></ReportField>
+        <ReportField Name="TaxCalcLevel"></ReportField>
+        <ReportField Name="TaxCalcLevel2Exclude">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxCalcRule"></ReportField>
+        <ReportField Name="TaxCalcType"></ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxType"></ReportField>
+        <ReportField Name="TaxVendorID"></ReportField>
+        <ReportField Name="TaxVendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="TaxVendorID_description"></ReportField>
+        <ReportField Name="TaxVendorID_Vendor_acctName"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.Tax</FullName>
+    </ReportTable>
+    <ReportTable Name="TaxTran">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AdjdDocType"></ReportField>
+        <ReportField Name="AdjdRefNbr"></ReportField>
+        <ReportField Name="AdjNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryExpenseAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="ExpenseAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="JurisName"></ReportField>
+        <ReportField Name="JurisType"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LineRefNbr"></ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="NonDeductibleTaxRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+        <ReportField Name="OrigTranType"></ReportField>
+        <ReportField Name="RecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReportCuryEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ReportCuryID"></ReportField>
+        <ReportField Name="ReportCuryMultDiv"></ReportField>
+        <ReportField Name="ReportCuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReportCuryRateTypeID"></ReportField>
+        <ReportField Name="ReportCuryRateTypeID_CurrencyRateType_descr"></ReportField>
+        <ReportField Name="ReportCuryRateTypeID_description"></ReportField>
+        <ReportField Name="ReportTaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReportTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxBucketID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxInvoiceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TaxInvoiceNbr"></ReportField>
+        <ReportField Name="TaxPeriodID"></ReportField>
+        <ReportField Name="TaxRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxType"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="VendorID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Voided">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.TaxTran</FullName>
+    </ReportTable>
+    <ReportTable Name="SVATConversionHistExt">
+      <Fields>
+        <ReportField Name="AdjBatchNbr"></ReportField>
+        <ReportField Name="AdjdBranchID"></ReportField>
+        <ReportField Name="AdjdBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="AdjdBranchID_description"></ReportField>
+        <ReportField Name="AdjdDocDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AdjdDocType"></ReportField>
+        <ReportField Name="AdjdFinPeriodID"></ReportField>
+        <ReportField Name="AdjdRefNbr"></ReportField>
+        <ReportField Name="AdjgDocType"></ReportField>
+        <ReportField Name="AdjgFinPeriodID"></ReportField>
+        <ReportField Name="AdjgRefNbr"></ReportField>
+        <ReportField Name="AdjNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnrecognizedTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayCounterPartyID"></ReportField>
+        <ReportField Name="DisplayCounterPartyID_BAccountR_acctName"></ReportField>
+        <ReportField Name="DisplayCounterPartyID_description"></ReportField>
+        <ReportField Name="DisplayDescription"></ReportField>
+        <ReportField Name="DisplayDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DisplayDocRef"></ReportField>
+        <ReportField Name="DisplayDocType"></ReportField>
+        <ReportField Name="DisplayOrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DisplayStatus"></ReportField>
+        <ReportField Name="DisplayTaxEntryRefNbr"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="Processed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReversalMethod"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxInvoiceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TaxInvoiceNbr"></ReportField>
+        <ReportField Name="TaxRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxRecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnrecognizedTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VendorID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.SVATConversionHistExt</FullName>
+    </ReportTable>
+    <ReportTable Name="SVATConversionHist">
+      <Fields>
+        <ReportField Name="AdjBatchNbr"></ReportField>
+        <ReportField Name="AdjdBranchID"></ReportField>
+        <ReportField Name="AdjdBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="AdjdBranchID_description"></ReportField>
+        <ReportField Name="AdjdDocDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AdjdDocType"></ReportField>
+        <ReportField Name="AdjdFinPeriodID"></ReportField>
+        <ReportField Name="AdjdRefNbr"></ReportField>
+        <ReportField Name="AdjgDocType"></ReportField>
+        <ReportField Name="AdjgFinPeriodID"></ReportField>
+        <ReportField Name="AdjgRefNbr"></ReportField>
+        <ReportField Name="AdjNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnrecognizedTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="Processed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReversalMethod"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxInvoiceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TaxInvoiceNbr"></ReportField>
+        <ReportField Name="TaxRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxRecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnrecognizedTaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VendorID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.SVATConversionHist</FullName>
+    </ReportTable>
+    <ReportTable Name="Branch">
+      <Fields>
+        <ReportField Name="AcctMapNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="BranchCD"></ReportField>
+        <ReportField Name="BranchCD_Segment1"></ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BranchOrOrganizationLogoNameReport"></ReportField>
+        <ReportField Name="CEmail"></ReportField>
+        <ReportField Name="CFSFiler">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactName"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CTelNumber"></ReportField>
+        <ReportField Name="DefaultPrinter"></ReportField>
+        <ReportField Name="ForeignEntity">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LedgerCD"></ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LedgerID_description"></ReportField>
+        <ReportField Name="LedgerID_Ledger_descr"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="LogoNameReport"></ReportField>
+        <ReportField Name="MainLogoName"></ReportField>
+        <ReportField Name="NameControl"></ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="OrganizationLogoNameReport"></ReportField>
+        <ReportField Name="ParentBranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="Reporting1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="RoleName_description"></ReportField>
+        <ReportField Name="RoleName_Roles_descr"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TCC"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Branch</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>64px</Height>
+      <Items>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>884px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>884px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <column>9</column>
+            <row>3</row>
+          </Excel>
+          <Location>884px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>10</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Account:</Value>
+          <VisibleExpr>=[@AccountID]&lt;&gt; null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 20px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Subaccount:</Value>
+          <VisibleExpr>=[@SubID]&lt;&gt; null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>384px, 4px</Location>
+          <Size>224px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('GLTran.AccountID', @AccountID)</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Location>384px, 20px</Location>
+          <Size>224px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('GLTran.SubID', @SubID)</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Location>4px, 0px</Location>
+          <Size>244px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>= Switch([@Format]='O', 'Output', [@Format]='I','Input') + ' VAT Pending Recognition' </Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>124px, 4px</Location>
+          <Size>200px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Subaccount</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>4px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Account</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </ReportFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>Account.AccountCD</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>Sub.SubCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>FirstDetail</KeepTogether>
+      <PrintEmpty>False</PrintEmpty>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <StyleName>GroupHighlight</StyleName>
+          <Variables>
+            <ReportVariable>
+              <Name>AccUnrecognizedVAT</Name>
+              <ValueExpr>=0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox2">
+              <Location>4px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[Account.AccountCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>124px, 4px</Location>
+              <Size>200px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[Sub.SubCD]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <StyleName>Bottom Line</StyleName>
+          <Items>
+            <TextBox Name="textBox25_434">
+              <Location>4px, 4px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Tax</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>24px</Height>
+          <VisibleExpr>=$AccUnrecognizedVAT &lt;&gt; 0</VisibleExpr>
+          <Items>
+            <Line Name="line2">
+              <Excel>
+                <column>8</column>
+                <width>3</width>
+              </Excel>
+              <Location>660px, 0px</Location>
+              <Size>360px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox27">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[TaxTran.TaxAmt.Format]</Format>
+              <Location>900px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AccUnrecognizedVAT</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Excel>
+                <column>8</column>
+                <width>2</width>
+              </Excel>
+              <Location>660px, 4px</Location>
+              <Size>240px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Account Total:</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group2">
+      <Grouping>
+        <GroupExp>
+          <DataField>Tax.TaxID</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>FirstDetail</KeepTogether>
+      <PrintEmpty>False</PrintEmpty>
+      <Headers>
+        <Header Name="groupHeaderSection4">
+          <GridSize>8px, 8px</GridSize>
+          <Height>36px</Height>
+          <StyleName>Bottom Line</StyleName>
+          <Variables>
+            <ReportVariable>
+              <Name>TaxUnrecognizedVAT</Name>
+              <ValueExpr>=0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox1">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>124px, 4px</Location>
+              <Size>896px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[Tax.Descr]</Value>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Location>900px, 24px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Unrecognized Amt</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Location>84px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Type</Value>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Location>164px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Date</Value>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Location>244px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Posted</Value>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Location>324px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Status</Value>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <Location>404px, 24px</Location>
+              <Size>200px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Description</Value>
+            </TextBox>
+            <TextBox Name="textBox45">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Location>780px, 24px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Tax Amt</Value>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>4px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Ref. Nbr.</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>4px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[Tax.TaxID]</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Location>660px, 24px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Taxable Amt</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection4">
+          <GridSize>8px, 8px</GridSize>
+          <Height>24px</Height>
+          <VisibleExpr>=$TaxUnrecognizedVAT &lt;&gt; 0</VisibleExpr>
+          <Items>
+            <Line Name="line1">
+              <Excel>
+                <column>8</column>
+                <width>3</width>
+              </Excel>
+              <Location>660px, 0px</Location>
+              <Size>360px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox10">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[TaxTran.TaxAmt.Format]</Format>
+              <Location>900px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$TaxUnrecognizedVAT</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Excel>
+                <column>8</column>
+                <width>2</width>
+              </Excel>
+              <Location>660px, 4px</Location>
+              <Size>240px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Unrecognized Tax Total:</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group3">
+      <Grouping>
+        <GroupExp>
+          <DataField>SVATConversionHistExt.Module</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>SVATConversionHistExt.AdjdDocType</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>SVATConversionHistExt.AdjdRefNbr</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>16px</Height>
+          <PrintEmpty>False</PrintEmpty>
+          <Variables>
+            <ReportVariable>
+              <Name>UnrecognizedVAT</Name>
+              <ValueExpr>=IIF([SVATConversionHistExt.ReversalMethod] = @onDocuments, #010;	IIF([SVATConversionHistExt.AdjgFinPeriodID] &gt; @FinPeriodID #010;	Or [SVATConversionHistExt.AdjgFinPeriodID] = Null,#010;		Max([SVATConversionHistExt.TaxAmt]), #010;		0),#010;	Max([SVATConversionHistExt.TaxAmt]) - Sum(IsNull([SVATConversionHist.TaxAmt], 0)))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>TaxUnrecognizedVAT</Name>
+              <ValueExpr>=$TaxUnrecognizedVAT + $UnrecognizedVAT</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>AccUnrecognizedVAT</Name>
+              <ValueExpr>=$AccUnrecognizedVAT + $UnrecognizedVAT</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=$UnrecognizedVAT &lt;&gt; 0</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox12">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[TaxTran.TaxAmt.Format]</Format>
+              <Location>660px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Max([SVATConversionHistExt.TaxableAmt])#010;</Value>
+            </TextBox>
+            <TextBox Name="textBox26_48f">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[TaxTran.TaxAmt.Format]</Format>
+              <Location>900px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$UnrecognizedVAT</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>4px, 0px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[SVATConversionHistExt.AdjdRefNbr] </Value>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Location>84px, 0px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[SVATConversionHistExt.DisplayDocType] </Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Location>164px, 0px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[SVATConversionHistExt.AdjdDocDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <Location>244px, 0px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxTran.FinPeriodID]</Value>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Location>324px, 0px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[SVATConversionHistExt.DisplayStatus] </Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>404px, 0px</Location>
+              <Size>200px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[SVATConversionHistExt.DisplayDescription] </Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[TaxTran.TaxAmt.Format]</Format>
+              <Location>780px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Max([SVATConversionHistExt.TaxAmt])#010;</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

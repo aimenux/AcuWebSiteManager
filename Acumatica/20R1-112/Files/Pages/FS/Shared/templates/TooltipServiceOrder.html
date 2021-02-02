@@ -1,0 +1,108 @@
+﻿<textarea id="tooltip-serviceorder" class="x-hidden-display">   
+    <div class = 'event-tip so-tooltip'>
+        <tpl if="ServiceOrder">
+            <div class = 'so-tooltip-title text-center'>
+                {ServiceOrder.RefNbr}
+            </div>
+
+            <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default tooltip-fieldset" style="border-width: 1px; width: 100%;">
+                <legend class="x-fieldset-header">
+                    <span style="display:table;">
+                        <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                            <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                                {Messages.TOOLTIP_BOX_DETAILS}
+                            </div>
+                        </div>
+                    </span>
+                </legend>
+
+                <!--Branch Location-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.BranchLocationDesc)">
+                    <b>{Messages.TOOLTIP_BOX_BRANCH_LOCATION}: </b>  {ServiceOrder.BranchLocationDesc}   <br/>
+                </tpl>
+
+                <!--Customer-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.CustomerDisplayName)">
+                    <b>{Messages.TOOLTIP_BOX_CUSTOMER}: </b>  {ServiceOrder.CustomerDisplayName}   <br/>
+                </tpl>
+
+                <!--Contact-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.ContactName)">
+                    <b>{Messages.TOOLTIP_BOX_CONTACT}: </b>  {ServiceOrder.ContactName}   <br/>
+                </tpl>
+
+                <!--Phone-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.ContactPhone)">
+                    <b>{Messages.TOOLTIP_BOX_PHONE}: </b>  {ServiceOrder.ContactPhone}   <br/>
+                </tpl>
+
+                <!--Email-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.ContactEmail)">
+                    <b>{Messages.TOOLTIP_BOX_EMAIL}: </b>  {ServiceOrder.ContactEmail}   <br/>
+                </tpl>
+
+                <!--Priority-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.Priority)">
+                <b>{Messages.SERVICEORDER_PRIORITY}: </b>
+                    <tpl if="ServiceOrder.Priority=='H'">
+                        {Messages.SERVICEORDER_PRIORITY_HIGH}
+                    </tpl>
+                    <tpl if="ServiceOrder.Priority=='M'">
+                        {Messages.SERVICEORDER_PRIORITY_MEDIUM}
+                    </tpl>
+                    <tpl if="ServiceOrder.Priority=='L'">
+                        {Messages.SERVICEORDER_PRIORITY_LOW}
+                    </tpl>
+                </tpl>
+
+                <br/>
+
+                <!--SLA-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.SLARemaning)">
+                    <b>{Messages.SERVICEORDER_SLA}: </b>{ServiceOrder.SLARemaning}<br/>
+                </tpl>
+
+                <!--Creation Date-->
+                <tpl if="!Ext.isEmpty(ServiceOrder.OrderDate)">
+                    <b>{Messages.SERVICEORDER_ORDERDATE}: </b> {ServiceOrder.OrderDate:date('Y-m-d')}  <br/>
+                </tpl>
+
+            </fieldset>
+        </tpl>
+
+
+            <fieldset class="x-fieldset x-fieldset-with-title x-fieldset-with-header x-fieldset-default  tooltip-fieldset tooltip-fieldset-last"  style="border-width: 1px; width: 100%;">
+                <legend class="x-fieldset-header">
+                    <span style="display:table;">
+                        <div  style="display:table-cell;height:100%;vertical-align:top;" class="">
+                            <div class="x-component x-fieldset-header-text x-component-default tooltip-leyend-title">
+                                {Messages.TOOLTIP_BOX_SERVICES}
+                            </div>
+
+                        </div>
+                    </span>
+                </legend>
+                <tpl for="Services">
+                    <ul class = 'sc-tooltip-list'>
+                        <tpl if="ServiceCodes.length==0">
+                            <b>{Messages.TOOLTIP_BOX_NONE} </b> 
+                        </tpl>
+
+                        <li>
+                            <b>{service.InventoryCD} </b>
+                            <ul class = 'sc-tooltip-list-inner'>
+                                <tpl if="!Ext.isEmpty(service.Descr)">
+                                    <li>{parent.Messages.TOOLTIP_BOX_DESCRIPTION}: {service.Descr}</li>
+                                </tpl>
+                                <tpl if="!Ext.isEmpty(estimatedDuration)">
+                                    <li>{parent.Messages.TOOLTIP_BOX_DURATION}: {estimatedDuration}</li>
+                                </tpl>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </tpl>
+            </fieldset>
+    </div>
+</textarea>
+

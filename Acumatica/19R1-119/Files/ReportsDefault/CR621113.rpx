@@ -1,0 +1,697 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>Contact.ContactType</DataField>
+      <Value>LD</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.ClassID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ClassID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@ClassID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.OwnerID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Owner</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Owner</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.WorkgroupID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Workgroup</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Workgroup</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.Source</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Source</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Source</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>Contact.AssignDate</DataField>
+      <Value>@EndDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>Contact.QualificationDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>Contact.QualificationDate</DataField>
+      <Value>@StartDate</Value>
+    </FilterExp>
+  </Filters>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>=DateAdd (DateAdd (DateAdd( Today(), 'd', 1-Day(Today())), 'm', 1-Month(Today())), 'm', CInt((Month(Today())-1)/3)*3)</DefaultValue>
+      <Name>StartDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Start Date</Prompt>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>=DateAdd (DateAdd (DateAdd( Today(), 'd', 1-Day(Today())), 'm', 1-Month(Today())), 'm', CInt((Month(Today())-1)/3)*3 + 3)#010;</DefaultValue>
+      <Name>EndDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>End Date</Prompt>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ClassID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Class ID</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.ClassID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Source</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Source</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.Source')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Workgroup</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Workgroup</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.WorkgroupID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Owner</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Owner</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.OwnerID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>localhost/main</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="Contact">
+      <Fields>
+        <ReportField Name="Address"></ReportField>
+        <ReportField Name="Anniversary">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRContactClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DEMO_Attributes">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="Gender"></ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Img"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAddressSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsConvertable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="LOCATION_Attributes"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaritalStatus"></ReportField>
+        <ReportField Name="MATERIALS_Attributes"></ReportField>
+        <ReportField Name="Method"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="NoCall">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoEMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoFax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMarketing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMassMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="POSITION_Attributes"></ReportField>
+        <ReportField Name="QualificationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SALES_Attributes">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SOLUTION_Attributes"></ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="Spouse"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UserID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="UserID_description"></ReportField>
+        <ReportField Name="UserID_Users_username"></ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Contact</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>2.53968cm</Height>
+      <Items>
+        <TextBox Name="textBox36">
+          <Location>224px, 40px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Class ID:</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>8px, 80px</Location>
+          <Size>376px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Lead Average Time Statistics by Owner</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Location>224px, 56px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Source:</Value>
+        </TextBox>
+        <TextBox Name="textBox43">
+          <Location>296px, 40px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@ClassID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Location>296px, 56px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@Source,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <Location>432px, 40px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Workgroup:</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Location>432px, 56px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Source:</Value>
+        </TextBox>
+        <TextBox Name="textBox47">
+          <Location>504px, 40px</Location>
+          <Size>184px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@Workgroup,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox48">
+          <Location>504px, 56px</Location>
+          <Size>184px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@Owner,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Location>8px, 0px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Location>8px, 16px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Location>72px, 0px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox69">
+          <Location>72px, 16px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox70">
+          <Location>8px, 40px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Start Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox71">
+          <Location>8px, 56px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>End Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox72">
+          <Location>88px, 40px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@StartDate,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox73">
+          <Location>88px, 56px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@EndDate,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox74">
+          <Location>560px, 0px</Location>
+          <Size>40px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox75">
+          <Location>560px, 16px</Location>
+          <Size>40px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox76">
+          <Location>600px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox77">
+          <Location>600px, 16px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Today()</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Count</Name>
+          <ProcessOrder>Always</ProcessOrder>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=$Count + 1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQty</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC'),$LostQty+1,$LostQty)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>QualifiedQty</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC'),$QualifiedQty+1,$QualifiedQty)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Time</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$Time + DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),$Time)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtyTime</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$LostQtyTime+1,$LostQtyTime)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>QualifiedQtyTime</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$QualifiedQtyTime+1,$QualifiedQtyTime)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CountSummary</Name>
+          <ValueExpr>=$CountSummary + 1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtySummary</Name>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC'),$LostQtySummary+1,$LostQtySummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>QualifiedQtySummary</Name>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$QualifiedQtyTimeSummary+1,$QualifiedQtyTimeSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TimeSummary</Name>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$TimeSummary + DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),$TimeSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtyTimeSummary</Name>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$LostQtyTimeSummary+1,$LostQtyTimeSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>QualifiedQtyTimeSummary</Name>
+          <ValueExpr>=IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),$QualifiedQtyTimeSummary+1,$QualifiedQtyTimeSummary)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <VisibleExpr>=false</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox5">
+          <Location>8px, 0px</Location>
+          <Size>168px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=IsNull([Contact.FirstName],'') + ' ' + IsNull([Contact.LastName],'') + IsNull([Contact.MidName],'') + IIf([Contact.Title] = Null,'',', ') + IsNull([Contact.Title],'')</Value>
+        </TextBox>
+        <TextBox Name="textBox62">
+          <Location>176px, 0px</Location>
+          <Size>104px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Contact.Status]</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Location>280px, 0px</Location>
+          <Size>136px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Contact.Source]</Value>
+        </TextBox>
+        <TextBox Name="textBox64">
+          <Location>416px, 0px</Location>
+          <Size>136px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Contact.ClassID_description]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Format>=[Contact.LastActivity.Format]</Format>
+          <Location>552px, 0px</Location>
+          <Size>136px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Contact.LastActivity]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>End</Name>
+          <ValueExpr>=1</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </PageFooter>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0px</Height>
+      <ProcessOrder>Always</ProcessOrder>
+      <Visible>False</Visible>
+      <Items>
+        <Panel Name="panel7">
+          <Location>104px, 0px</Location>
+          <Size>480px, 16px</Size>
+          <Style>
+            <BorderColor>
+              <Top>Black</Top>
+            </BorderColor>
+            <BorderStyle>
+              <Top>Solid</Top>
+            </BorderStyle>
+            <BorderWidth>
+              <Top>1px</Top>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox34">
+              <Location>0px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>64px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$CountSummary</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Location>64px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$LostQtySummary</Value>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Location>144px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$QualifiedQtySummary</Value>
+            </TextBox>
+            <TextBox Name="textBox81">
+              <Location>264px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($QualifiedQtySummary+$LostQtySummary)&gt;0, CStr(Round(100*$QualifiedQtySummary/($QualifiedQtySummary+$LostQtySummary),2)) + '%', 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox82">
+              <Location>392px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($QualifiedQtyTimeSummary + $LostQtyTimeSummary) &gt; 0, (CStr(CInt($TimeSummary/IIf(($QualifiedQtyTimeSummary + $LostQtyTimeSummary) &gt; 0,$QualifiedQtyTimeSummary + $LostQtyTimeSummary,1))/86400) + ' d '#010;+ CStr(CInt(((CInt($TimeSummary/IIf(($QualifiedQtyTimeSummary + $LostQtyTimeSummary) &gt; 0,$QualifiedQtyTimeSummary + $LostQtyTimeSummary,1)))%86400/3600))) + ' h'), 'None')#010;#010;</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </ReportFooter>
+    <ReportHeader Name="reportHeaderSection1">
+      <Height>15cm</Height>
+      <Items>
+        <Chart Name="chart1">
+          <ChartType>StackedBar</ChartType>
+          <GenerateSeries>False</GenerateSeries>
+          <Legend>
+            <Docking>Bottom</Docking>
+          </Legend>
+          <Location>0px, 0px</Location>
+          <Series>
+            <MSChartSeries>
+              <AxisLabel>=IsNull([Contact.OwnerID],'Unassigned')</AxisLabel>
+              <ChartType>StackedBar</ChartType>
+              <Color>57, 108, 159</Color>
+              <IsValueShownAsLabel>True</IsValueShownAsLabel>
+              <Label>=IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0, (CStr(CInt(Sum(IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),0))/IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0,Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0)),1))/86400) + ' d '#010;+ CStr(CInt(((CInt(Sum(IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),0))/IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0,Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0)),1)))%86400/3600))) + ' h'), 'None')</Label>
+              <LabelForeColor>White</LabelForeColor>
+              <Name>Average Time</Name>
+              <YValue>=IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0, (CStr(CInt(Sum(IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),0))/IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0,Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0)),1))/86400)),0) </YValue>
+            </MSChartSeries>
+          </Series>
+          <Size>1024px, 560px</Size>
+          <СhartArea>
+            <AxisY>
+              <MajorGrid>
+                <Enabled>False</Enabled>
+              </MajorGrid>
+            </AxisY>
+          </СhartArea>
+        </Chart>
+      </Items>
+    </ReportHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>Contact.OwnerID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>0.42328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>8px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>72px, 15px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IsNull([Contact.OwnerID],'Unassigned')</Value>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Location>96px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>72px, 15px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$Count</Value>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <Location>168px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$LostQty</Value>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Location>248px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$QualifiedQty</Value>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Location>368px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>= IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0, (CStr(CInt(Sum(IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),0))/IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0,Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0)),1))/86400) + ' d '#010;+ CStr(CInt(((CInt(Sum(IIf([Contact.MajorStatus]=3 And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),DateDiff('st',IsNull([Contact.AssignDate],Now()),IsNull([Contact.QualificationDate],Now())),0))/IIf((Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))) &gt; 0,Sum(IIf([Contact.MajorStatus]=3 And ([Contact.Resolution]=Null or [Contact.Resolution]='CC') And  Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0))+ Sum(IIf([Contact.MajorStatus]=3 And Not([Contact.Resolution]=Null or [Contact.Resolution]='CC') And Not (([Contact.AssignDate]=Null) Or ([Contact.QualificationDate]=Null)),1,0)),1)))%86400/3600))) + ' h'), 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Location>496px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

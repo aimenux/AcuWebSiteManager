@@ -1,0 +1,729 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<table name="WikiRevision">
+		<col name="CompanyID" type="Int" default="Zero" />
+		<col name="PageID" type="UniqueIdentifier" />
+		<col name="Language" type="VarChar(50)" />
+		<col name="PageRevisionID" type="Int" />
+		<col name="Content" type="NVarChar(MAX)" />
+		<col name="ContentHtml" type="NVarChar(MAX)" nullable="true" />
+		<col name="PlainText" type="NVarChar(MAX)" />
+		<col name="ApprovalByID" type="UniqueIdentifier" nullable="true" />
+		<col name="ApprovalDateTime" type="DateTime" nullable="true" />
+		<col name="CreatedByID" type="UniqueIdentifier" />
+		<col name="CreatedDateTime" type="DateTime" />
+		<col name="CompanyMask" type="VarBinary(32)" default="CompanyMaskReadOnly" />
+		<col name="UID" type="UniqueIdentifier" />
+		<col name="RecordSourceID" type="SmallInt" nullable="true" />
+	</table>
+	<rows>
+		<row PageID="03156779-6d2b-4723-b2f5-49baf251f7e3" Language="en-US" PageRevisionID="1" Content="&#xA;In this guide, you can find information about how to expand Acumatica ERP functionality by developing custom plug-ins.&#xA;==In This Guide==[anchor|#_bfb15475-1a84-4373-a296-810aeeb7f0f7]&#xA;*[HelpRoot_Dev_Plugin\CC__mng_Creating_Widgets_for_Dashboards|Creating Widgets for Dashboards]&#xA;*[HelpRoot_Dev_Plugin\CC__mng_Implementing_CC_Paymet_Plug-ins|Implementing Plug-Ins for Processing Credit Card Payments]&#xA;" PlainText="Plug-In Development Guide In this guide, you can find information about how to expand  Acumatica ERP     functionality by developing custom plug-ins. In This Guide Creating Widgets for DashboardsImplementing Plug-Ins for Processing Credit Card Payments" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="c13541c5-fc5f-989c-60d8-84d306aeb911" RecordSourceID="22377" />
+		<row PageID="5324b5b5-df59-48f8-a3ce-23b0d8858f43" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="7a709c4e-c4e7-3806-4dec-c451cfeddb4c" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+In Acumatica ERP or an Acumatica Framework-based application, a ''dashboard'' is a collection of widgets that are displayed on a single page to give you information at a glance. A ''widget'' is a small component that delivers a particular type of information. Acumatica ERP and any Acumatica Framework-based application support a number of predefined types of widgets that you can add to dashboards. For more information on the supported widgets and their types, see [HelpRoot_Interface\DB__DB_Features|Dashboards and Widgets]. {br}
+
+If none of the predefined widget types suits your task, you can create custom widgets, as the topics in this chapter describe, and use these widgets in the dashboards of Acumatica ERP or an Acumatica Framework-based application. 
+==In This Chapter==
+[anchor|#_02e4eb66-47dd-4211-8cb2-fe69cea0d31c]
+*[HelpRoot_Dev_Plugin\CC__con_WidgetCreation|Widget Creation]
+*[HelpRoot_Dev_Plugin\CC__con_Use_of_Widgets|Use of the Widgets]
+*[HelpRoot_Dev_Plugin\CC__how_Create_Simple_Widget|To Create a Simple Widget]
+*[HelpRoot_Dev_Plugin\CC__how_Create_Inquiry-Based_Widget|To Create an Inquiry-Based Widget]
+*[HelpRoot_Dev_Plugin\CC__how_Load_Widget_Asynchronously|To Load a Widget Synchronously or Asynchronously]
+*[HelpRoot_Dev_Plugin\CC__how_Add_Script_to_Widget|To Add a Script to a Widget]
+*[HelpRoot_Dev_Plugin\CC__how_Add_Custom_Controls_to_Widget_Wizard|To Add Custom Controls to the Widget Properties Dialog Box]
+]]></column>
+			<column name="PlainText"><![CDATA[Creating Widgets for Dashboards In  Acumatica ERP or an  Acumatica Framework-based application, a  dashboard  is a collection of widgets that are displayed on a         single page to give you information at a glance. A  widget  is a small component that         delivers a particular type of information.  Acumatica ERP and any  Acumatica Framework-based application support a number of predefined types of widgets that you can add to         dashboards. For more information on the supported widgets and their types, see  Dashboards and Widgets.  If none of the predefined widget types suits your task, you can create custom widgets, as the         topics in this chapter describe, and use these widgets in the dashboards of  Acumatica ERP or an  Acumatica Framework-based application.  In This Chapter Widget CreationUse of the WidgetsTo Create a Simple WidgetTo Create an Inquiry-Based WidgetTo Load a Widget Synchronously or AsynchronouslyTo Add a Script to a WidgetTo Add Custom Controls to the Widget Properties Dialog Box]]></column>
+		</row>
+		<row PageID="a8abf2d5-d758-4968-a5db-20ae1821171e" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="15193ea4-e345-eb77-7627-179132fc8e75" RecordSourceID="22377">
+			<column name="Content"><![CDATA[When you create a custom widget to be used in Acumatica ERP or an Acumatica Framework-based application, you must implement at least the three classes described in the sections below. (For details on the implementation of the classes, see [HelpRoot_Dev_Plugin\CC__how_Create_Simple_Widget|To Create a Simple Widget] and [HelpRoot_Dev_Plugin\CC__how_Create_Inquiry-Based_Widget|To Create an Inquiry-Based Widget].)
+==Data Access Class with the Widget Parameters==
+The data access class (DAC) with the widget parameters is a general DAC that implements the <tt>IBqlTable</tt> interface. {br}
+
+You can use any DAC attributes with this DAC. However, only the fields with <tt>PXDB</tt> attributes, such as <tt>PXDBString</tt> and <tt>PXDBInt</tt>, are stored in the database. The values of these fields are stored in the database automatically; you do not need to create a database table for them.{br}
+
+The fields of the DAC are displayed as controls in the '''Widget Properties''' dialog box when a user adds a new widget instance to a dashboard or modifies the parameters of an existing widget instance. (The way the controls are displayed depends on [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=66fe7e0d-950d-15d8-4248-21ac737c023a|PXFieldState] of the corresponding fields.) For information on adding comprehensive controls to the dialog box, see [HelpRoot_Dev_Plugin\CC__how_Add_Custom_Controls_to_Widget_Wizard|To Add Custom Controls to the Widget Properties Dialog Box].
+==Graph for the Widget==
+The graph for the widget is used to manage the widget parameters and read data for the widget. The graph must be inherited from the <tt>PX.Dashboards.WizardMaint</tt> class. For the widget graph, you can manage widget parameters by defining new events and redefining the events that are available in the base classes, such as the <tt>RowSelected</tt> and <tt>FieldSelecting</tt> events. (You work with the events of the widget graph in the same way as you work with the events of a general graph.)
+==Class of the Widget==
+The widget class is used by the system to work with the widget instances. The widget class must implement the <tt>PX.Web.UI.IDashboardWidget</tt> interface. The system treats as widgets the classes that implement this interface and are available in a library in the <tt>Bin</tt> folder of an instance of Acumatica ERP or Acumatica Framework-based application. The caption and description of the widget from these classes are displayed in the '''Add Widget''' dialog box automatically when a user adds a new widget to a dashboard. The methods of this class are used by the system to manage the parameters of a widget instance and display the widget on a dashboard page.
+==Related Articles==
+*[HelpRoot_Dev_Plugin\CC__how_Create_Simple_Widget|To Create a Simple Widget]
+*[HelpRoot_Dev_Plugin\CC__how_Create_Inquiry-Based_Widget|To Create an Inquiry-Based Widget]]]></column>
+			<column name="PlainText"><![CDATA[Widget Creation When you create a custom widget to be used in  Acumatica ERP or an  Acumatica Framework-based application, you must implement at least the three classes described in the             sections below. (For details on the implementation of the classes, see  To Create a Simple Widget and                  To Create an Inquiry-Based Widget.) Data Access Class with the Widget Parameters The data access class (DAC) with the widget parameters is a general DAC that                 implements the  IBqlTable  interface.  You can use any DAC attributes with this DAC. However, only the fields with                      PXDB  attributes, such as  PXDBString  and                      PXDBInt , are stored in the database. The values of these                 fields are stored in the database automatically; you do not need to create a                 database table for them. The fields of the DAC are displayed as controls in the  Widget                     Properties  dialog box when a user adds a new widget instance to a                 dashboard or modifies the parameters of an existing widget instance. (The way the                 controls are displayed depends on  PXFieldState PXFieldState of the corresponding fields.) For information                 on adding comprehensive controls to the dialog box, see  To Add Custom Controls to the Widget Properties Dialog Box. Graph for the Widget The graph for the widget is used to manage the widget parameters and read data for                 the widget. The graph must be inherited from the                      PX.Dashboards.WizardMaint  class. For the widget graph, you                 can manage widget parameters by defining new events and redefining the events that                 are available in the base classes, such as the  RowSelected  and                      FieldSelecting  events. (You work with the events of the                 widget graph in the same way as you work with the events of a general graph.) Class of the Widget The widget class is used by the system to work with the widget instances. The widget                 class must implement the  PX.Web.UI.IDashboardWidget  interface.                 The system treats as widgets the classes that implement this interface and are                 available in a library in the  Bin  folder of an instance of  Acumatica ERP or  Acumatica Framework-based application. The caption and description of the widget from these classes                 are displayed in the  Add Widget  dialog box automatically when                 a user adds a new widget to a dashboard. The methods of this class are used by the                 system to manage the parameters of a widget instance and display the widget on a                 dashboard page. ]]></column>
+		</row>
+		<row PageID="587b5310-b40a-4381-8b3b-2bce63ca5b20" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="a8e86545-25bd-673b-8bee-897ca3029b85" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+In this topic, you will learn how a custom widget is used in Acumatica ERP or an Acumatica Framework-based application. For more information on how to work with widgets on a dashboard page, see [HelpRoot_GettingStarted\GS__mng_Dashboards|Configuring Dashboards].
+==How the Widget Is Detected in an Application==
+Once the library that contains the class of the widget is placed in the <tt>Bin</tt> folder of an instance of Acumatica ERP or an Acumatica Framework-based application, the '''Add Widget''' dialog box, which you open to add a new widget to a dashboard page, contains the caption and description of the new widget. The system takes the caption and description of the widget from the implementation of the <tt>Caption</tt> and <tt>Description</tt> properties of the <tt>IDashboardWidget</tt> interface.{br}
+
+The following diagram illustrates the relations of the class of the widget and the '''Add Widget''' dialog box. In the diagram, the items that you add for the custom widget are shown in rectangles with a red border.[anchor|#_41ceb65e-80d3-4c63-b15b-31d656c2bbd1][anchor|#_f91f0f9e-da70-4f33-a773-7782422bb859][image:StudioDeveloperGuide/Images/Dashboards1.png|popup|Widget detection|250px]
+==How a Widget Instance Is Configured==
+When you select the widget in the '''Add Widget''' dialog box and click '''Next''', the controls for the parameters that should be configured for a new widget instance—that is, the predefined '''Caption''' box and the controls for the parameters, which are defined in the custom DAC—are displayed in the '''Widget Properties''' dialog box. These controls are maintained by using the graph for the widget, to which the reference is provided by the class of the widget. The graph uses the <tt>Widget</tt> DAC and the custom DAC with the widget parameters to save the parameters of a widget instance in the {{Widget}} table of the application database. {br}
+
+To display custom controls, such as buttons and pop-up panels, in the '''Widget Properties''' dialog box, the system uses the implementations of the <tt>RenderSettings()</tt> and <tt>RenderSettingsComplete()</tt> methods of the <tt>IDashboardWidget</tt> interface from the class of the widget. For more information on adding custom controls to the dialog box, see [HelpRoot_Dev_Plugin\CC__how_Add_Custom_Controls_to_Widget_Wizard|To Add Custom Controls to the Widget Properties Dialog Box].{br}
+
+The following diagram illustrates the interaction of the components of the widget with the '''Widget Properties''' dialog box. In the diagram, the items that you add for the custom widget are shown in rectangles with a red border.[anchor|#_4491b4fe-4991-46ac-98f6-21c72353f830][anchor|#_fad37393-2661-4807-ad84-f837aeea545b][image:StudioDeveloperGuide/Images/Dashboards2.png|popup|Configuration of a widget instance|450px]
+==How a Widget Instance Is Displayed on a Dashboard Page==
+After a widget instance is configured and saved in the '''Widget Properties''' dialog box, the widget instance is displayed on the dashboard page. To display the caption of the widget instance on the dashboad page, the widget graph retrieves the caption from the {{Widget}} table of the database by using the <tt>Widget</tt> DAC. To display the widget contents, the system uses the implementations of the <tt>Render()</tt>and <tt>RenderComplete()</tt> methods of the <tt>IDashboardWidget</tt> interface from the class of the widget. These implementations use the parameters of the widget, which the widget graph retrieves from the {{Widget}} table of the application database by using the DAC with the widget parameters. {br}
+
+You can specify how the widget should be loaded to a dashboard page and implement custom scripts to manage the way the widget is displayed on a dashboard page. For more information, see [HelpRoot_Dev_Plugin\CC__how_Load_Widget_Asynchronously|To Load a Widget Synchronously or Asynchronously] and [HelpRoot_Dev_Plugin\CC__how_Add_Script_to_Widget|To Add a Script to a Widget].{br}
+
+The following diagram illustrates the interaction of the components of the widget with a dashboard page. In the diagram, the items that you add for the custom widget are shown in rectangles with a red border.[anchor|#_d044d3e0-34ef-42a5-835b-f1c105f901b9][anchor|#_2024ad82-75c2-47cc-b6d3-7d6aa535e0c2][image:StudioDeveloperGuide/Images/Dashboards3.png|popup|Widget instance on a dashboard page|450px]
+==Related Articles==
+*[HelpRoot_GettingStarted\GS__con_Dashboards|Dashboards]]]></column>
+			<column name="PlainText"><![CDATA[Use of the Widgets In this topic, you will learn how a custom widget is used in  Acumatica ERP or an  Acumatica Framework-based application. For more information on how to work with widgets on a                 dashboard page, see  Configuring Dashboards. How the Widget Is Detected in an Application Once the library that contains the class of the widget is placed in the                      Bin  folder of an instance of  Acumatica ERP or an  Acumatica Framework-based application, the  Add Widget  dialog box, which you                 open to add a new widget to a dashboard page, contains the caption and description                 of the new widget. The system takes the caption and description of the widget from                 the implementation of the  Caption  and                      Description  properties of the                      IDashboardWidget  interface. The following diagram illustrates the relations of the class of the widget and the                      Add Widget  dialog box. In the diagram, the items that you                 add for the custom widget are shown in rectangles with a red border. Widget detection How a Widget Instance Is Configured When you select the widget in the  Add Widget  dialog box and                 click  Next , the controls for the parameters that should be                 configured for a new widget instance—that is, the predefined                      Caption  box and the controls for the parameters, which                 are defined in the custom DAC—are displayed in the  Widget                     Properties  dialog box. These controls are maintained by using the                 graph for the widget, to which the reference is provided by the class of the widget.                 The graph uses the  Widget  DAC and the custom DAC with the widget                 parameters to save the parameters of a widget instance in the                      Widget  table of the application database.  To display custom controls, such as buttons and pop-up panels, in the                      Widget Properties  dialog box, the system uses the                 implementations of the  RenderSettings()  and                      RenderSettingsComplete()  methods of the                      IDashboardWidget  interface from the class of the widget. For                 more information on adding custom controls to the dialog box, see  To Add Custom Controls to the Widget Properties Dialog Box. The following diagram illustrates the interaction of the components of the widget                 with the  Widget Properties  dialog box. In the diagram, the                 items that you add for the custom widget are shown in rectangles with a red                     border. Configuration of a widget instance How a Widget Instance Is Displayed on a Dashboard Page After a widget instance is configured and saved in the  Widget                     Properties  dialog box, the widget instance is displayed on the                 dashboard page. To display the caption of the widget instance on the dashboad page,                 the widget graph retrieves the caption from the  Widget  table of the                 database by using the  Widget  DAC. To display the widget contents,                 the system uses the implementations of the  Render() and                      RenderComplete()  methods of the                      IDashboardWidget  interface from the class of the widget.                 These implementations use the parameters of the widget, which the widget graph                 retrieves  from the  Widget  table of the application database by                 using the DAC with the widget parameters.  You can specify how the widget should be loaded to a dashboard page and implement                 custom scripts to manage the way the widget is displayed on a dashboard page. For                 more information, see  To Load a Widget Synchronously or Asynchronously and  To Add a Script to a Widget. The following diagram illustrates the interaction of the components of the widget                 with a dashboard page. In the diagram, the items that you add for the custom widget                 are shown in rectangles with a red border. Widget instance on a dashboard page ]]></column>
+		</row>
+		<row PageID="1ea88afb-8f3e-4c07-b8be-fb29c108e18f" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="afb5ef83-7be6-d856-63a9-1ae1766ec14c" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+A simple widget displays information from a single data source and does not require calculations or comprehensive data retrieval. Multiple simple widgets, such as wiki widgets or embedded page widgets, are available in Acumatica ERP or an Acumatica Framework-based application by default.{br}
+
+To create a simple widget, you need to perform the basic steps that are described in this topic.
+==To Create a Simple Widget==[anchor|#_dfcda250-a2a7-4288-bda1-9d6a3cdbdb4a]
+#In the project of your Acumatica ERP extension library or your Acumatica Framework-based application, create a data access class (DAC), which stores the parameters of the widget. The DAC must implement the <tt>IBqlTable</tt> interface; you can use any DAC attributes with this DAC. 
+#:The following code fragment shows an example of a DAC for a simple widget, which uses one parameter.{{{{using PX.Data;
+
+[PXHidden]
+public class YFSettings : IBqlTable
+{
+    #region PagePath
+    [PXDBString]
+    [PXDefault]
+    [PXUIField(DisplayName = "Help Article")]
+    public string PagePath { get; set; }
+    public abstract class pagePath : IBqlField { }
+    #endregion
+}
+}}}}
+#In the project, create a graph for working with the parameters of the widget and reading the data for the widget. The graph must be inherited from the <tt>PX.Dashboards.WizardMaint</tt> class.
+#:The following code fragment shows an example of a graph for a widget.{{{{using PX.Dashboards;
+
+public class YFSettingsMaint : WizardMaint&lt;YFSettingsMaint, YFSettings&gt;
+{
+}
+}}}}
+#In the project, create a widget class that implements the <tt>PX.Web.UI.IDashboardWidget</tt> interface. Use the following instructions for implementation:
+#*Inherit the widget class from the <tt>PX.Dashboards.Widgets.PXWidgetBase</tt> abstract class. This class implements part of the required functionality of the <tt>IDashboardWidget</tt> interface, such as localization of the caption and the description of the widget (which are displayed in the '''Add Widget''' dialog box when a user adds a new widget to a dashboard). This class also stores useful properties of the widget, such as <tt>Settings</tt>, <tt>DataGraph</tt>, <tt>Page</tt>, <tt>DataSource</tt>, and <tt>WidgetID</tt>.
+#*Store the values of the caption and the description of the widget in a {{Messages}} class that has the <tt>PXLocalizable</tt> attribute. This approach is required for localization functionality to work properly.
+#*Perform initialization of a widget class instance in the <tt>Initialize()</tt> method of the <tt>IDashboardWidget</tt> interface.
+#*Create the tree of controls of the widget in the <tt>Render()</tt> method of the <tt>IDashboardWidget</tt> interface.
+#*If you need to check the access rights of a user to the data displayed in the widget, implement the <tt>IsAccessible()</tt> method of the <tt>IDashboardWidget</tt> interface. If the user has access to the data in the widget, the method must return {{true}}; if the user has insufficient rights to access the data in the widget, the method must return {{false}}.
+#*If you want to specify the way the widget is loaded, override the <tt>AsyncLoading()</tt> method of the <tt>PXWidgetBase</tt> abstract class, as described in [HelpRoot_Dev_Plugin\CC__how_Load_Widget_Asynchronously|To Load a Widget Synchronously or Asynchronously].
+#:The following code fragment gives an example of a widget class. This class is inherited from the <tt>PXWidgetBase</tt> class. The caption and description of the widget are specified in the {{Messages}} class, which has <tt>PXLocalizable</tt> attribute. The widget class implements the <tt>Render()</tt> method to create the control of the widget and performs the configuration of the control in the <tt>RenderComplete()</tt> method.{{{{using PX.Web.UI;
+using PX.Dashboards.Widgets;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public class YFWidget: PXWidgetBase&lt;YFSettingsMaint, YFSettings&gt;
+{
+    public YFWidget()
+        : base(Messages.YFWidgetCaption, Messages.YFWidgetDescription)
+    {
+    }
+
+    protected override WebControl Render(PXDataSource ds, int height, 
+      bool designMode)
+    {
+        if (String.IsNullOrEmpty(Settings.PagePath)) return null;
+
+        WebControl frame = _frame = new WebControl(HtmlTextWriterTag.Iframe) 
+          { CssClass = "iframe" };
+        frame.Attributes["frameborder"] = "0";
+        frame.Width = frame.Height = Unit.Percentage(100);
+        frame.Attributes["src"] = "javascript:void 0";
+        return frame;
+    }
+
+    public override void RenderComplete()
+    {
+        if (_frame != null)
+        {
+            var renderer = JSManager.GetRenderer(this.Page);
+            renderer.RegisterStartupScript(this.GetType(),
+                this.GenerateControlID(this.WidgetID),
+                string.Format("px.elemByID('{0}').src = '{1}';", 
+                  _frame.ClientID, Settings.PagePath), true);
+        }
+        base.RenderComplete();
+    }
+
+    private WebControl _frame;
+}
+
+[PXLocalizable]
+public static class Messages
+{
+    public const string YFWidgetCaption = "YogiFon Help Page";
+    public const string YFWidgetDescription = "Displays a Help page.";
+}
+}}}}
+#Compile your Acumatica ERP extension library or Acumatica Framework-based application. 
+#Run the application and make sure that the new widget appears in the '''Add Widget''' dialog box. The widget class, which implements the <tt>IDashboardWidget</tt> interface, is detected by the system and automatically added to the list of widgets available for selection in the dialog box.
+
+==Related Articles==
+*[HelpRoot_Dev_Plugin\CC__how_Load_Widget_Asynchronously|To Load a Widget Synchronously or Asynchronously]]]></column>
+			<column name="PlainText"><![CDATA[To Create a Simple Widget A simple widget displays information from a single data source and does not require                 calculations or comprehensive data retrieval. Multiple simple widgets, such as wiki                 widgets or embedded page widgets, are available in  Acumatica ERP or an  Acumatica Framework-based application by default. To create a simple widget, you need to perform the basic steps that are described in                 this topic. To Create a Simple Widget In the project of your  Acumatica ERP extension library or your  Acumatica Framework-based application, create a data access class (DAC), which stores the                     parameters of the widget. The DAC must implement the                          IBqlTable  interface; you can use any DAC attributes with                     this DAC.  The following code fragment shows an example of a DAC for a simple                         widget, which uses one                         parameter. using PX.Data;
+
+[PXHidden]
+public class YFSettings : IBqlTable
+{
+    #region PagePath
+    [PXDBString]
+    [PXDefault]
+    [PXUIField(DisplayName = "Help Article")]
+    public string PagePath { get; set; }
+    public abstract class pagePath : IBqlField { }
+    #endregion
+} In the project, create a graph for working with the parameters of the widget and                     reading the data for the widget. The graph must be inherited from the                          PX.Dashboards.WizardMaint  class. The following code                         fragment shows an example of a graph for a                     widget. using PX.Dashboards;
+
+public class YFSettingsMaint : WizardMaint<YFSettingsMaint, YFSettings>
+{
+} In the project, create a widget class that implements the                          PX.Web.UI.IDashboardWidget  interface. Use the following                     instructions for implementation: Inherit the widget class from the                                  PX.Dashboards.Widgets.PXWidgetBase  abstract                             class. This class implements part of the required functionality of the                                  IDashboardWidget  interface, such as localization                             of the caption and the description of the widget (which are displayed in                             the  Add Widget  dialog box when a user adds a new                             widget to a dashboard). This class also stores useful properties of the                             widget, such as  Settings ,                                  DataGraph ,  Page ,                                  DataSource , and  WidgetID . Store the values of the caption and the description of the widget in a                                  Messages  class that has the                                  PXLocalizable  attribute. This approach is                             required for localization functionality to work properly. Perform initialization of a widget class instance in the                                  Initialize()  method of the                                  IDashboardWidget  interface. Create the tree of controls of the widget in the                                  Render()  method of the                                  IDashboardWidget  interface. If you need to check the access rights of a user to the data displayed                             in the widget, implement the  IsAccessible()  method of                             the  IDashboardWidget  interface. If the user has                             access to the data in the widget, the method must return                                  true ; if the user has insufficient rights to access                             the data in the widget, the method must return                              false . If you want to specify the way the widget is loaded, override the                                  AsyncLoading()  method of the                                  PXWidgetBase  abstract class, as described in                                  To Load a Widget Synchronously or Asynchronously. The following code fragment gives an example of a widget class. This                         class is inherited from the  PXWidgetBase  class. The                         caption and description of the widget are specified in the                              Messages  class, which has                              PXLocalizable  attribute. The widget class implements                         the  Render()  method to create the control of the widget                         and performs the configuration of the control in the                              RenderComplete()                          method. using PX.Web.UI;
+using PX.Dashboards.Widgets;
+using System.Web.UI;
+using System.Web.UI.WebControls;
+
+public class YFWidget: PXWidgetBase<YFSettingsMaint, YFSettings>
+{
+    public YFWidget()
+        : base(Messages.YFWidgetCaption, Messages.YFWidgetDescription)
+    {
+    }
+
+    protected override WebControl Render(PXDataSource ds, int height, 
+      bool designMode)
+    {
+        if (String.IsNullOrEmpty(Settings.PagePath)) return null;
+
+        WebControl frame = _frame = new WebControl(HtmlTextWriterTag.Iframe) 
+          { CssClass = "iframe" };
+        frame.Attributes["frameborder"] = "0";
+        frame.Width = frame.Height = Unit.Percentage(100);
+        frame.Attributes["src"] = "javascript:void 0";
+        return frame;
+    }
+
+    public override void RenderComplete()
+    {
+        if (_frame != null)
+        {
+            var renderer = JSManager.GetRenderer(this.Page);
+            renderer.RegisterStartupScript(this.GetType(),
+                this.GenerateControlID(this.WidgetID),
+                string.Format("px.elemByID('{0}').src = '{1}';", 
+                  _frame.ClientID, Settings.PagePath), true);
+        }
+        base.RenderComplete();
+    }
+
+    private WebControl _frame;
+}
+
+[PXLocalizable]
+public static class Messages
+{
+    public const string YFWidgetCaption = "YogiFon Help Page";
+    public const string YFWidgetDescription = "Displays a Help page.";
+} Compile your  Acumatica ERP extension library or  Acumatica Framework-based application.  Run the application and make sure that the new widget appears in the                          Add Widget  dialog box. The widget class, which                     implements the  IDashboardWidget  interface, is detected by the                     system and automatically added to the list of widgets available for selection in                     the dialog box. ]]></column>
+		</row>
+		<row PageID="e80a265c-d6ca-4134-a073-039dc243383d" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="50b520ad-de78-e539-0a53-b0c40fa97b6d" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+An inquiry widget retrieves data for the widget from an inquiry form, such as a generic inquiry form or a custom inquiry form. Inquiry-based widgets that are available in Acumatica ERP or an Acumatica Framework-based application by default include chart widgets, table widgets, and KPI widgets. {br}
+
+To create an inquiry-based widget, you need to perform the basic steps that are described in the section below. In these steps, you use the predefined classes, which provide the following functionality to simplify the development of an inquiry-based widget:[anchor|#_9b168b9b-9678-440d-a7b2-d85cbc1e4dc6]
+*Selection of the inquiry form in the widget settings
+*Selection of a shared inquiry filter
+*Selection of the parameters of the inquiry
+*The ability to drill down in the inquiry form when a user clicks on the widget caption
+*Verification of the user&rsquo;s access rights to the widget, which is performed based on the user&rsquo;s access rights to the inquiry form
+
+==To Create an Inquiry-Based Widget==[anchor|#_6b3424c8-ea04-4203-a0f1-c660536cf6e6]
+#In the project of your Acumatica ERP extension library or your Acumatica Framework-based application, create a data access class (DAC) that implements the <tt>IBqlTable</tt> interface and stores the parameters of the widget. We recommend that you inherit the DAC from the <tt>PX.Dashboards.Widgets.InquiryBasedWidgetSettings</tt> class, which provides the following parameters for the widget:
+#*''InquiryScreenID'': Specifies the inquiry form on which the widget is based
+#*''FilterID'': Specifies one of the shared filters available for the specified inquiry form
+#:The following code shows a fragment of the DAC for the predefined inquiry-based data table widget. The DAC is inherited from the <tt>InquiryBasedWidgetSettings</tt> class.{{{{using PX.Data;
+using PX.Dashboards.Widgets;
+
+[PXHidden]
+public class TableSettings : InquiryBasedWidgetSettings, IBqlTable
+{
+    #region AutoHeight
+    [PXDBBool]
+    [PXDefault(true)]
+    [PXUIField(DisplayName = "Automatically Adjust Height")]
+    public bool AutoHeight { get; set; }
+    public abstract class autoHeight : IBqlField { }
+    #endregion
+
+    ...
+}
+}}}}
+#In the project, create a graph for working with widget parameters and reading data for the widget. Use the following instructions when you implement the graph:
+#*Inherit the graph from the <tt>PX.Dashboards.Widgets.InquiryBasedWidgetMaint</tt> abstract class, which is inherited from the <tt>PXWidgetBase</tt> abstract class.
+#*Implement the <tt>SettingsRowSelected()</tt> event, which is the <tt>RowSelected</tt> event for the DAC with widget parameters; it contains the current values of the parameters of the widget instance and the list of available fields of the inquiry form. (For information on how to work with the fields of the inquiry form, see [[#_9bb22e3f-db74-4fe1-90fc-4e5d8aad1b1b|To Use the Parameters and Fields of the Inquiry Form in the Widget].) The signature of the method is shown below.{{{{protected virtual void SettingsRowSelected(PXCache cache, 
+  TPrimary settings, InqField[] inqFields)
+}}}}
+#In the project, create a widget class. We recommend that you inherit this class from the <tt>PX.Dashboards.Widgets.InquiryBasedWidget</tt> class. 
+#Compile your Acumatica ERP extension library or Acumatica Framework-based application. 
+#Run the application, and make sure that the new widget appears in the '''Add Widget''' dialog box. The widget class, which implements the <tt>IDashboardWidget</tt> interface, is detected by the system and automatically added to the list of widgets available for selection in the dialog box.
+[anchor|#_9bb22e3f-db74-4fe1-90fc-4e5d8aad1b1b]
+==To Use the Parameters and Fields of the Inquiry Form in the Widget==
+You can access the parameters and fields of the inquiry from that is used in the widget by using the <tt>DataScreenBase</tt> class, which is available through the <tt>DataScreen</tt> property in the widget graph and in the widget class. An instance of the <tt>DataScreenBase</tt> class, which is created based on the inquiry form selected by a user in the widget settings, contains the following properties:[anchor|#_832c63ec-bebf-40a7-93a9-83226c7d2775]
+*<tt>ViewName</tt>: Specifies the name of the data view from which the data for the widget is taken.
+*<tt>View</tt>: Returns the data view from which the data for the widget is taken.
+*<tt>ParametersViewName</tt>: Specifies the name of the data view with the parameters of the inquiry.
+*<tt>ParametersView</tt>: Returns the data view with the parameters of the inquiry. It can be {{null}} if the inquiry has no parameters.
+*<tt>ScreenID</tt>: Specifies the ID of the inquiry form.
+*<tt>DefaultAction</tt>: Specifies the action that is performed when a user double-clicks on the row in the details table of the inquiry form.
+{br}
+
+To access the fields of the inquiry form in the widget, use the <tt>GetFields()</tt> method of the <tt>DataScreenBase</tt> class. This method returns the <tt>InqField</tt> class, which provides the following properties:[anchor|#_229c62a4-5234-42b9-bf51-7c4d26a7d86c]
+*<tt>Name</tt>: Specifies the internal name of the field
+*<tt>DisplayName</tt>: Specifies the name of the field as it is displayed in the UI
+*<tt>FieldType</tt>: Specifies the C# type of the field
+*<tt>Visible</tt>: Specifies whether the field is visible in the UI
+*<tt>Enabled</tt>: Specifies whether the field is enabled in the UI
+*<tt>LinkCommand</tt>: Specifies the linked command of the field
+{br}
+
+To access the parameters of the inquiry form in the widget, use the <tt>GetParameters()</tt> method of the <tt>DataScreenBase</tt> class, which returns the <tt>InqField</tt> class.]]></column>
+			<column name="PlainText"><![CDATA[To Create an Inquiry-Based Widget An inquiry widget retrieves data for the widget from an inquiry form, such as a                 generic inquiry form or a custom inquiry form. Inquiry-based widgets that are                 available in  Acumatica ERP or an  Acumatica Framework-based application by default include chart widgets, table widgets, and KPI                 widgets.  To create an inquiry-based widget, you need to perform the basic steps that are                 described in the section below. In these steps, you use the predefined classes,                 which provide the following functionality to simplify the development of an                 inquiry-based widget: Selection of the inquiry form in the widget settings Selection of a shared inquiry filter Selection of the parameters of the inquiry The ability to drill down in the inquiry form when a user clicks on the                         widget caption Verification of the user's access rights to the widget, which is performed                         based on the user's access rights to the inquiry form To Create an Inquiry-Based Widget In the project of your  Acumatica ERP extension library or your  Acumatica Framework-based application, create a data access class (DAC) that implements the                          IBqlTable  interface and stores the parameters of the                     widget. We recommend that you inherit the DAC from the                          PX.Dashboards.Widgets.InquiryBasedWidgetSettings  class,                     which provides the following parameters for the widget: InquiryScreenID : Specifies the inquiry form on which the widget                             is based FilterID : Specifies one of the shared filters available for the                             specified inquiry form The following code shows a fragment of the DAC for the predefined                         inquiry-based data table widget. The DAC is inherited from the                              InquiryBasedWidgetSettings                          class. using PX.Data;
+using PX.Dashboards.Widgets;
+
+[PXHidden]
+public class TableSettings : InquiryBasedWidgetSettings, IBqlTable
+{
+    #region AutoHeight
+    [PXDBBool]
+    [PXDefault(true)]
+    [PXUIField(DisplayName = "Automatically Adjust Height")]
+    public bool AutoHeight { get; set; }
+    public abstract class autoHeight : IBqlField { }
+    #endregion
+
+    ...
+} In the project, create a graph for working with widget parameters and reading                     data for the widget. Use the following instructions when you implement the                         graph: Inherit the graph from the                                  PX.Dashboards.Widgets.InquiryBasedWidgetMaint                              abstract class, which is inherited from the                                  PXWidgetBase  abstract class. Implement the  SettingsRowSelected()  event, which is                             the  RowSelected  event for the DAC with widget                             parameters; it contains the current values of the parameters of the                             widget instance and the list of available fields of the inquiry form.                             (For information on how to work with the fields of the inquiry form, see                                  To Use the Parameters and Fields of the Inquiry Form in the Widget To Use the Parameters and Fields of the Inquiry Form in the Widget.) The signature of the method is shown                             below. protected virtual void SettingsRowSelected(PXCache cache, 
+  TPrimary settings, InqField[] inqFields) In the project, create a widget class. We recommend that you inherit this class                     from the  PX.Dashboards.Widgets.InquiryBasedWidget  class.                  Compile your  Acumatica ERP extension library or  Acumatica Framework-based application.  Run the application, and make sure that the new widget appears in the                          Add Widget  dialog box. The widget class, which                     implements the  IDashboardWidget  interface, is detected by the                     system and automatically added to the list of widgets available for selection in                     the dialog box. To Use the Parameters and Fields of the Inquiry Form in the Widget You can access the parameters and fields of the inquiry from that is used in the                 widget by using the  DataScreenBase  class, which is available                 through the  DataScreen  property in the widget graph and in the                 widget class. An instance of the  DataScreenBase  class, which is                 created based on the inquiry form selected by a user in the widget settings,                 contains the following properties: ViewName : Specifies the name of the data view from which                         the data for the widget is taken. View : Returns the data view from which the data for the                         widget is taken. ParametersViewName : Specifies the name of the data view                         with the parameters of the inquiry. ParametersView : Returns the data view with the parameters                         of the inquiry. It can be  null  if the inquiry has no                         parameters. ScreenID : Specifies the ID of the inquiry form. DefaultAction : Specifies the action that is performed                         when a user double-clicks on the row in the details table of the inquiry                         form. To access the fields of the inquiry form in the widget, use the                      GetFields()  method of the  DataScreenBase                  class. This method returns the  InqField  class, which provides the                 following properties: Name : Specifies the internal name of the field DisplayName : Specifies the name of the field as it is                         displayed in the UI FieldType : Specifies the C# type of the field Visible : Specifies whether the field is visible in the                         UI Enabled : Specifies whether the field is enabled in the                         UI LinkCommand : Specifies the linked command of the                         field To access the parameters of the inquiry form in the widget, use the                      GetParameters()  method of the                      DataScreenBase  class, which returns the                      InqField  class. ]]></column>
+		</row>
+		<row PageID="a4ed5e3e-a62b-497f-9851-c91f5edf6e60" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="3a6dbd90-23a8-8e62-7f03-54ffc219c047" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+By default, if a widget class is inherited from the <tt>PX.Dashboards.Widgets.PXWidgetBase</tt> abstract class, the widget is loaded asynchronously after the page has been loaded. You can change this behavior by using the <tt>AsyncLoading()</tt> method of the widget class, as described in the following sections.
+==To Load a Widget Synchronously==
+To load a widget synchronously along with the page, override the <tt>AsyncLoading()</tt> method, as the following code shows.{{{{using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.False; }
+}
+}}}}
+==To Load a Widget Asynchronously==
+To load a widget asynchronously after the page has been loaded, you do not need to perform any actions, because the following implementation of the <tt>AsyncLoading()</tt> method is used by default.{{{{using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.True; }
+}
+}}}}
+==To Load a Widget that Performs a Long-Running Operation==
+If a widget performs a long-running operation during loading, such as reading data that takes a long time, use the following approach to load this widget:[anchor|#_6635117e-bc3a-4d75-a8d5-98cb2d2c8d3a]
+#Override the <tt>AsyncLoading()</tt> method, as the following code shows. In this case, for processing the data of the widget, the system starts the long-running operation in a separate thread.{{{{using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.LongRun; }
+}
+}}}}
+#Override the <tt>ProcessData()</tt> method of the widget class so that it implements all the logic for the widget that consumes significant time while loading. 
+#Override the <tt>SetProcessResult()</tt> method of the widget class so that it retrieves the result of the processing of the widget data. 
+{br}
+
+If these methods are implemented, the system calls them automatically when it loads the widget on a dashboard page.]]></column>
+			<column name="PlainText"><![CDATA[To Load a Widget Synchronously or Asynchronously By default, if a widget class is inherited from the                      PX.Dashboards.Widgets.PXWidgetBase  abstract class, the widget                 is loaded asynchronously after the page has been loaded. You can change this                 behavior by using the  AsyncLoading()  method of the widget class,                 as described in the following sections. To Load a Widget Synchronously To load a widget synchronously along with the page, override the                      AsyncLoading()  method, as the following code                 shows. using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.False; }
+} To Load a Widget Asynchronously To load a widget asynchronously after the page has been loaded, you do not need to                 perform any actions, because the following implementation of the                      AsyncLoading()  method is used by                 default. using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.True; }
+} To Load a Widget that Performs a Long-Running Operation If a widget performs a long-running operation during loading, such as reading data                 that takes a long time, use the following approach to load this widget: Override the  AsyncLoading()  method, as the following code                         shows. In this case, for processing the data of the widget, the system                         starts the long-running operation in a separate                         thread. using PX.Web.UI;
+using PX.Dashboards.Widgets;
+
+public override AsyncLoadMode AsyncLoading
+{
+    get { return AsyncLoadMode.LongRun; }
+} Override the  ProcessData()  method of the widget class so                         that it implements all the logic for the widget that consumes significant                         time while loading.  Override the  SetProcessResult()  method of the widget                         class so that it retrieves the result of the processing of the widget data.                      If these methods are implemented, the system calls them automatically when it loads                 the widget on a dashboard page. ]]></column>
+		</row>
+		<row PageID="17509bc1-709f-4c58-9b5a-9acb8afd3d26" Language="en-US" PageRevisionID="1" Content="&#xA;You can specify how a widget should be displayed on a dashboard page by using a custom script. For example, you can implement a script that handles the way the widget is resized.{br}&#xA;&#xA;To add a custom script to a widget, you override the &lt;tt&gt;RegisterScriptModules()&lt;/tt&gt; method of the &lt;tt&gt;PX.Dashboards.Widgets.PXWidgetBase&lt;/tt&gt; abstract class. The following code shows an example of the method implementation for a predefined data table widget.{{{{using PS.Web.UI;&#xA;using PX.Dashboards.Widgets;&#xA;&#xA;internal const string JSResource = &#xA;  &quot;PX.Dashboards.Widgets.Table.px_dashboardGrid.js&quot;;&#xA;&#xA;public override void RegisterScriptModules(Page page)&#xA;{&#xA;    var renderer = JSManager.GetRenderer(page);&#xA;    renderer.RegisterClientScriptResource(this.GetType(), JSResource);&#xA;    base.RegisterScriptModules(page);&#xA;}&#xA;}}}}" PlainText="To Add a Script to a Widget You can specify how a widget should be displayed on a dashboard page by using a                 custom script. For example, you can implement a script that handles the way the                 widget is resized. To add a custom script to a widget, you override the                      RegisterScriptModules()  method of the                      PX.Dashboards.Widgets.PXWidgetBase  abstract class. The                 following code shows an example of the method implementation for a predefined data                 table                 widget. using PS.Web.UI;&#xA;using PX.Dashboards.Widgets;&#xA;&#xA;internal const string JSResource = &#xA;  &quot;PX.Dashboards.Widgets.Table.px_dashboardGrid.js&quot;;&#xA;&#xA;public override void RegisterScriptModules(Page page)&#xA;{&#xA;    var renderer = JSManager.GetRenderer(page);&#xA;    renderer.RegisterClientScriptResource(this.GetType(), JSResource);&#xA;    base.RegisterScriptModules(page);&#xA;} " ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="85ad0b8c-9914-8aa4-e3c2-1d0adfc786ce" RecordSourceID="22377" />
+		<row PageID="eaa0ee1b-73ce-4bc4-8a9f-18dadf3af55a" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="777c79e8-bfc3-9af5-c98c-4c21088fef2b" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+The '''Widget Properties''' dialog box is displayed when a user creates or edits a widget. If you need to add custom controls, such as buttons or grids, to this dialog box, you need to create these controls in the <tt>RenderSettings()</tt> or <tt>RenderSettingsComplete()</tt> method of the widget class, as is described in the sections below. 
+==To Add Buttons to the Widget Properties Dialog Box Dynamically==
+If you need to add buttons to the '''Widget Properties''' dialog box that appear based on a particular user action in the dialog box, override the <tt>RenderSettings()</tt> method of the widget class so that it dynamically adds the needed controls to the dialog box. The method must return {{true}} if all controls are created in the method implementation (that is, no automatic generation of controls is required). The default implementation of the <tt>RenderSettings()</tt> method of the <tt>PXWidgetBase</tt> class returns {{false}}. {br}
+
+The following example provides the implementation of this method in the predefined Power BI tile widget. When a user clicks the '''Sign In''' button in the '''Widget Properties''' dialog box and successfully logs in to Microsoft Azure Active Directory, the '''Dashboard''' and '''Tile''' boxes appear in the dialog box.{{{{public override bool RenderSettings(PXDataSource ds, WebControl owner)
+{
+    var cc = owner.Controls;
+    var btn = new PXButton() { ID = "btnAzureLogin", Text = 
+      PXLocalizer.Localize(Messages.PowerBISignIn, typeof(Messages).FullName), 
+      Width = Unit.Pixel(100) };
+    btn.ClientEvents.Click = "PowerBIWidget.authorizeButtonClick";
+
+    cc.Add(new PXLayoutRule() { StartColumn = true, ControlSize = "XM", 
+    LabelsWidth = "SM" });
+    cc.Add(new PXTextEdit() { DataField = "ClientID", CommitChanges = true });
+    cc.Add(new PXLayoutRule() { Merge = true });
+    cc.Add(new PXTextEdit() { DataField = "ClientSecret", 
+      CommitChanges = true });
+    cc.Add(btn);
+    cc.Add(new PXLayoutRule() { });
+    cc.Add(new PXDropDown() { DataField = "DashboardID", 
+      CommitChanges = true });
+    cc.Add(new PXDropDown() { DataField = "TileID", CommitChanges = true });
+    cc.Add(new PXTextEdit() { DataField = "AccessCode", 
+      CommitChanges = true });
+    cc.Add(new PXTextEdit() { DataField = "RedirectUri" });
+    cc.Add(new PXTextEdit() { DataField = "AccessToken" });
+    cc.Add(new PXTextEdit() { DataField = "RefreshToken" });
+
+    foreach (Control wc in cc)
+    {
+        IFieldEditor fe = wc as IFieldEditor;
+        if (fe != null) wc.ID = fe.DataField;
+        wc.ApplyStyleSheetSkin(ds.Page);
+
+        PXTextEdit te = wc as PXTextEdit;
+        if (te != null) switch (te.ID)
+            {
+                case "ClientID":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeClientID";
+                    break;
+                case "ClientSecret":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeClientSecret";
+                    break;
+                case "AccessCode":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeAccessCode";
+                    break;
+                case "RedirectUri":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeRedirectUri";
+                    break;
+            }
+    }
+    return true;
+}
+}}}}
+==To Open a Pop-Up Panel in the Widget Properties Dialog Box==
+If you need to open a pop-up panel in the '''Widget Properties''' dialog box, override the <tt>RenderSettingsComplete()</tt> method of the widget class and create the panel within it.{br}
+
+The following code shows a sample implementation of the method in the predefined chart widget. The method adds the buttons to the dialog box and creates the pop-up panel after the standard controls of the dialog box have been created.{{{{public override void RenderSettingsComplete(PXDataSource ds, WebControl owner)
+{
+    var btn = _btnConfig = new PXButton() { 
+      ID = "btnConfig", Width = Unit.Pixel(150),
+      Text = PXLocalizer.Localize(Messages.ChartConfigure, 
+        typeof(Messages).FullName), 
+      PopupPanel = "pnlConfig", Enabled = false, CallbackUpdatable = true };
+    owner.Controls.Add(btn);
+    btn.ApplyStyleSheetSkin(owner.Page);
+
+    owner.Controls.Add(CreateSettingsPanel(ds, ds.PrimaryView));
+    (ds.DataGraph as ChartSettingsMaint).InquiryIDChanged += (s, e) =&gt; 
+      _btnConfig.Enabled = !string.IsNullOrEmpty(e);
+    base.RenderSettingsComplete(ds, owner);
+}
+}}}}]]></column>
+			<column name="PlainText"><![CDATA[To Add Custom Controls to the Widget Properties Dialog Box The  Widget Properties  dialog box is displayed when a user                 creates or edits a widget. If you need to add custom controls, such as buttons or                 grids, to this dialog box, you need to create these controls in the                      RenderSettings()  or                      RenderSettingsComplete()  method of the widget class, as is                 described in the sections below.  To Add Buttons to the Widget Properties Dialog Box Dynamically If you need to add buttons to the  Widget Properties  dialog box                 that appear based on a particular user action in the dialog box, override the                      RenderSettings()  method of the widget class so that it                 dynamically adds the needed controls to the dialog box. The method must return                      true  if all controls are created in the method implementation                 (that is, no automatic generation of controls is required). The default                 implementation of the  RenderSettings()  method of the                      PXWidgetBase  class returns  false .  The following example provides the implementation of this method in the predefined                 Power BI tile widget. When a user clicks the  Sign In  button                 in the  Widget Properties  dialog box and successfully logs in                 to Microsoft Azure Active Directory, the  Dashboard  and                      Tile  boxes appear in the dialog                 box. public override bool RenderSettings(PXDataSource ds, WebControl owner)
+{
+    var cc = owner.Controls;
+    var btn = new PXButton() { ID = "btnAzureLogin", Text = 
+      PXLocalizer.Localize(Messages.PowerBISignIn, typeof(Messages).FullName), 
+      Width = Unit.Pixel(100) };
+    btn.ClientEvents.Click = "PowerBIWidget.authorizeButtonClick";
+
+    cc.Add(new PXLayoutRule() { StartColumn = true, ControlSize = "XM", 
+    LabelsWidth = "SM" });
+    cc.Add(new PXTextEdit() { DataField = "ClientID", CommitChanges = true });
+    cc.Add(new PXLayoutRule() { Merge = true });
+    cc.Add(new PXTextEdit() { DataField = "ClientSecret", 
+      CommitChanges = true });
+    cc.Add(btn);
+    cc.Add(new PXLayoutRule() { });
+    cc.Add(new PXDropDown() { DataField = "DashboardID", 
+      CommitChanges = true });
+    cc.Add(new PXDropDown() { DataField = "TileID", CommitChanges = true });
+    cc.Add(new PXTextEdit() { DataField = "AccessCode", 
+      CommitChanges = true });
+    cc.Add(new PXTextEdit() { DataField = "RedirectUri" });
+    cc.Add(new PXTextEdit() { DataField = "AccessToken" });
+    cc.Add(new PXTextEdit() { DataField = "RefreshToken" });
+
+    foreach (Control wc in cc)
+    {
+        IFieldEditor fe = wc as IFieldEditor;
+        if (fe != null) wc.ID = fe.DataField;
+        wc.ApplyStyleSheetSkin(ds.Page);
+
+        PXTextEdit te = wc as PXTextEdit;
+        if (te != null) switch (te.ID)
+            {
+                case "ClientID":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeClientID";
+                    break;
+                case "ClientSecret":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeClientSecret";
+                    break;
+                case "AccessCode":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeAccessCode";
+                    break;
+                case "RedirectUri":
+                    te.ClientEvents.Initialize = 
+                      "PowerBIWidget.initializeRedirectUri";
+                    break;
+            }
+    }
+    return true;
+} To Open a Pop-Up Panel in the Widget Properties Dialog Box If you need to open a pop-up panel in the  Widget Properties                  dialog box, override the  RenderSettingsComplete()  method of the                 widget class and create the panel within it. The following code shows a sample implementation of the method in the predefined                 chart widget. The method adds the buttons to the dialog box and creates the pop-up                 panel after the standard controls of the dialog box have been                 created. public override void RenderSettingsComplete(PXDataSource ds, WebControl owner)
+{
+    var btn = _btnConfig = new PXButton() { 
+      ID = "btnConfig", Width = Unit.Pixel(150),
+      Text = PXLocalizer.Localize(Messages.ChartConfigure, 
+        typeof(Messages).FullName), 
+      PopupPanel = "pnlConfig", Enabled = false, CallbackUpdatable = true };
+    owner.Controls.Add(btn);
+    btn.ApplyStyleSheetSkin(owner.Page);
+
+    owner.Controls.Add(CreateSettingsPanel(ds, ds.PrimaryView));
+    (ds.DataGraph as ChartSettingsMaint).InquiryIDChanged += (s, e) => 
+      _btnConfig.Enabled = !string.IsNullOrEmpty(e);
+    base.RenderSettingsComplete(ds, owner);
+} ]]></column>
+		</row>
+		<row PageID="cfa4f986-1fd1-4707-a8ec-d93dfc151d6f" Language="en-US" PageRevisionID="1" PlainText="Implementing Plug-Ins for Processing Credit Card Payments  Acumatica ERP processes credit card and debit card payments through the Authorize.Net payment &#x9;&#x9;&#x9;&#x9;gateway. To work with the Authorize.Net payment gateway,  Acumatica ERP supports three payment plug-ins:  Authorize.Net API ,  Authorize.Net &#x9;&#x9;&#x9;&#x9;&#x9;AIM , and  Authorize.Net CIM . For more information on these plug-ins, &#x9;&#x9;&#x9;&#x9;see  Means of Integration with Authorize.Net.  In a customized  Acumatica ERP application, you can implement payment plug-ins that work with credit card &#x9;&#x9;&#x9;&#x9;payment processing centers other than Authorize.Net. In this chapter, you can find &#x9;&#x9;&#x9;&#x9;information about how to develop custom plug-ins and use them in  Acumatica ERP. In This Chapter Interfaces for Processing Credit Card PaymentsTo Implement a Plug-In for Processing Credit Card Payments (Version 2 of Interfaces). To Implement a Plug-In for Processing Credit Card Payments (Version 1 of Interfaces). " ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="4cfe0bec-f1e0-fd48-4259-040bad1b049e" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+ Acumatica ERP processes credit card and debit card payments through the Authorize.Net payment gateway. To work with the Authorize.Net payment gateway, Acumatica ERP supports three payment plug-ins: ''Authorize.Net API'', ''Authorize.Net AIM'', and ''Authorize.Net CIM''. For more information on these plug-ins, see [HelpRoot_Integration\CA__CON_AuthorizeNet|Means of Integration with Authorize.Net]. {br}
+
+In a customized Acumatica ERP application, you can implement payment plug-ins that work with credit card payment processing centers other than Authorize.Net. In this chapter, you can find information about how to develop custom plug-ins and use them in Acumatica ERP.
+==In This Chapter==[anchor|#_462f04ee-cf90-4934-8df7-627babf02e08]
+*[HelpRoot_Dev_Plugin\CC__con_CC_Payment_Interfaces|Interfaces for Processing Credit Card Payments]
+*[HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V2|To Implement a Plug-In for Processing Credit Card Payments (Version 2 of Interfaces)].
+*[HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V1|To Implement a Plug-In for Processing Credit Card Payments (Version 1 of Interfaces)].
+]]></column>
+		</row>
+		<row PageID="53da199c-4dbc-44a7-8f73-93292f723b81" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="ee35730a-fdd7-64ca-f49c-7e458dacb084" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+ Acumatica ERP provides two versions of the interfaces for the implementation of plug-ins for credit card payment processing. In this topic, you can find information about the differences between these versions.{br}
+
+For both versions of the interfaces, you can implement tokenized processing plug-ins. When a tokenized processing plug-in is used, the credit card information is not saved to the application database; this information is stored only at the processing center. The Acumatica ERP database stores only the identification tokens that link customers and payment methods in the application with the credit card data at the processing center. 
+==Version 2==
+Version 2 of the interfaces for processing credit card payments, which has been supported since Acumatica ERP 2017R2, is more convenient, streamlined, and feature-rich than Version 1 is. We recommend that you use this version for the implementation of new custom plug-ins. {br}
+
+The root interface for implementation of custom plug-ins of this version is <tt>PX.CCProcessingBase.Interfaces.V2.ICCProcessingPlugin</tt>. The system automatically discovers the class that implements the <tt>ICCProcessingPlugin</tt> interface and includes it in the list in the '''Payment Plug-In (Type)''' box on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] ([~/?ScreenId=CA205000|CA205000]) form. If you implement Version 2 of the interfaces, you also need to implement the <tt>ICCTransactionProcessor</tt> interface to process credit card transactions.{br}
+
+You can implement the following additional functionality:[anchor|#_59863c8c-daed-42d4-8930-410bd3df78cf]
+*Tokenized credit card processing: Implement the <tt>ICCProfileProcessor</tt> and <tt>ICCHostedFormProcessor</tt> interfaces. 
+*Processing of payments from new credit cards: To use this functionality, implement the <tt>ICCProfileCreator</tt>, <tt>ICCHostedPaymentFormProcessor</tt>, and <tt>ICCTransactionGetter</tt> interfaces. If this functionality is implemented in a custom plug-in, a user can select the '''Accept Payment from New Card''' check box on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] form for the processing centers that use this custom plug-in.
+*Synchronization of credit cards with the processing center: Implement the <tt>ICCTransactionGetter</tt> interface in a custom plug-in. If this functionality is implemented, on the [HelpRoot_FormReference\CA_20_60_00|Synchronize Cards] ([~/?ScreenId=CA206000|CA206000]) form, users can work with the processing centers that use this custom plug-in.
+*Retrieval of the information about suspicious credit card transactions (without the use of the hosted form that accepts payments): To use this functionality, implement the <tt>ICCTranStatusGetter</tt> interface.
+*Webhooks as a way to obtain a response from the processing center: Implement the <tt>ICCWebhookProcessor</tt> and <tt>ICCWebhookResolver</tt> interfaces.
+{br}
+
+For details on how to implement custom plug-ins of Version 2, see [HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V2|To Implement a Plug-In for Processing Credit Card Payments (Version 2 of Interfaces)].{br}
+
+((({S:Hint}In Acumatica ERP, the ''Authorize.Net API'' (''PX.CCProcessing.V2.AuthnetProcessingPlugin'') plug-in implements the interfaces of Version 2 to work with Authorize.Net. For more information about the built-in plug-in, see [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_APIPlugin|Integration with Authorize.Net Through the API Plug-in].
+)))
+==Version 1==
+Version 1 of the interfaces for processing credit card payments is supported in Acumatica ERP 2019 R1 and earlier versions. {br}
+
+The root class for implementation of custom plug-ins of this version is <tt>PX.CCProcessingBase.ICCPaymentProcessing</tt>. You can implement tokenized credit card processing by also implementing the <tt>ICCTokenizedPaymentProcessing</tt> and <tt>ICCProcessingHostedForm</tt> interfaces. {br}
+
+For information on how to implement the custom plug-ins of Version 1, see [HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V1|To Implement a Plug-In for Processing Credit Card Payments (Version 1 of Interfaces)].{br}
+
+((({S:Hint}In Acumatica ERP, the ''Authorize.Net AIM'' (''PX.CCProcessing.AuthorizeNetProcessing'') and ''Authorize.Net CIM'' (''PX.CCProcessing.AuthorizeNetTokenizedProcessing'') plug-ins implement the interfaces of Version 1 to work with Authorize.Net. For details on the built-in plug-ins, see [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_AIMPlugin|Integration with Authorize.Net Through the AIM Plug-in] and [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_CIMPlugin|Integration with Authorize.Net Through the CIM Plug-in].
+)))
+==Related Articles==
+*[HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V2|To Implement a Plug-In for Processing Credit Card Payments (Version 2 of Interfaces)]
+*[HelpRoot_Dev_Plugin\CC__how_Implement_CC_Processing_Plug-in_V1|To Implement a Plug-In for Processing Credit Card Payments (Version 1 of Interfaces)]]]></column>
+			<column name="PlainText"><![CDATA[Interfaces for Processing Credit Card Payments  Acumatica ERP provides two versions of the interfaces for the implementation of plug-ins for credit         card payment processing. In this topic, you can find information about the differences         between these versions. For both versions of the interfaces, you can implement tokenized processing plug-ins. When a         tokenized processing plug-in is used, the credit card information is not saved to the         application database; this information is stored only at the processing center. The  Acumatica ERP database stores only the identification tokens that link customers and payment methods in         the application with the credit card data at the processing center.  Version 2 Version 2 of the interfaces for processing credit card payments, which has been supported         since  Acumatica ERP 2017R2, is more convenient, streamlined, and feature-rich than Version 1 is. We recommend         that you use this version for the implementation of new custom plug-ins.  The root interface for implementation of custom plug-ins of this version is            PX.CCProcessingBase.Interfaces.V2.ICCProcessingPlugin . The system         automatically discovers the class that implements the  ICCProcessingPlugin          interface and includes it in the list in the  Payment Plug-In (Type)          box on the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers (CA205000) form. If you implement Version 2 of the interfaces, you also need to implement         the  ICCTransactionProcessor  interface to process credit card         transactions. You can implement the following additional functionality: Tokenized credit card processing: Implement the  ICCProfileProcessor              and  ICCHostedFormProcessor  interfaces.  Processing of payments from new credit cards: To use this functionality, implement the                ICCProfileCreator ,              ICCHostedPaymentFormProcessor , and                ICCTransactionGetter  interfaces. If this functionality is             implemented in a custom plug-in, a user can select the  Accept Payment from               New Card  check box on the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers form for             the processing centers that use this custom plug-in. Synchronization of credit cards with the processing center: Implement the                ICCTransactionGetter  interface in a custom plug-in. If this             functionality is implemented, on the   ([~/?ScreenId=CA206000|CA206000]) Synchronize Cards             (CA206000) form, users can work with the processing centers that use this custom             plug-in. Retrieval of the information about suspicious credit card transactions (without the             use of the hosted form that accepts payments): To use this functionality, implement the                ICCTranStatusGetter  interface. Webhooks as a way to obtain a response from the processing center: Implement the                ICCWebhookProcessor  and  ICCWebhookResolver              interfaces. For details on how to implement custom plug-ins of Version 2, see  To Implement a Plug-In for Processing Credit Card Payments (Version 2 of Interfaces). In  Acumatica ERP, the  Authorize.Net API  ( PX.CCProcessing.V2.AuthnetProcessingPlugin )           plug-in implements the interfaces of Version 2 to work with Authorize.Net. For more           information about the built-in plug-in, see  Integration with Authorize.Net Through the API Plug-in. Version 1 Version 1 of the interfaces for processing credit card payments is supported in  Acumatica ERP 2019 R1 and earlier versions.  The root class for implementation of custom plug-ins of this version is            PX.CCProcessingBase.ICCPaymentProcessing . You can implement tokenized         credit card processing by also implementing the            ICCTokenizedPaymentProcessing  and            ICCProcessingHostedForm  interfaces.  For information on how to implement the custom plug-ins of Version 1, see  To Implement a Plug-In for Processing Credit Card Payments (Version 1 of Interfaces). In  Acumatica ERP, the  Authorize.Net AIM  ( PX.CCProcessing.AuthorizeNetProcessing ) and              Authorize.Net CIM  ( PX.CCProcessing.AuthorizeNetTokenizedProcessing )           plug-ins implement the interfaces of Version 1 to work with Authorize.Net. For details on           the built-in plug-ins, see  Integration with Authorize.Net Through the AIM Plug-in and  Integration with Authorize.Net Through the CIM Plug-in. ]]></column>
+		</row>
+		<row PageID="927a2a44-ebe5-4c98-a277-7027f4e073a0" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="23549f24-22eb-fa9e-96c3-2513ab789c73" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+[anchor|#_863f552c-122f-4937-b46d-923fe2044a32]((({S:Hint}We recommend that you implement plug-ins for processing credit card payments by using Version 2 of the credit card payment processing interfaces. For details on the available versions, see [HelpRoot_Dev_Plugin\CC__con_CC_Payment_Interfaces|Interfaces for Processing Credit Card Payments].
+))){br}
+
+In Acumatica ERP, the ''Authorize.Net API'' plug-in, which processes transactions in Authorize.Net, implements Version 2 interfaces. For more information on this plug-in, see [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_APIPlugin|Integration with Authorize.Net Through the API Plug-in]. You can implement your own plug-in for working with processing centers other than Authorize.Net, as described in this topic.
+==To Implement a Credit Card Processing Plug-In==[anchor|#_5991ba99-be61-454f-85a5-69d2b15e8e48]
+#In a class library project, define a class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCTransactionProcessor</tt> interface, which provides credit card processing functionality. In the class, implement the <tt>DoTransaction</tt> method, which processes the transaction in the payment gateway. For details on the implementation of the method, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=506b4ef7-538a-762d-0a5e-1fc75a2ca1a0|ICCTransactionProcessor Interface] in the API Reference. 
+#:The following code shows the declaration of a class that implements the <tt>ICCTransactionProcessor</tt> interface.<source lang="csharp">using PX.CCProcessingBase.Interfaces.V2;
+
+public class MyTransactionProcessor : ICCTransactionProcessor
+{
+  public ProcessingResult DoTransaction(ProcessingInput inputData)
+  {
+    ...
+  }
+}</source>
+#If you need to implement tokenized processing, define the following classes: 
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCProfileProcessor</tt> interface (which provides methods to manage customer and payment profiles)
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCHostedFormProcessor</tt> interface (which provides methods to work with hosted forms for the creation and management of payment profiles)
+#:In the classes, implement the methods of the interfaces. For details on the implementation of the interfaces, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=16d14e3a-df82-3c26-4412-e32e3ae32c9b|ICCProfileProcessor Interface] and [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=70705745-3e02-17a9-4094-2ef067598839|ICCHostedFormProcessor Interface] in the API Reference.
+#If you need to implement payment processing without the preliminary creation of payment profiles, define the following classes:
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCProfileCreator</tt> interface (which provides the method to create the payment profile for a new credit card)
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCHostedPaymentFormProcessor</tt> interface (which provides methods to work with hosted forms for processing payments without preliminary creation of payment profiles)
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCTransactionGetter</tt> interface (which provides the methods to obtain information about transactions by transaction ID)
+#:In the classes, implement the methods of the interfaces. For details on the implementation of the interfaces, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCProfileCreator Interface], [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCHostedPaymentFormProcessor Interface], and [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCTransactionGetter Interface] in the API Reference.
+#If you need to implement the retrieval of detailed information about transactions, which can be used for the synchronization of transactions with the processing center, define a class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCTransactionGetter</tt> interface (which provides the methods to obtain information about transactions by transaction ID). 
+#:In the class, implement the methods of the interface. For details on the implementation of the interface, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCTransactionGetter Interface] in the API Reference.
+#If you need to retrieve the information about suspicious credit card transactions with the ''Held for Review'' status (without the use of the hosted form that accepts payments), define a class that implements the supplementary <tt>PX.CCProcessingBase.Interfaces.V2.ICCTranStatusGetter</tt> interface (which provides the method to obtain the transaction status after the execution of the <tt>ICCTransactionProcessor.DoTransaction</tt> method).
+#:In the class, implement the methods of the interface. For details on the implementation of the interface, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCTranStatusGetter Interface] in the API Reference.
+#If you need to support webhooks as a way to obtain a response from the processing center, define the following classes:
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCWebhookProcessor</tt> interface (which provides the methods to add, update, and delete webhooks and retrieve the list of webhooks)
+#*A class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCWebhookResolver</tt> interface (which parses the information that comes from the processing center through webhooks)
+#:In the classes, implement the methods of the interfaces. For details on the implementation of the interfaces, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCWebhookProcessor Interface] and [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|ICCWebhookResolver Interface] in the API Reference.
+#Define a class that implements the <tt>PX.CCProcessingBase.Interfaces.V2.ICCProcessingPlugin</tt> interface, which is the root interface for credit card payment processing and is used by Acumatica ERP to find the plug-in in the application libraries. The class should have a public parameterless constructor (either explicit or default). In the class, implement the methods of the <tt>ICCProcessingPlugin</tt> interface (described in detail in [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=bccd5e25-4596-aefe-e4c8-d40bc74dad8d|ICCProcessingPlugin Interface] in the API Reference) as follows:
+#*In the <tt>ExportSettings</tt> method, which exports the required settings from the plug-in to the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] ([~/?ScreenId=CA205000|CA205000]) form, return a collection that contains the settings that can be configured by the user on the form. The syntax of the method is shown in the following code.<source lang="csharp">IEnumerable&lt;SettingsDetail&gt; ExportSettings(); </source>
+#*In the <tt>ValidateSettings</tt> method, validate the settings modified on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] form, which are passed as the parameter of the method, and return {{null}} if validation was successful or an error message if validation failed. The syntax of the method is shown in the following code.<source lang="csharp">string ValidateSettings(SettingsValue setting);</source>
+#*In the <tt>TestCredentials</tt> method, check the connection to the payment gateway by using the credentials that are specified by the user on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] form. The syntax of the method is shown in the following code.<source lang="csharp">void TestCredentials(IEnumerable&lt;SettingsValue&gt; settingValues);</source>
+#*In the <tt>CreateProcessor&lt;T&gt;</tt> method, return a new object of the <tt>T</tt> type, and initialize the object with the settings passed to the method. The <tt>T</tt> type can be any of the following: 
+#**<tt>ICCTransactionProcessor</tt>
+#** <tt>ICCProfileProcessor</tt>
+#** <tt>ICCHostedFormProcessor</tt>
+#** <tt>ICCProfileCreator</tt>
+#** <tt>ICCHostedPaymentFormProcessor</tt>
+#** <tt>ICCTransactionGetter</tt>
+#** <tt>ICCTranStatusGetter</tt>
+#** <tt>ICCWebhookResolver</tt>
+#** <tt>ICCWebhookProcessor</tt>
+#*:If a particular <tt>T</tt> type is not supported by your plug-in, return {{null}} for this type. The following code shows a sample implementation of the method.<source lang="csharp">public T CreateProcessor&lt;T&gt;(IEnumerable&lt;SettingsValue&gt; settingValues)
+  where T : class
+{
+  if (typeof(T) == typeof(ICCProfileProcessor))
+  {
+    return new MyProfileProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCHostedFormProcessor))
+  {
+    return new MyHostedFormProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCHostedPaymentFormProcessor))
+  {
+    return new MyHostedPaymentFormProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTransactionProcessor))
+  {
+    return new MyTransactionProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTransactionGetter))
+  {
+    return new MyTransactionGetter(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCProfileCreator))
+  {
+    return new MyProfileCreator(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCWebhookResolver))
+  {
+    return new MyWebhookResolver() as T;
+  }
+  if (typeof(T) == typeof(ICCWebhookProcessor))
+  {
+    return new MyWebhookProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTranStatusGetter))
+  {
+    return new MyTranStatusGetter() as T;
+  }
+  return null;
+}</source>
+#Build your project. 
+#To add your plug-in to Acumatica ERP, either manually copy the assembly that contains the plug-in to the <tt>Bin</tt> folder of the Acumatica ERP website or include the assembly in the customization project. (When the customization project is published, the assembly is copied to the <tt>Bin</tt> folder automatically.) During startup, the system automatically discovers the class that implements the <tt>ICCProcessingPlugin</tt> interface and includes it in the list in the '''Payment Plug-In (Type)''' box on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] form.
+
+==Related Articles==
+*[HelpRoot_Dev_Plugin\CC__con_CC_Payment_Interfaces|Interfaces for Processing Credit Card Payments]
+*[https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=4c6814ff-3928-3533-ccab-1b1a53d20395|PX.CCProcessingBase.Interfaces.V2 Namespace]]]></column>
+			<column name="PlainText"><![CDATA[To Implement a Plug-In for Processing Credit Card Payments (Version 2 of     Interfaces) We recommend that you implement plug-ins for             processing credit card payments by using Version 2 of the credit card payment processing             interfaces. For details on the available versions, see  Interfaces for Processing Credit Card Payments. In  Acumatica ERP, the  Authorize.Net API  plug-in, which processes transactions in Authorize.Net,         implements Version 2 interfaces. For more information on this plug-in, see  Integration with Authorize.Net Through the API Plug-in. You can implement         your own plug-in for working with processing centers other than Authorize.Net, as described         in this topic. To Implement a Credit Card Processing Plug-In In a class library project, define a class that implements the              PX.CCProcessingBase.Interfaces.V2.ICCTransactionProcessor  interface,           which provides credit card processing functionality. In the class, implement the              DoTransaction  method, which processes the transaction in the payment           gateway. For details on the implementation of the method, see  ICCTransactionProcessor             Interface ICCTransactionProcessor Interface in the API Reference.  The following code shows the declaration of a             class that implements the  ICCTransactionProcessor            interface. using PX.CCProcessingBase.Interfaces.V2;
+
+public class MyTransactionProcessor : ICCTransactionProcessor
+{
+  public ProcessingResult DoTransaction(ProcessingInput inputData)
+  {
+    ...
+  }
+} If you need to implement tokenized processing, define the following classes:  A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCProfileProcessor  interface               (which provides methods to manage customer and payment profiles) A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCHostedFormProcessor                interface (which provides methods to work with hosted forms for the creation and               management of payment profiles) In the classes, implement the methods of the interfaces. For details on the             implementation of the interfaces, see  ICCProfileProcessor Interface ICCProfileProcessor Interface and  ICCHostedFormProcessor Interface ICCHostedFormProcessor Interface in the API             Reference. If you need to implement payment processing without the preliminary creation of payment           profiles, define the following classes: A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCProfileCreator  interface               (which provides the method to create the payment profile for a new credit card) A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCHostedPaymentFormProcessor                interface (which provides methods to work with hosted forms for processing payments               without preliminary creation of payment profiles) A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCTransactionGetter  interface               (which provides the methods to obtain information about transactions by transaction               ID) In the classes, implement the methods of the interfaces. For details on the             implementation of the interfaces, see  ICCProfileCreator Interface ICCProfileCreator Interface,  ICCHostedPaymentFormProcessor Interface ICCHostedPaymentFormProcessor Interface, and                ICCTransactionGetter Interface ICCTransactionGetter Interface in the API             Reference. If you need to implement the retrieval of detailed information about transactions, which           can be used for the synchronization of transactions with the processing center, define a           class that implements the              PX.CCProcessingBase.Interfaces.V2.ICCTransactionGetter  interface           (which provides the methods to obtain information about transactions by transaction ID).              In the class, implement the methods of the interface. For details on the             implementation of the interface, see  ICCTransactionGetter Interface ICCTransactionGetter Interface in the API             Reference. If you need to retrieve the information about suspicious credit card transactions with           the  Held for Review  status (without the use of the hosted form that accepts           payments), define a class that implements the supplementary              PX.CCProcessingBase.Interfaces.V2.ICCTranStatusGetter  interface           (which provides the method to obtain the transaction status after the execution of the              ICCTransactionProcessor.DoTransaction  method). In the class,             implement the methods of the interface. For details on the implementation of the             interface, see  ICCTranStatusGetter Interface ICCTranStatusGetter Interface in the API             Reference. If you need to support webhooks as a way to obtain a response from the processing           center, define the following classes: A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCWebhookProcessor  interface               (which provides the methods to add, update, and delete webhooks and retrieve the list               of webhooks) A class that implements the                  PX.CCProcessingBase.Interfaces.V2.ICCWebhookResolver  interface               (which parses the information that comes from the processing center through               webhooks) In the classes, implement the methods of the interfaces. For details on the             implementation of the interfaces, see  ICCWebhookProcessor Interface ICCWebhookProcessor Interface and  ICCWebhookResolver Interface ICCWebhookResolver Interface in the API             Reference. Define a class that implements the              PX.CCProcessingBase.Interfaces.V2.ICCProcessingPlugin  interface,           which is the root interface for credit card payment processing and is used by  Acumatica ERP to find the plug-in in the application libraries. The class should have a public           parameterless constructor (either explicit or default). In the class, implement the           methods of the  ICCProcessingPlugin  interface (described in detail in            ICCProcessingPlugin             Interface ICCProcessingPlugin Interface in the API Reference) as follows: In the  ExportSettings  method, which exports the required settings               from the plug-in to the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers (CA205000)               form, return a collection that contains the settings that can be configured by the               user on the form. The syntax of the method is shown in the following               code. IEnumerable<SettingsDetail> ExportSettings();  In the  ValidateSettings  method, validate the settings modified on               the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers form, which are passed as the               parameter of the method, and return  null  if validation was successful               or an error message if validation failed. The syntax of the method is shown in the               following               code. string ValidateSettings(SettingsValue setting); In the  TestCredentials  method, check the connection to the               payment gateway by using the credentials that are specified by the user on the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers form. The syntax of the method is shown in               the following               code. void TestCredentials(IEnumerable<SettingsValue> settingValues); In the  CreateProcessor<T>  method, return a new object of the                  T  type, and initialize the object with the settings passed to the               method. The  T  type can be any of the following:  ICCTransactionProcessor ICCProfileProcessor ICCHostedFormProcessor ICCProfileCreator ICCHostedPaymentFormProcessor ICCTransactionGetter ICCTranStatusGetter ICCWebhookResolver ICCWebhookProcessor If a particular  T  type is not supported by your plug-in,                 return  null  for this type. The following code shows a sample                 implementation of the                 method. public T CreateProcessor<T>(IEnumerable<SettingsValue> settingValues)
+  where T : class
+{
+  if (typeof(T) == typeof(ICCProfileProcessor))
+  {
+    return new MyProfileProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCHostedFormProcessor))
+  {
+    return new MyHostedFormProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCHostedPaymentFormProcessor))
+  {
+    return new MyHostedPaymentFormProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTransactionProcessor))
+  {
+    return new MyTransactionProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTransactionGetter))
+  {
+    return new MyTransactionGetter(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCProfileCreator))
+  {
+    return new MyProfileCreator(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCWebhookResolver))
+  {
+    return new MyWebhookResolver() as T;
+  }
+  if (typeof(T) == typeof(ICCWebhookProcessor))
+  {
+    return new MyWebhookProcessor(settingValues) as T;
+  }
+  if (typeof(T) == typeof(ICCTranStatusGetter))
+  {
+    return new MyTranStatusGetter() as T;
+  }
+  return null;
+} Build your project.  To add your plug-in to  Acumatica ERP, either manually copy the assembly that contains the plug-in to the              Bin  folder of the  Acumatica ERP website or include the assembly in the customization project. (When the customization           project is published, the assembly is copied to the  Bin  folder           automatically.) During startup, the system automatically discovers the class that           implements the  ICCProcessingPlugin  interface and includes it in the           list in the  Payment Plug-In (Type)  box on the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers form. PX.CCProcessingBase.Interfaces.V2 Namespace ]]></column>
+		</row>
+		<row PageID="b640d060-bbdf-4af0-b7e7-933d7bb37ea1" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="aee16432-b37d-6f10-9576-64cdb43c1b55" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+[anchor|#_790fd469-9744-44f0-bde9-e5eab0235c34]((({S:Hint}We recommend that you implement plug-ins for processing credit card payments by using Version 2 of the credit card payment processing interfaces. For details on the available versions, see [HelpRoot_Dev_Plugin\CC__con_CC_Payment_Interfaces|Interfaces for Processing Credit Card Payments].
+))){br}
+
+In Acumatica ERP, the ''Authorize.Net AIM'' and ''Authorize.Net CIM'' plug-ins, which process transactions in Authorize.Net, implement Version 1 interfaces. For more information on these plug-ins, see [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_AIMPlugin|Integration with Authorize.Net Through the AIM Plug-in] and [HelpRoot_Integration\CA__CON_Integration_AuthorizeNet_CIMPlugin|Integration with Authorize.Net Through the CIM Plug-in]. You can implement your own plug-in for working with processing centers other than Authorize.Net, as described in this topic.
+==To Implement a Credit Card Processing Plug-In==
+[anchor|#_e3dc47d4-ed31-4a0a-9f9a-6558120770ab]
+#In a class library project, define a class that derives from the <tt>PX.CCProcessingBase.ICCPaymentProcessing</tt>{{abstract}} class, which is the root class that communicates with the authorization center. In your class, implement the {{abstract}} methods of the <tt>ICCPaymentProcessing</tt> class. For details on the implementation of these methods, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=a1a03a50-9088-5cee-2e16-1307139adfd0|ICCPaymentProcessing Class] in the API Reference.
+#If you need to implement tokenized processing, define the following classes: 
+#*A class that implements the <tt>ICCTokenizedPaymentProcessing</tt> interface, which provides the methods that are necessary for tokenized processing.
+#*A class that implements the <tt>ICCProcessingHostedForm</tt> interface, which contains the methods for managing the hosted form. On this form, the user enters credit card information, which is then sent to the processing center.
+#:For more details on the methods of the interfaces, see [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=c47333bd-853c-569f-1145-a6e639bcd8ec|ICCTokenizedPaymentProcessing Interface] and [https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=2a76f714-8cac-e26d-f9f9-3790aedbf2f7|ICCProcessingHostedForm Interface] in the API Reference.
+#Build your project. 
+#To add your plug-in to Acumatica ERP, either manually copy the assembly that contains the plug-in to the <tt>Bin</tt> folder of the Acumatica ERP website or include the assembly in the customization project. (When the customization project is published, the assembly is copied to the <tt>Bin</tt> folder automatically.) During startup, the system automatically discovers the class that derives from the <tt>ICCProcessingPlugin</tt>{{abstract}} class and includes the custom class in the list in the '''Payment Plug-In (Type)''' box on the [HelpRoot_FormReference\CA_20_50_00|Processing Centers] ([~/?ScreenId=CA205000|CA205000]) form.
+
+==Related Articles==
+*[HelpRoot_Dev_Plugin\CC__con_CC_Payment_Interfaces|Interfaces for Processing Credit Card Payments]
+*[https://help.acumatica.com/Main?ScreenId=ShowWiki&pageid=3dfa68b9-b4b3-fe77-8526-7b1dbb904919|PX.CCProcessingBase Namespace]]]></column>
+			<column name="PlainText"><![CDATA[To Implement a Plug-In for Processing Credit Card Payments (Version 1 of         Interfaces) We recommend that you implement plug-ins for             processing credit card payments by using Version 2 of the credit card payment processing             interfaces. For details on the available versions, see  Interfaces for Processing Credit Card Payments. In  Acumatica ERP, the  Authorize.Net AIM  and  Authorize.Net CIM  plug-ins, which                 process transactions in Authorize.Net, implement Version 1 interfaces. For more                 information on these plug-ins, see  Integration with Authorize.Net Through the AIM Plug-in and  Integration with Authorize.Net Through the CIM Plug-in. You can                 implement your own plug-in for working with processing centers other than                 Authorize.Net, as described in this topic. To Implement a Credit Card Processing Plug-In In a class library project, define a class that derives from the                              PX.CCProcessingBase.ICCPaymentProcessing abstract  class, which is the root class that communicates                         with the authorization center. In your class, implement the                              abstract  methods of the                              ICCPaymentProcessing  class. For details on the                         implementation of these methods, see  ICCPaymentProcessing Class ICCPaymentProcessing Class in the API Reference. If you need to implement tokenized processing, define the following classes:                              A class that implements the                                      ICCTokenizedPaymentProcessing  interface,                                 which provides the methods that are necessary for tokenized                                 processing. A class that implements the                                      ICCProcessingHostedForm  interface, which                                 contains the methods for managing the hosted form. On this form, the                                 user enters credit card information, which is then sent to the                                 processing center. For more details on the methods of the interfaces, see  ICCTokenizedPaymentProcessing Interface ICCTokenizedPaymentProcessing Interface and  ICCProcessingHostedForm Interface ICCProcessingHostedForm Interface in the API                         Reference. Build your project.  To add your plug-in to  Acumatica ERP, either manually copy the assembly that contains the plug-in to the                              Bin  folder of the  Acumatica ERP website or include the assembly in the customization project. (When the                         customization project is published, the assembly is copied to the                              Bin  folder automatically.) During startup, the                         system automatically discovers the class that derives from the                              ICCProcessingPlugin abstract  class and includes the custom class in the list in                         the  Payment Plug-In (Type)  box on the   ([~/?ScreenId=CA205000|CA205000]) Processing Centers (CA205000) form. PX.CCProcessingBase Namespace ]]></column>
+		</row>
+	</rows>
+</data>

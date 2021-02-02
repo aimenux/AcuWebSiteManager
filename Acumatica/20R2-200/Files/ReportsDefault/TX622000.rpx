@@ -1,0 +1,1147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>28</item>
+    <item>36</item>
+    <item>20</item>
+    <item>20</item>
+    <item>23</item>
+    <item>23</item>
+    <item>20</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>TaxDetailByGLReport.TaxPeriodID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@TaxPeriodID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@TaxPeriodID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>TaxDetailByGLReport.TaxID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@TaxID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@TaxID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>TaxDetailByGLReport.Released</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>TaxDetailByGLReport.VendorID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@VendorID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@VendorID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>TaxDetailByGLReport.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <NavigationTree>False</NavigationTree>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('TaxPeriodReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('TaxPeriodReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>VendorID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Tax Agency</Prompt>
+      <ViewName>=Report.GetFieldSchema('TaxPeriodReportParameters.VendorID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>TaxPeriodID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Tax Period</Prompt>
+      <ViewName>=Report.GetFieldSchema('TaxPeriodReportParameters.TaxPeriodIDByBAccount,OrgBAccountID,VendorID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>TaxID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Tax</Prompt>
+      <ViewName>=Report.GetFieldSchema('TaxDetailByGLReport.TaxID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowVendor</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Branch</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>TaxPeriod</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>VendorID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TaxPeriodID</ChildField>
+          <ParentField>TaxPeriodID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>OrganizationID</ChildField>
+          <ParentField>Branch.OrganizationID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowTax</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>TaxID</ChildField>
+          <ParentField>TaxID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>AccountID</ChildField>
+          <ParentField>AccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowBAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowSub</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>SubID</ChildField>
+          <ParentField>SubID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>TaxDetailByGLReport</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/61/</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="RowVendor">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="VendorClassID"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="CashAcctID"></ReportField>
+        <ReportField Name="PaymentLeadTime">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DefPOAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefRemitAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefRemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SeparateCheck">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APAcctID"></ReportField>
+        <ReportField Name="APSubID"></ReportField>
+        <ReportField Name="DiscTakenAcctID"></ReportField>
+        <ReportField Name="DiscTakenSubID"></ReportField>
+        <ReportField Name="ExpenseAcctID"></ReportField>
+        <ReportField Name="ExpenseSubID"></ReportField>
+        <ReportField Name="PrepaymentAcctID"></ReportField>
+        <ReportField Name="PrepaymentSubID"></ReportField>
+        <ReportField Name="PayToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsRemitSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsRemitContSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BaseRemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="Vendor1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxAgency">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxPeriodType"></ReportField>
+        <ReportField Name="SalesTaxAcctID"></ReportField>
+        <ReportField Name="SalesTaxSubID"></ReportField>
+        <ReportField Name="PurchTaxAcctID"></ReportField>
+        <ReportField Name="PurchTaxSubID"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrganizationType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="SearchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="TaxDetailByGLReport">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="RecordID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TaxableAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxableAmtIO">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmtIO">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxID_description"></ReportField>
+        <ReportField Name="TaxID_Tax_descr"></ReportField>
+        <ReportField Name="TaxPeriodID"></ReportField>
+        <ReportField Name="TaxRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxType"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranType"></ReportField>
+        <ReportField Name="TranTypeInvoiceDiscriminated"></ReportField>
+        <ReportField Name="VendorID"></ReportField>
+        <ReportField Name="VendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="VendorID_description"></ReportField>
+        <ReportField Name="VendorID_Vendor_acctName"></ReportField>
+        <ReportField Name="Voided">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.TaxDetailByGLReport</FullName>
+    </ReportTable>
+    <ReportTable Name="TaxPeriod">
+      <Fields>
+        <ReportField Name="EndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EndDate_Day"></ReportField>
+        <ReportField Name="EndDate_Hour"></ReportField>
+        <ReportField Name="EndDate_Month"></ReportField>
+        <ReportField Name="EndDate_Quarter"></ReportField>
+        <ReportField Name="EndDateUI">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Filed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StartDate_Day"></ReportField>
+        <ReportField Name="StartDate_Hour"></ReportField>
+        <ReportField Name="StartDate_Month"></ReportField>
+        <ReportField Name="StartDate_Quarter"></ReportField>
+        <ReportField Name="StartDateUI">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxPeriodID"></ReportField>
+        <ReportField Name="TaxYear"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="VendorID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.TX.TaxPeriod</FullName>
+    </ReportTable>
+    <ReportTable Name="RowTax">
+      <Fields>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="TaxVendorID"></ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowAccount">
+      <Fields>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AccountCD"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="COAOrder">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="AccountClassID"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="PostOption"></ReportField>
+        <ReportField Name="DirectPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GLConsolAccountCD"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="RevalCuryRateTypeId"></ReportField>
+        <ReportField Name="Box1099">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="IsCashAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowBAccount">
+      <Fields>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrganizationType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowSub">
+      <Fields>
+        <ReportField Name="SubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SubCD"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="ConsoSubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ConsoSubCode"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="Branch">
+      <Fields>
+        <ReportField Name="AcctMapNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="BranchCD"></ReportField>
+        <ReportField Name="BranchCD_Segment1"></ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CEmail"></ReportField>
+        <ReportField Name="CFSFiler">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactName"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CTelNumber"></ReportField>
+        <ReportField Name="ForeignEntity">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LedgerCD"></ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LedgerID_description"></ReportField>
+        <ReportField Name="LedgerID_Ledger_descr"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="LogoNameReport"></ReportField>
+        <ReportField Name="MainLogoName"></ReportField>
+        <ReportField Name="NameControl"></ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="Reporting1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="RoleName_description"></ReportField>
+        <ReportField Name="RoleName_Roles_descr"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TCC"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Branch</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>64px</Height>
+      <Items>
+        <TextBox Name="textBox10">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Tax Agency:</Value>
+          <VisibleExpr>=([@VendorID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Location>4px, 0px</Location>
+          <Size>268px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Tax Summary by GL Account by Period</Value>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>416px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@VendorID]</Value>
+          <VisibleExpr>=([@VendorID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <column>6</column>
+            <row>3</row>
+          </Excel>
+          <Location>880px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>7</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Location>880px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 20px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Tax Period:</Value>
+          <VisibleExpr>=[@TaxPeriodID] &lt;&gt; Null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>416px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=Report.ExtToUI('RowTaxDetailReport.TaxPeriodID', [@TaxPeriodID])</Value>
+          <VisibleExpr>=[@TaxPeriodID] &lt;&gt; Null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>880px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>416px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@TaxID]</Value>
+          <VisibleExpr>=([@TaxPeriodID] &lt;&gt; Null) And ([@TaxID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Excel>
+            <column>4</column>
+            <row>3</row>
+          </Excel>
+          <Location>320px, 36px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Tax:</Value>
+          <VisibleExpr>=([@TaxPeriodID] &lt;&gt; Null) And ([@TaxID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Expanded>False</Expanded>
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>GrpTaxableAmt</Name>
+          <ValueExpr>=$GrpTaxableAmt+[TaxDetailByGLReport.TaxableAmtIO]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>GrpTaxAmt</Name>
+          <ValueExpr>=$GrpTaxAmt+[TaxDetailByGLReport.TaxAmtIO]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalTaxableAmt</Name>
+          <ValueExpr>=$TotalTaxableAmt+[TaxDetailByGLReport.TaxableAmtIO]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalTaxAmt</Name>
+          <ValueExpr>=$TotalTaxAmt+[TaxDetailByGLReport.TaxAmtIO]</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox1">
+          <Location>108px, 0px</Location>
+          <Size>60px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.Module]</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>184px, 0px</Location>
+          <Size>88px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.TranType]</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>280px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.RefNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>416px, 0px</Location>
+          <Size>88px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.TranDate]</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>520px, 0px</Location>
+          <Size>92px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.TaxPeriodID]</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>768px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.TaxableAmtIO]</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>896px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[TaxDetailByGLReport.TaxAmtIO]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name=" ">
+      <Expanded>False</Expanded>
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <ReportHeader Name="reportHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>64px</Height>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>884px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=Assign('$TotalTaxAmt',0)</Value>
+          <Visible>False</Visible>
+        </TextBox>
+        <TextBox Name="textBox47">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>756px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=Assign('$TotalTaxableAmt',0)</Value>
+          <Visible>False</Visible>
+        </TextBox>
+      </Items>
+    </ReportHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <Items>
+        <Line Name="line1">
+          <Excel>
+            <column>5</column>
+            <width>3</width>
+          </Excel>
+          <Location>684px, 2px</Location>
+          <Size>342px, 2px</Size>
+        </Line>
+        <TextBox Name="textBox53">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=[TaxDetailByGLReport.TaxAmt.Format]</Format>
+          <Location>764px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalTaxableAmt</Value>
+        </TextBox>
+        <TextBox Name="textBox54">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Format>=[TaxDetailByGLReport.TaxAmt.Format]</Format>
+          <Location>900px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalTaxAmt</Value>
+        </TextBox>
+        <TextBox Name="textBox55">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>684px, 4px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Report Total :</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox33">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>624px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Tax Rate</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>764px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Taxable Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>900px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Tax Amt</Value>
+        </TextBox>
+        <TextBox Name="textBox59">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>168px, 4px</Location>
+          <Size>208px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Subaccount</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <Location>4px, 4px</Location>
+          <Size>160px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Account</Value>
+        </TextBox>
+        <TextBox Name="textBox61">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>384px, 4px</Location>
+          <Size>112px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Tax</Value>
+        </TextBox>
+        <TextBox Name="textBox62">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>496px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Tax Period</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowAccount.AccountCD</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>RowSub.SubCD</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>TaxDetailByGLReport.TaxID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>TaxDetailByGLReport.TaxPeriodID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>TaxDetailByGLReport.TaxRate</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <ExcelVisible>False</ExcelVisible>
+          <Expanded>False</Expanded>
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.5291cm</Height>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox38">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Location>832px, 4px</Location>
+              <Size>140px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=Assign('$GrpTaxAmt',0)</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>664px, 4px</Location>
+              <Size>156px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=Assign('$GrpTaxableAmt',0)</Value>
+              <Visible>False</Visible>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>16px</Height>
+          <Items>
+            <TextBox Name="textBox32">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=[TaxDetailByGLReport.TaxAmt.Format]</Format>
+              <Location>900px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$GrpTaxAmt</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>496px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxDetailByGLReport.TaxPeriodID]</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>4px, 0px</Location>
+              <Size>160px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxDetailByGLReport.AccountID]</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>168px, 0px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxDetailByGLReport.SubID]</Value>
+            </TextBox>
+            <TextBox Name="textBox52">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=[TaxDetailByGLReport.TaxAmt.Format]</Format>
+              <Location>764px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$GrpTaxableAmt</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>624px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxDetailByGLReport.TaxRate]</Value>
+            </TextBox>
+            <TextBox Name="textBox63">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>384px, 0px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[TaxDetailByGLReport.TaxID]</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

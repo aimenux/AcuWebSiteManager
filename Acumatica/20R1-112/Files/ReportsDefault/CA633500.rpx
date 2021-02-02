@@ -1,0 +1,916 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>12</item>
+    <item>8</item>
+    <item>18</item>
+    <item>12</item>
+    <item>22</item>
+    <item>5</item>
+    <item>15</item>
+    <item>19</item>
+    <item>19</item>
+    <item>20</item>
+    <item>18</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>CashAccount.CashAccountCD</DataField>
+      <Value>@CashAccount</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>CADailySummary.TranDate</DataField>
+      <Value>@DateTo</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>CATran.Released</DataField>
+      <OpenBraces>3</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@IncludeUnreleased</DataField>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>CATran.Cleared</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>2</CloseBraces>
+      <DataField>@IncludeUncleared</DataField>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>CATran.TranID</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <NavigationTree>False</NavigationTree>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=DateAdd(Report.GetDefExt('AccessInfo.BusinessDate'), 'd', -(Day(Report.GetDefExt('AccessInfo.BusinessDate')) - 1))</DefaultValue>
+      <Name>DateFrom</Name>
+      <Nullable>True</Nullable>
+      <Prompt>From Date</Prompt>
+      <Required>True</Required>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('AccessInfo.BusinessDate')</DefaultValue>
+      <Name>DateTo</Name>
+      <Nullable>True</Nullable>
+      <Prompt>To Date</Prompt>
+      <Required>True</Required>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>CashAccount</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Cash Account</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('CATran.CashAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=True</DefaultValue>
+      <Name>IncludeUncleared</Name>
+      <Prompt>Include Non-Cleared Transactions</Prompt>
+      <Type>Boolean</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=False</DefaultValue>
+      <Name>IncludeUnreleased</Name>
+      <Prompt>Include Unreleased Transactions</Prompt>
+      <Type>Boolean</Type>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>CADailySummary</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>CashAccountID</ChildField>
+          <ParentField>CashAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CashAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>CATran</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>CATran.CashAccountID</ChildField>
+          <ParentField>CashAccount.CashAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TranDate</ChildField>
+          <ParentField>TranDate</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>TranDate</ChildField>
+          <Condition>LessOrEqual</Condition>
+          <ParentField>@DateFrom</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CADailySummary</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/Acumatica_Main/</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>CATran.TranDate</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>CATran.TranID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="CATran">
+      <Fields>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BegBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CashAccountID"></ReportField>
+        <ReportField Name="CashAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="CashAccountID_description"></ReportField>
+        <ReportField Name="ClearDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Cleared">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CountCredit">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CountDebit">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryClearedCreditAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryClearedDebitAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryCreditAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDebitAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryReconciledCredit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryReconciledDebit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTranAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DayDesc"></ReportField>
+        <ReportField Name="DrCr"></ReportField>
+        <ReportField Name="EndBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrigModule"></ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+        <ReportField Name="OrigTranType"></ReportField>
+        <ReportField Name="Posted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Reconciled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReconciledCredit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReconciledDebit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReconDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ReconNbr"></ReportField>
+        <ReportField Name="ReferenceID"></ReportField>
+        <ReportField Name="ReferenceID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ReferenceID_description"></ReportField>
+        <ReportField Name="ReferenceName"></ReportField>
+        <ReportField Name="RefTranAccountID"></ReportField>
+        <ReportField Name="RefTranAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="RefTranAccountID_description"></ReportField>
+        <ReportField Name="RefTranID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TranAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranDesc"></ReportField>
+        <ReportField Name="TranID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="TranPeriodID"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.CATran</FullName>
+    </ReportTable>
+    <ReportTable Name="CADailySummary">
+      <Fields>
+        <ReportField Name="AmtReleasedClearedCr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtReleasedClearedDr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtReleasedUnclearedCr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtReleasedUnclearedDr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtUnreleasedClearedCr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtUnreleasedClearedDr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtUnreleasedUnclearedCr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmtUnreleasedUnclearedDr">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CashAccountID"></ReportField>
+        <ReportField Name="CashAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="CashAccountID_description"></ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.CADailySummary</FullName>
+    </ReportTable>
+    <ReportTable Name="CashAccount">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CashAccountCD"></ReportField>
+        <ReportField Name="CashAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CashCreatedByID"></ReportField>
+        <ReportField Name="CashCreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CashCreatedByID_description"></ReportField>
+        <ReportField Name="CashCreatedByScreenID"></ReportField>
+        <ReportField Name="CashCreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CashLastModifiedByID"></ReportField>
+        <ReportField Name="CashLastModifiedByID_description"></ReportField>
+        <ReportField Name="CashLastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="CashLastModifiedByScreenID"></ReportField>
+        <ReportField Name="CashLastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ClearingAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="Reconcile">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReconNumberingID"></ReportField>
+        <ReportField Name="ReconNumberingID_description"></ReportField>
+        <ReportField Name="ReconNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="ReferenceID"></ReportField>
+        <ReportField Name="ReferenceID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ReferenceID_description"></ReportField>
+        <ReportField Name="ReferenceID_Vendor_acctName"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Signature"></ReportField>
+        <ReportField Name="SignatureDescr"></ReportField>
+        <ReportField Name="StatementImportTypeName"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.CashAccount</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>56px</Height>
+      <Items>
+        <TextBox Name="textBox10">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>416px, 4px</Location>
+          <Size>144px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@DateFrom]</Value>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>11</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>80px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Excel>
+            <column>4</column>
+            <row>3</row>
+          </Excel>
+          <Location>320px, 36px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Cash Account:</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>880px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Location>880px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Location>4px, 0px</Location>
+          <Size>268px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Cash Account Details</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>11</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>416px, 36px</Location>
+          <Size>144px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@CashAccount]</Value>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>From Date:</Value>
+          <VisibleExpr>=([@DateFrom] &lt;&gt; Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <Excel>
+            <column>10</column>
+            <row>3</row>
+          </Excel>
+          <Location>880px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 20px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>To Date:</Value>
+          <VisibleExpr>=([@DateTo] &lt;&gt; Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox62">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>568px, 4px</Location>
+          <Size>220px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Include Non-Cleared Transactions</Value>
+          <VisibleExpr>=[@IncludeUncleared]</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Location>568px, 20px</Location>
+          <Size>220px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Include Unreleased Transactions</Value>
+          <VisibleExpr>=[@IncludeUnreleased]</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>416px, 20px</Location>
+          <Size>144px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@DateTo]</Value>
+          <VisibleExpr>= (@DateTo &lt;&gt; Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>16px</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>BegBalance</Name>
+          <ValueExpr>= isnull($EndBalance,0) </ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>BegBalSumD</Name>
+          <ValueExpr>=IsNull( $BegBalSumD, 0 ) #010;+ Switch( [@IncludeUnreleased] = 1 AND [@IncludeUncleared] = 1, [CADailySummary.AmtUnreleasedUnclearedDr] -[CADailySummary.AmtUnreleasedUnclearedCr] + [CADailySummary.AmtUnreleasedClearedDr]- [CADailySummary.AmtUnreleasedClearedCr] + [CADailySummary.AmtReleasedUnclearedDr] - [CADailySummary.AmtReleasedUnclearedCr] + #010;[CADailySummary.AmtReleasedClearedDr] - [CADailySummary.AmtReleasedClearedCr], #010;[@IncludeUncleared] = 0  AND [@IncludeUnreleased] = 1 ,[CADailySummary.AmtUnreleasedClearedDr] - [CADailySummary.AmtUnreleasedClearedCr] + [CADailySummary.AmtReleasedClearedDr] - [CADailySummary.AmtReleasedClearedCr], #010;[@IncludeUncleared] = 1  AND [@IncludeUnreleased] = 0 ,[CADailySummary.AmtReleasedUnclearedDr] - [CADailySummary.AmtReleasedUnclearedCr] + [CADailySummary.AmtReleasedClearedDr] - [CADailySummary.AmtReleasedClearedCr],#010;[@IncludeUncleared] = 0  AND [@IncludeUnreleased] = 0 , [CADailySummary.AmtReleasedClearedDr] - [CADailySummary.AmtReleasedClearedCr] )#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalBegBalanceFirst</Name>
+          <ValueExpr>=IIF([CATran.TranDate] = null, $BegBalSumD, $TotalBegBalanceFirst)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>EndBalance</Name>
+          <ValueExpr>= iif([CADailySummary.TranDate] &lt; [@DateFrom], isnull($BegBalSumD, 0),#010;isnull($BegBalance,0)+IIF([CATran.DrCr]='D',isnull([CATran.CuryTranAmt],0),0)-IIF([CATran.DrCr]='C',-isnull([CATran.CuryTranAmt],0),0))</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalBegBalance</Name>
+          <ValueExpr>=$TotalBegBalance+IIF([CATran.TranDate]&lt;[@DateFrom],IIF([CATran.DrCr]='D',[CATran.CuryTranAmt],0)-IIF([CATran.DrCr]='C',-[CATran.CuryTranAmt],0),0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalEndBalance</Name>
+          <ValueExpr>=$TotalEndBalance+IIF([CATran.TranDate]&lt;=[@DateTo],IIF([CATran.DrCr]='D',[CATran.CuryTranAmt],0)-IIF([CATran.DrCr]='C',-[CATran.CuryTranAmt],0),0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalReceipts</Name>
+          <ValueExpr>=$TotalReceipts+IIF([CATran.TranDate]&gt;=[@DateFrom] AND [CATran.TranDate]&lt;=[@DateTo],IIF([CATran.DrCr]='D',[CATran.CuryTranAmt],0),0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalDisb</Name>
+          <ValueExpr>=$TotalDisb+IIF([CATran.TranDate]&gt;=[@DateFrom] AND [CATran.TranDate]&lt;=[@DateTo],IIF([CATran.DrCr]='C',-[CATran.CuryTranAmt],0),0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalEndBalanceLast</Name>
+          <ValueExpr>=IsNull(Next([CATran.TranDate]), $EndBalance)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <VisibleExpr>=[CATran.TranID] &lt;&gt; null</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>72px, 0px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.OrigModule]</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>124px, 0px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.OrigTranType]</Value>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>228px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.OrigRefNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>304px, 0px</Location>
+          <Size>128px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.TranDesc]</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>464px, 0px</Location>
+          <Size>88px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.ReferenceID]</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>552px, 0px</Location>
+          <Size>112px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$BegBalance</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>432px, 0px</Location>
+          <Size>28px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([CATran.Released],'R','-') + '/' + IIF([CATran.Cleared],'С','-')</Value>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Location>664px, 0px</Location>
+          <Size>116px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([CATran.DrCr]='D',[CATran.CuryTranAmt],0)</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>780px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([CATran.DrCr]='C',-[CATran.CuryTranAmt],0)</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>900px, 0px</Location>
+          <Size>121px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$EndBalance</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Location>4px, 0px</Location>
+          <Size>68px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CATran.TranDate]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>20px</Height>
+      <Items>
+        <Line Name="line1">
+          <Excel>
+            <column>7</column>
+            <width>5</width>
+          </Excel>
+          <Location>464px, 2px</Location>
+          <Size>562px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox30">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>664px, 4px</Location>
+          <Size>116px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalReceipts</Value>
+        </TextBox>
+        <TextBox Name="textBox32">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>780px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalDisb</Value>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>900px, 4px</Location>
+          <Size>121px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalEndBalanceLast</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=[CATran.CuryTranAmt.Format]</Format>
+          <Location>552px, 4px</Location>
+          <Size>112px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalBegBalanceFirst</Value>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>464px, 4px</Location>
+          <Size>88px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Total:</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox1">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>72px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Module</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>124px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Tran. Type</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Location>4px, 4px</Location>
+          <Size>68px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Doc. Date</Value>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>228px, 4px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Doc. Number</Value>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>304px, 4px</Location>
+          <Size>128px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Description</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>464px, 4px</Location>
+          <Size>88px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Business Acc.</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>432px, 4px</Location>
+          <Size>28px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>R/C</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>552px, 4px</Location>
+          <Size>112px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Beginning Balance</Value>
+        </TextBox>
+        <TextBox Name="textBox43">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Location>780px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Disbursement</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Location>900px, 4px</Location>
+          <Size>121px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Ending Balance</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Location>664px, 4px</Location>
+          <Size>116px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Receipt</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+</Report>

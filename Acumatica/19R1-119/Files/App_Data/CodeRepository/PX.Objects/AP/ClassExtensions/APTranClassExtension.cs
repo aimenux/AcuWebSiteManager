@@ -1,0 +1,27 @@
+﻿
+namespace PX.Objects.AP
+{
+	public static class APTranClassExtension
+	{
+		public static void ClearInvoiceDetailsBalance(this APTran tran)
+		{
+			tran.CuryCashDiscBal = 0m;
+			tran.CashDiscBal = 0m;
+
+			tran.CuryRetainedTaxableAmt = 0m;
+			tran.RetainedTaxableAmt = 0m;
+			tran.CuryRetainedTaxAmt = 0m;
+			tran.RetainedTaxAmt = 0m;
+
+			tran.CuryRetainageBal = 0m;
+			tran.RetainageBal = 0m;
+			tran.CuryOrigRetainageAmt = 0m;
+			tran.OrigRetainageAmt = 0m;
+
+			tran.CuryOrigTranAmt = 0m;
+			tran.OrigTranAmt = 0m;
+			tran.CuryTranBal = 0m;
+			tran.TranBal = 0m;
+		}
+	}
+}

@@ -1,0 +1,1109 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <DrawGrid>False</DrawGrid>
+  <Filters>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>APPayNotSelReport.CuryEffDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ReportDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>APPayNotSelReport.CuryEffDate</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>Greater</Condition>
+      <DataField>APPayNotSelReport.NextEffDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ReportDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>APPayNotSelReport.NextEffDate</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>APPayNotSelReport.CuryEffDateDoc</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ReportDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>APPayNotSelReport.CuryEffDateDoc</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>Greater</Condition>
+      <DataField>APPayNotSelReport.NextEffDateDoc</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ReportDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>APPayNotSelReport.NextEffDateDoc</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>APPayNotSelReport.PayAccountID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@AccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@AccountID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>APPayNotSelReport.PayTypeID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@PaymentMethodID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@PaymentMethodID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>APPayNotSelReport.VendorID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@VendorID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@VendorID</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>AccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Cash Account</Prompt>
+      <ViewName>=Report.GetFieldSchema('APPayment.CashAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>PaymentMethodID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Payment Method</Prompt>
+      <ViewName>=Report.GetFieldSchema('PaymentMethod.PaymentMethodID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>VendorID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Vendor</Prompt>
+      <ViewName>=Report.GetFieldSchema('APPayment.VendorID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>=Report.GetDefExt('Batch.DateEntered')</DefaultValue>
+      <Name>ReportDate</Name>
+      <Type>DateTime</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>CashAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>CashAccountID</ChildField>
+          <ParentField>PayAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>APPayNotSelReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PaymentMethod</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>PaymentMethodID</ChildField>
+          <ParentField>PayTypeID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>APPayNotSelReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Vendor</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>APPayNotSelReport</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Terms</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>TermsID</ChildField>
+          <ParentField>TermsID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>APPayNotSelReport</ParentName>
+    </ReportRelation>
+  </Relations>
+	<SchemaUrl>http://localhost:4444/Site</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>APPayNotSelReport.DueDate</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>APPayNotSelReport.PayAccountID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="Vendor">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseRemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Box1099">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefaultUOM"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="DefPOAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DiscTakenAcctID"></ReportField>
+        <ReportField Name="DiscTakenAcctID_Account_description"></ReportField>
+        <ReportField Name="DiscTakenAcctID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID"></ReportField>
+        <ReportField Name="DiscTakenSubID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID_Sub_description"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="LandedCostVendor">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="ParentBAccountID_Vendor_acctName"></ReportField>
+        <ReportField Name="PayToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentAcctID"></ReportField>
+        <ReportField Name="PrepaymentAcctID_Account_description"></ReportField>
+        <ReportField Name="PrepaymentAcctID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID"></ReportField>
+        <ReportField Name="PrepaymentSubID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID_Sub_description"></ReportField>
+        <ReportField Name="PriceListCuryID"></ReportField>
+        <ReportField Name="PurchTaxAcctID"></ReportField>
+        <ReportField Name="PurchTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="PurchTaxAcctID_description"></ReportField>
+        <ReportField Name="PurchTaxSubID"></ReportField>
+        <ReportField Name="PurchTaxSubID_description"></ReportField>
+        <ReportField Name="PurchTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="SalesTaxAcctID"></ReportField>
+        <ReportField Name="SalesTaxAcctID_Account_description"></ReportField>
+        <ReportField Name="SalesTaxAcctID_description"></ReportField>
+        <ReportField Name="SalesTaxSubID"></ReportField>
+        <ReportField Name="SalesTaxSubID_description"></ReportField>
+        <ReportField Name="SalesTaxSubID_Sub_description"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxAgency">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxExpenseAcctID"></ReportField>
+        <ReportField Name="TaxExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="TaxExpenseAcctID_description"></ReportField>
+        <ReportField Name="TaxExpenseSubID"></ReportField>
+        <ReportField Name="TaxExpenseSubID_description"></ReportField>
+        <ReportField Name="TaxExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="TaxPeriodType"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="TermsID_description"></ReportField>
+        <ReportField Name="TermsID_Terms_descr"></ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="Vendor1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VendorClassID"></ReportField>
+        <ReportField Name="VendorClassID_description"></ReportField>
+        <ReportField Name="VendorClassID_VendorClass_descr"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AP.Vendor</FullName>
+    </ReportTable>
+    <ReportTable Name="Terms">
+      <Fields>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DayDisc">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayDue00">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayDue01">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayFrom00">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayFrom01">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayTo00">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DayTo01">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="DiscPercent">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscType"></ReportField>
+        <ReportField Name="DueType"></ReportField>
+        <ReportField Name="InstallmentCntr">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="InstallmentFreq"></ReportField>
+        <ReportField Name="InstallmentMthd"></ReportField>
+        <ReportField Name="InstallmentType"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="VisibleTo"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CS.Terms</FullName>
+    </ReportTable>
+    <ReportTable Name="CashAccount">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AcctSettingsAllowed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CashAccountCD"></ReportField>
+        <ReportField Name="CashAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CashCreatedByID"></ReportField>
+        <ReportField Name="CashCreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CashCreatedByID_description"></ReportField>
+        <ReportField Name="CashCreatedByScreenID"></ReportField>
+        <ReportField Name="CashCreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CashLastModifiedByID"></ReportField>
+        <ReportField Name="CashLastModifiedByID_description"></ReportField>
+        <ReportField Name="CashLastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="CashLastModifiedByScreenID"></ReportField>
+        <ReportField Name="CashLastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ClearingAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PTInstancesAllowed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Reconcile">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReconNumberingID"></ReportField>
+        <ReportField Name="ReconNumberingID_description"></ReportField>
+        <ReportField Name="ReconNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="ReferenceID"></ReportField>
+        <ReportField Name="ReferenceID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ReferenceID_description"></ReportField>
+        <ReportField Name="ReferenceID_Vendor_acctName"></ReportField>
+        <ReportField Name="RestrictVisibilityWithBranch">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Signature"></ReportField>
+        <ReportField Name="SignatureDescr"></ReportField>
+        <ReportField Name="StatementImportTypeName"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.CashAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="APPayNotSelReport">
+      <Fields>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="CashCuryID"></ReportField>
+        <ReportField Name="CashCuryMultDiv"></ReportField>
+        <ReportField Name="CashCuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryEffDateDoc">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryOrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryPayDiscBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryPayDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryPayOrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocCuryID"></ReportField>
+        <ReportField Name="DocCuryMultDiv"></ReportField>
+        <ReportField Name="DocCuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="DueDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="InvoiceNbr"></ReportField>
+        <ReportField Name="NextEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NextEffDateDoc">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrigCuryMultDiv"></ReportField>
+        <ReportField Name="OrigCuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PayAccountID"></ReportField>
+        <ReportField Name="PayAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="PayAccountID_description"></ReportField>
+        <ReportField Name="PayDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PayDiscBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PayDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PayOrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PaySel">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PayTypeID"></ReportField>
+        <ReportField Name="PrintDocType"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="SignBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="VendorID"></ReportField>
+        <ReportField Name="VendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="VendorID_description"></ReportField>
+        <ReportField Name="VendorID_Vendor_acctName"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AP.APPayNotSelReport</FullName>
+    </ReportTable>
+    <ReportTable Name="PaymentMethod">
+      <Fields>
+        <ReportField Name="APAllowInstances">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APBatchExportSYMappingID"></ReportField>
+        <ReportField Name="APCheckReportID"></ReportField>
+        <ReportField Name="APCheckReportID_description"></ReportField>
+        <ReportField Name="APCheckReportID_SiteMap_title"></ReportField>
+        <ReportField Name="APCreateBatchPayment">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APPrintChecks">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APPrintRemittance">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APRemittanceReportID"></ReportField>
+        <ReportField Name="APRemittanceReportID_description"></ReportField>
+        <ReportField Name="APRemittanceReportID_SiteMap_title"></ReportField>
+        <ReportField Name="APStubLines">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="ARDepositAsBatch">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ARHasBillingInfo">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ARIsOnePerCustomer">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ARIsProcessingRequired">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ARVoidOnDepositAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefaultCashAccountID"></ReportField>
+        <ReportField Name="DefaultCashAccountID_CashAccount_descr"></ReportField>
+        <ReportField Name="DefaultCashAccountID_description"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="IsAccountNumberRequired">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PaymentMethodID"></ReportField>
+        <ReportField Name="PaymentType"></ReportField>
+        <ReportField Name="PrintOrExport">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="UseForAP">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="UseForAR">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="UseForCA">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.PaymentMethod</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>43px</Height>
+      <Items>
+        <Line Name="line1">
+          <Location>4px, 42px</Location>
+          <Size>1012px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox11">
+          <Location>8px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Location>90px, 0px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Location>892px, 14px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>892px, 0px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Location>8px, 14px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Location>928px, 0px</Location>
+          <Size>84px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Location>90px, 14px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Location>928px, 14px</Location>
+          <Size>84px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Today()</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Location>4px, 28px</Location>
+          <Size>332px, 14px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>AP Bills Pending Approval by Vendor</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>DiscTaken</Name>
+          <ValueExpr>=IIF([APPayNotSelReport.DiscDate]&gt;=[@ReportDate], [APPayNotSelReport.CuryPayDiscBal], 0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>PayAmount</Name>
+          <ValueExpr>=[APPayNotSelReport.CuryPayDocBal]-$DiscTaken</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CashAccountTotal</Name>
+          <ValueExpr>=$CashAccountTotal + $PayAmount</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CashAccountCount</Name>
+          <ValueExpr>=$CashAccountCount + 1</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Items>
+        <TextBox Name="textBox1">
+          <Location>200px, 0px</Location>
+          <Size>60px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.PrintDocType]</Value>
+        </TextBox>
+        <TextBox Name="textBox10">
+          <Location>792px, 0px</Location>
+          <Size>100px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.CuryPayDocBal]</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Location>264px, 0px</Location>
+          <Size>92px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.RefNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Location>1012px, 0px</Location>
+          <Size>12px, 16px</Size>
+          <Style>
+            <Color>Red</Color>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([APPayNotSelReport.DiscDate]&gt;=[@ReportDate] Or [APPayNotSelReport.CuryPayDiscBal]=0, '', '**')</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Location>360px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.InvoiceNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Location>16px, 0px</Location>
+          <Size>88px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[PaymentMethod.PaymentMethodID]</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Location>444px, 0px</Location>
+          <Size>64px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.DocCuryID]</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <Location>108px, 0px</Location>
+          <Size>88px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[CashAccount.AccountCD]</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>592px, 0px</Location>
+          <Size>92px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.DiscDate]</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Location>512px, 0px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.DueDate]</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Format>=[APPayNotSelReport.CuryPayDocBal.Format]</Format>
+          <Location>896px, 0px</Location>
+          <Size>100px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$PayAmount</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <Location>998px, 0px</Location>
+          <Size>12px, 16px</Size>
+          <Style>
+            <Color>Red</Color>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF(([APPayNotSelReport.CashCuryID] &lt;&gt; [APPayNotSelReport.DocCuryID]), '*', '')</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Location>688px, 0px</Location>
+          <Size>100px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[APPayNotSelReport.CuryPayDiscBal]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.95238cm</Height>
+      <Items>
+        <TextBox Name="textBox24">
+          <Location>8px, 16px</Location>
+          <Size>572px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=Format('** Available discount estimated based on the {0:d} effective date', [@ReportDate])</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Location>8px, 0px</Location>
+          <Size>572px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=Format('* Payment amount estimated based on the {0:d} effective date', [@ReportDate])</Value>
+        </TextBox>
+      </Items>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>APPayNotSelReport.VendorID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>APPayNotSelReport.CashCuryID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>1.79894cm</Height>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <Items>
+            <Line Name="line2">
+              <Location>4px, 14px</Location>
+              <Size>1012px, 1px</Size>
+            </Line>
+            <Panel Name="panel3">
+              <Location>16px, 36px</Location>
+              <Size>998px, 31px</Size>
+              <Style>
+                <BorderColor>
+                  <Bottom>Black</Bottom>
+                  <Top>Black</Top>
+                </BorderColor>
+                <BorderStyle>
+                  <Bottom>Solid</Bottom>
+                </BorderStyle>
+                <BorderWidth>
+                  <Bottom>1px</Bottom>
+                  <Top>1px</Top>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox13">
+                  <Location>788px, 0px</Location>
+                  <Size>88px, 28px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Document Balance</Value>
+                </TextBox>
+                <TextBox Name="textBox21">
+                  <Location>880px, 0px</Location>
+                  <Size>100px, 28px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Amount To Pay</Value>
+                </TextBox>
+                <TextBox Name="textBox23">
+                  <Location>428px, 0px</Location>
+                  <Size>64px, 28px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Document Currency</Value>
+                </TextBox>
+                <TextBox Name="textBox28">
+                  <Location>496px, 0px</Location>
+                  <Size>76px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Due Date</Value>
+                </TextBox>
+                <TextBox Name="textBox29">
+                  <Location>92px, 0px</Location>
+                  <Size>85px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Cash Account</Value>
+                </TextBox>
+                <TextBox Name="textBox30">
+                  <Location>680px, 0px</Location>
+                  <Size>92px, 28px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Discount Balance</Value>
+                </TextBox>
+                <TextBox Name="textBox32">
+                  <Location>0px, 0px</Location>
+                  <Size>88px, 28px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Payment Method</Value>
+                </TextBox>
+                <TextBox Name="textBox40">
+                  <Location>576px, 0px</Location>
+                  <Size>92px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Disc. Date</Value>
+                </TextBox>
+                <TextBox Name="textBox43">
+                  <Location>344px, 0px</Location>
+                  <Size>80px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Vendor Ref.</Value>
+                </TextBox>
+                <TextBox Name="textBox44">
+                  <Location>248px, 0px</Location>
+                  <Size>92px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Ref. Nbr.</Value>
+                </TextBox>
+                <TextBox Name="textBox45">
+                  <Location>184px, 0px</Location>
+                  <Size>60px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Type</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <TextBox Name="textBox20">
+              <Location>4px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Vendor ID</Value>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>356px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Vendor Class</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Location>356px, 16px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[Vendor.VendorClassID]</Value>
+            </TextBox>
+            <TextBox Name="textBox27">
+              <Location>480px, 0px</Location>
+              <Size>88px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Currency</Value>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Location>128px, 16px</Location>
+              <Size>224px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[Vendor.AcctName]</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>128px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Vendor Name</Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Location>480px, 16px</Location>
+              <Size>88px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[CashAccount.CuryID]</Value>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Location>896px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=Assign('$CashAccountTotal',0)</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox51">
+              <Location>776px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=Assign('$CashAccountCount',0)</Value>
+              <Visible>False</Visible>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Location>4px, 16px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[APPayNotSelReport.PayAccountID]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0.42328cm</Height>
+          <Items>
+            <Panel Name="panel4">
+              <Location>504px, 0px</Location>
+              <Size>510px, 18px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Black</Top>
+                </BorderColor>
+                <BorderStyle>
+                  <Top>Solid</Top>
+                </BorderStyle>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox47">
+                  <Location>4px, 0px</Location>
+                  <Size>228px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Vendor/Cash Currency Total:</Value>
+                </TextBox>
+                <TextBox Name="textBox48">
+                  <Format>=[APPayNotSelReport.CuryPayDocBal.Format]</Format>
+                  <Location>392px, 0px</Location>
+                  <Size>100px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CashAccountTotal</Value>
+                </TextBox>
+                <TextBox Name="textBox58">
+                  <Location>248px, 0px</Location>
+                  <Size>132px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=Format('{0} Documents',$CashAccountCount)</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

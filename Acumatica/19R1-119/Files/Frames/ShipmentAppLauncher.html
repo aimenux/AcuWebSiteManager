@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Shipment App Launcher</title>
+    <script type="text/javascript">
+        var queryString = window.location.search || '';
+        var keyValPairs = [];
+        var params = {};
+        queryString = queryString.substr(1);
+
+        if (queryString.length) {
+            keyValPairs = queryString.split('&');
+            for (pairNum in keyValPairs) {
+                var key = keyValPairs[pairNum].split('=')[0];
+                if (!key.length) continue;
+                if (typeof params[key] === 'undefined')
+                    params[key] = [];
+                params[key].push(keyValPairs[pairNum].split('=')[1]);
+            }
+        }
+
+        window.opener.location = 'acumaticashippingtoolintegration:' + params['ShipmentNbr'] + '@' + params['ShipmentApplicationType'];
+        window.close();
+    </script>
+</head>
+<body style="height:0px;margin:0px;padding:0px">
+</body>
+</html>

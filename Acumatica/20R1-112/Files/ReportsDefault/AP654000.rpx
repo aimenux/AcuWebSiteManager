@@ -1,0 +1,2360 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>7</item>
+    <item>9</item>
+    <item>15</item>
+    <item>15</item>
+    <item>10</item>
+    <item>14</item>
+    <item>18</item>
+    <item>18</item>
+    <item>18</item>
+    <item>18</item>
+    <item>18</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>AP1099HistoryByPayer.FinYear</DataField>
+      <Value>=@FinYear</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AP1099HistoryByPayer.BAccountID</DataField>
+      <Value>@PayerBAccountID</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>MISC</DefaultValue>
+      <Name>Format</Name>
+      <Prompt>Report Format</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>1099-MISC</Label>
+          <Value>MISC</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>1099-NEC</Label>
+          <Value>NEC</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('AP1099ReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>PayerBAccountID</Name>
+      <Prompt>Company/Branch</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('AP1099ReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <InputMask>####</InputMask>
+      <Name>FinYear</Name>
+      <Prompt>1099 Year</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('AP1099ReportParameters.FinYearByPayer,PayerBAccountID,PayerBAccountID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowAP1099Box</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BoxNbr</ChildField>
+          <ParentField>BoxNbr</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AP1099HistoryByPayer</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowVendor</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AP1099HistoryByPayer</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowContact</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowVendor</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowLocation</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>LocationID</ChildField>
+          <ParentField>DefLocationID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowVendor</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowVendor</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>localhost/2019r1</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="RowAP1099Box">
+      <Fields>
+        <ReportField Name="BoxNbr">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="MinReportAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="OldAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowVendor">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="VendorClassID"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="CashAcctID"></ReportField>
+        <ReportField Name="PaymentLeadTime">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="DefPOAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefRemitAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefRemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SeparateCheck">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="APAcctID"></ReportField>
+        <ReportField Name="APSubID"></ReportField>
+        <ReportField Name="DiscTakenAcctID"></ReportField>
+        <ReportField Name="DiscTakenSubID"></ReportField>
+        <ReportField Name="ExpenseAcctID"></ReportField>
+        <ReportField Name="ExpenseSubID"></ReportField>
+        <ReportField Name="PrepaymentAcctID"></ReportField>
+        <ReportField Name="PrepaymentSubID"></ReportField>
+        <ReportField Name="PayToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsRemitSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsRemitContSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="BaseRemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Vendor1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxAgency">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxPeriodType"></ReportField>
+        <ReportField Name="SalesTaxAcctID"></ReportField>
+        <ReportField Name="SalesTaxSubID"></ReportField>
+        <ReportField Name="PurchTaxAcctID"></ReportField>
+        <ReportField Name="PurchTaxSubID"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrganizationType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowContact">
+      <Fields>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowLocation">
+      <Fields>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LocationCD"></ReportField>
+        <ReportField Name="LocType"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_displayName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="AP1099HistoryByPayer">
+      <Fields>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BAccountID_Segment1"></ReportField>
+        <ReportField Name="BoxNbr">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="FinYear"></ReportField>
+        <ReportField Name="HistAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VendorID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.AP.AP1099HistoryByPayer</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="BAccount.BAccountID"></ViewerField>
+  </ViewerFields>
+  <Width>29.6cm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>56px</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>11</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>342px, 20px</Location>
+          <Size>74px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>1099 Year:</Value>
+          <VisibleExpr>=([@FinYear]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>880px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>880px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>11</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@PayerBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>424px, 20px</Location>
+          <Size>184px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('RowAP1099Year.FinYear', @FinYear)</Value>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <Location>4px, 0px</Location>
+          <Size>604px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>=IIf([@Format]='NEC'#010;	,'1099 Year Summary (1099-NEC)'#010;	, IIf( CInt([@FinYear]) &lt; 2020#010;		, '1099 Year Summary (1099-MISC Before Tax Year 2020)'#010;		, '1099 Year Summary (1099-MISC Starting Tax Year 2020)'))</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>9</column>
+            <row>3</row>
+          </Excel>
+          <Location>880px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <ExcelVisible>False</ExcelVisible>
+      <Expanded>False</Expanded>
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <ExcelVisible>False</ExcelVisible>
+      <Expanded>False</Expanded>
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <ReportFooter Name="reportFooterSection1">
+      <ExcelMargin>
+        <top>1</top>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>40px</Height>
+      <VisibleExpr>=[@Format]='MISC' And CInt([@FinYear]) &lt; 2020</VisibleExpr>
+      <Items>
+        <Line Name="line1">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>256px, 18px</Location>
+          <Size>644px, 1px</Size>
+        </Line>
+        <Line Name="line3">
+          <Excel>
+            <column>5</column>
+            <width>7</width>
+          </Excel>
+          <Location>256px, 0px</Location>
+          <Size>756px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox41">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>148px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Company Total:</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>688px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box5Total</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>796px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box6Total</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>688px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box13Total</Value>
+        </TextBox>
+        <TextBox Name="textBox47">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>472px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box3Total</Value>
+        </TextBox>
+        <TextBox Name="textBox48">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box1Total</Value>
+        </TextBox>
+        <TextBox Name="textBox49">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box2Total</Value>
+        </TextBox>
+        <TextBox Name="textBox50">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>580px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box4Total</Value>
+        </TextBox>
+        <TextBox Name="textBox51">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>364px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box7Total</Value>
+        </TextBox>
+        <TextBox Name="textBox52">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>472px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box8Total</Value>
+        </TextBox>
+        <TextBox Name="textBox53">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>580px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box10Total</Value>
+        </TextBox>
+        <TextBox Name="textBox54">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>796px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box14Total</Value>
+        </TextBox>
+        <TextBox Name="textBox55">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>904px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalTotal</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <PageHeader Name="PageHeader_Form2019_MISC">
+      <GridSize>8px, 8px</GridSize>
+      <Height>36px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <VisibleExpr>=[@Format]='MISC' And CInt([@FinYear]) &lt; 2020</VisibleExpr>
+      <Items>
+        <Line Name="line4">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>256px, 18px</Location>
+          <Size>644px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox5">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>688px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 10</Value>
+        </TextBox>
+        <TextBox Name="textBox59">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>100px, 4px</Location>
+          <Size>78px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Vendor Name</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Location>580px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 9</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <Location>4px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Vendor</Value>
+        </TextBox>
+        <TextBox Name="textBox61">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>44px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Phone</Value>
+        </TextBox>
+        <TextBox Name="textBox62">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>164px, 20px</Location>
+          <Size>52px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>TIN</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Location>688px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 5</Value>
+        </TextBox>
+        <TextBox Name="textBox64">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>276px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>State</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 1</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 2</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>472px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 3</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>580px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 4</Value>
+        </TextBox>
+        <TextBox Name="textBox69">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Location>796px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 6</Value>
+        </TextBox>
+        <TextBox Name="textBox70">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Location>364px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 7</Value>
+        </TextBox>
+        <TextBox Name="textBox71">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Location>472px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 8</Value>
+        </TextBox>
+        <TextBox Name="textBox72">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Location>796px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 14</Value>
+        </TextBox>
+        <TextBox Name="textBox73">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Location>904px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Total</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <PageHeader Name="PageHeader_Form2020_MISC">
+      <GridSize>8px, 8px</GridSize>
+      <Height>36px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <VisibleExpr>=[@Format]='MISC' And CInt([@FinYear]) &gt;= 2020</VisibleExpr>
+      <Items>
+        <Line Name="line2">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>256px, 18px</Location>
+          <Size>750px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox76">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Location>1012px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Total</Value>
+        </TextBox>
+        <TextBox Name="textBox77">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Location>796px, 20px</Location>
+          <Size>40px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 12</Value>
+        </TextBox>
+        <TextBox Name="textBox78">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Location>472px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 8</Value>
+        </TextBox>
+        <TextBox Name="textBox79">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Location>364px, 20px</Location>
+          <Size>34px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 7</Value>
+        </TextBox>
+        <TextBox Name="textBox80">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Location>796px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 6</Value>
+        </TextBox>
+        <TextBox Name="textBox81">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>580px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 4</Value>
+        </TextBox>
+        <TextBox Name="textBox82">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>472px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 3</Value>
+        </TextBox>
+        <TextBox Name="textBox83">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 2</Value>
+        </TextBox>
+        <TextBox Name="textBox84">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 1</Value>
+        </TextBox>
+        <TextBox Name="textBox85">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>276px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>State</Value>
+        </TextBox>
+        <TextBox Name="textBox86">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Location>688px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 5</Value>
+        </TextBox>
+        <TextBox Name="textBox87">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>164px, 20px</Location>
+          <Size>52px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>TIN</Value>
+        </TextBox>
+        <TextBox Name="textBox88">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>44px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Phone</Value>
+        </TextBox>
+        <TextBox Name="textBox89">
+          <Location>4px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Vendor</Value>
+        </TextBox>
+        <TextBox Name="textBox90">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Location>580px, 20px</Location>
+          <Size>34px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 9</Value>
+        </TextBox>
+        <TextBox Name="textBox91">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>100px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Name</Value>
+        </TextBox>
+        <TextBox Name="textBox92">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>688px, 20px</Location>
+          <Size>40px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 10</Value>
+        </TextBox>
+        <TextBox Name="textBox93">
+          <Location>398px, 20px</Location>
+          <Size>17px, 14px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>*</Value>
+        </TextBox>
+        <TextBox Name="textBox94">
+          <Location>614px, 20px</Location>
+          <Size>17px, 14px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>*</Value>
+        </TextBox>
+        <TextBox Name="textBox95">
+          <Location>728px, 20px</Location>
+          <Size>17px, 14px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>*</Value>
+        </TextBox>
+        <TextBox Name="textBox96">
+          <Location>836px, 20px</Location>
+          <Size>17px, 14px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>*</Value>
+        </TextBox>
+        <TextBox Name="textBox97">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Location>904px, 20px</Location>
+          <Size>40px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 14</Value>
+        </TextBox>
+        <TextBox Name="textBox99">
+          <Location>944px, 20px</Location>
+          <Size>17px, 14px</Size>
+          <Style>
+            <Color>Red</Color>
+            <Font>
+              <Style>Bold</Style>
+            </Font>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>*</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <PageHeader Name="pageHeader_Form_NEC">
+      <GridSize>8px, 8px</GridSize>
+      <Height>36px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <VisibleExpr>=[@Format]='NEC' And CInt([@FinYear]) &gt;= 2020</VisibleExpr>
+      <Items>
+        <Line Name="line7">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>256px, 18px</Location>
+          <Size>644px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox114">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Location>904px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Total</Value>
+        </TextBox>
+        <TextBox Name="textBox121">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 4</Value>
+        </TextBox>
+        <TextBox Name="textBox122">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Box 1</Value>
+        </TextBox>
+        <TextBox Name="textBox123">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>276px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>State</Value>
+        </TextBox>
+        <TextBox Name="textBox125">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>164px, 20px</Location>
+          <Size>52px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>TIN</Value>
+        </TextBox>
+        <TextBox Name="textBox126">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>44px, 20px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Phone</Value>
+        </TextBox>
+        <TextBox Name="textBox127">
+          <Location>4px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Vendor</Value>
+        </TextBox>
+        <TextBox Name="textBox129">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>100px, 4px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Name</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <ReportFooter Name="reportFooter_Form2020_MISC">
+      <GridSize>8px, 8px</GridSize>
+      <Height>1.90476cm</Height>
+      <VisibleExpr>=[@Format]='MISC' And CInt([@FinYear]) &gt;= 2020</VisibleExpr>
+      <Items>
+        <Line Name="line5">
+          <Excel>
+            <column>5</column>
+            <width>7</width>
+          </Excel>
+          <Location>256px, 0px</Location>
+          <Size>860px, 1px</Size>
+        </Line>
+        <Line Name="line6">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>256px, 18px</Location>
+          <Size>750px, 1px</Size>
+        </Line>
+        <Panel Name="panel1">
+          <Location>8px, 48px</Location>
+          <Size>1104px, 24px</Size>
+          <Items>
+            <Line Name="line9">
+              <Location>0px, 0px</Location>
+              <Size>480px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox119">
+              <Location>8px, 8px</Location>
+              <Size>8px, 12px</Size>
+              <Style>
+                <Color>Red</Color>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>*</Value>
+            </TextBox>
+            <TextBox Name="textBox128">
+              <Location>16px, 8px</Location>
+              <Size>984px, 12px</Size>
+              <StyleName>Normal Small</StyleName>
+              <Value>= 'Starting in tax year 2020, the box displays the amount according to the new 1099-MISC revision.'</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+        <TextBox Name="textBox100">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>1012px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalTotal_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox101">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>796px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box151Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox102">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>580px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box10Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox103">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>472px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box8Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox104">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>364px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box9Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox105">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>580px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box4Total</Value>
+        </TextBox>
+        <TextBox Name="textBox106">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box2Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox107">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box1Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox108">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>472px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box3Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox109">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>688px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box14Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox110">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>796px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box6Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox111">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>688px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box5Total_2020_MISC</Value>
+        </TextBox>
+        <TextBox Name="textBox112">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>148px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Company Total:</Value>
+        </TextBox>
+        <TextBox Name="textBox113">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>904px, 22px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box152Total_2020_MISC</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <ReportFooter Name="reportFooter_Form_NEC">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.63492cm</Height>
+      <VisibleExpr>=[@Format]='NEC' And CInt([@FinYear]) &gt;= 2020</VisibleExpr>
+      <Items>
+        <Line Name="line8">
+          <Excel>
+            <column>5</column>
+            <width>7</width>
+          </Excel>
+          <Location>256px, 0px</Location>
+          <Size>756px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox115">
+          <Excel>
+            <column>11</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>904px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$TotalTotal_NEC</Value>
+        </TextBox>
+        <TextBox Name="textBox135">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>364px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box4Total_NEC</Value>
+        </TextBox>
+        <TextBox Name="textBox136">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>256px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Box7Total_NEC</Value>
+        </TextBox>
+        <TextBox Name="textBox141">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>148px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Company Total:</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Description>=[RowVendor.AcctCD]</Description>
+      <Grouping>
+        <GroupExp>
+          <DataField>RowVendor.AcctCD</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>RowVendor.AcctName</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>32px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>Box1Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box1Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box2Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box2Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box3Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box3Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box4Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box4Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box5Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box5Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box6Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box6Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box7Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box7Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box8Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box8Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box10Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box10Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box13Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box13Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box14Total</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box14Total</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>TotalTotal</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $TotalTotal</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=[@Format]='MISC' And CInt([@FinYear]) &lt; 2020</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox10">
+              <Excel>
+                <column>7</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>472px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Excel>
+                <column>8</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>580px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>796px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>688px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>256px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>364px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox27">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>472px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>580px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <Excel>
+                <column>9</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>688px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Excel>
+                <column>10</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>796px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>100px, 0px</Location>
+              <Size>148px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.AcctName]</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Location>4px, 0px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>88px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[BAccount.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Excel>
+                <column>11</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>904px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox56">
+              <Excel>
+                <column>4</column>
+                <row>2</row>
+              </Excel>
+              <Location>164px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowLocation.TaxRegistrationID]</Value>
+            </TextBox>
+            <TextBox Name="textBox57">
+              <Excel>
+                <column>5</column>
+                <row>2</row>
+              </Excel>
+              <Location>280px, 18px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.Status]</Value>
+            </TextBox>
+            <TextBox Name="textBox58">
+              <Excel>
+                <column>2</column>
+                <row>2</row>
+              </Excel>
+              <Location>44px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowContact.Phone1]</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Excel>
+                <column>6</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>364px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeader_Form2020_MISC">
+          <ExcelMargin>
+            <bottom>1</bottom>
+          </ExcelMargin>
+          <GridSize>8px, 8px</GridSize>
+          <Height>32px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>Box1Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box1Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box2Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box2Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box3Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box3Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box4Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box4Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box5Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box5Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box6Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box6Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box9Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box9Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box8Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box8Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box10Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box10Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box14Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box14Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box151Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=151,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box151Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box152Total_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=152,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box152Total_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>TotalTotal_2020_MISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=151,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=152,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) +#010;$TotalTotal_2020_MISC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>AmountsGreaterThanZeroMISC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=151,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=152,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) #010;&gt; 0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=[@Format]='MISC' #010;And CInt([@FinYear]) &gt;= 2020#010;And $AmountsGreaterThanZeroMISC</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox11">
+              <Excel>
+                <column>5</column>
+                <row>2</row>
+              </Excel>
+              <Location>280px, 18px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.Status]</Value>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <Excel>
+                <column>4</column>
+                <row>2</row>
+              </Excel>
+              <Location>164px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowLocation.TaxRegistrationID]</Value>
+            </TextBox>
+            <TextBox Name="textBox15_fb4">
+              <Excel>
+                <column>11</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>1012px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=151,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=152,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox17_d44">
+              <Location>4px, 0px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>88px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[BAccount.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>100px, 0px</Location>
+              <Size>148px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.AcctName]</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Excel>
+                <column>10</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>796px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=151,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Excel>
+                <column>9</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>688px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=14,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>580px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>472px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=3,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>364px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=2,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>256px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=1,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>688px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=5,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>796px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=6,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Excel>
+                <column>6</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>364px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=9,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox74">
+              <Excel>
+                <column>8</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>580px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=10,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox75">
+              <Excel>
+                <column>7</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>472px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=8,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Excel>
+                <column>2</column>
+                <row>2</row>
+              </Excel>
+              <Location>44px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowContact.Phone1]</Value>
+            </TextBox>
+            <TextBox Name="textBox98">
+              <Excel>
+                <column>10</column>
+                <row>2</row>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>904px, 18px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=152,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeader_Form_NEC">
+          <GridSize>8px, 8px</GridSize>
+          <Height>32px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>Box7Total_NEC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box7Total_NEC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>Box4Total_NEC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + $Box4Total_NEC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>TotalTotal_NEC</Name>
+              <ValueExpr>=Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0)) + #010;+ $TotalTotal_NEC</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>AmountsGreaterThanZero</Name>
+              <ValueExpr>=(#010;Sum(IIF([RowAP1099Box.BoxNbr]=4#010;	,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0)#010;	,0)) +#010;Sum(IIF([RowAP1099Box.BoxNbr]=7#010;	,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0)#010;	,0))#010;) &gt; 0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=[@Format]='NEC' #010;And CInt([@FinYear]) &gt;= 2020#010;And $AmountsGreaterThanZero</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox116">
+              <Excel>
+                <column>2</column>
+                <row>2</row>
+              </Excel>
+              <Location>44px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowContact.Phone1]</Value>
+            </TextBox>
+            <TextBox Name="textBox117">
+              <Excel>
+                <column>5</column>
+                <row>2</row>
+              </Excel>
+              <Location>280px, 18px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.Status]</Value>
+            </TextBox>
+            <TextBox Name="textBox118">
+              <Excel>
+                <column>4</column>
+                <row>2</row>
+              </Excel>
+              <Location>164px, 18px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowLocation.TaxRegistrationID]</Value>
+            </TextBox>
+            <TextBox Name="textBox120">
+              <Location>4px, 0px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>88px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[BAccount.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox124">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>100px, 0px</Location>
+              <Size>148px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowVendor.AcctName]</Value>
+            </TextBox>
+            <TextBox Name="textBox130">
+              <Excel>
+                <column>11</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>904px, 4px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))+#010;Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox133">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>364px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=4,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+            <TextBox Name="textBox134">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>256px, 0px</Location>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IIF([RowAP1099Box.BoxNbr]=7,IIF([AP1099HistoryByPayer.HistAmt]&gt;=[RowAP1099Box.MinReportAmt],[AP1099HistoryByPayer.HistAmt],0),0))</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <ExcelVisible>False</ExcelVisible>
+          <Expanded>False</Expanded>
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.21164cm</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

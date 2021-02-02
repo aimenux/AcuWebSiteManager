@@ -1,0 +1,33 @@
+<%@ Page Language="C#" MasterPageFile="~/MasterPages/ListView.master" AutoEventWireup="true" ValidateRequest="false" CodeFile="PM501000.aspx.cs"
+    Inherits="Page_PM501000" Title="Untitled Page" %>
+
+<%@ MasterType VirtualPath="~/MasterPages/ListView.master" %>
+<asp:Content ID="cont1" ContentPlaceHolderID="phDS" runat="Server">
+    <px:PXDataSource ID="ds" Width="100%" runat="server" Visible="true" PrimaryView="Items" TypeName="PX.Objects.PM.RegisterRelease"/>
+</asp:Content>
+<asp:Content ID="cont2" ContentPlaceHolderID="phL" runat="Server">
+    <px:PXGrid ID="grid" runat="server" Height="400px" Width="100%" Style="z-index: 100" AllowPaging="True" AllowSearch="true"
+        AdjustPageSize="Auto" DataSourceID="ds" SkinID="PrimaryInquire" SyncPosition="True" FastFilterFields="RefNbr,Description" Caption="Transactions">
+        <Levels>
+            <px:PXGridLevel DataMember="Items">
+                <RowTemplate>
+                    <px:PXLayoutRule runat="server" StartColumn="True" LabelsWidth="SM" ControlSize="XM" />
+                    <px:PXCheckBox ID="chkSelected" runat="server" DataField="Selected" />
+                    <px:PXDropDown ID="edModule" runat="server" DataField="Module" Enabled="False" SelectedIndex="4" />
+                    <px:PXSelector ID="edRefNbr" runat="server" DataField="RefNbr" Enabled="False" AllowEdit="true" Width="128px"/>
+                    <px:PXDateTimeEdit ID="edDate" runat="server" DataField="Date" Enabled="False" Width="108px"/>
+                    <px:PXTextEdit ID="edDescription" runat="server" DataField="Description" Enabled="False" Width="308px"/>
+                    <px:PXCheckBox ID="chkReleased" runat="server" DataField="Released" Enabled="False" />
+                </RowTemplate>
+                <Columns>
+                    <px:PXGridColumn DataField="Selected" Label="Selected" TextAlign="Center" Type="CheckBox" AllowCheckAll="true" />
+                    <px:PXGridColumn DataField="RefNbr" Label="Ref Number" />
+                    <px:PXGridColumn DataField="Date" Label="Transaction Date" />
+                    <px:PXGridColumn DataField="Description" Label="Description" />
+                </Columns>
+            </px:PXGridLevel>
+        </Levels>
+        <AutoSize Container="Window" Enabled="True" MinHeight="200" />
+        <ActionBar PagerVisible="False" />
+    </px:PXGrid>
+</asp:Content>

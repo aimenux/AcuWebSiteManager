@@ -1,0 +1,436 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <SchemaUrl>http://px2/test/Api/Interface.asmx?WSDL</SchemaUrl>
+  <Parameters>
+    <ReportParameter>
+      <Name>WarehouseID</Name>
+      <Nullable>True</Nullable>
+      <ViewName>=Report.GetFieldSchema('INTran.SiteID')</ViewName>
+      <Prompt>Warehouse</Prompt>
+    </ReportParameter>
+  </Parameters>
+  <Filters>
+    <FilterExp>
+      <DataField>RowINSite.SiteCD</DataField>
+      <Operator>Or</Operator>
+      <OpenBraces>1</OpenBraces>
+      <Value>@WarehouseID</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@WarehouseID</DataField>
+      <CloseBraces>1</CloseBraces>
+    </FilterExp>
+  </Filters>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <DrawGrid>False</DrawGrid>
+  <NavigationTree>False</NavigationTree>
+  <GridSize>4px, 4px</GridSize>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowINSite</ChildName>
+      <ParentName>RowINLocation</ParentName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>SiteID</ChildField>
+          <ParentField>SiteID</ParentField>
+        </RelationRow>
+      </Links>
+    </ReportRelation>
+  </Relations>
+  <Tables>
+    <ReportTable Name="RowINLocation">
+      <Fields>
+        <ReportField Name="LocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SiteID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LocationCD"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="IsCosted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InclQtyAvail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PickPriority">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="SalesValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReceiptsValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TransfersValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrimaryItemValid"></ReportField>
+        <ReportField Name="PrimaryItemID"></ReportField>
+        <ReportField Name="PrimaryItemClassID"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowINSite">
+      <Fields>
+        <ReportField Name="SiteID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SiteCD"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="ReasonCodeSubID"></ReportField>
+        <ReportField Name="SalesAcctID"></ReportField>
+        <ReportField Name="SalesSubID"></ReportField>
+        <ReportField Name="InvtAcctID"></ReportField>
+        <ReportField Name="InvtSubID"></ReportField>
+        <ReportField Name="COGSAcctID"></ReportField>
+        <ReportField Name="COGSSubID"></ReportField>
+        <ReportField Name="DiscAcctID"></ReportField>
+        <ReportField Name="DiscSubID"></ReportField>
+        <ReportField Name="StdCstRevAcctID"></ReportField>
+        <ReportField Name="StdCstRevSubID"></ReportField>
+        <ReportField Name="StdCstVarAcctID"></ReportField>
+        <ReportField Name="StdCstVarSubID"></ReportField>
+        <ReportField Name="PPVAcctID"></ReportField>
+        <ReportField Name="PPVSubID"></ReportField>
+        <ReportField Name="FreightAcctID"></ReportField>
+        <ReportField Name="FreightSubID"></ReportField>
+        <ReportField Name="MiscAcctID"></ReportField>
+        <ReportField Name="MiscSubID"></ReportField>
+        <ReportField Name="CompanyLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ReceiptLocationID"></ReportField>
+        <ReportField Name="ShipLocationID"></ReportField>
+        <ReportField Name="ReturnLocationID"></ReportField>
+        <ReportField Name="LocationValid"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>1.16402cm</Height>
+      <Items>
+        <TextBox Name="textBox9">
+          <Size>206px, 14px</Size>
+          <Value>Location Labels</Value>
+          <Location>8px, 28px</Location>
+          <StyleName>Report Name</StyleName>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Size>76px, 14px</Size>
+          <Value>Company:</Value>
+          <Location>8px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Size>168px, 14px</Size>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+          <Location>90px, 0px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Location>536px, 0px</Location>
+          <Size>36px, 14px</Size>
+          <Value>Date:</Value>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>536px, 14px</Location>
+          <Size>36px, 14px</Size>
+          <Value>Page:</Value>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Size>76px, 14px</Size>
+          <Value>User:</Value>
+          <Location>8px, 14px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Location>592px, 14px</Location>
+          <Size>84px, 14px</Size>
+          <Value>=[PageOf]</Value>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Size>168px, 14px</Size>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+          <Location>90px, 14px</Location>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Location>576px, 0px</Location>
+          <Size>100px, 14px</Size>
+          <Format>g</Format>
+          <Value>=Now()</Value>
+          <StyleName>Report Params</StyleName>
+        </TextBox>
+        <Line Name="line1">
+          <Size>664px, 1px</Size>
+          <Location>8px, 42px</Location>
+        </Line>
+      </Items>
+    </PageHeader>
+    <Detail Name="Details">
+      <Height>1.26984cm</Height>
+      <VisibleExpr>=($IndexRow%2=1)</VisibleExpr>
+      <Variables>
+        <ReportVariable>
+          <Name>IndexRow</Name>
+          <ValueExpr>=$IndexRow+1</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Items>
+        <TextBox Name="textBox38">
+          <Size>16px, 14px</Size>
+          <Value>/</Value>
+          <Location>544px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Size>104px, 14px</Size>
+          <Value>Inv. ID/Class:</Value>
+          <Location>348px, 32px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <Size>108px, 14px</Size>
+          <Value>=Next([RowINLocation.PrimaryItemClassID])</Value>
+          <Location>564px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Size>88px, 14px</Size>
+          <Value>=Next([RowINLocation.PrimaryItemID])</Value>
+          <Location>452px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Size>16px, 14px</Size>
+          <Value>/</Value>
+          <Location>204px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Size>104px, 14px</Size>
+          <Value>Inv. ID/Class:</Value>
+          <Location>8px, 32px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox32">
+          <Size>108px, 14px</Size>
+          <Value>=[RowINLocation.PrimaryItemClassID]</Value>
+          <Location>224px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Size>88px, 14px</Size>
+          <Value>=[RowINLocation.PrimaryItemID]</Value>
+          <Location>112px, 32px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox30">
+          <Size>52px, 14px</Size>
+          <Value>Wareh.:</Value>
+          <Location>348px, 0px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <Size>52px, 14px</Size>
+          <Value>Loc.:</Value>
+          <Location>348px, 16px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Size>52px, 14px</Size>
+          <Value>Wareh.:</Value>
+          <Location>8px, 0px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Size>52px, 14px</Size>
+          <Value>Loc.:</Value>
+          <Location>8px, 16px</Location>
+          <StyleName>Heading 1</StyleName>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Size>204px, 14px</Size>
+          <Value>=Next([RowINSite.Descr])</Value>
+          <Location>472px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Size>72px, 14px</Size>
+          <Value>=Next([RowINSite.SiteCD])</Value>
+          <Location>400px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Size>204px, 14px</Size>
+          <Value>=Next([RowINLocation.Descr])</Value>
+          <Location>472px, 16px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Size>72px, 14px</Size>
+          <Value>=Next([RowINLocation.LocationCD])</Value>
+          <Location>400px, 16px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Size>208px, 14px</Size>
+          <Value>=[RowINSite.Descr]</Value>
+          <Location>132px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Size>72px, 14px</Size>
+          <Value>=[RowINSite.SiteCD]</Value>
+          <Location>60px, 0px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Size>208px, 14px</Size>
+          <Value>=[RowINLocation.Descr]</Value>
+          <Location>132px, 16px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Size>72px, 14px</Size>
+          <Value>=[RowINLocation.LocationCD]</Value>
+          <Location>60px, 16px</Location>
+          <StyleName>Normal</StyleName>
+        </TextBox>
+        <Line Name="line2">
+          <Size>664px, 1px</Size>
+          <LineStyle>Dotted</LineStyle>
+          <Location>8px, 47px</Location>
+        </Line>
+        <Line Name="line3">
+          <Size>1px, 48px</Size>
+          <LineStyle>Dotted</LineStyle>
+          <Direction>Vertical</Direction>
+          <Location>344px, 0px</Location>
+        </Line>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <Height>29px</Height>
+      <Visible>False</Visible>
+      <Items>
+        <Panel Name="panel1">
+          <Location>8px, 0px</Location>
+          <Size>664px, 29px</Size>
+          <Style>
+            <BorderColor>
+              <Top>Black</Top>
+              <Bottom>Black</Bottom>
+            </BorderColor>
+            <BorderStyle>
+              <Bottom>Solid</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Top>1px</Top>
+              <Bottom>1px</Bottom>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox26">
+              <Size>164px, 14px</Size>
+              <Value>Warehouse Description</Value>
+              <Location>456px, 14px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Size>104px, 14px</Size>
+              <Value>Warehouse</Value>
+              <Location>344px, 14px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Size>164px, 14px</Size>
+              <Value>Location Description</Value>
+              <Location>456px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Size>104px, 14px</Size>
+              <Value>Location ID</Value>
+              <Location>344px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Size>164px, 14px</Size>
+              <Value>Warehouse Description</Value>
+              <Location>112px, 14px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox1">
+              <Size>104px, 14px</Size>
+              <Value>Warehouse</Value>
+              <Location>0px, 14px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <Size>56px, 14px</Size>
+              <Value>Barcode</Value>
+              <Location>276px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Size>164px, 14px</Size>
+              <Value>Location Description</Value>
+              <Location>112px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Size>104px, 14px</Size>
+              <Value>Location ID</Value>
+              <Location>0px, 0px</Location>
+              <StyleName>Heading 1</StyleName>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </PageHeader>
+  </Sections>
+</Report>

@@ -1,0 +1,957 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>Contact.ContactType</DataField>
+      <Value>LD</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.ClassID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ClassID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@ClassID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.OwnerID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Owner</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Owner</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.WorkgroupID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Workgroup</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Workgroup</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.Source</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Source</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Source</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>CROpportunity.ClosingDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>CROpportunity.ClosingDate</DataField>
+      <Value>@StartDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>CROpportunity.AssignDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@EndDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>CROpportunity.AssignDate</DataField>
+    </FilterExp>
+  </Filters>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>=DateAdd (DateAdd (DateAdd( Today(), 'd', 1-Day(Today())), 'm', 1-Month(Today())), 'm', CInt((Month(Today())-1)/3)*3)</DefaultValue>
+      <Name>StartDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Start Date</Prompt>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>=DateAdd (DateAdd (DateAdd( Today(), 'd', 1-Day(Today())), 'm', 1-Month(Today())), 'm', CInt((Month(Today())-1)/3)*3 + 3)#010;</DefaultValue>
+      <Name>EndDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>End Date</Prompt>
+      <Type>DateTime</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ClassID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Class ID</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.ClassID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Source</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Lead Source</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.Source')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>OwnerID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Owner</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.OwnerID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>WorkgroupID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Workgroup</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.WorkgroupID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>ContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CROpportunity</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>localhost/main</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="CROpportunity">
+      <Fields>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ARRefNbr"></ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="CampaignSourceID"></ReportField>
+        <ReportField Name="CampaignSourceID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignSourceID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="CloseDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ClosingDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactID_Contact_displayName"></ReportField>
+        <ReportField Name="ContactID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CROpportunityClassID"></ReportField>
+        <ReportField Name="CROpportunityClassID_CROpportunityClass_description"></ReportField>
+        <ReportField Name="CROpportunityClassID_description"></ReportField>
+        <ReportField Name="CuryAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryLineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryProductsAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryWgtAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="IsTaxValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="LocationID_description"></ReportField>
+        <ReportField Name="LocationID_Location_descr"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ManualTotalEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OpportunityID"></ReportField>
+        <ReportField Name="OpportunityName"></ReportField>
+        <ReportField Name="OpportunityNumber">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrderNbr"></ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PrimaryContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PrimaryContactID_Contact_displayName"></ReportField>
+        <ReportField Name="PrimaryContactID_description"></ReportField>
+        <ReportField Name="ProductsAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StageID"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="VatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.CROpportunity</FullName>
+    </ReportTable>
+    <ReportTable Name="Contact">
+      <Fields>
+        <ReportField Name="Address"></ReportField>
+        <ReportField Name="Anniversary">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRContactClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DEMO_Attributes">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="Gender"></ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Img"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAddressSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsConvertable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="LOCATION_Attributes"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaritalStatus"></ReportField>
+        <ReportField Name="MATERIALS_Attributes"></ReportField>
+        <ReportField Name="Method"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="NoCall">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoEMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoFax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMarketing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMassMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="POSITION_Attributes"></ReportField>
+        <ReportField Name="QualificationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SALES_Attributes">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SOLUTION_Attributes"></ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="Spouse"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UserID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="UserID_description"></ReportField>
+        <ReportField Name="UserID_Users_username"></ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Contact</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>2.53968cm</Height>
+      <StyleName>Report Params</StyleName>
+      <Items>
+        <TextBox Name="textBox51">
+          <Location>8px, 0px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox52">
+          <Location>8px, 16px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox53">
+          <Location>72px, 0px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox54">
+          <Location>72px, 16px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox55">
+          <Location>904px, 0px</Location>
+          <Size>40px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox56">
+          <Location>904px, 16px</Location>
+          <Size>40px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox57">
+          <Location>944px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox58">
+          <Location>944px, 16px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Today()</Value>
+        </TextBox>
+        <TextBox Name="textBox59">
+          <Location>8px, 40px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Start Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <Location>8px, 56px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>End Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox61">
+          <Location>88px, 40px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@StartDate,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox62">
+          <Location>88px, 56px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@EndDate,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Location>224px, 40px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Class ID:</Value>
+        </TextBox>
+        <TextBox Name="textBox64">
+          <Location>224px, 56px</Location>
+          <Size>80px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Source:</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Location>304px, 40px</Location>
+          <Size>136px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@ClassID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Location>304px, 56px</Location>
+          <Size>136px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@Source,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Location>456px, 40px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Workgroup:</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Location>456px, 56px</Location>
+          <Size>72px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Owner:</Value>
+        </TextBox>
+        <TextBox Name="textBox69">
+          <Location>528px, 40px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@WorkgroupID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox70">
+          <Location>528px, 56px</Location>
+          <Size>176px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@OwnerID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox87">
+          <Location>8px, 80px</Location>
+          <Size>368px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Opportunity Average Time Statistics by Owner</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0px</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Count</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=$Count + 1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amount</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=$Amount + [CROpportunity.CuryProductsAmount]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQty</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$LostQty+1,$LostQty)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostAmount</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$LostAmount + [CROpportunity.CuryProductsAmount],$LostAmount)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonQty</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$WonQty+1,$WonQty)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonAmount</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$WonAmount+[CROpportunity.CuryProductsAmount],$WonAmount)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Time</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$Time + DateDiff('st',IsNull([CROpportunity.AssignDate],Now()),IsNull([CROpportunity.CloseDate],Now())),$Time)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TimedQty</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$TimedQty + 1,$TimedQty)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtyTime</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$LostQtyTime+1,$LostQtyTime)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonQtyTime</Name>
+          <ResetGroup>group1</ResetGroup>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$WonQtyTime+1,$WonQtyTime)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CountSummary</Name>
+          <ValueExpr>=$CountSummary + 1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AmountSummary</Name>
+          <ValueExpr>=$AmountSummary + [CROpportunity.CuryProductsAmount]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtySummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$LostQtySummary+1,$LostQtySummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostAmountSummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$LostAmountSummary + [CROpportunity.CuryProductsAmount],$LostAmountSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonQtySummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$WonQtySummary+1,$WonQtySummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonAmountSummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC'),$WonAmountSummary+[CROpportunity.CuryProductsAmount],$WonAmountSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TimeSummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$TimeSummary + DateDiff('st',IsNull([CROpportunity.AssignDate],Now()),IsNull([CROpportunity.CloseDate],Now())),$TimeSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LostQtyTimeSummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$LostQtyTimeSummary+1,$LostQtyTimeSummary)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WonQtyTimeSummary</Name>
+          <ValueExpr>=IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),$WonQtyTimeSummary+1,$WonQtyTimeSummary)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0px</Height>
+      <ProcessOrder>Always</ProcessOrder>
+      <Visible>False</Visible>
+      <Items>
+        <Panel Name="panel7">
+          <Location>96px, 0px</Location>
+          <Size>832px, 16px</Size>
+          <Style>
+            <BorderColor>
+              <Top>Black</Top>
+            </BorderColor>
+            <BorderStyle>
+              <Top>Solid</Top>
+            </BorderStyle>
+            <BorderWidth>
+              <Top>1px</Top>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox34">
+              <Location>0px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$CountSummary</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>64px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>96px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$AmountSummary</Value>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Location>168px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$LostQtySummary</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>496px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonQtySummary+$LostQtySummary)&gt;0, CStr(Round(100*$WonQtySummary/($WonQtySummary+$LostQtySummary),2)) + '%', 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox71">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>232px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$LostAmountSummary</Value>
+            </TextBox>
+            <TextBox Name="textBox72">
+              <Location>344px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>56px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$WonQtySummary</Value>
+            </TextBox>
+            <TextBox Name="textBox73">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>400px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>96px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$WonAmountSummary</Value>
+            </TextBox>
+            <TextBox Name="textBox75">
+              <Location>624px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonAmountSummary+$LostAmountSummary)&gt;0, CStr(Round(100*$WonAmountSummary/($WonAmountSummary+$LostAmountSummary),2)) + '%', 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox76">
+              <Location>760px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonQtyTimeSummary + $LostQtyTimeSummary) &gt; 0, (CStr(CInt($TimeSummary/IIf(($WonQtyTimeSummary + $LostQtyTimeSummary) &gt; 0,$WonQtyTimeSummary + $LostQtyTimeSummary,1))/86400) + ' d '#010;+ CStr(CInt(((CInt($TimeSummary/IIf(($WonQtyTimeSummary + $LostQtyTimeSummary) &gt; 0,$WonQtyTimeSummary + $LostQtyTimeSummary,1)))%86400/3600))) + ' h'), 'None')</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </ReportFooter>
+    <ReportHeader Name="reportHeaderSection1">
+      <Height>15cm</Height>
+      <Variables>
+        <ReportVariable>
+          <ValueExpr>IIf($WonQtyTime + $LostQtyTime &gt; 0,($Time/($WonQtyTime + $LostQtyTime)) /86400) + ' d '</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Items>
+        <Chart Name="chart1">
+          <ChartType>StackedBar</ChartType>
+          <GenerateSeries>False</GenerateSeries>
+          <Location>0px, 0px</Location>
+          <Series>
+            <MSChartSeries>
+              <AxisLabel>=IsNull([CROpportunity.OwnerID],'Unassigned')</AxisLabel>
+              <Color>57, 108, 159</Color>
+              <IsValueShownAsLabel>True</IsValueShownAsLabel>
+              <Label>=IIf((Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0))) &gt; 0, (CStr(CInt(Sum(IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),DateDiff('st',IsNull([CROpportunity.AssignDate],Now()),IsNull([CROpportunity.CloseDate],Now())),0))/IIf((Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0))) &gt; 0,Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)),1))/86400) + ' d '+ CStr(CInt(((CInt(Sum(IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),DateDiff('st',IsNull([CROpportunity.AssignDate],Now()),IsNull([CROpportunity.CloseDate],Now())),0))/IIf((Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0))) &gt; 0,Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)),1)))%86400/3600))) + ' h'), 'None')</Label>
+              <LabelForeColor>White</LabelForeColor>
+              <LabelFormat>{0} days</LabelFormat>
+              <Name>Average Time</Name>
+              <YValue>=IIf(Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) &gt; 0, Sum(IIf([CROpportunity.MajorStatus]=4 And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),DateDiff('st',IsNull([CROpportunity.AssignDate],Now()),IsNull([CROpportunity.CloseDate],Now())),0))/(Sum(IIf([CROpportunity.MajorStatus]=4 And Not ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And  Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)) + Sum(IIf([CROpportunity.MajorStatus]=4 And ([CROpportunity.Resolution]='CL' or [CROpportunity.Resolution]='CC') And Not (([CROpportunity.AssignDate]=Null) Or ([CROpportunity.CloseDate]=Null)),1,0)))/86400, 0)</YValue>
+            </MSChartSeries>
+          </Series>
+          <Size>1024px, 560px</Size>
+          <СhartArea>
+            <AxisX>
+              <MajorGrid>
+                <Enabled>False</Enabled>
+              </MajorGrid>
+            </AxisX>
+          </СhartArea>
+        </Chart>
+      </Items>
+    </ReportHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>CROpportunity.OwnerID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>0px</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Visible>False</Visible>
+          <Items>
+            <TextBox Name="textBox41_95b">
+              <Location>8px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IsNull([CROpportunity.OwnerID],'Unassigned')</Value>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Location>96px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$Count</Value>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>160px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>96px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$Amount</Value>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <Location>264px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$LostQty</Value>
+            </TextBox>
+            <TextBox Name="textBox45">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>368px, 24px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf($WonQtyTime + $LostQtyTime &gt; 0,CDec($Time)/CDec($WonQtyTime + $LostQtyTime)/86400,0)</Value>
+            </TextBox>
+            <TextBox Name="textBox46">
+              <Location>440px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>56px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$WonQty</Value>
+            </TextBox>
+            <TextBox Name="textBox47">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>496px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>96px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=$WonAmount</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Location>720px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonAmount+$LostAmount)&gt;0, CStr(Round(100*$WonAmount/($WonAmount+$LostAmount),2)) + '%', 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Location>856px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonQtyTime + $LostQtyTime) &gt; 0, (CStr(CInt($Time/IIf(($WonQtyTime + $LostQtyTime) &gt; 0,$WonQtyTime + $LostQtyTime,1))/86400) + ' d '#010;+ CStr(CInt(((CInt($Time/IIf(($WonQtyTime + $LostQtyTime) &gt; 0,$WonQtyTime + $LostQtyTime,1)))%86400/3600))) + ' h'), 'None')</Value>
+            </TextBox>
+            <TextBox Name="textBox74">
+              <Location>592px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=IIf(($WonQty+$LostQty)&gt;0, CStr(Round(100*$WonQty/($WonQty+$LostQty),2)) + '%', 'None')</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0cm</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

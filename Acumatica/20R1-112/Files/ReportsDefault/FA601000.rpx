@@ -1,0 +1,449 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>FixedAsset.BranchID</DataField>
+      <Value>@Branch</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>FixedAsset.AssetCD</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Asset</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Asset</DataField>
+      <Value></Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>FixedAsset.ClassID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Class</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@Class</DataField>
+      <Value>''</Value>
+    </FilterExp>
+  </Filters>
+  <LayoutUnit>Mm</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrganizationID')</DefaultValue>
+      <Name>OrganizationID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrganizationID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>Branch</Name>
+      <Prompt>Branch</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.BranchID,OrganizationID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Class</Name>
+      <Prompt>Class</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('FixedAsset.ClassID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Asset</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Asset</Prompt>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>FADetails</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>AssetID</ChildField>
+          <ParentField>AssetID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>FixedAsset</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost:5555/Site</SchemaUrl>
+  <SnapToGrid>False</SnapToGrid>
+  <Sorting>
+    <SortExp>
+      <DataField>FADetails.TagNbr</DataField>
+    </SortExp>
+  </Sorting>
+  <Tables>
+    <ReportTable Name="FixedAsset">
+      <Fields>
+        <ReportField Name="AccumDeprSubMask"></ReportField>
+        <ReportField Name="AccumulatedDepreciationAccountID"></ReportField>
+        <ReportField Name="AccumulatedDepreciationAccountID_Account_description"></ReportField>
+        <ReportField Name="AccumulatedDepreciationAccountID_description"></ReportField>
+        <ReportField Name="AccumulatedDepreciationSubID"></ReportField>
+        <ReportField Name="AccumulatedDepreciationSubID_description"></ReportField>
+        <ReportField Name="AccumulatedDepreciationSubID_Sub_description"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AssetCD"></ReportField>
+        <ReportField Name="AssetID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AssetTypeID"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="ClassID_FixedAsset_description"></ReportField>
+        <ReportField Name="ConstructionAccountID"></ReportField>
+        <ReportField Name="ConstructionAccountID_Account_description"></ReportField>
+        <ReportField Name="ConstructionAccountID_description"></ReportField>
+        <ReportField Name="ConstructionSubID"></ReportField>
+        <ReportField Name="ConstructionSubID_description"></ReportField>
+        <ReportField Name="ConstructionSubID_Sub_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DepreciatedExpenseAccountID"></ReportField>
+        <ReportField Name="DepreciatedExpenseAccountID_Account_description"></ReportField>
+        <ReportField Name="DepreciatedExpenseAccountID_description"></ReportField>
+        <ReportField Name="DepreciatedExpenseSubID"></ReportField>
+        <ReportField Name="DepreciatedExpenseSubID_description"></ReportField>
+        <ReportField Name="DepreciatedExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="DeprExpenceSubMask"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DisposalAccountID"></ReportField>
+        <ReportField Name="DisposalAccountID_Account_description"></ReportField>
+        <ReportField Name="DisposalAccountID_description"></ReportField>
+        <ReportField Name="DisposalAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DisposalSubID"></ReportField>
+        <ReportField Name="DisposalSubID_description"></ReportField>
+        <ReportField Name="DisposalSubID_Sub_description"></ReportField>
+        <ReportField Name="FAAccountID"></ReportField>
+        <ReportField Name="FAAccountID_Account_description"></ReportField>
+        <ReportField Name="FAAccountID_description"></ReportField>
+        <ReportField Name="FAAccrualAcctID"></ReportField>
+        <ReportField Name="FAAccrualAcctID_Account_description"></ReportField>
+        <ReportField Name="FAAccrualAcctID_description"></ReportField>
+        <ReportField Name="FAAccrualSubID"></ReportField>
+        <ReportField Name="FAAccrualSubID_description"></ReportField>
+        <ReportField Name="FAAccrualSubID_Sub_description"></ReportField>
+        <ReportField Name="FASubID"></ReportField>
+        <ReportField Name="FASubID_description"></ReportField>
+        <ReportField Name="FASubID_Sub_description"></ReportField>
+        <ReportField Name="FASubMask"></ReportField>
+        <ReportField Name="GainAcctID"></ReportField>
+        <ReportField Name="GainAcctID_Account_description"></ReportField>
+        <ReportField Name="GainAcctID_description"></ReportField>
+        <ReportField Name="GainLossSubMask"></ReportField>
+        <ReportField Name="GainSubID"></ReportField>
+        <ReportField Name="GainSubID_description"></ReportField>
+        <ReportField Name="GainSubID_Sub_description"></ReportField>
+        <ReportField Name="HoldEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InsuranceRequired">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsTangible">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LeaseAccountID"></ReportField>
+        <ReportField Name="LeaseAccountID_Account_description"></ReportField>
+        <ReportField Name="LeaseAccountID_description"></ReportField>
+        <ReportField Name="LeaseSubID"></ReportField>
+        <ReportField Name="LeaseSubID_description"></ReportField>
+        <ReportField Name="LeaseSubID_Sub_description"></ReportField>
+        <ReportField Name="LossAcctID"></ReportField>
+        <ReportField Name="LossAcctID_Account_description"></ReportField>
+        <ReportField Name="LossAcctID_description"></ReportField>
+        <ReportField Name="LossSubID"></ReportField>
+        <ReportField Name="LossSubID_description"></ReportField>
+        <ReportField Name="LossSubID_Sub_description"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="ParentAssetID"></ReportField>
+        <ReportField Name="ParentAssetID_description"></ReportField>
+        <ReportField Name="ParentAssetID_FixedAsset_description"></ReportField>
+        <ReportField Name="Path"></ReportField>
+        <ReportField Name="ProceedsSubMask"></ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RecordType"></ReportField>
+        <ReportField Name="RentAccountID"></ReportField>
+        <ReportField Name="RentAccountID_Account_description"></ReportField>
+        <ReportField Name="RentAccountID_description"></ReportField>
+        <ReportField Name="RentSubID"></ReportField>
+        <ReportField Name="RentSubID_description"></ReportField>
+        <ReportField Name="RentSubID_Sub_description"></ReportField>
+        <ReportField Name="RequiredRecalculation">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ServiceScheduleID"></ReportField>
+        <ReportField Name="ServiceScheduleID_description"></ReportField>
+        <ReportField Name="ServiceScheduleID_FAServiceSchedule_description"></ReportField>
+        <ReportField Name="SplittedFrom">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Suspended">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UsageScheduleID"></ReportField>
+        <ReportField Name="UsageScheduleID_description"></ReportField>
+        <ReportField Name="UsageScheduleID_FAUsageSchedule_usageUOM"></ReportField>
+        <ReportField Name="UseFASubMask">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="UsefulLife">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.FA.FixedAsset</FullName>
+    </ReportTable>
+    <ReportTable Name="FADetails">
+      <Fields>
+        <ReportField Name="AccrualBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AcquisitionCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AssetID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Barcode"></ReportField>
+        <ReportField Name="BillNumber"></ReportField>
+        <ReportField Name="Condition"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CurrentCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Depreciable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DepreciateFromDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DisposalDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DisposalMethodID"></ReportField>
+        <ReportField Name="DisposalMethodID_description"></ReportField>
+        <ReportField Name="DisposalMethodID_FADisposalMethod_description"></ReportField>
+        <ReportField Name="DisposalPeriodID"></ReportField>
+        <ReportField Name="FairMarketValue">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InventoryID_description"></ReportField>
+        <ReportField Name="InventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="InventoryLocationID"></ReportField>
+        <ReportField Name="InventoryLocationID_description"></ReportField>
+        <ReportField Name="InventoryLocationID_INLocation_descr"></ReportField>
+        <ReportField Name="IsReconciled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsTemplate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastCountDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastMeasurementUsageDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastServiceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastServiceValue">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LeaseNumber"></ReportField>
+        <ReportField Name="LeaseRentTerm">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LessorID"></ReportField>
+        <ReportField Name="LessorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="LessorID_description"></ReportField>
+        <ReportField Name="LessorID_Vendor_acctName"></ReportField>
+        <ReportField Name="LocationRevID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Manufacturer"></ReportField>
+        <ReportField Name="ManufacturingYear"></ReportField>
+        <ReportField Name="Model"></ReportField>
+        <ReportField Name="NextMeasurementUsageDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NextServiceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NextServiceValue">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PONumber"></ReportField>
+        <ReportField Name="PropertyType"></ReportField>
+        <ReportField Name="ReceiptDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ReceiptNbr"></ReportField>
+        <ReportField Name="ReceiptType"></ReportField>
+        <ReportField Name="RentAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReplacementCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReportingLineNbr"></ReportField>
+        <ReportField Name="RetailCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SaleAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SalvageAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SerialNumber"></ReportField>
+        <ReportField Name="SiteID"></ReportField>
+        <ReportField Name="SiteID_description"></ReportField>
+        <ReportField Name="SiteID_INSite_descr"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="SubItemID"></ReportField>
+        <ReportField Name="TagNbr"></ReportField>
+        <ReportField Name="TemplateID"></ReportField>
+        <ReportField Name="TemplateID_description"></ReportField>
+        <ReportField Name="TemplateID_FixedAsset_description"></ReportField>
+        <ReportField Name="TotalExpectedUsage">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TransferPeriod"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Warrantor"></ReportField>
+        <ReportField Name="WarrantyCertificateNumber"></ReportField>
+        <ReportField Name="WarrantyExpirationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.FA.FADetails</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>85.92275mm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0px</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>54mm</Height>
+      <Items>
+        <Panel Name="panel1">
+          <Location>0px, 0px</Location>
+          <Size>86mm, 54mm</Size>
+          <Style>
+            <BorderStyle>
+              <Default>Solid</Default>
+            </BorderStyle>
+            <BorderWidth>
+              <Default>1px</Default>
+            </BorderWidth>
+            <Color>Black</Color>
+          </Style>
+          <Items>
+            <PictureBox Name="pictureBox1">
+              <BarcodeSettings>
+                <BarHeight>500</BarHeight>
+              </BarcodeSettings>
+              <Location>76px, 49px</Location>
+              <MimeType>image/bmp</MimeType>
+              <Size>185px, 76px</Size>
+              <Source>Barcode</Source>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <Value>=CStr([FixedAsset.AssetCD])</Value>
+            </PictureBox>
+            <TextBox Name="textBox2">
+              <CanGrow>True</CanGrow>
+              <Location>8px, 0px</Location>
+              <Size>304px, 48px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <Value>='Property of '+[FixedAsset.BranchID_Branch_acctName]</Value>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <CanGrow>True</CanGrow>
+              <Location>8px, 154px</Location>
+              <Size>304px, 47px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <Value>=[FixedAsset.Description]</Value>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>8px, 129px</Location>
+              <Size>304px, 24px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <Value>=CStr([FADetails.TagNbr])</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0px</Height>
+    </PageFooter>
+  </Sections>
+</Report>

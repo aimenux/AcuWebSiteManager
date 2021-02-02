@@ -1,0 +1,357 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowWikiRevision</ChildName>
+      <ParentName>RowWikiPage</ParentName>
+      <Links>
+        <RelationRow>
+          <ChildField>PageID</ChildField>
+          <ParentField>PageID</ParentField>
+        </RelationRow>
+      </Links>
+    </ReportRelation>
+  </Relations>
+  <Filters>
+    <FilterExp>
+      <DataField>RowWikiRevision.CreatedByID</DataField>
+      <Operator>Or</Operator>
+      <OpenBraces>1</OpenBraces>
+      <Value>@UserID</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@UserID</DataField>
+      <CloseBraces>1</CloseBraces>
+    </FilterExp>
+    <FilterExp>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>RowWikiRevision.CreatedDateTime</DataField>
+      <Value>@DateFrom</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>RowWikiRevision.CreatedDateTime</DataField>
+      <Value>@DateTo</Value>
+    </FilterExp>
+  </Filters>
+  <Tables>
+    <ReportTable Name="RowWikiPage">
+      <Fields>
+        <ReportField Name="PageID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="WikiID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ArticleType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ParentUID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Number">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Name"></ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="Summary"></ReportField>
+        <ReportField Name="Keywords"></ReportField>
+        <ReportField Name="Versioned">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Folder">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CategoryID"></ReportField>
+        <ReportField Name="TagID"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="Language"></ReportField>
+        <ReportField Name="PageRevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PageRevisionCreatedByID"></ReportField>
+        <ReportField Name="PublishedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Content"></ReportField>
+        <ReportField Name="OldStatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StatusID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ApprovalGroupID"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowWikiRevision">
+      <Fields>
+        <ReportField Name="PageID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Language"></ReportField>
+        <ReportField Name="PageRevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Content"></ReportField>
+        <ReportField Name="ApprovalByID"></ReportField>
+        <ReportField Name="ApprovalDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Published">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SelectedDest">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <DrawGrid>False</DrawGrid>
+  <GridSize>4px, 4px</GridSize>
+  <Parameters>
+    <ReportParameter>
+      <Name>UserID</Name>
+      <ViewName>=Report.GetFieldSchema('Users.Username')</ViewName>
+      <Prompt>User</Prompt>
+      <ColumnSpan>2</ColumnSpan>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>DateFrom</Name>
+      <Type>DateTime</Type>
+      <Nullable>True</Nullable>
+      <Prompt>Start Date</Prompt>
+      <DefaultValue>=DateAdd(Report.GetDefExt('RowAccessInfo.BusinessDate'), 'd', -(Day(Report.GetDefExt('RowAccessInfo.BusinessDate')) - 1))</DefaultValue>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>DateTo</Name>
+      <Type>DateTime</Type>
+      <Nullable>True</Nullable>
+      <Prompt>End Date</Prompt>
+      <DefaultValue>=Report.GetDefExt('RowAccessInfo.BusinessDate')</DefaultValue>
+    </ReportParameter>
+  </Parameters>
+ <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>1.69312cm</Height>
+      <Items>
+        <TextBox Name="textBox10">
+          <Value>=Report.IntToUI('RowReportUsers.FriendlyName', @UserID)</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>400px, 32px</Location>
+          <Size>148px, 15px</Size>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Value>Selected User:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>292px, 32px</Location>
+          <Size>104px, 15px</Size>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Value>=[@DateTo]</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>400px, 16px</Location>
+          <Size>148px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Value>End Date:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>292px, 16px</Location>
+          <Size>104px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Value>=[@DateFrom]</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>400px, 0px</Location>
+          <Size>148px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Value>Start Date:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>292px, 0px</Location>
+          <Size>104px, 16px</Size>
+        </TextBox>
+        <Panel Name="panel1">
+          <Style>
+            <BorderColor>
+              <Top>Black</Top>
+              <Bottom>Black</Bottom>
+            </BorderColor>
+            <BorderStyle>
+              <Top>Solid</Top>
+              <Bottom>Solid</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Top>1px</Top>
+              <Bottom>1px</Bottom>
+            </BorderWidth>
+          </Style>
+          <Size>676px, 16px</Size>
+          <Location>4px, 48px</Location>
+          <Items>
+            <TextBox Name="textBox34">
+              <Value>Modif.Date</Value>
+              <StyleName>Heading 1</StyleName>
+              <Location>464px, 1px</Location>
+              <Size>84px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox1">
+              <Value>Article</Value>
+              <StyleName>Heading 1</StyleName>
+              <Location>0px, 1px</Location>
+              <Size>84px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Value>Number of Modif.</Value>
+              <StyleName>Heading 1</StyleName>
+              <Location>552px, 1px</Location>
+              <Size>124px, 14px</Size>
+            </TextBox>
+          </Items>
+        </Panel>
+        <TextBox Name="textBox9">
+          <Value>Wiki Article Statistics</Value>
+          <StyleName>Report Name</StyleName>
+          <Location>8px, 32px</Location>
+          <Size>206px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Value>Company:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>8px, 0px</Location>
+          <Size>76px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>90px, 0px</Location>
+          <Size>168px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Value>Date:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>560px, 16px</Location>
+          <Size>36px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Value>Page:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>560px, 0px</Location>
+          <Size>36px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Value>User:</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>8px, 16px</Location>
+          <Size>76px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Value>=[PageOf]</Value>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Location>596px, 0px</Location>
+          <Size>84px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Value>=Report.GetDefUI('RowAccessInfo.Displayname')</Value>
+          <StyleName>Report Params</StyleName>
+          <Location>90px, 16px</Location>
+          <Size>168px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Value>=Today()</Value>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Location>596px, 16px</Location>
+          <Size>84px, 16px</Size>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowWikiPage.PageID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>0.42328cm</Height>
+          <Items>
+            <TextBox Name="textBox13">
+              <Value>=IIf( [RowWikiRevision.CreatedDateTime]&gt;[RowWikiPage.LastModifiedDateTime], [RowWikiRevision.CreatedDateTime], [RowWikiPage.LastModifiedDateTime] )</Value>
+              <StyleName>Normal</StyleName>
+              <Location>468px, 0px</Location>
+              <Size>84px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Value>=Count([RowWikiPage.PageID])</Value>
+              <StyleName>Normal</StyleName>
+              <Location>556px, 0px</Location>
+              <Size>124px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <Value>=[RowWikiPage.Name]</Value>
+              <StyleName>Normal</StyleName>
+              <Location>4px, 0px</Location>
+              <Size>460px, 14px</Size>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0.21164cm</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

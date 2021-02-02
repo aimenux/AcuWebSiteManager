@@ -1,0 +1,653 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>12</item>
+    <item>18</item>
+    <item>13</item>
+    <item>13</item>
+    <item>13</item>
+    <item>17</item>
+    <item>17</item>
+    <item>20</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>Batch.Module</DataField>
+      <Value>='CA'</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Batch.Released</DataField>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Batch.Posted</DataField>
+      <OpenBraces>2</OpenBraces>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@Unposted</DataField>
+      <Operator>Or</Operator>
+      <Value>False</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>@Unposted</DataField>
+      <Value>True</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>GreaterOrEqual</Condition>
+      <DataField>Batch.FinPeriodID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@FromPeriod</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@FromPeriod</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>Batch.FinPeriodID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ToPeriod</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@ToPeriod</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Batch.LedgerID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@LedgerID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@LedgerID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>Batch.BranchID</DataField>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Batch.CreatedByID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@CreatedUser</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@CreatedUser</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Batch.LastModifiedByID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@LAstUpdated</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@LastUpdated</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <NavigationTree>False</NavigationTree>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.NotBudgetLedgerID')</DefaultValue>
+      <Name>LedgerID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Ledger</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.NotBudgetLedgerIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>FromPeriod</Name>
+      <Prompt>From Period</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>ToPeriod</Name>
+      <Prompt>To Period</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>CreatedUser</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Created By</Prompt>
+      <ViewName>=Report.GetFieldSchema('Users.Username')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>LastUpdated</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Last Modified By</Prompt>
+      <ViewName>=Report.GetFieldSchema('Users.Username')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>True</DefaultValue>
+      <Name>Unposted</Name>
+      <Prompt>Include Unposted Transactons</Prompt>
+      <Required>True</Required>
+      <Type>Boolean</Type>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://localhost/MAIN</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>Batch.BatchNbr</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="Batch">
+      <Fields>
+        <ReportField Name="AutoReverse">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoReverseCopy">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BatchType"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="ControlTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreditTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryControlTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryCreditTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDebitTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DateEntered">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DebitTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="Draft">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LineCntr">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="NumberCode"></ReportField>
+        <ReportField Name="OrigBatchNbr"></ReportField>
+        <ReportField Name="OrigModule"></ReportField>
+        <ReportField Name="Posted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Scheduled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ScheduleID"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TranPeriodID"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Voided">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Batch</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>19.78836cm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>1.48148cm</Height>
+      <Items>
+        <TextBox Name="textBox10">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>640px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>380px, 20px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Last Modify By:</Value>
+          <VisibleExpr>=[@LastUpdated]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>380px, 36px</Location>
+          <Size>160px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Include Unposted Transactions</Value>
+          <VisibleExpr>=[@Unposted]</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>4px, 36px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Ledger:</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>460px, 4px</Location>
+          <Size>112px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@CreatedUser]</Value>
+        </TextBox>
+        <TextBox Name="textBox21">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>8</column>
+            <row>3</row>
+          </Excel>
+          <Location>640px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Location>460px, 20px</Location>
+          <Size>112px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@LastUpdated]</Value>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>640px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Excel>
+            <column>7</column>
+            <row>3</row>
+          </Excel>
+          <Location>600px, 36px</Location>
+          <Size>32px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>600px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+          </Excel>
+          <Location>600px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>104px, 36px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@LedgerID]</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Location>4px, 0px</Location>
+          <Size>188px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>CA Batch Register</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>380px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Created By:</Value>
+          <VisibleExpr>=[@CreatedUser]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Excel>
+            <column>3</column>
+            <row>2</row>
+          </Excel>
+          <Location>200px, 20px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>From Period:</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Excel>
+            <column>3</column>
+            <row>3</row>
+          </Excel>
+          <Location>200px, 36px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>To Period:</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Excel>
+            <column>4</column>
+            <row>3</row>
+          </Excel>
+          <Location>280px, 36px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('OrganizationBranchReportParameters.FinPeriodID', @ToPeriod)</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>280px, 20px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('OrganizationBranchReportParameters.FinPeriodID', @FromPeriod)</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>14px</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>416px, 0px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.CreatedByID_Creator_Username]</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Location>4px, 0px</Location>
+          <Size>68px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.FinPeriodID]</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>180px, 0px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.DateEntered]</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>336px, 0px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.Status]</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>520px, 0px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.LastModifiedByID_Modifier_Username]</Value>
+        </TextBox>
+        <TextBox Name="textBox30">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>260px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.CuryID]</Value>
+        </TextBox>
+        <TextBox Name="textBox43">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>620px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.CuryControlTotal]</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>72px, 0px</Location>
+          <NavigateMethod>Server</NavigateMethod>
+          <Size>108px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[Batch.BatchNbr]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox11">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>520px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Updated By</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>336px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Status</Value>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>260px, 4px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Currency</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>180px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Date</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>4px, 4px</Location>
+          <Size>68px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Period</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>416px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Created By</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>72px, 4px</Location>
+          <Size>108px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Batch Number</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>620px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Control Total</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+</Report>

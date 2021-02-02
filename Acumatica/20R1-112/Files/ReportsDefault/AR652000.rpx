@@ -1,0 +1,1348 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>21</item>
+    <item>19</item>
+    <item>18</item>
+    <item>19</item>
+    <item>19</item>
+    <item>18</item>
+    <item>19</item>
+    <item>19</item>
+    <item>18</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <Condition>Between</Condition>
+      <DataField>BaseARHistoryByPeriod.FinPeriodID</DataField>
+      <Value>@FromPeriodID</Value>
+      <Value2>@ToPeriodID</Value2>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>BaseARHistoryByPeriod.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>ARHistory.CustomerID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@CustomerID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@CustomerID</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>FromPeriodID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>From Period</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>ToPeriodID</Name>
+      <Prompt>To Period</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>CustomerID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Customer</Prompt>
+      <ViewName>=Report.GetFieldSchema('ARPayment.CustomerID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>ARHistory</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>AccountID</ChildField>
+          <ParentField>AccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>FinPeriodID</ChildField>
+          <ParentField>LastActivityPeriod</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>SubID</ChildField>
+          <ParentField>SubID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>BaseARHistoryByPeriod</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARHistory</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Customer</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARHistory</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/x3</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>BaseARHistoryByPeriod.FinPeriodID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="ARHistory">
+      <Fields>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="DetDeleted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinBegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinFlag">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="FinPtdCOGS">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdCrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdDiscounts">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdDrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdFinCharges">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdPayments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdRevalued">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdRGOL">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPtdSales">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinYtdBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinYtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="NumberInvoicePaid">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PaidInvoiceDays">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="PtdCOGS">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdCrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdDiscounts">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdDrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdFinCharges">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdPayments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdRGOL">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PtdSales">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TranBegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdCOGS">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdCrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdDiscounts">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdDrAdjustments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdFinCharges">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdPayments">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdRGOL">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPtdSales">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranYtdBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranYtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="YtdBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="YtdDeposits">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.ARHistory</FullName>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="BaseARHistoryByPeriod">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="LastActivityPeriod"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.BaseARHistoryByPeriod</FullName>
+    </ReportTable>
+    <ReportTable Name="Customer">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoApplyPayments">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseBillContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COGSAcctID"></ReportField>
+        <ReportField Name="COGSAcctID_Account_description"></ReportField>
+        <ReportField Name="COGSAcctID_description"></ReportField>
+        <ReportField Name="COGSSubID"></ReportField>
+        <ReportField Name="COGSSubID_description"></ReportField>
+        <ReportField Name="COGSSubID_Sub_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreditDaysPastDue">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CreditLimit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreditRule"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="CustomerClassID"></ReportField>
+        <ReportField Name="CustomerClassID_CustomerClass_descr"></ReportField>
+        <ReportField Name="CustomerClassID_description"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefBillAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefBillContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="DefPaymentMethodID"></ReportField>
+        <ReportField Name="DefPaymentMethodID_description"></ReportField>
+        <ReportField Name="DefPaymentMethodID_PaymentMethod_descr"></ReportField>
+        <ReportField Name="DefPMInstanceID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefSOAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DiscTakenAcctID"></ReportField>
+        <ReportField Name="DiscTakenAcctID_Account_description"></ReportField>
+        <ReportField Name="DiscTakenAcctID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID"></ReportField>
+        <ReportField Name="DiscTakenSubID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID_Sub_description"></ReportField>
+        <ReportField Name="EntityType"></ReportField>
+        <ReportField Name="FinChargeApply">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsBillContSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsBillSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LanguageID"></ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="MailInvoices">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PayToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentAcctID"></ReportField>
+        <ReportField Name="PrepaymentAcctID_Account_description"></ReportField>
+        <ReportField Name="PrepaymentAcctID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID"></ReportField>
+        <ReportField Name="PrepaymentSubID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID_Sub_description"></ReportField>
+        <ReportField Name="PrintCuryStatements">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintInvoices">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintStatements">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SendStatementByEmail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SmallBalanceAllow">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SmallBalanceLimit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SmallBalanceWOAcctID"></ReportField>
+        <ReportField Name="SmallBalanceWOAcctID_Account_description"></ReportField>
+        <ReportField Name="SmallBalanceWOAcctID_description"></ReportField>
+        <ReportField Name="SmallBalanceWOSubID"></ReportField>
+        <ReportField Name="SmallBalanceWOSubID_description"></ReportField>
+        <ReportField Name="SmallBalanceWOSubID_Sub_description"></ReportField>
+        <ReportField Name="SmallCreditWOAcctID"></ReportField>
+        <ReportField Name="SmallCreditWOAcctID_Account_description"></ReportField>
+        <ReportField Name="SmallCreditWOAcctID_description"></ReportField>
+        <ReportField Name="SmallCreditWOSubID"></ReportField>
+        <ReportField Name="SmallCreditWOSubID_description"></ReportField>
+        <ReportField Name="SmallCreditWOSubID_Sub_description"></ReportField>
+        <ReportField Name="StatementCycleId"></ReportField>
+        <ReportField Name="StatementLastDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StatementType"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="TermsID_description"></ReportField>
+        <ReportField Name="TermsID_Terms_descr"></ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.Customer</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 8px</GridSize>
+      <Height>56px</Height>
+      <Items>
+        <TextBox Name="textBox11">
+          <Location>4px, 1px</Location>
+          <Size>244px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Customer History</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>880px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>880px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox32">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>416px, 4px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('RowBatch.TranPeriodID', @FromPeriodID)</Value>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>From Period:</Value>
+          <VisibleExpr>=[@FromPeriodID]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 20px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>To Period:</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Excel>
+            <column>6</column>
+            <row>3</row>
+          </Excel>
+          <Location>416px, 36px</Location>
+          <Size>184px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@CustomerID]</Value>
+          <VisibleExpr>=([@CustomerID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Location>416px, 20px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('RowBatch.TranPeriodID', @ToPeriodID)</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>320px, 36px</Location>
+          <Size>96px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Customer:</Value>
+          <VisibleExpr>=([@CustomerID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox58">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>10</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox59">
+          <Excel>
+            <column>9</column>
+            <row>3</row>
+          </Excel>
+          <Location>880px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>23px</Height>
+      <Items>
+        <Line Name="line4">
+          <Excel>
+            <width>9</width>
+          </Excel>
+          <Location>4px, 0px</Location>
+          <Size>1022px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox27">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>110px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=$BegBalance</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>880px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=$YTDBalance</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>440px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDrAdjustments],0))</Value>
+        </TextBox>
+        <TextBox Name="textBox43">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>220px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod], [ARHistory.FinPtdSales], 0))</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Location>4px, 1px</Location>
+          <Size>105px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Company Totals</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>330px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdPayments],0))</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>550px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdCrAdjustments],0))</Value>
+        </TextBox>
+        <TextBox Name="textBox47">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>770px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDiscounts],0))</Value>
+        </TextBox>
+        <TextBox Name="textBox57">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+          <Location>660px, 1px</Location>
+          <Size>110px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdFinCharges],0))</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox10">
+          <Location>4px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Customer</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>128px, 4px</Location>
+          <Size>216px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Customer Name</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>BAccount.AcctCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>24px</Height>
+          <StyleName>GroupHighlight</StyleName>
+          <Variables>
+            <ReportVariable>
+              <Name>CustomerBegBal</Name>
+              <ValueExpr>= null</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox1">
+              <Location>4px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[ARHistory.CustomerID]</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>128px, 4px</Location>
+              <Size>216px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[BAccount.AcctName]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <StyleName>GroupL1Highlight</StyleName>
+          <Items>
+            <TextBox Name="textBox12">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Location>660px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Overdue charges</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Location>880px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>YTD Balance</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Location>770px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Disc. Allowed</Value>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Location>550px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Credit Adj.</Value>
+            </TextBox>
+            <TextBox Name="textBox51">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>440px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Debit Adj.</Value>
+            </TextBox>
+            <TextBox Name="textBox56">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>330px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Receipts</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>220px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Sales</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>4px, 4px</Location>
+              <Size>105px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Period</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>110px, 4px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Beg. Balance</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>18px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>BegBalance</Name>
+              <ValueExpr>=$CustomerBegBal + $BegBalance</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>YTDBalance</Name>
+              <ValueExpr>=$CustomerYtdBalance + $YTDBalance</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <Line Name="line1">
+              <Excel>
+                <width>9</width>
+              </Excel>
+              <Location>4px, 0px</Location>
+              <Size>1022px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox2">
+              <Location>4px, 1px</Location>
+              <Size>105px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Customer Totals</Value>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>440px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDrAdjustments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>330px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdPayments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>770px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDiscounts],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>220px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod], [ARHistory.FinPtdSales], 0))</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>880px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=$CustomerYtdBalance</Value>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>550px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdCrAdjustments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>110px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=$CustomerBegBal</Value>
+            </TextBox>
+            <TextBox Name="textBox53">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>660px, 1px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdFinCharges],0))</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection3">
+          <ExcelMargin>
+            <bottom>1</bottom>
+          </ExcelMargin>
+          <GridSize>8px, 8px</GridSize>
+          <Height>7px</Height>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group2">
+      <Grouping>
+        <GroupExp>
+          <DataField>BaseARHistoryByPeriod.FinPeriodID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>14px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>CustomerBegBal</Name>
+              <ValueExpr>=IIF($CustomerBegBal &lt;&gt; null, $CustomerBegBal, Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinBegBalance],[ARHistory.FinYtdBalance] )))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustomerYtdBalance</Name>
+              <ResetGroup>group1</ResetGroup>
+              <ValueExpr>=Sum([ARHistory.FinYtdBalance])</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox23">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>110px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinBegBalance],[ARHistory.FinYtdBalance] ))</Value>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>880px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([ARHistory.FinYtdBalance])</Value>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>660px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdFinCharges],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>770px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDiscounts],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>550px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdCrAdjustments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>440px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdDrAdjustments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>330px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod],[ARHistory.FinPtdPayments],0))</Value>
+            </TextBox>
+            <TextBox Name="textBox54">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Format>=Report.GetFormat('RowCustomer.CreditLimit')</Format>
+              <Location>220px, 0px</Location>
+              <Size>110px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(iif([BaseARHistoryByPeriod.FinPeriodID] = [BaseARHistoryByPeriod.LastActivityPeriod], [ARHistory.FinPtdSales], 0))</Value>
+            </TextBox>
+            <TextBox Name="textBox55">
+              <Location>4px, 0px</Location>
+              <Size>105px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=#010;[BaseARHistoryByPeriod.FinPeriodID]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

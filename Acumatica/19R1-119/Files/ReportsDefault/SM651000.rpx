@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <DrawGrid>False</DrawGrid>
+  <Filters>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>RowUsers.PKID</DataField>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>RowUsers.IsHidden</DataField>
+      <Value>True</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>D</DefaultValue>
+      <Name>ReportFormat</Name>
+      <Prompt>Format</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Detailed</Label>
+          <Value>D</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Summary</Label>
+          <Value>S</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowUsersInRoles</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>Rolename</ChildField>
+          <ParentField>Rolename</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowRoles</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>RowUsers</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>Username</ChildField>
+          <ParentField>Username</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>RowUsersInRoles</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://px2/test/Api/Interface.asmx?WSDL</SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="RowUsers">
+      <Fields>
+        <ReportField Name="PKID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Username"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="ApplicationName"></ReportField>
+        <ReportField Name="Email"></ReportField>
+        <ReportField Name="Comment"></ReportField>
+        <ReportField Name="Password"></ReportField>
+        <ReportField Name="OldPassword"></ReportField>
+        <ReportField Name="NewPassword"></ReportField>
+        <ReportField Name="ConfirmPassword"></ReportField>
+        <ReportField Name="AllowPasswordRecovery">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PasswordQuestion"></ReportField>
+        <ReportField Name="PasswordAnswer"></ReportField>
+        <ReportField Name="PasswordChangeOnNextLogin">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PasswordChangeable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PasswordNeverExpires">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsApproved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Guest">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivityDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastLoginDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastPasswordChangedDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="IsOnLine">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LockedOutDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="IsLockedOut">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastLockedOutDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FailedPasswordAttemptCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="FailedPasswordAttemptWindowStart">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FailedPasswordAnswerAttemptCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="FailedPasswordAnswerAttemptWindowStart">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="State">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="IsHidden">
+          <DataType>Boolean</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowUsersInRoles">
+      <Fields>
+        <ReportField Name="Username"></ReportField>
+        <ReportField Name="Rolename"></ReportField>
+        <ReportField Name="ApplicationName"></ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowRoles">
+      <Fields>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="ApplicationName"></ReportField>
+        <ReportField Name="Guest"></ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>47px</Height>
+      <Items>
+        <Line Name="line1">
+          <Location>8px, 46px</Location>
+          <Size>672px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox11">
+          <Location>8px, 0px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Location>90px, 0px</Location>
+          <Size>168px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Location>560px, 16px</Location>
+          <Size>36px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>560px, 0px</Location>
+          <Size>36px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Location>8px, 16px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Location>596px, 0px</Location>
+          <Size>84px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Location>90px, 16px</Location>
+          <Size>168px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Location>596px, 16px</Location>
+          <Size>84px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Today()</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Location>8px, 32px</Location>
+          <Size>206px, 14px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Role List</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <VisibleExpr>=([@ReportFormat]='D')</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox10">
+          <Location>28px, 0px</Location>
+          <Size>156px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowUsersInRoles.Username]</Value>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <Location>360px, 0px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowUsers.Email]</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <Location>532px, 0px</Location>
+          <Size>148px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowUsers.Comment]</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Location>188px, 0px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[RowUsers.FirstName]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.21164cm</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <Height>0.42328cm</Height>
+      <VisibleExpr>=([@ReportFormat]='S')</VisibleExpr>
+      <Items>
+        <Panel Name="panel1">
+          <DrawGrid>True</DrawGrid>
+          <GridSize>8px, 8px</GridSize>
+          <Location>4px, 0px</Location>
+          <Size>676px, 16px</Size>
+          <Style>
+            <BorderColor>
+              <Bottom>Black</Bottom>
+            </BorderColor>
+            <BorderStyle>
+              <Bottom>Solid</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Bottom>1px</Bottom>
+            </BorderWidth>
+          </Style>
+          <Items>
+            <TextBox Name="textBox1">
+              <Location>116px, 1px</Location>
+              <Size>84px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Description</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Location>0px, 1px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Role Name</Value>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Location>544px, 1px</Location>
+              <Size>132px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Number of Users</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowRoles.RoleName</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>15px</Height>
+          <VisibleExpr>=([@ReportFormat]='S')</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox2">
+              <Location>120px, 0px</Location>
+              <Size>460px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowRoles.Descr]</Value>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>4px, 0px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowRoles.RoleName]</Value>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>584px, 0px</Location>
+              <Size>96px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Count([RowUsersInRoles.Username])</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection2">
+          <DrawGrid>True</DrawGrid>
+          <GridSize>8px, 8px</GridSize>
+          <Height>31px</Height>
+          <VisibleExpr>=([@ReportFormat]='D')</VisibleExpr>
+          <Items>
+            <Panel Name="panel3">
+              <Location>4px, 0px</Location>
+              <Size>676px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Bottom>Black</Bottom>
+                </BorderColor>
+                <BorderStyle>
+                  <Bottom>Solid</Bottom>
+                </BorderStyle>
+                <BorderWidth>
+                  <Bottom>1px</Bottom>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox20">
+                  <Location>544px, 1px</Location>
+                  <Size>132px, 14px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Number of Users</Value>
+                </TextBox>
+                <TextBox Name="textBox21">
+                  <Location>116px, 1px</Location>
+                  <Size>84px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Description</Value>
+                </TextBox>
+                <TextBox Name="textBox22">
+                  <Location>0px, 1px</Location>
+                  <Size>112px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Role Name</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <TextBox Name="textBox24">
+              <Location>4px, 16px</Location>
+              <Size>112px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowRoles.RoleName]</Value>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>120px, 16px</Location>
+              <Size>460px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[RowRoles.Descr]</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Location>584px, 16px</Location>
+              <Size>96px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Count([RowUsersInRoles.Username])</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection3">
+          <Height>0.42328cm</Height>
+          <VisibleExpr>=([@ReportFormat]='D')</VisibleExpr>
+          <Items>
+            <Panel Name="panel2">
+              <Location>28px, 0px</Location>
+              <Size>652px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Bottom>Black</Bottom>
+                </BorderColor>
+                <BorderStyle>
+                  <Bottom>Solid</Bottom>
+                </BorderStyle>
+                <BorderWidth>
+                  <Bottom>1px</Bottom>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox29">
+                  <Location>504px, 1px</Location>
+                  <Size>96px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Description</Value>
+                </TextBox>
+                <TextBox Name="textBox5">
+                  <Location>332px, 1px</Location>
+                  <Size>96px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Email</Value>
+                </TextBox>
+                <TextBox Name="textBox6">
+                  <Location>160px, 1px</Location>
+                  <Size>84px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>First Name</Value>
+                </TextBox>
+                <TextBox Name="textBox7">
+                  <Location>0px, 1px</Location>
+                  <Size>112px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>User</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0.21164cm</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

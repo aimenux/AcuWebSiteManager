@@ -1,0 +1,1080 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>CROpportunity.OwnerID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OwnerID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OwnerID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>CROpportunity.WorkgroupID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Workgroup</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@WorkgroupID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>CROpportunity.ClassID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@ClassID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@ClassID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Contact.Source</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@LeadSource</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@LeadSource</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>CROpportunity.Status</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>L</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>NotEqual</Condition>
+      <DataField>CROpportunity.Status</DataField>
+      <Value>W</Value>
+    </FilterExp>
+  </Filters>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>D</DefaultValue>
+      <Name>Format</Name>
+      <Prompt>Format</Prompt>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Detailed</Label>
+          <Value>D</Value>
+        </ParameterValue>
+        <ParameterValue>
+          <Label>Summary</Label>
+          <Value>S</Value>
+        </ParameterValue>
+      </ValidValues>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>WorkgroupID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Workgroup</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.WorkgroupID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>OwnerID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Owner</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.OwnerID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ClassID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Class ID</Prompt>
+      <ViewName>=Report.GetFieldSchema('CROpportunity.ClassID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>LeadSource</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Lead Source</Prompt>
+      <ViewName>=Report.GetFieldSchema('Contact.Source')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>ContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CROpportunity</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CROpportunity</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>CROpportunityProbability</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>StageCode</ChildField>
+          <ParentField>StageID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>CROpportunity</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>localhost/ac-82007</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>CROpportunity.Subject</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>CROpportunity.OpportunityID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="CROpportunity">
+      <Fields>
+        <ReportField Name="AllowOverrideContactAddress">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ARRefNbr"></ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CampaignSourceID"></ReportField>
+        <ReportField Name="CampaignSourceID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignSourceID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="CloseDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ClosingDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactID_Contact_displayName"></ReportField>
+        <ReportField Name="ContactID_description"></ReportField>
+        <ReportField Name="ConvertedLeadID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ConvertedLeadID_Contact_displayName"></ReportField>
+        <ReportField Name="ConvertedLeadID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CROpportunityClassID"></ReportField>
+        <ReportField Name="CROpportunityClassID_CROpportunityClass_description"></ReportField>
+        <ReportField Name="CROpportunityClassID_description"></ReportField>
+        <ReportField Name="CuryAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryLineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryProductsAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryWgtAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="IsTaxValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModified">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="LocationID_description"></ReportField>
+        <ReportField Name="LocationID_Location_descr"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ManualTotalEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OpportunityAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OpportunityContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OpportunityID"></ReportField>
+        <ReportField Name="OpportunityName"></ReportField>
+        <ReportField Name="OpportunityNumber">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrderNbr"></ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PRODREQ_Attributes"></ReportField>
+        <ReportField Name="ProductCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ProductsAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="RawAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="StageChangedDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StageID"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="VatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.CROpportunity</FullName>
+    </ReportTable>
+    <ReportTable Name="Contact">
+      <Fields>
+        <ReportField Name="Address"></ReportField>
+        <ReportField Name="Anniversary">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="CampaignID"></ReportField>
+        <ReportField Name="CampaignID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRContactClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactPriority">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="ConvertedBy"></ReportField>
+        <ReportField Name="ConvertedBy_description"></ReportField>
+        <ReportField Name="ConvertedBy_Users_fullName"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DeletedDatabaseRecord">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="DuplicateFound">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DuplicateStatus"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="Gender"></ReportField>
+        <ReportField Name="GrammValidationDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Date">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Time">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Img"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAddressSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsConvertable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="LOCATION_Attributes"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaritalStatus"></ReportField>
+        <ReportField Name="Method"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="NoCall">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoEMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoFax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMarketing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMassMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="POSITION_Attributes"></ReportField>
+        <ReportField Name="PRODREQ_Attributes"></ReportField>
+        <ReportField Name="QualificationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ResetOwner">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="SearchSuggestion"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="Spouse"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Synchronize">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UserID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Contact</FullName>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ConsolidateToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatingBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsCustomerOrCombined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="CROpportunityProbability">
+      <Fields>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Name"></ReportField>
+        <ReportField Name="Probability">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SortOrder">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StageCode"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.CROpportunityProbability</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>2.75132cm</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <Location>8px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox10">
+          <Location>8px, 40px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Workgroup:</Value>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <Location>8px, 56px</Location>
+          <Size>76px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Owner:</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Location>90px, 0px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.CompanyName')</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>8px, 14px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Location>90px, 14px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Location>896px, 0px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Location>304px, 40px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Source:</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Location>304px, 56px</Location>
+          <Size>64px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Class ID:</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Location>88px, 40px</Location>
+          <Size>200px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@WorkgroupID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Location>936px, 0px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox74">
+          <Location>88px, 56px</Location>
+          <Size>200px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@OwnerID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox75">
+          <Location>368px, 40px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@LeadSource,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox76">
+          <Location>368px, 56px</Location>
+          <Size>120px, 16px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=IsNull(@ClassID,'All')</Value>
+        </TextBox>
+        <TextBox Name="textBox78">
+          <Location>8px, 80px</Location>
+          <Size>280px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Opportunity Pipeline by Workgroup</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Format>g</Format>
+          <Location>936px, 14px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Location>896px, 14px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Count2</Name>
+          <ResetGroup>GroupWorkGroup</ResetGroup>
+          <ValueExpr>=$Count2 + 1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amount2</Name>
+          <ResetGroup>GroupWorkGroup</ResetGroup>
+          <ValueExpr>=$Amount2 + [CROpportunity.CuryProductsAmount]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Probability2</Name>
+          <ResetGroup>GroupWorkGroup</ResetGroup>
+          <ValueExpr>=$Probability2 + [CROpportunityProbability.Probability]</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WgtTotal2</Name>
+          <ResetGroup>GroupWorkGroup</ResetGroup>
+          <ValueExpr>=$WgtTotal2 + [CROpportunity.CuryProductsAmount]*[CROpportunityProbability.Probability]/100</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <VisibleExpr>=(@Format='D')</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox2">
+          <Location>16px, 0px</Location>
+          <Size>132px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunity.Subject]</Value>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <Location>192px, 0px</Location>
+          <Size>88px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunity.Status]</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Location>304px, 0px</Location>
+          <Size>76px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunityProbability.Name]</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Location>400px, 0px</Location>
+          <Size>92px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunity.CloseDate]</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <Location>504px, 0px</Location>
+          <Size>136px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunity.LastActivity]</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <Location>728px, 0px</Location>
+          <Size>72px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunityProbability.Probability]</Value>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <Format>=[CROpportunity.Amount.Format]</Format>
+          <Location>808px, 0px</Location>
+          <Size>96px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[CROpportunity.CuryProductsAmount]*[CROpportunityProbability.Probability]/100</Value>
+        </TextBox>
+        <TextBox Name="textBox53">
+          <Format>=[CROpportunity.CuryProductsAmount.Format]</Format>
+          <Location>640px, 0px</Location>
+          <Size>88px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[CROpportunity.CuryProductsAmount]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0cm</Height>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="GroupWorkGroup">
+      <Grouping>
+        <GroupExp>
+          <DataField>Contact.WorkgroupID</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <Height>0.42328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Variables>
+            <ReportVariable>
+              <Name>Own1</Name>
+              <ValueExpr>=$Own1 + 1</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=((@Format='D') or ($Own1=1))</VisibleExpr>
+          <Items>
+            <Panel Name="panel2">
+              <Location>16px, 0px</Location>
+              <Size>704px, 15px</Size>
+              <Style>
+                <BorderColor>
+                  <Bottom>Black</Bottom>
+                </BorderColor>
+                <BorderStyle>
+                  <Bottom>Solid</Bottom>
+                </BorderStyle>
+                <BorderWidth>
+                  <Bottom>1px</Bottom>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox31">
+                  <Location>0px, 0px</Location>
+                  <Size>116px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Workgroup</Value>
+                </TextBox>
+                <TextBox Name="textBox36">
+                  <Location>176px, 0px</Location>
+                  <Size>56px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Name</Value>
+                </TextBox>
+                <TextBox Name="textBox40">
+                  <Location>396px, 0px</Location>
+                  <Size>56px, 14px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Quantity</Value>
+                </TextBox>
+                <TextBox Name="textBox41">
+                  <Location>480px, 0px</Location>
+                  <Size>96px, 12px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Total</Value>
+                </TextBox>
+                <TextBox Name="textBox42">
+                  <Location>632px, 0px</Location>
+                  <Size>68px, 14px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Wgt.Total</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection5">
+          <Height>0.42328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Items>
+            <TextBox Name="textBox18">
+              <Location>192px, 0px</Location>
+              <Size>184px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=IsNull([CROpportunity.WorkgroupID_description],'Unassigned')</Value>
+            </TextBox>
+            <TextBox Name="textBox59">
+              <Location>16px, 0px</Location>
+              <Size>172px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=IsNull([CROpportunity.WorkgroupID],'Unassigned')</Value>
+            </TextBox>
+            <TextBox Name="textBox61">
+              <Location>408px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>56px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Count2</Value>
+            </TextBox>
+            <TextBox Name="textBox62">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>488px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>104px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amount2</Value>
+            </TextBox>
+            <TextBox Name="textBox63">
+              <Format>=[CROpportunity.Amount.Format]</Format>
+              <Location>608px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WgtTotal2</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection6">
+          <Height>0.42328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <VisibleExpr>=@Format='D'</VisibleExpr>
+          <Items>
+            <Panel Name="panel7">
+              <Location>16px, 0px</Location>
+              <Size>888px, 15px</Size>
+              <Style>
+                <BackColor>Transparent</BackColor>
+                <BorderColor>
+                  <Bottom>Black</Bottom>
+                </BorderColor>
+                <BorderStyle>
+                  <Bottom>Solid</Bottom>
+                </BorderStyle>
+                <BorderWidth>
+                  <Bottom>1px</Bottom>
+                </BorderWidth>
+              </Style>
+              <Items>
+                <TextBox Name="textBox79">
+                  <Location>0px, 0px</Location>
+                  <Size>128px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Opportunity Name</Value>
+                </TextBox>
+                <TextBox Name="textBox80">
+                  <Location>176px, 0px</Location>
+                  <Size>76px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Status</Value>
+                </TextBox>
+                <TextBox Name="textBox81">
+                  <Location>288px, 0px</Location>
+                  <Size>84px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Stage</Value>
+                </TextBox>
+                <TextBox Name="textBox82">
+                  <Location>384px, 0px</Location>
+                  <Size>96px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Estimation</Value>
+                </TextBox>
+                <TextBox Name="textBox83">
+                  <Location>488px, 0px</Location>
+                  <Size>80px, 14px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Last Act.</Value>
+                </TextBox>
+                <TextBox Name="textBox84">
+                  <Location>656px, 0px</Location>
+                  <Size>56px, 14px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Total</Value>
+                </TextBox>
+                <TextBox Name="textBox85">
+                  <Location>712px, 0px</Location>
+                  <Size>72px, 14px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Prob.</Value>
+                </TextBox>
+                <TextBox Name="textBox86">
+                  <Location>824px, 0px</Location>
+                  <Size>64px, 14px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Wgt.Total</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <Height>0.74074cm</Height>
+          <VisibleExpr>=(@Format='D')</VisibleExpr>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

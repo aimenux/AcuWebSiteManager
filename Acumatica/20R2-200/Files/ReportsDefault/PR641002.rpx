@@ -1,0 +1,1008 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PRPaymentTax.RefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPaymentTax.DocType</DataField>
+      <Value>@DocType</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>Greater</Condition>
+      <DataField>PRPaymentTax.TaxAmount</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>0</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>Greater</Condition>
+      <DataField>PRPaymentTax.YtdAmount</DataField>
+      <Value>0</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPaymentTax.TaxCategory</DataField>
+      <Value>EWH</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>REG</DefaultValue>
+      <Name>DocType</Name>
+      <Prompt>Check Type:</Prompt>
+      <Required>True</Required>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Regular Pay Check</Label>
+          <Value>REG</Value>
+        </ParameterValue>
+      </ValidValues>
+      <ViewName>=[PRPaymentTax.DocType]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>RefNbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Ref Number</Prompt>
+      <ViewName>=[PRPayment.RefNbr]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>CalcYTD</Name>
+      <Required>True</Required>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>PRTaxCode</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>PRTaxCode.TaxID</ChildField>
+          <ParentField>PRPaymentTax.TaxID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PRPaymentTax</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/AcumaticaDB0021</SchemaUrl>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PRPaymentTax">
+      <Fields>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="TaxAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmountEmp">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxAmountWH">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxCategory"></ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxID_description"></ReportField>
+        <ReportField Name="TaxID_PRTaxCode_description"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="WageBaseAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WageBaseGrossAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WageBaseHours">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="YtdAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPaymentTax</FullName>
+    </ReportTable>
+    <ReportTable Name="PRTaxCode">
+      <Fields>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BAccountID_Segment1"></ReportField>
+        <ReportField Name="BAccountID_Vendor_acctName"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="ExpenseAcctID"></ReportField>
+        <ReportField Name="ExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="ExpenseAcctID_description"></ReportField>
+        <ReportField Name="ExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="ExpenseSubID"></ReportField>
+        <ReportField Name="ExpenseSubID_description"></ReportField>
+        <ReportField Name="ExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="ExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="ExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="GovtRefNbr"></ReportField>
+        <ReportField Name="JurisdictionLevel"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LiabilityAcctID"></ReportField>
+        <ReportField Name="LiabilityAcctID_Account_description"></ReportField>
+        <ReportField Name="LiabilityAcctID_description"></ReportField>
+        <ReportField Name="LiabilityAcctID_Segment1"></ReportField>
+        <ReportField Name="LiabilitySubID"></ReportField>
+        <ReportField Name="LiabilitySubID_description"></ReportField>
+        <ReportField Name="LiabilitySubID_Segment1"></ReportField>
+        <ReportField Name="LiabilitySubID_Segment2"></ReportField>
+        <ReportField Name="LiabilitySubID_Sub_description"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="ReflectiveUniqueCode"></ReportField>
+        <ReportField Name="TaxCategory"></ReportField>
+        <ReportField Name="TaxCD"></ReportField>
+        <ReportField Name="TaxID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxInvDescrType"></ReportField>
+        <ReportField Name="TaxState"></ReportField>
+        <ReportField Name="TaxState_description"></ReportField>
+        <ReportField Name="TaxState_State_name"></ReportField>
+        <ReportField Name="TaxUniqueCode"></ReportField>
+        <ReportField Name="TaxUniqueCodeDescription"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="TypeName"></ReportField>
+        <ReportField Name="TypeName_description"></ReportField>
+        <ReportField Name="TypeName_PRTaxType_description"></ReportField>
+        <ReportField Name="UseDerivedType">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VndInvDescr"></ReportField>
+        <ReportField Name="WageBaseType"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRTaxCode</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>4.25042in</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>YAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt03</Name>
+          <ValueExpr>=IIF($LineNbr = 3, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt03)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt04</Name>
+          <ValueExpr>=IIF($LineNbr = 4, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt04)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt05</Name>
+          <ValueExpr>=IIF($LineNbr = 5, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt05)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt06</Name>
+          <ValueExpr>=IIF($LineNbr = 6, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt06)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt07</Name>
+          <ValueExpr>=IIF($LineNbr = 7, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt07)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt08</Name>
+          <ValueExpr>=IIF($LineNbr = 8, Report.IntToUI('PRPaymentTax.YTDAmount',[PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0)), $YAmt08)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt03</Name>
+          <ValueExpr>=IIF($LineNbr = 3, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt03)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt04</Name>
+          <ValueExpr>=IIF($LineNbr = 4, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt04)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt05</Name>
+          <ValueExpr>=IIF($LineNbr = 5, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt05)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt06</Name>
+          <ValueExpr>=IIF($LineNbr = 6, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt06)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt07</Name>
+          <ValueExpr>=IIF($LineNbr = 7, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt07)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt08</Name>
+          <ValueExpr>=IIF($LineNbr = 8, Report.IntToUI('PRPaymentTax.TaxAmount',[PRPaymentTax.TaxAmount]), $Amt08)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType03</Name>
+          <ValueExpr>=IIF($LineNbr = 3, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType03)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType04</Name>
+          <ValueExpr>=IIF($LineNbr = 4, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType04)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType05</Name>
+          <ValueExpr>=IIF($LineNbr =5, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType05)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType06</Name>
+          <ValueExpr>=IIF($LineNbr = 6, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType06)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType07</Name>
+          <ValueExpr>=IIF($LineNbr = 7, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType07)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType08</Name>
+          <ValueExpr>=IIF($LineNbr = 8, Report.IntToUI('PRPaymentTax.TaxID_description',[PRPaymentTax.TaxID_description]), $DocType08)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt01)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt02)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt03</Name>
+          <ValueExpr>=IIF($LineNbr = 3, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt03)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt04</Name>
+          <ValueExpr>=IIF($LineNbr = 4, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt04)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt05</Name>
+          <ValueExpr>=IIF($LineNbr = 5, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt05)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt06</Name>
+          <ValueExpr>=IIF($LineNbr = 6, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt06)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt07</Name>
+          <ValueExpr>=IIF($LineNbr = 7, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt07)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>WAmt08</Name>
+          <ValueExpr>=IIF($LineNbr = 8, Report.IntToUI('PRPaymentTax.WageBaseAmount',[PRPaymentTax.WageBaseAmount]), $WAmt08)#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LineNbr</Name>
+          <ValueExpr>=$LineNbr+1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt09</Name>
+          <ResetExpr>0</ResetExpr>
+          <ResetGroup>grpEmployee</ResetGroup>
+          <ValueExpr>=$YAmt09 + IIF($LineNbr &gt;9, [PRPaymentTax.YTDAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0), 0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt09</Name>
+          <ValueExpr>=$Amt09 + IIF($LineNbr &gt;9, [PRPaymentTax.TaxAmount], 0)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpEmployee">
+      <Grouping>
+        <GroupExp>
+          <DataField>PRPaymentTax.RefNbr</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>2.08333in</Height>
+          <Style>
+            <BackColor>Transparent</BackColor>
+          </Style>
+          <Items>
+            <Line Name="line2">
+              <LineColor>Silver</LineColor>
+              <Location>0px, 176px</Location>
+              <Size>410px, 3px</Size>
+            </Line>
+            <TextBox Name="textBox1">
+              <Format>N</Format>
+              <Location>328px, 160px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt09</Value>
+              <VisibleExpr>=$LineNbr&gt;9</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <Location>0px, 16px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType00)&gt;27, Left($DocType00,27) + '...', $DocType00)</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Location>168px, 0px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Taxable Wages</Value>
+            </TextBox>
+            <TextBox Name="textBox122">
+              <Location>328px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>YTD Amt</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Location>0px, 32px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType01)&gt;27, Left($DocType01,27) + '...', $DocType01)</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <Format>N</Format>
+              <Location>168px, 144px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt08</Value>
+              <VisibleExpr>=$LineNbr&gt;8</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <Location>0px, 48px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType02)&gt;27, Left($DocType02,27) + '...', $DocType02)</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <Location>0px, 64px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType03)&gt;27, Left($DocType03,27) + '...', $DocType03)</Value>
+              <VisibleExpr>=$LineNbr&gt;3</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <Location>0px, 80px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType04)&gt;27, Left($DocType04,27) + '...', $DocType04)</Value>
+              <VisibleExpr>=$LineNbr&gt;4</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox18">
+              <Location>0px, 96px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType05)&gt;27, Left($DocType05,27) + '...', $DocType05)</Value>
+              <VisibleExpr>=$LineNbr&gt;5</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox19">
+              <Location>0px, 112px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType06)&gt;27, Left($DocType06,27) + '...', $DocType06)</Value>
+              <VisibleExpr>=$LineNbr&gt;6</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <Format>N</Format>
+              <Location>328px, 184px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum( [PRPaymentTax.YtdAmount]+Switch([@CalcYTD]=True,[PRPaymentTax.TaxAmount],[@CalcYTD]=False,0))</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Location>0px, 128px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType07)&gt;27, Left($DocType07,27) + '...', $DocType07)</Value>
+              <VisibleExpr>=$LineNbr&gt;7</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Location>0px, 144px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF ( Len ($DocType08)&gt;27, Left($DocType08,27) + '...', $DocType08)</Value>
+              <VisibleExpr>=$LineNbr&gt;8</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Format>N</Format>
+              <Location>168px, 128px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt07</Value>
+              <VisibleExpr>=$LineNbr&gt;7</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>0px, 160px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Others</Value>
+              <VisibleExpr>=$LineNbr&gt;9</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Format>N</Format>
+              <Location>256px, 32px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Format>N</Format>
+              <Location>256px, 16px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox27">
+              <Format>N</Format>
+              <Location>328px, 32px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Format>N</Format>
+              <Location>328px, 16px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Format>N</Format>
+              <Location>328px, 48px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Format>N</Format>
+              <Location>328px, 64px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt03</Value>
+              <VisibleExpr>=$LineNbr&gt;3</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Format>N</Format>
+              <Location>256px, 48px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Format>N</Format>
+              <Location>256px, 64px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt03</Value>
+              <VisibleExpr>=$LineNbr&gt;3</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <Format>N</Format>
+              <Location>256px, 80px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt04</Value>
+              <VisibleExpr>=$LineNbr&gt;4</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Format>N</Format>
+              <Location>256px, 96px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt05</Value>
+              <VisibleExpr>=$LineNbr&gt;5</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Format>N</Format>
+              <Location>256px, 112px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt06</Value>
+              <VisibleExpr>=$LineNbr&gt;6</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Format>N</Format>
+              <Location>256px, 128px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt07</Value>
+              <VisibleExpr>=$LineNbr&gt;7</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <Format>N</Format>
+              <Location>256px, 144px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt08</Value>
+              <VisibleExpr>=$LineNbr&gt;8</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Format>N</Format>
+              <Location>256px, 160px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt09</Value>
+              <VisibleExpr>=$LineNbr&gt;9</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Format>N</Format>
+              <Location>248px, 184px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum( [PRPaymentTax.TaxAmount])</Value>
+            </TextBox>
+            <TextBox Name="textBox385">
+              <Location>256px, 0px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Curr. Amt</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Format>N</Format>
+              <Location>168px, 112px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt06</Value>
+              <VisibleExpr>=$LineNbr&gt;6</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Format>N</Format>
+              <Location>328px, 80px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt04</Value>
+              <VisibleExpr>=$LineNbr&gt;4</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Format>N</Format>
+              <Location>168px, 96px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt05</Value>
+              <VisibleExpr>=$LineNbr&gt;5</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Format>N</Format>
+              <Location>168px, 80px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt04</Value>
+              <VisibleExpr>=$LineNbr&gt;4</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Format>N</Format>
+              <Location>168px, 64px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt03</Value>
+              <VisibleExpr>=$LineNbr&gt;3</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Format>N</Format>
+              <Location>168px, 48px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <Format>N</Format>
+              <Location>168px, 16px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox45">
+              <Format>N</Format>
+              <Location>168px, 32px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$WAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Format>N</Format>
+              <Location>328px, 96px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt05</Value>
+              <VisibleExpr>=$LineNbr&gt;5</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox52">
+              <Location>0px, 184px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Total:</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Format>N</Format>
+              <Location>328px, 112px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt06</Value>
+              <VisibleExpr>=$LineNbr&gt;6</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>0px, 0px</Location>
+              <Size>168px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Taxes</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Format>N</Format>
+              <Location>328px, 128px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt07</Value>
+              <VisibleExpr>=$LineNbr&gt;7</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Format>N</Format>
+              <Location>328px, 144px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt08</Value>
+              <VisibleExpr>=$LineNbr&gt;8</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

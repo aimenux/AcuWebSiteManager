@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<data>
+	<table name="WikiRevision">
+		<col name="CompanyID" type="Int" default="Zero" />
+		<col name="PageID" type="UniqueIdentifier" />
+		<col name="Language" type="VarChar(50)" />
+		<col name="PageRevisionID" type="Int" />
+		<col name="Content" type="NVarChar(MAX)" />
+		<col name="ContentHtml" type="NVarChar(MAX)" nullable="true" />
+		<col name="PlainText" type="NVarChar(MAX)" />
+		<col name="ApprovalByID" type="UniqueIdentifier" nullable="true" />
+		<col name="ApprovalDateTime" type="DateTime" nullable="true" />
+		<col name="CreatedByID" type="UniqueIdentifier" />
+		<col name="CreatedDateTime" type="DateTime" />
+		<col name="CompanyMask" type="VarBinary(32)" default="CompanyMaskReadOnly" />
+		<col name="UID" type="UniqueIdentifier" />
+		<col name="RecordSourceID" type="SmallInt" nullable="true" />
+	</table>
+	<rows>
+		<row PageID="7c048700-ca24-4c0c-b41d-d894bcd0eb03" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="cd67ed86-8997-dd06-0092-8ccd9e4ad584" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+You can import records from an external file or system to Acumatica ERP by using an import scenario, as described in this guide.{br}{TOC}[anchor|#_d27954fc-1ae2-4e74-b17a-c24b6e5af328]
+==1. Create the Data Provider==
+You review the source data to determine the needed provider type and to see the external data schema. On the [HelpRoot_FormReference\SM_20_60_15|Data Providers] ([~/?ScreenId=SM206015|SM206015]) form, you create a data provider of the needed type, specify the parameters of the provider, and fill in the schema of the data provider, as shown in the following screenshot. {br}
+
+[anchor|#_755ad657-f021-4138-9ee9-2ffde372cadf][anchor|#_43de151e-894c-4cca-a62d-8a33beefb211][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step1.png|popup|450px]{br}
+
+For details, see [HelpRoot_Integration\IS__how_Create_CSV_Data_Provider|To Create a CSV Data Provider], [HelpRoot_Integration\IS__how_Create_Excel_Data_Provider|To Create an Excel Data Provider], or [HelpRoot_Integration\IS__how_Create_MS_SQL_Data_Provider|To Create a Microsoft SQL Data Provider].[anchor|#_f4255f3e-0076-4e6b-afbc-587901831396]
+==2. Analyze the Sequence of Actions on the Target Form==
+You analyze how a data record is entered on the target Acumatica ERP form.[anchor|#_2ce97e02-fc4a-4457-ac99-4bd8d42bb3d7]{br}
+
+Before you start creating a scenario, we strongly recommend that you manually enter one record of the imported data (or a test record) on the target Acumatica ERP form. (If you enter a record of the imported data, during import, you can exclude this record from processing to avoid duplication of records in the system.) [anchor|#_d638e95b-18be-4609-bba8-21f4f57ec8f5]{br}
+
+As you manually enter the record, make a note of the sequence of actions you perform: the order in which you specify values in the fields on the form, and the actions you perform for the entered record, such as adding a new row and saving your changes. {br}
+
+As an example, the following screenshot shows the most common order in which the elements of the [HelpRoot_FormReference\AR_30_30_00|Customers] ([~/?ScreenId=AR303000|AR303000]) form are used to enter a customer record.{br}
+
+[anchor|#_c424f74a-7d69-4342-b31e-2ff33fee989f][anchor|#_b17b7215-dfea-49e2-a9ea-24253960a346][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step2.png|popup|450px]
+For information, see [HelpRoot_Integration\IS__con_Import_Scenario_Creation|Import Scenario Creation].[anchor|#_fe932681-b26b-40a6-ad55-80f019e81f4d]
+==3. Create the Import Scenario and Configure Its Mapping==
+On the [HelpRoot_FormReference\SM_20_60_25|Import Scenarios] ([~/?ScreenId=SM206025|SM206025]) form, you create an import scenario, define the parameters of the scenario (such as the name of the scenario, the target Acumatica ERP form, the data provider, and the source object of the data provider), and configure the scenario mapping, as shown in the following screenshot. You map the elements of the target Acumatica ERP form to the fields that are defined by the data provider in the order in which you would use the elements on the form.[anchor|#_02ccaaac-e730-457b-a990-e758d5009333][anchor|#_fa5f70dd-9622-4c25-9de8-18c35eb160fc][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step3.png|popup|450px]
+For details on the mapping configuration, see [HelpRoot_Integration\IS__mng_Scenario_Mapping|Configuring Scenario Mapping].[anchor|#_d882910e-aaeb-4288-a65f-7992f1ca58d2]
+==4. Configure the Source Restrictions==
+If you want to import only particular records from the source, you can configure source restrictions on the [HelpRoot_FormReference\SM_20_60_25|Import Scenarios] ([~/?ScreenId=SM206025|SM206025]) form, as shown in the following screenshot.{br}
+
+[anchor|#_bf05bf47-cfe0-4ddd-a7df-e19cc94f1b97][anchor|#_9c7c0b2d-3db5-4e99-b40e-60b0253ef6de][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step4.png|popup|450px]{br}
+
+For details, see [HelpRoot_Integration\IS__con_Source_Restrictions_in_Import_Scenarios|Source Restrictions in Import Scenarios].[anchor|#_e5049352-230e-406a-bd46-6387b396ea87]
+==5. Configure the Target Restrictions==
+You may want the system to save the results of import for only particular records, and the records that should be saved can be identified only based on data that is not available in the source (but this data exists for these records in Acumatica ERP). In these situations, you can configure target restrictions on the [HelpRoot_FormReference\SM_20_60_25|Import Scenarios] ([~/?ScreenId=SM206025|SM206025]) form, as shown in the following screenshot.{br}
+
+[anchor|#_81800502-7b36-4b5f-81a8-757e5ae7ac60][anchor|#_19c16ccd-865c-4fa4-8849-6c943252a20c][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step5.png|popup|450px]{br}
+
+For information, see [HelpRoot_Integration\IS__con_Target_Restrictions_in_Import_Scenarios|Target Restrictions in Import Scenarios].[anchor|#_f66d69f7-a2ac-4c32-9774-cf8253dfa338]
+==6. Import Records By Using the Scenario==
+On the [HelpRoot_FormReference\SM_20_60_36|Import by Scenario] ([~/?ScreenId=SM206036|SM206036]) form, you first select the name of the import scenario; if you are using a file for importing data, you decide whether you need to upload a new file version. You then prepare and import data. {br}
+
+The following screenshot shows the successfully imported data. {br}
+
+[anchor|#_e6fe773c-875a-4424-b224-ebd76e9c9a05][anchor|#_de1dab30-75c3-42fa-ae5f-2626fa2f9da7][image:QuickGuides/Images/QG__Importing_Records_By_Scenario_Step6.png|popup|450px]{br}
+
+For details, see [HelpRoot_Integration\IS__con_Data_Import|Data Import].
+==Related Articles==
+*[HelpRoot_Integration\IS__con_Import_and_Export_Scenarios|Import and Export Scenarios]]]></column>
+			<column name="PlainText"><![CDATA[Importing Records by Using Import Scenarios You can import records from an external file or system to  Acumatica ERP by using an import scenario, as described in this guide. 1. Create the Data Provider You review the source data to determine the needed provider type and to see the                 external data schema. On the   ([~/?ScreenId=SM206015|SM206015]) Data Providers                 (SM206015) form, you create a data provider of the needed type, specify the                 parameters of the provider, and fill in the schema of the data provider, as shown in                 the following screenshot.  For details, see  To Create a CSV Data Provider,  To Create an Excel Data Provider, or  To Create a Microsoft SQL Data Provider. 2. Analyze the Sequence of Actions on the Target Form You analyze how a data record is entered on the target  Acumatica ERP form. Before you start creating a scenario, we             strongly recommend that you manually enter one record of the imported data (or a test             record) on the target  Acumatica ERP             form. (If you enter a record of the imported data, during import, you can exclude this             record from processing to avoid duplication of records in the system.)  As you manually enter the record, make a note of the sequence of actions you perform: the order in which you specify values in the fields on the form, and the actions you perform for the entered record, such as adding a new row and saving your changes.  As an example, the following screenshot shows the most common order in which the                 elements of the   ([~/?ScreenId=AR303000|AR303000]) Customers                 (AR303000) form are used to enter a customer record. For information, see  Import Scenario Creation. 3. Create the Import Scenario and Configure Its Mapping On the   ([~/?ScreenId=SM206025|SM206025]) Import Scenarios                 (SM206025) form, you create an import scenario, define the parameters of the                 scenario (such as the name of the scenario, the target  Acumatica ERP form, the data provider, and the source object of the data provider), and                 configure the scenario mapping, as shown in the following screenshot. You map the                 elements of the target  Acumatica ERP form to the fields that are defined by the data provider in the order in which                 you would use the elements on the form. For details on the mapping configuration, see  Configuring Scenario Mapping. 4. Configure the Source Restrictions If you want to import only particular records from the source, you can configure                 source restrictions on the   ([~/?ScreenId=SM206025|SM206025]) Import Scenarios                 (SM206025) form, as shown in the following screenshot. For details, see  Source Restrictions in Import Scenarios. 5. Configure the Target Restrictions You may want the system to save the results of import for only particular records,                 and the records that should be saved can be identified only based on data that is                 not available in the source (but this data exists for these records in  Acumatica ERP). In these situations, you can configure target restrictions on the   ([~/?ScreenId=SM206025|SM206025]) Import Scenarios                 (SM206025) form, as shown in the following screenshot. For information, see  Target Restrictions in Import Scenarios. 6. Import Records By Using the Scenario On the   ([~/?ScreenId=SM206036|SM206036]) Import by Scenario                 (SM206036) form, you first select the name of the import scenario; if you are                 using a file for importing data, you decide whether you need to upload a new file                 version. You then prepare and import data.  The following screenshot shows the successfully imported data.  For details, see  Data Import. ]]></column>
+		</row>
+		<row PageID="b9a43f0a-5604-4773-b2c1-5d6d387367c6" Language="en-US" PageRevisionID="1" ApprovalByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" ApprovalDateTime="1970-01-23 00:00:00" CreatedByID="b5344897-037e-4d58-b5c3-1bdfd0f47bf9" CreatedDateTime="1970-01-23 00:00:00" UID="58b1ce3c-9cef-f66b-1be6-ead44fd0a5f6" RecordSourceID="22377">
+			<column name="Content"><![CDATA[
+You can export records from Acumatica ERP to an external file or system by using an export scenario, as described in this guide.{br}{TOC}[anchor|#_58f3f616-0dd0-4f82-9681-279bacb38e77]
+==1. Create the Data Provider==
+To determine the needed provider type and to see the external data schema, you review the way the data is stored in the external file or system. Then on the [HelpRoot_FormReference\SM_20_60_15|Data Providers] ([~/?ScreenId=SM206015|SM206015]) form, you create a data provider of the needed type, specify the parameters of the provider (such as a file name or the location of the remote source), and fill in the schema of the data provider, as shown in the following screenshot. [anchor|#_85f6966f-40ed-4785-b2d1-0d74f44a4003][image:QuickGuides/Images/QG__Exporting_Records_By_Scenario_Step1.png|popup|450px]{br}
+
+For details, see [HelpRoot_Integration\IS__how_Create_CSV_Data_Provider|To Create a CSV Data Provider], [HelpRoot_Integration\IS__how_Create_Excel_Data_Provider|To Create an Excel Data Provider], or [HelpRoot_Integration\IS__how_Create_MS_SQL_Data_Provider|To Create a Microsoft SQL Data Provider].[anchor|#_ca4b0c7e-10cd-4a31-9309-19b2ecefcd5c]
+==2. Analyze the Sequence of Actions on the Source Form==
+You analyze how a data record is retrieved on the source Acumatica ERP form.[anchor|#_62c355f4-a044-48ff-97b9-277b832335d4]{br}
+
+Before you start creating a scenario, we strongly recommend that you open a record of the exported data on the source form by selecting the values of the key fields (which gives you an understanding of how a record is retrieved on the form and which fields you need to export). As you open the record on the form, make a note of the sequence of actions you perform: the order in which you specify the values in the key field (or fields) on the form, the actions you perform, and the list of fields you need to export.{br}
+
+As an example, the following screenshot shows the most common elements of the [HelpRoot_FormReference\AR_30_30_00|Customers] ([~/?ScreenId=AR303000|AR303000]) form that are retrieved for export. To open a record on the [HelpRoot_FormReference\AR_30_30_00|Customers] form, you need to select the appropriate value in the '''Customer ID''' element (which is the key field).[anchor|#_776c5abe-46bb-48b9-8d12-2193062afb91][image:QuickGuides/Images/QG__Exporting_Records_By_Scenario_Step2.png|popup|450px]{br}
+
+For information, see [HelpRoot_Integration\IS__con_Export_Scenario_Creation|Export Scenario Creation].[anchor|#_18adc683-9969-4f85-bbd8-3b1dd90354c0]
+==3. Create the Export Scenario and Configure Its Mapping==
+On the [HelpRoot_FormReference\SM_20_70_25|Export Scenarios] ([~/?ScreenId=SM207025|SM207025]) form, you create an export scenario, define the parameters of the scenario (such as the name of the scenario, the source Acumatica ERP form, the data provider, and the object of the data provider), and configure the scenario mapping, as shown in the following screenshot. {br}
+
+If you need to export all records that have been created by using the form, you map the key field or fields to the {{=Every}} system action. You map the elements of the source Acumatica ERP form that you need to export to the fields that are defined by the data provider. [anchor|#_09d9165e-9a33-4ce9-b697-7c15e0159eae][image:QuickGuides/Images/QG__Exporting_Records_By_Scenario_Step3.png|popup|450px]{br}
+
+For details on the mapping configuration, see [HelpRoot_Integration\IS__mng_Scenario_Mapping|Configuring Scenario Mapping] and [HelpRoot_Integration\IS__con_Every_in_Export_Scenarios|Export of All Records: Use of Every].[anchor|#_ddf8f7ae-3053-4ef2-904b-568f344a4154]
+==4. Configure the Source Restrictions==
+If you want to export only particular records from the source Acumatica ERP form, you configure the source restrictions on the [HelpRoot_FormReference\SM_20_70_25|Export Scenarios] ([~/?ScreenId=SM207025|SM207025]) form, as shown in the following screenshot. With the source restrictions shown below, only the customer records with the value of the '''Customer ID''' element in range from ''C000000001'' to ''C000000009'' are exported.[anchor|#_bbe2f9ef-5024-440b-a32e-e497c30426b5][image:QuickGuides/Images/QG__Exporting_Records_By_Scenario_Step4.png|popup|450px]{br}
+
+For information, see [HelpRoot_Integration\IS__con_Source_Restrictions_in_Export_Scenarios|Source Restrictions in Export Scenarios].[anchor|#_cbc46855-13fa-488e-b389-be987e327712]
+==5. Export Records by Using the Scenario==
+On the [HelpRoot_FormReference\SM_20_70_36|Export by Scenario] ([~/?ScreenId=SM207036|SM207036]) form, you first select the name of the export scenario; you then prepare and export the records. If you are exporting data to a file, you can download the result of the export by clicking '''Get Latest Version''' on the form toolbar.{br}
+
+The following screenshot shows the successfully exported data on the form. [anchor|#_26f2e4c0-2943-4b26-8889-392e032d04fe][image:QuickGuides/Images/QG__Exporting_Records_By_Scenario_Step5.png|popup|450px]{br}
+
+For details, see [HelpRoot_Integration\IS__con_Data_Export|Data Export].]]></column>
+			<column name="PlainText"><![CDATA[Exporting Records By Using Export Scenarios You can export records from  Acumatica ERP to an external file or system by using an export scenario, as described in this         guide. 1. Create the Data Provider To determine the needed provider type and to see the external data schema, you review the way         the data is stored in the external file or system. Then on the   ([~/?ScreenId=SM206015|SM206015]) Data Providers (SM206015)         form, you create a data provider of the needed type, specify the parameters of the provider         (such as a file name or the location of the remote source), and fill in the schema of the         data provider, as shown in the following screenshot.  For details, see  To Create a CSV Data Provider,  To Create an Excel Data Provider, or  To Create a Microsoft SQL Data Provider. 2. Analyze the Sequence of Actions on the Source Form You analyze how a data record is retrieved on the source  Acumatica ERP     form. Before you start creating a scenario, we strongly             recommend that you open a record of the exported data on the source form by selecting             the values of the key fields (which gives you an understanding of how a record is             retrieved on the form and which fields you need to export). As you open the record on             the form, make a note of the sequence of actions you perform: the order in which you             specify the values in the key field (or fields) on the form, the actions you perform,             and the list of fields you need to export. As an example, the following screenshot shows the most common elements of the   ([~/?ScreenId=AR303000|AR303000]) Customers (AR303000)         form that are retrieved for export. To open a record on the   ([~/?ScreenId=AR303000|AR303000]) Customers form, you         need to select the appropriate value in the  Customer ID  element         (which is the key field). For information, see  Export Scenario Creation. 3. Create the Export Scenario and Configure Its Mapping On the   ([~/?ScreenId=SM207025|SM207025]) Export Scenarios     (SM207025) form, you create an export scenario, define the parameters of the scenario (such     as the name of the scenario, the source  Acumatica ERP     form, the data provider, and the object of the data provider), and configure the scenario     mapping, as shown in the following screenshot.  If you need to export all records that have been created by using the form, you map the key         field or fields to the  =Every  system action. You map the elements of the         source  Acumatica ERP form that you need to export to the fields that are defined by the data provider.  For details on the mapping configuration, see  Configuring Scenario Mapping and       Export of All Records: Use of Every. 4. Configure the Source Restrictions If you want to export only particular records from the source  Acumatica ERP form, you configure the source restrictions on the   ([~/?ScreenId=SM207025|SM207025]) Export Scenarios (SM207025)         form, as shown in the following screenshot. With the source restrictions shown below, only         the customer records with the value of the  Customer ID  element in         range from  C000000001  to  C000000009  are exported. For information, see  Source Restrictions in Export Scenarios. 5. Export Records by Using the Scenario On the   ([~/?ScreenId=SM207036|SM207036]) Export by Scenario         (SM207036) form, you first select the name of the export scenario; you then prepare and         export the records. If you are exporting data to a file, you can download the result of the         export by clicking  Get Latest Version  on the form toolbar. The following screenshot shows the successfully exported data on the form.  For details, see  Data Export. ]]></column>
+		</row>
+	</rows>
+</data>

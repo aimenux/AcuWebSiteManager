@@ -1,0 +1,237 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+	<title>Welcome Pages - Page 1</title>
+	<!-- For the Office UI Fabric, go to http://aka.ms/office-ui-fabric to learn more. -->
+	<!-- Template styles -->
+
+	<script src="//appsforoffice.microsoft.com/lib/1.1/hosted/office.js" type="text/javascript"></script>
+
+	<style type="text/css">
+		html, body {
+			height: 100%;
+			margin: auto;
+			padding: 0;
+			overflow: auto;
+			font-family: arial, sans-serif;
+		}
+
+		.logo {
+			background-color: #EEE;
+		}
+
+		.font-l {
+			visibility: hidden;
+		}
+
+		.fontWeight-light {
+			text-align: center;
+		}
+
+		.firstrun-trial {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			height: 100%;
+			max-width: 600px;
+			margin: auto;
+		}
+
+		.img-responsive-header {
+			max-height: 100px;
+		}
+
+		.img-responsive-picture {
+			width: 100%;
+		}
+
+		.font-xl {
+			font-size: 15px;
+		}
+
+		.firstrun-value__logo {
+			max-width: 500px;
+		}
+
+		.firstrun-trial__logo {
+			width: 100%;
+			height: 100%;
+			flex: 1 1 0;
+			background: transparent no-repeat center center;
+			background-size: contain;
+			justify-content: center;
+			align-items: center;
+		}
+
+		.firstrun-trial__header {
+			min-height: 100px;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			margin: auto;
+			text-align: center;
+		}
+
+		.firstrun-trial__content {
+			display: flex;
+			flex-direction: column;
+			flex-wrap: nowrap;
+			height: 100%;
+			flex: 1 1 0;
+			min-height: 380px;
+			--background-color: #EEE;
+			min-width: 250px;
+			min-height: 510px;
+		}
+
+		.button.button--command1 {
+			background-color: transparent;
+			border: none;
+			height: 32px;
+			line-height: 32px;
+			min-width: 0;
+			padding: 0 30px;
+			text-align: left;
+			font-size: 15px;
+			color: #0078d7;
+		}
+
+		.little_text {
+			font-size: 12px;
+		}
+
+		.button_here {
+			background-color: transparent;
+			color: #0078d7;
+			cursor: pointer;
+		}
+
+		.btn {
+			max-width: 100%;
+			background-color: #3591d1;
+			border-color: #3591d1;
+			color: #fff;
+			fill: #fff;
+			text-overflow: ellipsis;
+			text-shadow: none;
+			transition: all 200ms ease;
+			border-radius: 18px;
+			display: inline-block;
+			position: relative;
+			font-family: 'Source Sans Pro Semi Bold', Arial, Helvetica, 'Helvetica CY', 'Nimbus Sans L', sans-serif;
+			text-align: center;
+			vertical-align: top;
+			padding-right: 18px;
+			padding-left: : 18px;
+		}
+	</style>
+	<script type="text/javascript">
+		(function () {
+			'use strict';
+
+			// The initialize function must be run each time a new page is loaded
+			Office.initialize = function (reason) {
+				var thecookie = readCookie('doRedirect');
+				if (thecookie)
+					signIn();
+				else
+					document.getElementById('edBody').style.visibility = 'visible';
+			}
+		})();
+
+		function signIn() {
+			Office.context.mailbox.getUserIdentityTokenAsync(function (asyncResult) {
+				if (asyncResult.status === "succeeded") {
+					// The rest of this code assumes you are not using a library.
+					// It can be made less wordy if you use one.
+                    var form = document.createElement("form");
+                    let action = '../../Frames/AuthDock.ashx?_returnUrl_=..%2fPages%2fCR%2fOU201000.aspx';
+
+					const locale = localStorage.getItem('acumaticaLocale');
+                    if (locale) {
+                        action += '&_locale_=' + locale;
+                    }
+
+					form.setAttribute("method", "post");
+					form.setAttribute("action", action);
+
+					var hiddenField = document.createElement("input");
+					hiddenField.setAttribute("type", "hidden");
+					hiddenField.setAttribute("name", "token");
+					hiddenField.setAttribute("value", asyncResult.value);
+
+					form.appendChild(hiddenField);
+
+					document.body.appendChild(form);
+					form.submit();
+				}
+				else {
+					document.body.insertBefore(document.createTextNode('Get Token error. Status: ' + asyncResult.status
+					+ ". Error: " + asyncResult.error), document.body.firstChild);
+				}
+			});
+		}
+
+		function readCookie(name) {
+			return localStorage.getItem(name);
+		}
+
+		function setCookie(name, value)
+			{
+			localStorage.setItem(name, value);
+			signIn();
+		}
+
+		window.onload = function ()
+		{
+			var editor = document.body.querySelector('[id^="hideInstructionsButton"]');
+			if (editor && !editor.readOnly)
+				editor.focus();
+		}
+	</script>
+</head>
+<body class="font-l" id="edBody">
+	<main class="firstrun-trial">
+		<section class="firstrun-trial__header">
+			<div class="firstrun-trial__logo">
+				<img src="Acumatica_logo.png" class="img-responsive-header">
+			</div>
+		</section>
+		<section class="firstrun-trial__content">
+			<h1 class="font-xl fontWeight-light">Solution for All your business management needs today and in the future</h1>
+			<div>
+				<div class="logo">
+					<div class="firstrun-value__logo">
+						<img src="Picture_Graph.png" class="img-responsive-picture">
+					</div>
+				</div>
+				<div>
+					<ul>
+						<h2 class="font-xl fontWeight-light">With this Outlook Add-In:</h2>
+						<li><span>Access any Acumatica contact or business account in one click </span></li>
+						<li><span>Context relevant actions</span></li>
+						<li><span>Interact with contacts, opportunities and cases</span></li>
+						<li><span>Works on Desktop and Web versions of Outlook</span></li>
+					</ul>
+
+
+					<div>
+						<h2 class="font-xl fontWeight-light">
+							Already have an Acumatica account?
+							<input type="submit" name="btnLogin" value="Sign In" id="hideInstructionsButton" onclick="javascript: setCookie('doRedirect', '1');" class="btn" />
+						</h2>
+					</div>
+				</div>
+			</div>
+			<ul class="little_text">
+				<hr>
+				<li><span>Don't have an Acumatica account? Learn more </span><a class="button_here" onclick="javascript: window.open('http://www.acumatica.com',null,null)">here</a></li>
+				<li><span>Pop-up windows should be enabled. Learn more </span><a class="button_here" onclick="javascript: window.open('https://support.microsoft.com/en-us/help/17479/windows-internet-explorer-11-change-security-privacy-settings',null,null)">here</a></li>
+				<li><span>Supported Windows 7 and higher, Internet Explorer 11/Chrome/Safari 9, Outlook 2013 and 2016 for Windows, Outlook 2016 for Mac</span></li>
+				</hr>
+			</ul>
+		</section>
+	</main>
+</body>
+</html>

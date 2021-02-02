@@ -1,0 +1,1119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <DataSource></DataSource>
+  <Filters>
+    <FilterExp>
+      <DataField>AMProdItem.StatusID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>M</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>AMProdItem.StatusID</DataField>
+      <Value>I</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.WIPAcctID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@WIPAcct</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@WIPAcct</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.WIPSubID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@WIPSubAccount</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@WIPSubAccount</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.SiteID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Site</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Site</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.ProdOrdID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Production_Nbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Production_Nbr</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.OrderType</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrderType</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrderType</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <LayoutUnit>Pixel</LayoutUnit>
+  <MailSettings>
+    <ActivitySource>AMProdItem.NoteID</ActivitySource>
+    <Bcc></Bcc>
+    <Body></Body>
+    <Cc></Cc>
+    <Format></Format>
+    <ParentSource></ParentSource>
+    <Subject></Subject>
+    <TemplateID></TemplateID>
+    <To></To>
+  </MailSettings>
+  <PageSettings>
+    <Landscape>True</Landscape>
+    <Margins>
+      <Bottom>30px</Bottom>
+    </Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('AMPSetup.DefaultOrderType')</DefaultValue>
+      <Name>OrderType</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Order Type</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.OrderType')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>Production_Nbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Production Nbr:</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.ProdOrdID,OrderType')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>Site</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Warehouse:</Prompt>
+      <ViewName>=[AMProdItem.SiteID]</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>WIPAcct</Name>
+      <Nullable>True</Nullable>
+      <Prompt>WIP Account:</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.WIPAcctID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>WIPSubAccount</Name>
+      <Nullable>True</Nullable>
+      <Prompt>WIP Sub Account:</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.WIPSubID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildAlias>WIP</ChildAlias>
+      <ChildName>Account</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>WIP.AccountID</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <OpenBraces>1</OpenBraces>
+          <ParentField>AMProdItem.WIPAcctID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AMProdItem</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>SUB</ChildAlias>
+      <ChildName>Sub</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>SUB.SubID</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <OpenBraces>1</OpenBraces>
+          <ParentField>AMProdItem.WIPSubID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AMProdItem</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>AMOrderType</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>OrderType</ChildField>
+          <ParentField>OrderType</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AMProdItem</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl></SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>AMProdItem.WIPAcctID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>AMProdItem.WIPSubID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="AMProdItem">
+      <Fields>
+        <ReportField Name="BaseQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyRemaining">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyScrapped">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtytoProd">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BOMEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BOMID"></ReportField>
+        <ReportField Name="BuildProductionBom">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConstDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CostMethod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="Delete">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="DetailSource">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="EndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EstimateID"></ReportField>
+        <ReportField Name="EstimateRevisionID"></ReportField>
+        <ReportField Name="ExpireDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FirmSchedule">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FirstOperationID"></ReportField>
+        <ReportField Name="FMLTime">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FMLTMRPOrdorOP">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="HasMixedProjectTasks">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InventoryID_description"></ReportField>
+        <ReportField Name="InventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="InvtMult">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="IsConfigurable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastOperationID"></ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="LocationID_description"></ReportField>
+        <ReportField Name="LocationID_INLocation_descr"></ReportField>
+        <ReportField Name="LotSerialNbr"></ReportField>
+        <ReportField Name="MultDiv"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OrdLineRef">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrdNbr"></ReportField>
+        <ReportField Name="OrdTypeRef"></ReportField>
+        <ReportField Name="ParentOrderType"></ReportField>
+        <ReportField Name="ParentOrdID"></ReportField>
+        <ReportField Name="PerClose"></ReportField>
+        <ReportField Name="PerEnt"></ReportField>
+        <ReportField Name="ProdDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ProdOrdID"></ReportField>
+        <ReportField Name="ProductManagerID"></ReportField>
+        <ReportField Name="ProductManagerID_description"></ReportField>
+        <ReportField Name="ProductManagerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ProductOrderType"></ReportField>
+        <ReportField Name="ProductOrdID"></ReportField>
+        <ReportField Name="ProductWorkgroupID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyRemaining">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyScrapped">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtytoProd">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RelDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Reschedule">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevisionNbr"></ReportField>
+        <ReportField Name="SchdConst"></ReportField>
+        <ReportField Name="SchPriority">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SiteID"></ReportField>
+        <ReportField Name="SiteID_description"></ReportField>
+        <ReportField Name="SiteID_INSite_descr"></ReportField>
+        <ReportField Name="SplitLineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StatusID"></ReportField>
+        <ReportField Name="SubItemID"></ReportField>
+        <ReportField Name="TaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnassignedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="WIPAcctID"></ReportField>
+        <ReportField Name="WIPAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPAcctID_description"></ReportField>
+        <ReportField Name="WIPBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPComp">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPSubID"></ReportField>
+        <ReportField Name="WIPSubID_description"></ReportField>
+        <ReportField Name="WIPSubID_Sub_description"></ReportField>
+        <ReportField Name="WIPTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPVarianceAcctID"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID"></ReportField>
+        <ReportField Name="WIPVarianceSubID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AM.AMProdItem</FullName>
+    </ReportTable>
+    <ReportTable Name="Account">
+      <Fields>
+        <ReportField Name="AccountCD"></ReportField>
+        <ReportField Name="AccountClassID"></ReportField>
+        <ReportField Name="AccountClassID_AccountClass_descr"></ReportField>
+        <ReportField Name="AccountClassID_description"></ReportField>
+        <ReportField Name="AccountGroupID"></ReportField>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Box1099">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="COAOrder">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DirectPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GLConsolAccountCD"></ReportField>
+        <ReportField Name="GLConsolAccountCD_description"></ReportField>
+        <ReportField Name="GLConsolAccountCD_GLConsolAccount_description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCashAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoSubDetail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PostOption"></ReportField>
+        <ReportField Name="ReadableActive">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RequireUnits">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevalCuryRateTypeId"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="TransactionsForGivenCurrencyExists">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="TypeTotal"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Account</FullName>
+    </ReportTable>
+    <ReportTable Name="Sub">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsoSubCode"></ReportField>
+        <ReportField Name="ConsoSubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubCD"></ReportField>
+        <ReportField Name="SubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Sub</FullName>
+    </ReportTable>
+    <ReportTable Name="AMOrderType">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesItem">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesMatl">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesOper">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesOvhd">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesStep">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesTool">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefaultCostMethod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="ProdNumberingID"></ReportField>
+        <ReportField Name="ProdNumberingID_description"></ReportField>
+        <ReportField Name="ProdNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="WIPAcctID"></ReportField>
+        <ReportField Name="WIPAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPAcctID_description"></ReportField>
+        <ReportField Name="WIPSubID"></ReportField>
+        <ReportField Name="WIPSubID_description"></ReportField>
+        <ReportField Name="WIPSubID_Sub_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID"></ReportField>
+        <ReportField Name="WIPVarianceSubID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AM.AMOrderType</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="AMProdItem.WIPAcctID"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPSubID"></ViewerField>
+    <ViewerField Name="AMProdItem.SiteID"></ViewerField>
+    <ViewerField Name="AMProdItem.ProdOrdID"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPTotal"></ViewerField>
+    <ViewerField Name="AMProdItem.QtyScrapped"></ViewerField>
+    <ViewerField Name="AMProdItem.QtyComplete"></ViewerField>
+    <ViewerField Name="AMProdItem.InventoryID"></ViewerField>
+    <ViewerField Name="AMProdItem.SubItemID"></ViewerField>
+    <ViewerField Name="AMProdItem.ProdDate"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPBalance"></ViewerField>
+    <ViewerField Name="AMProdItem.UOM"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPComp"></ViewerField>
+    <ViewerField Name="AMProdItem.StatusID"></ViewerField>
+    <ViewerField Name="WIP.AccountCD"></ViewerField>
+    <ViewerField Name="WIP.Description"></ViewerField>
+  </ViewerFields>
+  <Width>1026px</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>56px</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <Location>916px, 20px</Location>
+          <Size>86px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Location>80px, 36px</Location>
+          <Size>132px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Location>916px, 36px</Location>
+          <Size>84px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Location>4px, 36px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Location>868px, 20px</Location>
+          <Size>43px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Location>4px, 20px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <CanGrow>True</CanGrow>
+          <Location>80px, 20px</Location>
+          <Size>132px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowCompanyBAccount.AcctName')</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Location>368px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@Production_Nbr]</Value>
+          <VisibleExpr>=([@Production_Nbr]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Location>488px, 36px</Location>
+          <Size>101px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>WIP Subaccount</Value>
+          <VisibleExpr>=([@WIPSubAccount]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <CanGrow>True</CanGrow>
+          <Location>488px, 20px</Location>
+          <Size>101px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>WIP Account</Value>
+          <VisibleExpr>=([@WIPAcct]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <CanGrow>True</CanGrow>
+          <Location>592px, 36px</Location>
+          <Size>105px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@WIPSubAccount]</Value>
+          <VisibleExpr>=([@WIPSubAccount]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <CanGrow>True</CanGrow>
+          <Location>4px, 0px</Location>
+          <Size>236px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Work In Process</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <CanGrow>True</CanGrow>
+          <Location>264px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Production Nbr:</Value>
+          <VisibleExpr>=([@Production_Nbr]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox50">
+          <Location>264px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Warehouse</Value>
+          <VisibleExpr>=([@Site]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox51">
+          <CanGrow>True</CanGrow>
+          <Location>592px, 20px</Location>
+          <Size>105px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@WIPAcct]</Value>
+          <VisibleExpr>=([@WIPAcct]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox52">
+          <Location>368px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@Site]</Value>
+          <VisibleExpr>=([@Site]&lt;&gt;Null)#010;</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox72">
+          <CanGrow>True</CanGrow>
+          <Location>264px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Order Type:</Value>
+          <VisibleExpr>=([@OrderType]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox73">
+          <CanGrow>True</CanGrow>
+          <Location>368px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@OrderType]</Value>
+          <VisibleExpr>=([@OrderType]&lt;&gt;Null)#010;</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Location>868px, 36px</Location>
+          <Size>41px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <Items>
+        <TextBox Name="textBox11">
+          <Location>716px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.WIPTotal]</Value>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Location>624px, 4px</Location>
+          <Size>90px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.QtyScrapped]</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Location>528px, 4px</Location>
+          <Size>90px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.QtyComplete]</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Location>164px, 4px</Location>
+          <Size>90px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.InventoryID]</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Location>60px, 4px</Location>
+          <NavigateMethod>Server</NavigateMethod>
+          <Size>100px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.ProdOrdID]</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <CanShrink>True</CanShrink>
+          <Location>320px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.SiteID]</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Location>256px, 4px</Location>
+          <Size>60px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.SubItemID]</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <CanShrink>True</CanShrink>
+          <Location>404px, 4px</Location>
+          <Size>68px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.ProdDate]</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <CanGrow>True</CanGrow>
+          <CanShrink>True</CanShrink>
+          <Location>0px, 4px</Location>
+          <Size>56px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.OrderType]</Value>
+        </TextBox>
+        <TextBox Name="textBox69">
+          <Location>916px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.WIPBalance]</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Location>476px, 4px</Location>
+          <Size>50px, 14px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.UOM]</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <Location>816px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdItem.WIPComp]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>8px</Height>
+    </PageFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox30">
+          <CanShrink>True</CanShrink>
+          <Location>264px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Subaccount</Value>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Location>4px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Account</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>28px</Height>
+      <Items>
+        <Line Name="line1">
+          <Location>592px, 1px</Location>
+          <Size>429px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox40">
+          <CanShrink>True</CanShrink>
+          <Location>612px, 8px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Report Total:</Value>
+        </TextBox>
+        <TextBox Name="textBox41">
+          <CanShrink>True</CanShrink>
+          <Location>716px, 8px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=Sum([AMProdItem.WIPTotal])</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <CanShrink>True</CanShrink>
+          <Location>816px, 8px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=Sum([AMProdItem.WIPComp])</Value>
+        </TextBox>
+        <TextBox Name="textBox43">
+          <Location>916px, 8px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=Sum([AMProdItem.WIPBalance])</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>AMProdItem.WIPAcctID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>AMProdItem.WIPSubID</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <PrintEmpty>False</PrintEmpty>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <StyleName>GroupHighlight</StyleName>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>4px, 4px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[WIP.AccountCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <CanShrink>True</CanShrink>
+              <Location>264px, 4px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[SUB.SubCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <CanShrink>True</CanShrink>
+              <Location>368px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[SUB.Description]</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>108px, 4px</Location>
+              <Size>152px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[WIP.Description]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>36px</Height>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <StyleName>GroupL1Highlight</StyleName>
+          <Items>
+            <TextBox Name="textBox16">
+              <Location>528px, 12px</Location>
+              <Size>90px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Qty Complete</Value>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <CanShrink>True</CanShrink>
+              <Location>320px, 12px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Warehouse</Value>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Location>164px, 12px</Location>
+              <Multiline>False</Multiline>
+              <Size>90px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Inventory ID</Value>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>716px, 12px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>WIP Total</Value>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Location>624px, 12px</Location>
+              <Size>90px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Qty Scrapped</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Location>816px, 12px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Mfg to Inventory</Value>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Location>916px, 12px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>WIP Balance</Value>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <CanShrink>True</CanShrink>
+              <Location>256px, 12px</Location>
+              <Size>60px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Subitem</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>404px, 12px</Location>
+              <Size>68px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Prod Date</Value>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <CanGrow>True</CanGrow>
+              <Location>0px, 12px</Location>
+              <Size>56px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Order Type</Value>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>476px, 12px</Location>
+              <Size>50px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>UOM</Value>
+            </TextBox>
+            <TextBox Name="textBox53">
+              <Location>60px, 12px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Production Nbr</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>28px</Height>
+          <PageBreak>After</PageBreak>
+          <Items>
+            <Line Name="line2">
+              <Location>592px, 1px</Location>
+              <Size>429px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox17">
+              <CanShrink>True</CanShrink>
+              <Location>612px, 8px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Total:</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <CanShrink>True</CanShrink>
+              <Location>716px, 8px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([AMProdItem.WIPTotal])</Value>
+            </TextBox>
+            <TextBox Name="textBox62">
+              <CanShrink>True</CanShrink>
+              <Location>816px, 8px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([AMProdItem.WIPComp])</Value>
+            </TextBox>
+            <TextBox Name="textBox71">
+              <Location>916px, 8px</Location>
+              <Size>100px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([AMProdItem.WIPBalance])</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

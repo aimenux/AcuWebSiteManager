@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>CABatchDetail.BatchNbr</DataField>
+      <Value>@DDBatchID</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins>
+      <Bottom>0in</Bottom>
+      <Left>0in</Left>
+      <Right>0in</Right>
+      <Top>0in</Top>
+    </Margins>
+    <PaperKind>Letter</PaperKind>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>DDBatchID</Name>
+      <Prompt>Direct Deposit Batch ID</Prompt>
+      <Required>True</Required>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://localhost/AcumaticaDB0019/</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>CABatchDetail.OrigDocType</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>CABatchDetail.OrigRefNbr</DataField>
+    </SortExp>
+  </Sorting>
+  <StyleSheet>
+    <StyleRule>
+      <Name>NormalFixed</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+        </Font>
+      </Style>
+    </StyleRule>
+  </StyleSheet>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="CABatchDetail">
+      <Fields>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="OrigDocType"></ReportField>
+        <ReportField Name="OrigLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrigModule"></ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CA.CABatchDetail</FullName>
+    </ReportTable>
+  </Tables>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.01in</Height>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpCheck">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[CABatchDetail.OrigDocType]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[CABatchDetail.OrigRefNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.01in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>10.3in</Height>
+          <Items>
+            <SubReport Name="subReport1">
+              <Location>0px, 0px</Location>
+              <Parameters>
+                <ExternalParameter>
+                  <Name>DocType</Name>
+                  <ValueExpr>=[CABatchDetail.OrigDocType]</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>RefNbr</Name>
+                  <ValueExpr>=[CABatchDetail.OrigRefNbr]</ValueExpr>
+                </ExternalParameter>
+              </Parameters>
+              <ReportName>PR641000.rpx</ReportName>
+              <Size>816px, 984px</Size>
+            </SubReport>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

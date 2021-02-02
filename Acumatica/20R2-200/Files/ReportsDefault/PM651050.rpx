@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PMWipTotalForecastHistory.ProjectID</DataField>
+      <Value>@ProjectID</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>PMWipTotalForecastHistory.PeriodID</DataField>
+      <Value>@To_Date</Value>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <Name>From_Date</Name>
+      <Prompt>From Date</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>To_Date</Name>
+      <Prompt>To Date</Prompt>
+      <Required>True</Required>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ProjectID</Name>
+      <Prompt>Project</Prompt>
+      <Required>True</Required>
+      <Type>Integer</Type>
+    </ReportParameter>
+  </Parameters>
+  <ParamsColumns>1</ParamsColumns>
+  <SchemaUrl>http://localhost/2020r102CE/</SchemaUrl>
+  <Style>
+    <TextAlign>Left</TextAlign>
+  </Style>
+  <Tables>
+    <ReportTable Name="PMWipTotalForecastHistory">
+      <Fields>
+        <ReportField Name="ActualCostAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualRevenueAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PeriodID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.CN.PMWipTotalForecastHistory</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>15.74075cm</Width>
+  <Sections>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>ThroughDate</Name>
+          <ValueExpr>=CStr(CInt(Left([@To_Date],4))-1) + '12'</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualCostAmt</Name>
+          <ValueExpr>=Sum(IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipTotalForecastHistory.ActualCostAmount],0))#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmt</Name>
+          <ValueExpr>=Sum(IIf([PMWipTotalForecastHistory.PeriodID]&gt;=@From_Date and [PMWipTotalForecastHistory.PeriodID]&lt;=@To_Date, [PMWipTotalForecastHistory.ActualRevenueAmount],0))#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualCostAmtTodate</Name>
+          <ValueExpr>=Sum([PMWipTotalForecastHistory.ActualCostAmount])</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ActualRevenueAmtTodate</Name>
+          <ValueExpr>=Sum([PMWipTotalForecastHistory.ActualRevenueAmount])#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>CostThroughAmt</Name>
+          <ValueExpr>=Sum(IIf([PMWipTotalForecastHistory.PeriodID]&lt;=$ThroughDate, [PMWipTotalForecastHistory.ActualCostAmount],0))#010;</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>BilledThroughAmt</Name>
+          <ValueExpr>=Sum(IIf([PMWipTotalForecastHistory.PeriodID]&lt;=$ThroughDate, [PMWipTotalForecastHistory.ActualRevenueAmount],0))</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </Detail>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+        </Font>
+      </Style>
+      <Visible>False</Visible>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <Height>0.42328cm</Height>
+      <Style>
+        <Font>
+          <Size>12px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </ReportFooter>
+  </Sections>
+</Report>

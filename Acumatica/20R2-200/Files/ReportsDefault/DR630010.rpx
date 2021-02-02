@@ -1,0 +1,913 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>28</item>
+    <item>56</item>
+    <item>20</item>
+    <item>20</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>DRRevenueBalanceByPeriod.FinPeriodID</DataField>
+      <Value>@paramFinPeriod</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@account</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>DRRevenueBalanceByPeriod.AcctID</DataField>
+      <Value>@account</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@sub</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <DataField>DRRevenueBalanceByPeriod.SubID</DataField>
+      <Value>@sub</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>DRRevenueBalanceByPeriod.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@PendingValidate</DataField>
+      <Value>False</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <NavigationTree>False</NavigationTree>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('DRReportParameters.PendingRevenueValidate')</DefaultValue>
+      <Name>PendingValidate</Name>
+      <Nullable>True</Nullable>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>paramFinPeriod</Name>
+      <Prompt>Financial Period</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>account</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Account</Prompt>
+      <ViewName>=Report.GetFieldSchema('RowDRScheduleDetail.DefAcctID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>sub</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Subaccount</Prompt>
+      <ViewName>=Report.GetFieldSchema('RowDRScheduleDetail.DefSubID,account')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=True</DefaultValue>
+      <Name>SuppressZeroBal</Name>
+      <Prompt>Suppress Zero Balances</Prompt>
+      <Type>Boolean</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>True</DefaultValue>
+      <Name>ShowSub</Name>
+      <Prompt>Show Subaccounts</Prompt>
+      <Type>Boolean</Type>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.UseMasterCalendar')</DefaultValue>
+      <Name>UseMasterCalendar</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Use Master Calendar</Prompt>
+      <Type>Boolean</Type>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.UseMasterCalendar')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildAlias>AHCurrent</ChildAlias>
+      <ChildName>DRRevenueBalance</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AcctID</ChildField>
+          <ParentField>AcctID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>SubID</ChildField>
+          <ParentField>SubID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ComponentID</ChildField>
+          <ParentField>ComponentID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>FinPeriodID</ChildField>
+          <ParentField>FinPeriodID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRRevenueBalanceByPeriod</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>AHLast</ChildAlias>
+      <ChildName>DRRevenueBalance</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AcctID</ChildField>
+          <ParentField>AcctID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>SubID</ChildField>
+          <ParentField>SubID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ComponentID</ChildField>
+          <ParentField>ComponentID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>FinPeriodID</ChildField>
+          <ParentField>LastActivityPeriod</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRRevenueBalanceByPeriod</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Account</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>Account.AccountID</ChildField>
+          <ParentField>DRRevenueBalanceByPeriod.AcctID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRRevenueBalanceByPeriod</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Sub</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>Sub.SubID</ChildField>
+          <ParentField>DRRevenueBalanceByPeriod.SubID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRRevenueBalanceByPeriod</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/Howard</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>AHCurrent.AcctID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="DRRevenueBalance">
+      <Fields>
+        <ReportField Name="AcctID"></ReportField>
+        <ReportField Name="AcctID_Account_description"></ReportField>
+        <ReportField Name="AcctID_description"></ReportField>
+        <ReportField Name="AcctID_Segment1"></ReportField>
+        <ReportField Name="BegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BegProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="ComponentID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="EndBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="EndProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PTDDeferred">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PTDProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PTDRecognized">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PTDRecognizedSamePeriod">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Segment1"></ReportField>
+        <ReportField Name="SubID_Segment2"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TranBegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranBegProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranEndBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranEndProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPTDDeferred">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPTDProjected">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPTDRecognized">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranPTDRecognizedSamePeriod">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.DR.DRRevenueBalance</FullName>
+    </ReportTable>
+    <ReportTable Name="DRRevenueBalanceByPeriod">
+      <Fields>
+        <ReportField Name="AcctID"></ReportField>
+        <ReportField Name="AcctID_Account_description"></ReportField>
+        <ReportField Name="AcctID_description"></ReportField>
+        <ReportField Name="AcctID_Segment1"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="ComponentID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="LastActivityPeriod"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Segment1"></ReportField>
+        <ReportField Name="SubID_Segment2"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.DR.DRRevenueBalanceByPeriod</FullName>
+    </ReportTable>
+    <ReportTable Name="Account">
+      <Fields>
+        <ReportField Name="AccountCD"></ReportField>
+        <ReportField Name="AccountCD_Segment1"></ReportField>
+        <ReportField Name="AccountClassID"></ReportField>
+        <ReportField Name="AccountClassID_AccountClass_descr"></ReportField>
+        <ReportField Name="AccountClassID_description"></ReportField>
+        <ReportField Name="AccountGroupID"></ReportField>
+        <ReportField Name="AccountGroupID_Segment1"></ReportField>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Box1099">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="COAOrder">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DirectPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GLConsolAccountCD"></ReportField>
+        <ReportField Name="GLConsolAccountCD_description"></ReportField>
+        <ReportField Name="GLConsolAccountCD_GLConsolAccount_description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCashAccount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoSubDetail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PostOption"></ReportField>
+        <ReportField Name="ReadableActive">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RequireUnits">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevalCuryRateTypeId"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="TransactionsForGivenCurrencyExists">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="TypeTotal"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Account</FullName>
+    </ReportTable>
+    <ReportTable Name="Sub">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsoSubCode"></ReportField>
+        <ReportField Name="ConsoSubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubCD"></ReportField>
+        <ReportField Name="SubCD_Segment1"></ReportField>
+        <ReportField Name="SubCD_Segment2"></ReportField>
+        <ReportField Name="SubID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Sub</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>20.13757cm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 4px</GridSize>
+      <Height>1.48148cm</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <Excel>
+            <column>3</column>
+            <row>2</row>
+          </Excel>
+          <Location>224px, 20px</Location>
+          <Size>94px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Account:</Value>
+          <VisibleExpr>=[@account]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 20px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@account]</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>3</column>
+            <row>3</row>
+          </Excel>
+          <Location>224px, 36px</Location>
+          <Size>94px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Subaccount:</Value>
+          <VisibleExpr>=[@sub]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>4</column>
+            <row>3</row>
+          </Excel>
+          <Location>320px, 36px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('DRRevenueBalanceByPeriod.SubID', [@sub])</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Excel>
+            <column>3</column>
+            <row>4</row>
+          </Excel>
+          <Location>400px, 4px</Location>
+          <Size>128px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Suppress Zero Balances</Value>
+          <VisibleExpr>=[@SuppressZeroBal]</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox17">
+          <Excel>
+            <column>3</column>
+            <row>5</row>
+          </Excel>
+          <Location>400px, 20px</Location>
+          <Size>128px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Show Subaccounts</Value>
+          <VisibleExpr>=[@ShowSub]</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>6</column>
+            <row>3</row>
+          </Excel>
+          <Location>640px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>600px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI('RowBatch.TranPeriodID', @paramFinPeriod)</Value>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Location>4px, 0px</Location>
+          <Size>180px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>DR Balance by Account</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>224px, 4px</Location>
+          <Size>92px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Financial Period:</Value>
+        </TextBox>
+        <TextBox Name="textBox24">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>600px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>640px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Excel>
+            <column>6</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>640px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>600px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox35">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>624px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>End Balance</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Location>4px, 4px</Location>
+          <Size>164px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Account</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>168px, 4px</Location>
+          <Size>336px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Subaccount</Value>
+          <VisibleExpr>=[@ShowSub]=True</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>504px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Begining Balance</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <ReportFooter Name="reportFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>20px</Height>
+      <Items>
+        <Line Name="line1">
+          <Excel>
+            <column>2</column>
+            <width>3</width>
+          </Excel>
+          <Location>452px, 0px</Location>
+          <Size>296px, 1px</Size>
+        </Line>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Format>=[AHCurrent.BegBalance.Format]</Format>
+          <Location>504px, 2px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranBegBalance],[AHCurrent.BegBalance]), #010;	IsNull(IIf( @UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),#010;	0)) )</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>456px, 2px</Location>
+          <Size>48px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Total:</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Format>=[AHCurrent.EndBalance.Format]</Format>
+          <Location>624px, 2px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=Sum(IsNull(IIf(@UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),0))</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+    <ReportFooter Name="reportFooterSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>44px</Height>
+      <VisibleExpr>=[@PendingValidate]= True</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox13">
+          <Location>8px, 8px</Location>
+          <Size>736px, 32px</Size>
+          <Style>
+            <Color>Red</Color>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>The report cannot be generated for the selected company or branch because deferral balances were not calculated for this company or branch. Recalculate deferral balances by using the Validate Deferred Balances (DR509900) form to be able to generate the report.</Value>
+        </TextBox>
+      </Items>
+    </ReportFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>Account.AccountCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>14px</Height>
+          <VisibleExpr>=(IIF([@SuppressZeroBal]=True #010;	AND Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranBegBalance], [AHCurrent.BegBalance]), #010;	IsNull(IIf( @UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),#010;	0)) ) = 0 #010;	AND Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranEndBalance],[AHCurrent.EndBalance]),#010;	0)) = 0 , False, True))#010;	AND[@ShowSub]=False#010;</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>4px, 0px</Location>
+              <Size>164px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRRevenueBalanceByPeriod.AcctID]</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=[AHCurrent.BegBalance.Format]</Format>
+              <Location>504px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranBegBalance],[AHCurrent.BegBalance]), #010;	IsNull(IIf( @UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),#010;	0)) )</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=[AHCurrent.EndBalance.Format]</Format>
+              <Location>624px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IsNull(IIf(@UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),0))</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group2">
+      <Grouping>
+        <GroupExp>
+          <DataField>Account.AccountCD</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>Sub.SubCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>14px</Height>
+          <VisibleExpr>=(IIF([@SuppressZeroBal]=True #010;	AND Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranBegBalance], [AHCurrent.BegBalance]), #010;	IsNull(IIf( @UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),#010;	0)) ) = 0 #010;	AND Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranEndBalance],[AHCurrent.EndBalance]),#010;	0)) = 0 , False, True))#010;	AND[@ShowSub]=True#010;</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox1_283">
+              <Location>4px, 0px</Location>
+              <Size>164px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRRevenueBalanceByPeriod.AcctID]</Value>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>168px, 0px</Location>
+              <Size>208px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRRevenueBalanceByPeriod.SubID]</Value>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Format>=[AHCurrent.BegBalance.Format]</Format>
+              <Location>504px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IsNull(IIf( @UseMasterCalendar=True,[AHCurrent.TranBegBalance],[AHCurrent.BegBalance]), #010;	IsNull(IIf( @UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),#010;	0)) )</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Format>=[AHCurrent.EndBalance.Format]</Format>
+              <Location>624px, 0px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum(IsNull(IIf(@UseMasterCalendar=True,[AHLast.TranEndBalance],[AHLast.EndBalance]),0))</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

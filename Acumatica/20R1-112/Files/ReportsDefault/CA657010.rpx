@@ -1,0 +1,410 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Parameters>
+    <ReportParameter>
+      <Name>DepositAccountID</Name>
+      <ViewName>=Report.GetFieldSchema('RowCashAccount.CashAccountCD')</ViewName>
+      <Prompt>Clearing Account</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>PaymentMethodID</Name>
+      <Nullable>True</Nullable>
+      <ViewName>=Report.GetFieldSchema('RowCashAccountDeposit.PaymentMethodID')</ViewName>
+      <Prompt>Payment Method</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>AnyPayment</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>ChargeableAmount</Name>
+      <Type>Float</Type>
+      <Prompt>Chargeable Amount:</Prompt>
+      <DefaultValue>0</DefaultValue>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>localhost/pure</SchemaUrl>
+  <StyleSheet>
+    <StyleRule>
+      <Name>Report Name</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>12px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </StyleRule>
+    <StyleRule>
+      <Name>Report Params</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+        </Font>
+      </Style>
+    </StyleRule>
+    <StyleRule>
+      <Name>Heading 1</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </StyleRule>
+    <StyleRule>
+      <Name>Heading 2</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </StyleRule>
+    <StyleRule>
+      <Name>Heading 3</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+          <Style>Bold</Style>
+        </Font>
+      </Style>
+    </StyleRule>
+    <StyleRule>
+      <Name>Normal</Name>
+      <Style>
+        <Font>
+          <Name>Courier New</Name>
+          <Size>11px</Size>
+        </Font>
+      </Style>
+    </StyleRule>
+  </StyleSheet>
+  <Filters>
+    <FilterExp>
+      <DataField>RowCashAccountDeposit.PaymentMethodID</DataField>
+      <Operator>Or</Operator>
+      <OpenBraces>1</OpenBraces>
+      <Value>@PaymentMethodID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>@PaymentMethodID</DataField>
+      <CloseBraces>1</CloseBraces>
+      <Value>@AnyPayment</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowCashAccountDeposit.DepositAcctID</DataField>
+      <Value>@DepositAccountID</Value>
+    </FilterExp>
+  </Filters>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Tables>
+    <ReportTable Name="RowCashAccountDeposit">
+      <Fields>
+        <ReportField Name="AccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DepositAcctID"></ReportField>
+        <ReportField Name="PaymentMethodID"></ReportField>
+        <ReportField Name="ChargeEntryTypeID"></ReportField>
+        <ReportField Name="ChargeRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DepositAcctID_CashAccount_description"></ReportField>
+        <ReportField Name="DepositAcctID_description"></ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowCashAccount">
+      <Fields>
+		  <ReportField Name="AccountID"></ReportField>
+		  <ReportField Name="AccountID_Account_description"></ReportField>
+		  <ReportField Name="AccountID_description"></ReportField>
+		  <ReportField Name="AcctSettingsAllowed">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Active">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="BranchID"></ReportField>
+		  <ReportField Name="BranchID_Branch_acctName"></ReportField>
+		  <ReportField Name="BranchID_description"></ReportField>
+		  <ReportField Name="CashAccountCD"></ReportField>
+		  <ReportField Name="CashAccountID">
+			  <DataType>Int32</DataType>
+		  </ReportField>
+		  <ReportField Name="CashCreatedByID"></ReportField>
+		  <ReportField Name="CashCreatedByID_Creator_username"></ReportField>
+		  <ReportField Name="CashCreatedByID_description"></ReportField>
+		  <ReportField Name="CashCreatedByScreenID"></ReportField>
+		  <ReportField Name="CashCreatedDateTime">
+			  <DataType>DateTime</DataType>
+		  </ReportField>
+		  <ReportField Name="CashLastModifiedByID"></ReportField>
+		  <ReportField Name="CashLastModifiedByID_description"></ReportField>
+		  <ReportField Name="CashLastModifiedByID_Modifier_username"></ReportField>
+		  <ReportField Name="CashLastModifiedByScreenID"></ReportField>
+		  <ReportField Name="CashLastModifiedDateTime">
+			  <DataType>DateTime</DataType>
+		  </ReportField>
+		  <ReportField Name="ClearingAccount">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="CuryID"></ReportField>
+		  <ReportField Name="CuryRateTypeID"></ReportField>
+		  <ReportField Name="Descr"></ReportField>
+		  <ReportField Name="ExtRefNbr"></ReportField>
+		  <ReportField Name="NoteActivity"></ReportField>
+		  <ReportField Name="NoteFiles"></ReportField>
+		  <ReportField Name="NoteID">
+			  <DataType>Int64</DataType>
+		  </ReportField>
+		  <ReportField Name="NoteImages"></ReportField>
+		  <ReportField Name="NoteText"></ReportField>
+		  <ReportField Name="PTInstancesAllowed">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Reconcile">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="ReconNumberingID"></ReportField>
+		  <ReportField Name="ReconNumberingID_description"></ReportField>
+		  <ReportField Name="ReconNumberingID_Numbering_descr"></ReportField>
+		  <ReportField Name="ReferenceID"></ReportField>
+		  <ReportField Name="ReferenceID_BAccountR_acctName"></ReportField>
+		  <ReportField Name="ReferenceID_description"></ReportField>
+		  <ReportField Name="ReferenceID_Vendor_acctName"></ReportField>
+		  <ReportField Name="RestrictVisibilityWithBranch">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Selected">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Signature"></ReportField>
+		  <ReportField Name="SignatureDescr"></ReportField>
+		  <ReportField Name="StatementImportTypeName"></ReportField>
+		  <ReportField Name="SubID"></ReportField>
+		  <ReportField Name="SubID_description"></ReportField>
+		  <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="CashAccount.CashAccountID"></ViewerField>
+  </ViewerFields>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowCashAccount</ChildName>
+      <ParentName>RowCashAccountDeposit</ParentName>
+      <JoinType>Inner</JoinType>
+      <ChildAlias>CashAccount</ChildAlias>
+      <Links>
+        <RelationRow>
+          <ChildField>CashAccountID</ChildField>
+          <ParentField>AccountID</ParentField>
+        </RelationRow>
+      </Links>
+    </ReportRelation>
+  </Relations>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>1.0582cm</Height>
+      <Items>
+        <TextBox Name="textBox9">
+          <StyleName>Heading 1</StyleName>
+          <Location>8px, 8px</Location>
+          <Value>Type</Value>
+          <Size>56px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox10">
+          <StyleName>Heading 1</StyleName>
+          <Location>64px, 8px</Location>
+          <Value>Reference Nbr.</Value>
+          <Size>72px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox11">
+          <StyleName>Heading 1</StyleName>
+          <Location>144px, 8px</Location>
+          <Value>Customer ID</Value>
+          <Size>96px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox12">
+          <StyleName>Heading 1</StyleName>
+          <Location>240px, 8px</Location>
+          <Value>Customer Name</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox13">
+          <StyleName>Heading 1</StyleName>
+          <Location>368px, 8px</Location>
+          <Value>Doc Date</Value>
+          <Size>72px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <StyleName>Heading 1</StyleName>
+          <Location>448px, 8px</Location>
+          <Value>Deposit After</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <StyleName>Heading 1</StyleName>
+          <Location>576px, 8px</Location>
+          <Value>Currency</Value>
+          <Size>80px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <StyleName>Heading 1</StyleName>
+          <Location>928px, 8px</Location>
+          <Value>Amount</Value>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Size>88px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <StyleName>Heading 1</StyleName>
+          <Location>664px, 8px</Location>
+          <Value>Payment Method</Value>
+          <Size>104px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <StyleName>Heading 1</StyleName>
+          <Location>776px, 8px</Location>
+          <Value>Payment Ref.</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+        <Line Name="line1">
+          <Location>0px, 24px</Location>
+          <Size>1024px, 8px</Size>
+        </Line>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>ChargeRate1</Name>
+          <ValueExpr>=IIF([RowCashAccountDeposit.PaymentMethodID]=[@PaymentMethodID], [RowCashAccountDeposit.ChargeRate],#010;IIF(([RowCashAccountDeposit.AccountID]&lt;&gt;Next([RowCashAccountDeposit.AccountID])),[RowCashAccountDeposit.ChargeRate],0))</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>ChargeRateTotal1</Name>
+          <ValueExpr>=$ChargeRateTotal1 +$ChargeRate1</ValueExpr>
+          <ResetGroup>group3</ResetGroup>
+        </ReportVariable>
+      </Variables>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox38">
+          <StyleName>Normal</StyleName>
+          <Location>928px, 0px</Location>
+          <Value>=$ChargeRateTotal1</Value>
+          <Size>88px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <StyleName>Normal</StyleName>
+          <Location>824px, 0px</Location>
+          <Value>=$ChargeRate1</Value>
+          <Size>96px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <StyleName>Normal</StyleName>
+          <Location>448px, 0px</Location>
+          <Value>=[RowCashAccountDeposit.PaymentMethodID]</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <StyleName>Normal</StyleName>
+          <Location>576px, 0px</Location>
+          <Value>=[RowCashAccountDeposit.ChargeEntryTypeID]</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <StyleName>Normal</StyleName>
+          <Location>704px, 0px</Location>
+          <Value>=[RowCashAccountDeposit.ChargeRate]</Value>
+          <Size>120px, 16px</Size>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1" />
+  </Sections>
+  <Groups>
+    <Group Name="group3">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowCashAccountDeposit.AccountID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <Height>0.42328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Items>
+            <TextBox Name="textBox41">
+              <StyleName>Normal</StyleName>
+              <Location>824px, 0px</Location>
+              <Value>=$ChargeRateTotal1</Value>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>80px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <StyleName>Normal</StyleName>
+              <Location>424px, 0px</Location>
+              <Value>=[CashAccount.ReferenceID]</Value>
+              <Size>160px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <StyleName>Normal</StyleName>
+              <Location>160px, 0px</Location>
+              <Value>=[CashAccount.Descr]</Value>
+              <Size>120px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <StyleName>Normal</StyleName>
+              <Location>288px, 0px</Location>
+              <Value>=[CashAccount.ExtRefNbr]</Value>
+              <Size>128px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <StyleName>Normal</StyleName>
+              <Location>32px, 0px</Location>
+              <Value>=[CashAccount.CashAccountCD]</Value>
+              <Size>120px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <StyleName>Normal</StyleName>
+              <Location>592px, 0px</Location>
+              <Value>=[CashAccount.ReferenceID_BAccount_acctName]</Value>
+              <Size>176px, 16px</Size>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <StyleName>Normal</StyleName>
+              <Location>912px, 0px</Location>
+              <Value>=($ChargeRateTotal1*@ChargeableAmount)/100.0</Value>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>104px, 16px</Size>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection3">
+          <Height>0.21164cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

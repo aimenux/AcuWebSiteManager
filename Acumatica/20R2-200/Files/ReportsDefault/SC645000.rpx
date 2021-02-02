@@ -1,0 +1,4121 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PMChangeOrder.RefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMChangeOrderRevenueBudget.POOrderNbr</DataField>
+      <OpenBraces>2</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@SubcontractNumber</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@SubcontractNumber</DataField>
+      <OpenBraces>1</OpenBraces>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>2</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@POOrderNbr</DataField>
+      <Operator>Or</Operator>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PMChangeOrderRevenueBudget.POOrderNbr</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@POOrderNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>IsNull</Condition>
+      <DataField>@POOrderNbr</DataField>
+      <OpenBraces>1</OpenBraces>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>3</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@SubcontractNumber</DataField>
+    </FilterExp>
+  </Filters>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>RefNbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Reference Number</Prompt>
+      <Required>True</Required>
+      <ViewName>=Report.GetFieldSchema('PMChangeOrder.RefNbr')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>SubcontractNumber</Name>
+      <Nullable>True</Nullable>
+      <Prompt>SubcontractNumber</Prompt>
+      <ViewName>=Report.GetFieldSchema('SubcontractReportInformation.SubcontractNumber')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>POOrderNbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>POOrderNbr</Prompt>
+      <ViewName>=Report.GetFieldSchema('POOrder.OrderNbr')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>PMProject</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ContractID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMChangeOrder</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>PMChangeOrderRevenueBudget</ChildAlias>
+      <ChildName>PMChangeOrderLine</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>RefNbr</ChildField>
+          <ParentField>RefNbr</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMChangeOrder</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PMBudget</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ProjectID</ChildField>
+          <ParentField>ProjectID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ProjectTaskID</ChildField>
+          <ParentField>TaskID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AccountGroupID</ChildField>
+          <ParentField>InventoryID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CostCodeID</ChildField>
+          <ParentField>CostCodeID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>PMChangeOrderRevenueBudget</ParentAlias>
+      <ParentName>PMChangeOrderLine</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Branch</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>DefaultBranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMProject</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PMAddress</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>BillAddressID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMProject</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>CompanyBAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>Branch</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>InventoryItem</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>InventoryID</ChildField>
+          <ParentField>InventoryID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>PMChangeOrderRevenueBudget</ParentAlias>
+      <ParentName>PMChangeOrderLine</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PMCostCode</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>CostCodeID</ChildField>
+          <ParentField>CostCodeID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>PMChangeOrderRevenueBudget</ParentAlias>
+      <ParentName>PMChangeOrderLine</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Company</ChildName>
+      <JoinType>Cross</JoinType>
+      <ParentName>PMChangeOrder</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>Branch</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>CompanyAddress</ChildAlias>
+      <ChildName>Address</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>DefAddressID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>CompanyContact</ChildAlias>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>POLine</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>OrderNbr</ChildField>
+          <ParentField>POOrderNbr</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>LineNbr</ChildField>
+          <ParentField>POLineNbr</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>PMChangeOrderRevenueBudget</ParentAlias>
+      <ParentName>PMChangeOrderLine</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>Vendor</ChildAlias>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>VendorID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>PMChangeOrderRevenueBudget</ParentAlias>
+      <ParentName>PMChangeOrderLine</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>VendorAddress</ChildAlias>
+      <ChildName>Address</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>DefAddressID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>Vendor</ParentAlias>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>VendorContact</ChildAlias>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>Vendor</ParentAlias>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>PMCommitment</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>CommitmentID</ChildField>
+          <ParentField>POLine.CommitmentID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMChangeOrder</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>POOrder</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>OrderNbr</ChildField>
+          <ParentField>POLine.OrderNbr</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>PMChangeOrder</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/AcumaticaCE/</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>PMChangeOrder.RefNbr</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>PMChangeOrderRevenueBudget.TaskID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>PMChangeOrderRevenueBudget.CostCodeID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>PMChangeOrderRevenueBudget.InventoryID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateFormExternal.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PMChangeOrder">
+      <Fields>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="ClassID_PMChangeOrderClass_description"></ReportField>
+        <ReportField Name="CommitmentTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CompletionDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CompletionDate_Day"></ReportField>
+        <ReportField Name="CompletionDate_Hour"></ReportField>
+        <ReportField Name="CompletionDate_Month"></ReportField>
+        <ReportField Name="CompletionDate_Quarter"></ReportField>
+        <ReportField Name="CostTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="CustomerID_Segment1"></ReportField>
+        <ReportField Name="Date">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Date_Day"></ReportField>
+        <ReportField Name="Date_Hour"></ReportField>
+        <ReportField Name="Date_Month"></ReportField>
+        <ReportField Name="Date_Quarter"></ReportField>
+        <ReportField Name="DelayDays">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="GrossMarginAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="GrossMarginPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="ProjectNbr"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevenueTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReverseStatus"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Text"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMChangeOrder</FullName>
+    </ReportTable>
+    <ReportTable Name="PMCostCode">
+      <Fields>
+        <ReportField Name="CostCodeCD"></ReportField>
+        <ReportField Name="CostCodeCD_Segment1"></ReportField>
+        <ReportField Name="CostCodeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="IsDefault">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsProjectOverride">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMCostCode</FullName>
+    </ReportTable>
+    <ReportTable Name="PMAddress">
+      <Fields>
+        <ReportField Name="AddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AddressLine1"></ReportField>
+        <ReportField Name="AddressLine2"></ReportField>
+        <ReportField Name="AddressLine3"></ReportField>
+        <ReportField Name="BAccountAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="City"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CustomerAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="IsDefaultAddress">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsDefaultBillAddress">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsValidated">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="OverrideAddress">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PostalCode"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="State"></ReportField>
+        <ReportField Name="State_description"></ReportField>
+        <ReportField Name="State_State_name"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMAddress</FullName>
+    </ReportTable>
+    <ReportTable Name="Branch">
+      <Fields>
+        <ReportField Name="AcctMapNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="BranchCD"></ReportField>
+        <ReportField Name="BranchCD_Segment1"></ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CEmail"></ReportField>
+        <ReportField Name="CFSFiler">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactName"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CTelNumber"></ReportField>
+        <ReportField Name="ForeignEntity">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LedgerCD"></ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LedgerID_description"></ReportField>
+        <ReportField Name="LedgerID_Ledger_descr"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="MainLogoName"></ReportField>
+        <ReportField Name="NameControl"></ReportField>
+        <ReportField Name="ParentBranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="Reporting1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="RoleName_description"></ReportField>
+        <ReportField Name="RoleName_Roles_descr"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TCC"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Branch</FullName>
+    </ReportTable>
+    <ReportTable Name="PMProject">
+      <Fields>
+        <ReportField Name="ActivationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ActivationDate_Day"></ReportField>
+        <ReportField Name="ActivationDate_Hour"></ReportField>
+        <ReportField Name="ActivationDate_Month"></ReportField>
+        <ReportField Name="ActivationDate_Quarter"></ReportField>
+        <ReportField Name="AllocationID"></ReportField>
+        <ReportField Name="AllocationID_description"></ReportField>
+        <ReportField Name="AllocationID_PMAllocation_description"></ReportField>
+        <ReportField Name="AllowOverride">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ApproverID"></ReportField>
+        <ReportField Name="ApproverID_description"></ReportField>
+        <ReportField Name="ApproverID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ApproverID_Segment1"></ReportField>
+        <ReportField Name="Asset">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AutoAllocate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutomaticReleaseAR">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoRenew">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoRenewDays">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Balance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseType"></ReportField>
+        <ReportField Name="BillAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BillContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BillingID"></ReportField>
+        <ReportField Name="BillingID_description"></ReportField>
+        <ReportField Name="BillingID_PMBilling_description"></ReportField>
+        <ReportField Name="BillingLineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BudgetFinalized">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BudgetLevel"></ReportField>
+        <ReportField Name="BudgetMetricsEnabled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BURDEN_Attributes"></ReportField>
+        <ReportField Name="CalendarID"></ReportField>
+        <ReportField Name="CalendarID_CSCalendar_description"></ReportField>
+        <ReportField Name="CalendarID_description"></ReportField>
+        <ReportField Name="CampaignID"></ReportField>
+        <ReportField Name="CampaignID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignID_description"></ReportField>
+        <ReportField Name="CaseItemID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ChangeOrderWorkflow">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassType"></ReportField>
+        <ReportField Name="ContractAccountGroup"></ReportField>
+        <ReportField Name="ContractCD"></ReportField>
+        <ReportField Name="ContractCD_Segment1"></ReportField>
+        <ReportField Name="ContractID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContractInfo"></ReportField>
+        <ReportField Name="CPMARGIN_Attributes"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CreateProforma">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CurrentRecurring">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CurrentRenewal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CurrentSetup">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="CustomerID_Segment1"></ReportField>
+        <ReportField Name="Days"></ReportField>
+        <ReportField Name="DaysBeforeExpiration"></ReportField>
+        <ReportField Name="DefaultAccountID"></ReportField>
+        <ReportField Name="DefaultAccountID_Account_description"></ReportField>
+        <ReportField Name="DefaultAccountID_description"></ReportField>
+        <ReportField Name="DefaultAccountID_Segment1"></ReportField>
+        <ReportField Name="DefaultAccrualAccountID"></ReportField>
+        <ReportField Name="DefaultAccrualAccountID_Account_description"></ReportField>
+        <ReportField Name="DefaultAccrualAccountID_description"></ReportField>
+        <ReportField Name="DefaultAccrualAccountID_Segment1"></ReportField>
+        <ReportField Name="DefaultAccrualSubID"></ReportField>
+        <ReportField Name="DefaultAccrualSubID_description"></ReportField>
+        <ReportField Name="DefaultAccrualSubID_Segment1"></ReportField>
+        <ReportField Name="DefaultAccrualSubID_Segment2"></ReportField>
+        <ReportField Name="DefaultAccrualSubID_Sub_description"></ReportField>
+        <ReportField Name="DefaultBranchID"></ReportField>
+        <ReportField Name="DefaultBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="DefaultBranchID_description"></ReportField>
+        <ReportField Name="DefaultBranchID_Segment1"></ReportField>
+        <ReportField Name="DefaultSubID"></ReportField>
+        <ReportField Name="DefaultSubID_description"></ReportField>
+        <ReportField Name="DefaultSubID_Segment1"></ReportField>
+        <ReportField Name="DefaultSubID_Segment2"></ReportField>
+        <ReportField Name="DefaultSubID_Sub_description"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="DetailedBilling">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DiscontinueAfter">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DiscontinueAfter_Day"></ReportField>
+        <ReportField Name="DiscontinueAfter_Hour"></ReportField>
+        <ReportField Name="DiscontinueAfter_Month"></ReportField>
+        <ReportField Name="DiscontinueAfter_Quarter"></ReportField>
+        <ReportField Name="DiscountID"></ReportField>
+        <ReportField Name="Duration">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DurationType"></ReportField>
+        <ReportField Name="EffectiveFrom">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EffectiveFrom_Day"></ReportField>
+        <ReportField Name="EffectiveFrom_Hour"></ReportField>
+        <ReportField Name="EffectiveFrom_Month"></ReportField>
+        <ReportField Name="EffectiveFrom_Quarter"></ReportField>
+        <ReportField Name="Expense">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ExpireDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ExpireDate_Day"></ReportField>
+        <ReportField Name="ExpireDate_Hour"></ReportField>
+        <ReportField Name="ExpireDate_Month"></ReportField>
+        <ReportField Name="ExpireDate_Quarter"></ReportField>
+        <ReportField Name="EXPMARKUP_Attributes"></ReportField>
+        <ReportField Name="GraceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GracePeriod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Income">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCancelled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCompleted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsContinuous">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsLastActionUndoable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsPendingUpdate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsTemplate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActiveRevID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastChangeOrderNumber"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="Liability">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LimitsEnabled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LineCtr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="LocationID_description"></ReportField>
+        <ReportField Name="LocationID_Location_descr"></ReportField>
+        <ReportField Name="LocationID_Segment1"></ReportField>
+        <ReportField Name="LockCommitments">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="MasterContractID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Min"></ReportField>
+        <ReportField Name="NonProject">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OriginalContractID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="PendingRecurring">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PendingRenewal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PendingSetup">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PMDIRECTOR_Attributes"></ReportField>
+        <ReportField Name="PrepaymentDefCode"></ReportField>
+        <ReportField Name="PrepaymentDefCode_description"></ReportField>
+        <ReportField Name="PrepaymentDefCode_DRDeferredCode_description"></ReportField>
+        <ReportField Name="PrepaymentEnabled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RateTableID"></ReportField>
+        <ReportField Name="RateTableID_description"></ReportField>
+        <ReportField Name="RateTableID_PMRateTable_description"></ReportField>
+        <ReportField Name="RateTypeID"></ReportField>
+        <ReportField Name="RefreshOnRenewal">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Refundable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RefundPeriod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RenewalBillingStartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="RenewalBillingStartDate_Day"></ReportField>
+        <ReportField Name="RenewalBillingStartDate_Hour"></ReportField>
+        <ReportField Name="RenewalBillingStartDate_Month"></ReportField>
+        <ReportField Name="RenewalBillingStartDate_Quarter"></ReportField>
+        <ReportField Name="RestrictProjectSelect"></ReportField>
+        <ReportField Name="RestrictToEmployeeList">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RestrictToResourceList">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RetainagePct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RevID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SalesPersonID"></ReportField>
+        <ReportField Name="SalesPersonID_description"></ReportField>
+        <ReportField Name="SalesPersonID_SalesPerson_descr"></ReportField>
+        <ReportField Name="SalesPersonID_Segment1"></ReportField>
+        <ReportField Name="ScheduleStartsOn"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ServiceActivate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StartDate_Day"></ReportField>
+        <ReportField Name="StartDate_Hour"></ReportField>
+        <ReportField Name="StartDate_Month"></ReportField>
+        <ReportField Name="StartDate_Quarter"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="StrIsTemplate"></ReportField>
+        <ReportField Name="TemplateID"></ReportField>
+        <ReportField Name="TemplateID_description"></ReportField>
+        <ReportField Name="TemplateID_PMProject_description"></ReportField>
+        <ReportField Name="TemplateID_Segment1"></ReportField>
+        <ReportField Name="TerminationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TerminationDate_Day"></ReportField>
+        <ReportField Name="TerminationDate_Hour"></ReportField>
+        <ReportField Name="TerminationDate_Month"></ReportField>
+        <ReportField Name="TerminationDate_Quarter"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="TermsID_description"></ReportField>
+        <ReportField Name="TermsID_Terms_descr"></ReportField>
+        <ReportField Name="TotalDue">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TotalPending">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TotalRecurring">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TotalsCalculated">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TotalUsage">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="VisibleInAP">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInAR">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInCA">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInCR">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInEA">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInGL">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInIN">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInPO">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInSO">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VisibleInTA">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMProject</FullName>
+    </ReportTable>
+    <ReportTable Name="InventoryItem">
+      <Fields>
+        <ReportField Name="ABCCodeID"></ReportField>
+        <ReportField Name="ABCCodeID_description"></ReportField>
+        <ReportField Name="ABCCodeID_INABCCode_descr"></ReportField>
+        <ReportField Name="ABCCodeIsFixed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ActionType"></ReportField>
+        <ReportField Name="AutoShowNote">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BaseItemVolume">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseItemWeight">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BasePrice">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BasePriceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BaseUnit"></ReportField>
+        <ReportField Name="BaseVolume">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseWeight">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BillingRule"></ReportField>
+        <ReportField Name="Body"></ReportField>
+        <ReportField Name="chkEquipmentManagement">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="chkServiceManagement">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClassID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="COGSAcctID"></ReportField>
+        <ReportField Name="COGSAcctID_Account_description"></ReportField>
+        <ReportField Name="COGSAcctID_description"></ReportField>
+        <ReportField Name="COGSAcctID_Segment1"></ReportField>
+        <ReportField Name="COGSSubID"></ReportField>
+        <ReportField Name="COGSSubID_description"></ReportField>
+        <ReportField Name="COGSSubID_Segment1"></ReportField>
+        <ReportField Name="COGSSubID_Segment2"></ReportField>
+        <ReportField Name="COGSSubID_Sub_description"></ReportField>
+        <ReportField Name="COLOR_Attributes"></ReportField>
+        <ReportField Name="Commisionable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CompletePOLine"></ReportField>
+        <ReportField Name="CONFIGURAB_Attributes"></ReportField>
+        <ReportField Name="CpnyWarrantyType"></ReportField>
+        <ReportField Name="CpnyWarrantyValue">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CycleID"></ReportField>
+        <ReportField Name="CycleID_description"></ReportField>
+        <ReportField Name="CycleID_INPICycle_descr"></ReportField>
+        <ReportField Name="DefaultSubItemID"></ReportField>
+        <ReportField Name="DefaultSubItemID_Segment1"></ReportField>
+        <ReportField Name="DefaultSubItemOnEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DefaultTerm">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DefaultTermUOM"></ReportField>
+        <ReportField Name="DeferralAcctID"></ReportField>
+        <ReportField Name="DeferralAcctID_Account_description"></ReportField>
+        <ReportField Name="DeferralAcctID_description"></ReportField>
+        <ReportField Name="DeferralAcctID_Segment1"></ReportField>
+        <ReportField Name="DeferralSubID"></ReportField>
+        <ReportField Name="DeferralSubID_description"></ReportField>
+        <ReportField Name="DeferralSubID_Segment1"></ReportField>
+        <ReportField Name="DeferralSubID_Segment2"></ReportField>
+        <ReportField Name="DeferralSubID_Sub_description"></ReportField>
+        <ReportField Name="DeferredCode"></ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="DfltEarningType"></ReportField>
+        <ReportField Name="DfltReceiptLocationID"></ReportField>
+        <ReportField Name="DfltReceiptLocationID_description"></ReportField>
+        <ReportField Name="DfltReceiptLocationID_INLocation_descr"></ReportField>
+        <ReportField Name="DfltReceiptLocationID_Segment1"></ReportField>
+        <ReportField Name="DfltShipLocationID"></ReportField>
+        <ReportField Name="DfltShipLocationID_description"></ReportField>
+        <ReportField Name="DfltShipLocationID_INLocation_descr"></ReportField>
+        <ReportField Name="DfltShipLocationID_Segment1"></ReportField>
+        <ReportField Name="DfltSiteID"></ReportField>
+        <ReportField Name="DfltSiteID_description"></ReportField>
+        <ReportField Name="DfltSiteID_INSite_descr"></ReportField>
+        <ReportField Name="DfltSiteID_Segment1"></ReportField>
+        <ReportField Name="DiscAcctID"></ReportField>
+        <ReportField Name="DiscAcctID_Account_description"></ReportField>
+        <ReportField Name="DiscAcctID_description"></ReportField>
+        <ReportField Name="DiscAcctID_Segment1"></ReportField>
+        <ReportField Name="DiscSubID"></ReportField>
+        <ReportField Name="DiscSubID_description"></ReportField>
+        <ReportField Name="DiscSubID_Segment1"></ReportField>
+        <ReportField Name="DiscSubID_Segment2"></ReportField>
+        <ReportField Name="DiscSubID_Sub_description"></ReportField>
+        <ReportField Name="EntityTypeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="EQEnabled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="EquipmentItemClass"></ReportField>
+        <ReportField Name="EstimatedDuration"></ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="ImageUrl"></ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InventoryCD"></ReportField>
+        <ReportField Name="InventoryCD_Segment1"></ReportField>
+        <ReportField Name="InventoryID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="InvtAcctID"></ReportField>
+        <ReportField Name="InvtAcctID_Account_description"></ReportField>
+        <ReportField Name="InvtAcctID_description"></ReportField>
+        <ReportField Name="InvtAcctID_Segment1"></ReportField>
+        <ReportField Name="InvtSubID"></ReportField>
+        <ReportField Name="InvtSubID_description"></ReportField>
+        <ReportField Name="InvtSubID_Segment1"></ReportField>
+        <ReportField Name="InvtSubID_Segment2"></ReportField>
+        <ReportField Name="InvtSubID_Sub_description"></ReportField>
+        <ReportField Name="IsSplitted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ItemClassID"></ReportField>
+        <ReportField Name="ItemClassID_description"></ReportField>
+        <ReportField Name="ItemClassID_INItemClass_descr"></ReportField>
+        <ReportField Name="ItemClassID_Segment1"></ReportField>
+        <ReportField Name="ItemClassID_Segment2"></ReportField>
+        <ReportField Name="ItemClassID_Segment3"></ReportField>
+        <ReportField Name="ItemStatus"></ReportField>
+        <ReportField Name="ItemType"></ReportField>
+        <ReportField Name="KitItem">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastBasePrice">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LastSiteID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LastStdCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LCVarianceAcctID"></ReportField>
+        <ReportField Name="LCVarianceAcctID_Account_description"></ReportField>
+        <ReportField Name="LCVarianceAcctID_description"></ReportField>
+        <ReportField Name="LCVarianceAcctID_Segment1"></ReportField>
+        <ReportField Name="LCVarianceSubID"></ReportField>
+        <ReportField Name="LCVarianceSubID_description"></ReportField>
+        <ReportField Name="LCVarianceSubID_Segment1"></ReportField>
+        <ReportField Name="LCVarianceSubID_Segment2"></ReportField>
+        <ReportField Name="LCVarianceSubID_Sub_description"></ReportField>
+        <ReportField Name="LotSerClassID"></ReportField>
+        <ReportField Name="LotSerClassID_description"></ReportField>
+        <ReportField Name="LotSerClassID_INLotSerClass_descr"></ReportField>
+        <ReportField Name="LotSerNumberResult"></ReportField>
+        <ReportField Name="LotSerNumShared">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LotSerNumSharedVal"></ReportField>
+        <ReportField Name="LotSerNumVal"></ReportField>
+        <ReportField Name="ManufacturerID"></ReportField>
+        <ReportField Name="ManufacturerID_description"></ReportField>
+        <ReportField Name="ManufacturerID_FSManufacturer_descr"></ReportField>
+        <ReportField Name="ManufacturerModelID"></ReportField>
+        <ReportField Name="ManufacturerModelID_description"></ReportField>
+        <ReportField Name="ManufacturerModelID_FSManufacturerModel_descr"></ReportField>
+        <ReportField Name="MarkupPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Mem_ShowComponent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="MinGrossProfitPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ModelType"></ReportField>
+        <ReportField Name="MovementClassID"></ReportField>
+        <ReportField Name="MovementClassID_description"></ReportField>
+        <ReportField Name="MovementClassID_INMovementClass_descr"></ReportField>
+        <ReportField Name="MovementClassIsFixed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NegQty">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NonStockReceipt">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NonStockShip">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PackageOption"></ReportField>
+        <ReportField Name="PackSeparately">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ParentItemClassID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PendingBasePrice">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PendingBasePriceDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PendingStdCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PendingStdCostDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PendingStdCostDate_Day"></ReportField>
+        <ReportField Name="PendingStdCostDate_Hour"></ReportField>
+        <ReportField Name="PendingStdCostDate_Month"></ReportField>
+        <ReportField Name="PendingStdCostDate_Quarter"></ReportField>
+        <ReportField Name="PIXELSIZE_Attributes"></ReportField>
+        <ReportField Name="POAccrualAcctID"></ReportField>
+        <ReportField Name="POAccrualAcctID_Account_description"></ReportField>
+        <ReportField Name="POAccrualAcctID_description"></ReportField>
+        <ReportField Name="POAccrualAcctID_Segment1"></ReportField>
+        <ReportField Name="POAccrualSubID"></ReportField>
+        <ReportField Name="POAccrualSubID_description"></ReportField>
+        <ReportField Name="POAccrualSubID_Segment1"></ReportField>
+        <ReportField Name="POAccrualSubID_Segment2"></ReportField>
+        <ReportField Name="POAccrualSubID_Sub_description"></ReportField>
+        <ReportField Name="PostClassID"></ReportField>
+        <ReportField Name="PPVAcctID"></ReportField>
+        <ReportField Name="PPVAcctID_Account_description"></ReportField>
+        <ReportField Name="PPVAcctID_description"></ReportField>
+        <ReportField Name="PPVAcctID_Segment1"></ReportField>
+        <ReportField Name="PPVSubID"></ReportField>
+        <ReportField Name="PPVSubID_description"></ReportField>
+        <ReportField Name="PPVSubID_Segment1"></ReportField>
+        <ReportField Name="PPVSubID_Segment2"></ReportField>
+        <ReportField Name="PPVSubID_Sub_description"></ReportField>
+        <ReportField Name="PreferredVendorID"></ReportField>
+        <ReportField Name="PreferredVendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="PreferredVendorID_description"></ReportField>
+        <ReportField Name="PreferredVendorID_Segment1"></ReportField>
+        <ReportField Name="PreferredVendorID_Vendor_acctName"></ReportField>
+        <ReportField Name="PreferredVendorLocationID"></ReportField>
+        <ReportField Name="PreferredVendorLocationID_description"></ReportField>
+        <ReportField Name="PreferredVendorLocationID_Location_descr"></ReportField>
+        <ReportField Name="PreferredVendorLocationID_Segment1"></ReportField>
+        <ReportField Name="PriceClassID"></ReportField>
+        <ReportField Name="PriceClassID_description"></ReportField>
+        <ReportField Name="PriceClassID_INPriceClass_description"></ReportField>
+        <ReportField Name="PriceManagerID"></ReportField>
+        <ReportField Name="PriceManagerID_description"></ReportField>
+        <ReportField Name="PriceManagerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="PriceWorkgroupID"></ReportField>
+        <ReportField Name="ProductManagerID"></ReportField>
+        <ReportField Name="ProductManagerID_description"></ReportField>
+        <ReportField Name="ProductManagerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ProductWorkgroupID"></ReportField>
+        <ReportField Name="PurchaseUnit"></ReportField>
+        <ReportField Name="ReasonCodeSubID"></ReportField>
+        <ReportField Name="ReasonCodeSubID_description"></ReportField>
+        <ReportField Name="ReasonCodeSubID_Segment1"></ReportField>
+        <ReportField Name="ReasonCodeSubID_Segment2"></ReportField>
+        <ReportField Name="ReasonCodeSubID_Sub_description"></ReportField>
+        <ReportField Name="RecPrice">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SalesAcctID"></ReportField>
+        <ReportField Name="SalesAcctID_Account_description"></ReportField>
+        <ReportField Name="SalesAcctID_description"></ReportField>
+        <ReportField Name="SalesAcctID_Segment1"></ReportField>
+        <ReportField Name="SalesSubID"></ReportField>
+        <ReportField Name="SalesSubID_description"></ReportField>
+        <ReportField Name="SalesSubID_Segment1"></ReportField>
+        <ReportField Name="SalesSubID_Segment2"></ReportField>
+        <ReportField Name="SalesSubID_Sub_description"></ReportField>
+        <ReportField Name="SalesUnit"></ReportField>
+        <ReportField Name="SDEnabled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ServiceClassID"></ReportField>
+        <ReportField Name="ServiceClassID_description"></ReportField>
+        <ReportField Name="ServiceClassID_INItemClass_descr"></ReportField>
+        <ReportField Name="StdCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="StdCostDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StdCostDate_Day"></ReportField>
+        <ReportField Name="StdCostDate_Hour"></ReportField>
+        <ReportField Name="StdCostDate_Month"></ReportField>
+        <ReportField Name="StdCostDate_Quarter"></ReportField>
+        <ReportField Name="StdCstRevAcctID"></ReportField>
+        <ReportField Name="StdCstRevAcctID_Account_description"></ReportField>
+        <ReportField Name="StdCstRevAcctID_description"></ReportField>
+        <ReportField Name="StdCstRevAcctID_Segment1"></ReportField>
+        <ReportField Name="StdCstRevSubID"></ReportField>
+        <ReportField Name="StdCstRevSubID_description"></ReportField>
+        <ReportField Name="StdCstRevSubID_Segment1"></ReportField>
+        <ReportField Name="StdCstRevSubID_Segment2"></ReportField>
+        <ReportField Name="StdCstRevSubID_Sub_description"></ReportField>
+        <ReportField Name="StdCstVarAcctID"></ReportField>
+        <ReportField Name="StdCstVarAcctID_Account_description"></ReportField>
+        <ReportField Name="StdCstVarAcctID_description"></ReportField>
+        <ReportField Name="StdCstVarAcctID_Segment1"></ReportField>
+        <ReportField Name="StdCstVarSubID"></ReportField>
+        <ReportField Name="StdCstVarSubID_description"></ReportField>
+        <ReportField Name="StdCstVarSubID_Segment1"></ReportField>
+        <ReportField Name="StdCstVarSubID_Segment2"></ReportField>
+        <ReportField Name="StdCstVarSubID_Sub_description"></ReportField>
+        <ReportField Name="StkItem">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TaxCalcMode"></ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="TotalPercentage">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UseParentSubID">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ValMethod"></ReportField>
+        <ReportField Name="VendorWarrantyType"></ReportField>
+        <ReportField Name="VendorWarrantyValue">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="VolumeUOM"></ReportField>
+        <ReportField Name="WeightUOM"></ReportField>
+        <ReportField Name="WIDEANGLE_Attributes"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.IN.InventoryItem</FullName>
+    </ReportTable>
+    <ReportTable Name="PMChangeOrderPrevioslyAmount">
+      <Fields>
+        <ReportField Name="AccountGroupID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostCodeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="InventoryID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="TaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMChangeOrderPrevioslyAmount</FullName>
+    </ReportTable>
+    <ReportTable Name="Company">
+      <Fields>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="CompanyCD"></ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Company</FullName>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctCD_Segment1"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CampaignSourceID"></ReportField>
+        <ReportField Name="CampaignSourceID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignSourceID_description"></ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ConsolidateToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatingBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="EntityTypeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsCustomerOrCombined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="ParentBAccountID_Segment1"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="Address">
+      <Fields>
+        <ReportField Name="AddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AddressLine1"></ReportField>
+        <ReportField Name="AddressLine2"></ReportField>
+        <ReportField Name="AddressLine3"></ReportField>
+        <ReportField Name="AddressType"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="City"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="IsValidated">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PostalCode"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="State"></ReportField>
+        <ReportField Name="State_description"></ReportField>
+        <ReportField Name="State_State_name"></ReportField>
+        <ReportField Name="TaxLocationCode"></ReportField>
+        <ReportField Name="TaxMunicipalCode"></ReportField>
+        <ReportField Name="TaxSchoolCode"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Address</FullName>
+    </ReportTable>
+    <ReportTable Name="Contact">
+      <Fields>
+        <ReportField Name="Address"></ReportField>
+        <ReportField Name="Anniversary">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Anniversary_Day"></ReportField>
+        <ReportField Name="Anniversary_Hour"></ReportField>
+        <ReportField Name="Anniversary_Month"></ReportField>
+        <ReportField Name="Anniversary_Quarter"></ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AssignDate_Day"></ReportField>
+        <ReportField Name="AssignDate_Hour"></ReportField>
+        <ReportField Name="AssignDate_Month"></ReportField>
+        <ReportField Name="AssignDate_Quarter"></ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="CampaignID"></ReportField>
+        <ReportField Name="CampaignID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRContactClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactPriority">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="ConvertedBy"></ReportField>
+        <ReportField Name="ConvertedBy_description"></ReportField>
+        <ReportField Name="ConvertedBy_Users_fullName"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DateOfBirth_Day"></ReportField>
+        <ReportField Name="DateOfBirth_Hour"></ReportField>
+        <ReportField Name="DateOfBirth_Month"></ReportField>
+        <ReportField Name="DateOfBirth_Quarter"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DeletedDatabaseRecord">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="DuplicateFound">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DuplicateStatus"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="EntityTypeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="Gender"></ReportField>
+        <ReportField Name="GrammValidationDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Date">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Day"></ReportField>
+        <ReportField Name="GrammValidationDateTime_Hour"></ReportField>
+        <ReportField Name="GrammValidationDateTime_Month"></ReportField>
+        <ReportField Name="GrammValidationDateTime_Quarter"></ReportField>
+        <ReportField Name="GrammValidationDateTime_Time">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Img"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAddressSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsConvertable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsNotEmployee">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LanguageID"></ReportField>
+        <ReportField Name="LanguageID_description"></ReportField>
+        <ReportField Name="LanguageID_Locale_description"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="LOCATION_Attributes"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaritalStatus"></ReportField>
+        <ReportField Name="MemberName"></ReportField>
+        <ReportField Name="Method"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="NoCall">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoEMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoFax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMarketing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMassMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="ParentBAccountID_Segment1"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="POSITION_Attributes"></ReportField>
+        <ReportField Name="PRODREQ_Attributes"></ReportField>
+        <ReportField Name="QualificationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="QualificationDate_Day"></ReportField>
+        <ReportField Name="QualificationDate_Hour"></ReportField>
+        <ReportField Name="QualificationDate_Month"></ReportField>
+        <ReportField Name="QualificationDate_Quarter"></ReportField>
+        <ReportField Name="ResetOwner">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="SearchSuggestion"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="Spouse"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Synchronize">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UserID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Contact</FullName>
+    </ReportTable>
+    <ReportTable Name="CompanyBAccount">
+      <Fields>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AddressLine1"></ReportField>
+        <ReportField Name="AddressLine2"></ReportField>
+        <ReportField Name="AddressLine3"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="City"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="PostalCode"></ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="State"></ReportField>
+        <ReportField Name="Title"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CS.CompanyBAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="PMChangeOrderLine">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AccountID_Segment1"></ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmountInBaseCury">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommitmentType"></ReportField>
+        <ReportField Name="CostCodeID"></ReportField>
+        <ReportField Name="CostCodeID_description"></ReportField>
+        <ReportField Name="CostCodeID_PMCostCode_description"></ReportField>
+        <ReportField Name="CostCodeID_Segment1"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InventoryID_description"></ReportField>
+        <ReportField Name="InventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="InventoryID_Segment1"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LineType"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="POLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="POOrderNbr"></ReportField>
+        <ReportField Name="POOrderType"></ReportField>
+        <ReportField Name="PotentialRevisedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PotentialRevisedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SubItemID"></ReportField>
+        <ReportField Name="SubItemID_Segment1"></ReportField>
+        <ReportField Name="TaskID"></ReportField>
+        <ReportField Name="TaskID_description"></ReportField>
+        <ReportField Name="TaskID_PMTask_description"></ReportField>
+        <ReportField Name="TaskID_Segment1"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnitCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="UsrHasExpiredComplianceDocuments">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VendorID"></ReportField>
+        <ReportField Name="VendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="VendorID_description"></ReportField>
+        <ReportField Name="VendorID_Segment1"></ReportField>
+        <ReportField Name="VendorID_Vendor_acctName"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMChangeOrderLine</FullName>
+    </ReportTable>
+    <ReportTable Name="PMBudget">
+      <Fields>
+        <ReportField Name="AccountGroupID"></ReportField>
+        <ReportField Name="AccountGroupID_description"></ReportField>
+        <ReportField Name="AccountGroupID_PMAccountGroup_description"></ReportField>
+        <ReportField Name="AccountGroupID_Segment1"></ReportField>
+        <ReportField Name="ActualAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualPlusOpenCommittedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AmountToInvoice">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ChangeOrderAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ChangeOrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedCOAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedCOQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedInvoicedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedInvoicedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedOpenAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedOpenQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedOrigAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedOrigQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedReceivedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CompletedPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostAtCompletion">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostCodeID"></ReportField>
+        <ReportField Name="CostCodeID_description"></ReportField>
+        <ReportField Name="CostCodeID_PMCostCode_description"></ReportField>
+        <ReportField Name="CostCodeID_Segment1"></ReportField>
+        <ReportField Name="CostToComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="Description"></ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InvoicedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="IsProduction">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastCostAtCompletion">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LastCostToComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LastPercentCompleted">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LimitAmount">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LimitQty">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaxAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="MaxQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PercentCompleted">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Performance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentAvailable">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentInvoiced">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ProjectTaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Rate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RetainagePct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RevenueInventoryID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RevenueTaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RevisedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RevisedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SortOrder">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="VarianceAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMBudget</FullName>
+    </ReportTable>
+    <ReportTable Name="POLine">
+      <Fields>
+        <ReportField Name="AllowComplete">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AlternateID"></ReportField>
+        <ReportField Name="BaseOpenQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseOrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseReceivedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseVoucheredQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BLLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BLOrderNbr"></ReportField>
+        <ReportField Name="BLType"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="Cancelled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClosedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommitmentID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Completed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CompletePOLine"></ReportField>
+        <ReportField Name="CostCodeID"></ReportField>
+        <ReportField Name="CostCodeID_description"></ReportField>
+        <ReportField Name="CostCodeID_PMCostCode_description"></ReportField>
+        <ReportField Name="CostCodeID_Segment1"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CuryClosedAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryExtCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryLineAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryOpenAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryReceivedCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRetainageAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnitCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CuryVoucheredCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DiscountID"></ReportField>
+        <ReportField Name="DiscountSequenceID"></ReportField>
+        <ReportField Name="DiscPct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocumentDiscountRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ExpenseAcctID"></ReportField>
+        <ReportField Name="ExpenseAcctID_Account_description"></ReportField>
+        <ReportField Name="ExpenseAcctID_description"></ReportField>
+        <ReportField Name="ExpenseAcctID_Segment1"></ReportField>
+        <ReportField Name="ExpenseSubID"></ReportField>
+        <ReportField Name="ExpenseSubID_description"></ReportField>
+        <ReportField Name="ExpenseSubID_Segment1"></ReportField>
+        <ReportField Name="ExpenseSubID_Segment2"></ReportField>
+        <ReportField Name="ExpenseSubID_Segment3"></ReportField>
+        <ReportField Name="ExpenseSubID_Sub_description"></ReportField>
+        <ReportField Name="ExtCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ExtVolume">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ExtWeight">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="GroupDiscountRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InventoryID_description"></ReportField>
+        <ReportField Name="InventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="InventoryID_Segment1"></ReportField>
+        <ReportField Name="IsKit">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsReturn">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsStockItem">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LeftToReceiveBaseQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LeftToReceiveQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LineAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LineType"></ReportField>
+        <ReportField Name="LotSerialNbr"></ReportField>
+        <ReportField Name="ManualDisc">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ManualPrice">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OpenAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OpenQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrderDate_Day"></ReportField>
+        <ReportField Name="OrderDate_Hour"></ReportField>
+        <ReportField Name="OrderDate_Month"></ReportField>
+        <ReportField Name="OrderDate_Quarter"></ReportField>
+        <ReportField Name="OrderedQtyAltered">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="OrderNbr"></ReportField>
+        <ReportField Name="OrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OrigExtCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigOrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="POLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PONbr"></ReportField>
+        <ReportField Name="POType"></ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="PromisedDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PromisedDate_Day"></ReportField>
+        <ReportField Name="PromisedDate_Hour"></ReportField>
+        <ReportField Name="PromisedDate_Month"></ReportField>
+        <ReportField Name="PromisedDate_Quarter"></ReportField>
+        <ReportField Name="RcptQtyAction"></ReportField>
+        <ReportField Name="RcptQtyMax">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RcptQtyMin">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RcptQtyThreshold">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReasonCode"></ReportField>
+        <ReportField Name="ReceiptStatus"></ReportField>
+        <ReportField Name="ReceivedCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReceivedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RequestedDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="RequestedDate_Day"></ReportField>
+        <ReportField Name="RequestedDate_Hour"></ReportField>
+        <ReportField Name="RequestedDate_Month"></ReportField>
+        <ReportField Name="RequestedDate_Quarter"></ReportField>
+        <ReportField Name="RetainageAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RetainagePct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RQReqLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RQReqNbr"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ShipToBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ShipToLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SiteID"></ReportField>
+        <ReportField Name="SiteID_description"></ReportField>
+        <ReportField Name="SiteID_INSite_descr"></ReportField>
+        <ReportField Name="SiteID_Segment1"></ReportField>
+        <ReportField Name="SortOrder">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SubItemID"></ReportField>
+        <ReportField Name="SubItemID_Segment1"></ReportField>
+        <ReportField Name="TaskID"></ReportField>
+        <ReportField Name="TaskID_description"></ReportField>
+        <ReportField Name="TaskID_PMTask_description"></ReportField>
+        <ReportField Name="TaskID_Segment1"></ReportField>
+        <ReportField Name="TaxCategoryID"></ReportField>
+        <ReportField Name="TaxCategoryID_description"></ReportField>
+        <ReportField Name="TaxCategoryID_TaxCategory_descr"></ReportField>
+        <ReportField Name="TaxID"></ReportField>
+        <ReportField Name="TaxID_description"></ReportField>
+        <ReportField Name="TaxID_Tax_descr"></ReportField>
+        <ReportField Name="TranDesc"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnitCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnitVolume">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnitWeight">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="UsrHasExpiredComplianceDocuments">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="VendorID"></ReportField>
+        <ReportField Name="VendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="VendorID_description"></ReportField>
+        <ReportField Name="VendorID_Segment1"></ReportField>
+        <ReportField Name="VendorID_Vendor_acctName"></ReportField>
+        <ReportField Name="VendorLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="VoucheredCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VoucheredQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VoucherStatus"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PO.POLine</FullName>
+    </ReportTable>
+    <ReportTable Name="PMCommitment">
+      <Fields>
+        <ReportField Name="AccountGroupID"></ReportField>
+        <ReportField Name="AccountGroupID_description"></ReportField>
+        <ReportField Name="AccountGroupID_PMAccountGroup_description"></ReportField>
+        <ReportField Name="AccountGroupID_Segment1"></ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommitmentID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="CommittedCOAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CommittedCOQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CostCodeID"></ReportField>
+        <ReportField Name="CostCodeID_description"></ReportField>
+        <ReportField Name="CostCodeID_PMCostCode_description"></ReportField>
+        <ReportField Name="CostCodeID_Segment1"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InvoicedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="InvoicedIsReadonly">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InvoicedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OpenAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OpenQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectCuryID"></ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="ProjectTaskID"></ReportField>
+        <ReportField Name="ProjectTaskID_description"></ReportField>
+        <ReportField Name="ProjectTaskID_PMTask_description"></ReportField>
+        <ReportField Name="ProjectTaskID_Segment1"></ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ReceivedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RefNoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="TaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="UsrRelatedDocumentType"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PM.PMCommitment</FullName>
+    </ReportTable>
+    <ReportTable Name="POOrder">
+      <Fields>
+        <ReportField Name="Approved">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Behavior"></ReportField>
+        <ReportField Name="BLOrderNbr"></ReportField>
+        <ReportField Name="BLType"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="Cancelled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClDisplayName"></ReportField>
+        <ReportField Name="ControlTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CuryControlTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDocDisc">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryLineRetainageTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryLineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryOrderTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRetainageTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRetainedDiscTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryRetainedTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnbilledLineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnbilledOrderTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryUnbilledTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryVatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryViewState">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DefRetainagePct">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DisableAutomaticDiscountCalculation">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DiscTot">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocDisc">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DontEmail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DontPrint">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Emailed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="EmailedExt">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="EmployeeID"></ReportField>
+        <ReportField Name="EmployeeID_CREmployee_acctName"></ReportField>
+        <ReportField Name="EmployeeID_description"></ReportField>
+        <ReportField Name="EmployeeID_Segment1"></ReportField>
+        <ReportField Name="ExpectedDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ExpectedDate_Day"></ReportField>
+        <ReportField Name="ExpectedDate_Hour"></ReportField>
+        <ReportField Name="ExpectedDate_Month"></ReportField>
+        <ReportField Name="ExpectedDate_Quarter"></ReportField>
+        <ReportField Name="ExpirationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ExpirationDate_Day"></ReportField>
+        <ReportField Name="ExpirationDate_Hour"></ReportField>
+        <ReportField Name="ExpirationDate_Month"></ReportField>
+        <ReportField Name="ExpirationDate_Quarter"></ReportField>
+        <ReportField Name="FOBPoint"></ReportField>
+        <ReportField Name="FOBPoint_description"></ReportField>
+        <ReportField Name="FOBPoint_FOBPoint_description"></ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsTaxValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsUnbilledTaxValid">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LineRetainageTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="LockCommitment">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OpenOrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderBasedAPBill">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="OrderDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrderDate_Day"></ReportField>
+        <ReportField Name="OrderDate_Hour"></ReportField>
+        <ReportField Name="OrderDate_Month"></ReportField>
+        <ReportField Name="OrderDate_Quarter"></ReportField>
+        <ReportField Name="OrderDesc"></ReportField>
+        <ReportField Name="OrderNbr"></ReportField>
+        <ReportField Name="OrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OrderVolume">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrderWeight">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="OwnerWorkgroupID"></ReportField>
+        <ReportField Name="PayToVendorID"></ReportField>
+        <ReportField Name="PayToVendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="PayToVendorID_description"></ReportField>
+        <ReportField Name="PayToVendorID_Segment1"></ReportField>
+        <ReportField Name="PayToVendorID_Vendor_acctName"></ReportField>
+        <ReportField Name="POAccrualType"></ReportField>
+        <ReportField Name="PrepaymentDocType"></ReportField>
+        <ReportField Name="PrepaymentRefNbr"></ReportField>
+        <ReportField Name="Printed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintedExt">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="Rejected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RemitAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RemitContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RequestApproval">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RetainageApply">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RetainageTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RetainedDiscTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RetainedTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RQReqNbr"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ShipAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ShipContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ShipDestType"></ReportField>
+        <ReportField Name="ShipToBAccountID"></ReportField>
+        <ReportField Name="ShipToBAccountID_BAccount2_acctName"></ReportField>
+        <ReportField Name="ShipToBAccountID_description"></ReportField>
+        <ReportField Name="ShipToLocationID"></ReportField>
+        <ReportField Name="ShipToLocationID_description"></ReportField>
+        <ReportField Name="ShipToLocationID_Location_descr"></ReportField>
+        <ReportField Name="ShipToLocationID_Segment1"></ReportField>
+        <ReportField Name="ShipVia"></ReportField>
+        <ReportField Name="SiteID"></ReportField>
+        <ReportField Name="SiteID_description"></ReportField>
+        <ReportField Name="SiteID_INSite_descr"></ReportField>
+        <ReportField Name="SiteID_Segment1"></ReportField>
+        <ReportField Name="SiteIdErrorMessage"></ReportField>
+        <ReportField Name="SOOrderNbr"></ReportField>
+        <ReportField Name="SOOrderType"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="TermsID_description"></ReportField>
+        <ReportField Name="TermsID_Terms_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnbilledLineTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnbilledOrderQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnbilledOrderTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UnbilledTaxTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UpdateVendorCost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="UploadFileNameCorrectorStub">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="UsrOrderTotalInWords"></ReportField>
+        <ReportField Name="UsrSubcontractClassID"></ReportField>
+        <ReportField Name="VatExemptTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VatTaxableTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VendorID"></ReportField>
+        <ReportField Name="VendorID_BAccountR_acctName"></ReportField>
+        <ReportField Name="VendorID_description"></ReportField>
+        <ReportField Name="VendorID_Segment1"></ReportField>
+        <ReportField Name="VendorID_Vendor_acctName"></ReportField>
+        <ReportField Name="VendorLocationID"></ReportField>
+        <ReportField Name="VendorLocationID_description"></ReportField>
+        <ReportField Name="VendorLocationID_Location_descr"></ReportField>
+        <ReportField Name="VendorLocationID_Segment1"></ReportField>
+        <ReportField Name="VendorRefNbr"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PO.POOrder</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="PMChangeOrder.RefNbr"></ViewerField>
+    <ViewerField Name="PMChangeOrder.ProjectID"></ViewerField>
+  </ViewerFields>
+  <Width>22.35449cm</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.21164cm</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <Height>0.84656cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>LineNbr</Name>
+          <ResetGroup>RevenueBudget</ResetGroup>
+          <ValueExpr>=#010;Assign( '$LineNbr', $LineNbr + 1)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LinePreviousCOAmt</Name>
+          <ValueExpr>=$subReport1_TotalCommitmentCOAmount</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>TotalPreviousCOAmt</Name>
+          <ValueExpr>=$LinePreviousCOAmt + $TotalPreviousCOAmt</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <VisibleExpr>=[PMProject.BudgetLevel]&lt;&gt; 'T'</VisibleExpr>
+      <Items>
+        <TextBox Name="textBox46">
+          <Location>240px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.POOrderNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox87">
+          <CanShrink>True</CanShrink>
+          <Location>36px, 16px</Location>
+          <Size>45px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>NOTES:</Value>
+          <VisibleExpr>=[PMChangeOrderRevenueBudget.NoteText]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox88">
+          <CanGrow>True</CanGrow>
+          <CanShrink>True</CanShrink>
+          <Location>84px, 16px</Location>
+          <Size>740px, 16px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.NoteText]</Value>
+          <VisibleExpr>=[PMChangeOrderRevenueBudget.NoteText]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox89">
+          <Format>#,##0.00</Format>
+          <Location>720px, 0px</Location>
+          <Size>104px, 16px</Size>
+          <Style>
+            <Padding>
+              <Right>8px</Right>
+            </Padding>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMCommitment.OrigAmount] + $subReport1_TotalCommitmentCOAmount + [PMChangeOrderRevenueBudget.Amount]</Value>
+        </TextBox>
+        <TextBox Name="textBox90">
+          <Format>#,##0.00</Format>
+          <Location>640px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.Amount]</Value>
+        </TextBox>
+        <TextBox Name="textBox91">
+          <Location>576px, 0px</Location>
+          <Size>64px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.UnitCost]</Value>
+        </TextBox>
+        <TextBox Name="textBox93">
+          <Location>512px, 0px</Location>
+          <Size>64px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.Qty]</Value>
+        </TextBox>
+        <TextBox Name="textBox94">
+          <Format>#,##0.00</Format>
+          <Location>401px, 0px</Location>
+          <Size>111px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$subReport1_TotalCommitmentCOAmount#010;/*=[PMChangeOrderPrevioslyAmount.Amount]*/</Value>
+        </TextBox>
+        <TextBox Name="textBox95">
+          <Location>0px, 0px</Location>
+          <Size>32px, 16px</Size>
+          <Style>
+            <Padding>
+              <Left>8px</Left>
+            </Padding>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$LineNbr</Value>
+        </TextBox>
+        <TextBox Name="textBox96">
+          <Format>=[PMBudget.Amount]</Format>
+          <Location>320px, 0px</Location>
+          <Size>81px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMCommitment.OrigAmount]#010;#010;/*[POLine.LineAmt]*/</Value>
+        </TextBox>
+        <TextBox Name="textBox97">
+          <CanGrow>True</CanGrow>
+          <CanShrink>True</CanShrink>
+          <Location>160px, 0px</Location>
+          <Size>80px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.Description]</Value>
+        </TextBox>
+        <TextBox Name="textBox98">
+          <Location>88px, 0px</Location>
+          <Size>72px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=IIF([PMProject.BudgetLevel]= 'C', CStr([PMCostCode.CostCodeCD]), [PMChangeOrderRevenueBudget.InventoryID])</Value>
+          <VisibleExpr>=[PMProject.BudgetLevel]&lt;&gt; 'T'</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox99">
+          <CanGrow>True</CanGrow>
+          <Location>32px, 0px</Location>
+          <Size>56px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+            <VerticalAlign>Top</VerticalAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[PMChangeOrderRevenueBudget.TaskID_description]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0.84656cm</Height>
+      <Items>
+        <TextBox Name="textBox15">
+          <Location>696px, 8px</Location>
+          <Size>128px, 16px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>='Page ' + [PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox16">
+          <Location>536px, 8px</Location>
+          <ProcessOrder>Always</ProcessOrder>
+          <Size>160px, 16px</Size>
+          <Style>
+            <TextAlign>Left</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Continued...</Value>
+          <VisibleExpr>=([PageIndex]&lt;&gt;[PageCount])</VisibleExpr>
+        </TextBox>
+      </Items>
+    </PageFooter>
+    <Detail Name="detailSection2">
+      <Height>0.84656cm</Height>
+      <VisibleExpr>=[PMProject.BudgetLevel]= 'T'</VisibleExpr>
+      <Items>
+        <Panel Name="panel5">
+          <Location>0px, 0px</Location>
+          <Size>831px, 32px</Size>
+          <Items>
+            <TextBox Name="textBox27">
+              <CanShrink>True</CanShrink>
+              <Location>36px, 16px</Location>
+              <Size>45px, 16px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>NOTES:</Value>
+              <VisibleExpr>=[PMChangeOrderRevenueBudget.NoteText]&lt;&gt;null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>85px, 16px</Location>
+              <Size>739px, 16px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.NoteText]</Value>
+              <VisibleExpr>=[PMChangeOrderRevenueBudget.NoteText]&lt;&gt;null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Format>#,##0.00</Format>
+              <Location>720px, 0px</Location>
+              <Size>104px, 16px</Size>
+              <Style>
+                <Padding>
+                  <Right>8px</Right>
+                </Padding>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMCommitment.OrigAmount] + $subReport1_TotalCommitmentCOAmount + [PMChangeOrderRevenueBudget.Amount]#010;#010;/*IIF([PMChangeOrder.Released]&lt;&gt;true, [PMChangeOrderRevenueBudget.Amount], 0)*/</Value>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Format>#,##0.00</Format>
+              <Location>640px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.Amount]</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Location>576px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.UnitCost]</Value>
+            </TextBox>
+            <TextBox Name="textBox40">
+              <Location>240px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.POOrderNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Location>512px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.Qty]</Value>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Format>#,##0.00</Format>
+              <Location>400px, 0px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$subReport1_TotalCommitmentCOAmount#010;/*=[PMChangeOrderPrevioslyAmount.Amount]*/</Value>
+            </TextBox>
+            <TextBox Name="textBox43">
+              <Location>0px, 0px</Location>
+              <Size>32px, 16px</Size>
+              <Style>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$LineNbr</Value>
+            </TextBox>
+            <TextBox Name="textBox45">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>88px, 0px</Location>
+              <Size>147px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.Description]</Value>
+            </TextBox>
+            <TextBox Name="textBox47">
+              <CanGrow>True</CanGrow>
+              <Location>32px, 0px</Location>
+              <Size>56px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrderRevenueBudget.TaskID_description]</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>320px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMCommitment.OrigAmount]#010;#010;/*[POLine.LineAmt]*/</Value>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </Detail>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="groupChangeOrder">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PMChangeOrder.RefNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>5.92593cm</Height>
+          <PrintForEmptyGroup>True</PrintForEmptyGroup>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <Items>
+            <PictureBox Name="pictureBox1">
+              <Location>8px, 0px</Location>
+              <MimeType>image/gif</MimeType>
+              <QRCodeSettings />
+              <Size>412px, 98px</Size>
+              <Source>Database</Source>
+              <Value>=[Branch.BranchOrOrganizationLogoNameReport]</Value>
+            </PictureBox>
+            <TextBox Name="textBox32">
+              <Location>504px, 144px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Project CO Nbr</Value>
+            </TextBox>
+            <TextBox Name="textBox60">
+              <Location>504px, 128px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Project Name</Value>
+            </TextBox>
+            <TextBox Name="textBox61">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>664px, 128px</Location>
+              <Size>160px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMProject.Description]</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>8px, 112px</Location>
+              <Size>352px, 112px</Size>
+              <StyleName>SenderCompany</StyleName>
+              <Value>=IIf([BAccount.AcctName]&lt;&gt; null, [BAccount.AcctName] + '{br}','')#010;+IIf([CompanyAddress.AddressLine1]&lt;&gt; null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2]&lt;&gt;null,[CompanyAddress.AddressLine2] + '{br}','')#010;+IIf([CompanyAddress.AddressLine3]&lt;&gt; null,[CompanyAddress.AddressLine3] + '{br}','')#010;+IIf([CompanyAddress.City]&lt;&gt;null, [CompanyAddress.City],'')#010;+IIf([CompanyAddress.City]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([CompanyAddress.State]&lt;&gt;null,[CompanyAddress.State],'')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null,[CompanyAddress.PostalCode],'')#010;+'{br}'#010;+IIf([CompanyContact.Phone1] &lt;&gt;null,'Phone: ' + [CompanyContact.Phone1]+ '{br}','')#010;+IIf([CompanyContact.Phone3] &lt;&gt;null,'Fax: ' + [CompanyContact.Phone3]+ '{br}','')#010;+IIf([CompanyContact.WebSite]&lt;&gt;null,'Web: '+[CompanyContact.WebSite],'')</Value>
+            </TextBox>
+            <TextBox Name="textBox70">
+              <Location>664px, 32px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[PMChangeOrder.RefNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox71">
+              <Location>664px, 112px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMProject.ContractCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox72">
+              <Location>664px, 144px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.ProjectNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox73">
+              <Location>664px, 80px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.CustomerID]</Value>
+            </TextBox>
+            <TextBox Name="textBox74">
+              <Location>504px, 32px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Reference Number</Value>
+            </TextBox>
+            <TextBox Name="textBox75">
+              <Format>dd-MMM-yyyy</Format>
+              <Location>664px, 48px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.Date]</Value>
+            </TextBox>
+            <TextBox Name="textBox76">
+              <Location>504px, 48px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Change Date</Value>
+            </TextBox>
+            <TextBox Name="textBox77">
+              <Location>504px, 160px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Contract Time Change, Days</Value>
+            </TextBox>
+            <TextBox Name="textBox78">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>664px, 176px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.Description]</Value>
+            </TextBox>
+            <TextBox Name="textBox79">
+              <Location>504px, 80px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Customer ID</Value>
+            </TextBox>
+            <TextBox Name="textBox80">
+              <Format>dd-MMM-yyyy</Format>
+              <Location>664px, 64px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.CompletionDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox81">
+              <Location>504px, 64px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Completion Date</Value>
+            </TextBox>
+            <TextBox Name="textBox82">
+              <Location>664px, 160px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PMChangeOrder.DelayDays]</Value>
+            </TextBox>
+            <TextBox Name="textBox83">
+              <Location>664px, 96px</Location>
+              <Size>161px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[Company.BaseCuryID]</Value>
+            </TextBox>
+            <TextBox Name="textBox84">
+              <Location>504px, 112px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Project Reference Nbr</Value>
+            </TextBox>
+            <TextBox Name="textBox85">
+              <Location>504px, 96px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Currency</Value>
+            </TextBox>
+            <TextBox Name="textBox86">
+              <Location>504px, 176px</Location>
+              <Size>160px, 16px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Description</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Location>504px, 0px</Location>
+              <Size>320px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Document Name</StyleName>
+              <Value>CHANGE ORDER</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>5.50265cm</Height>
+          <Items>
+            <Panel Name="panel3">
+              <Location>0px, 8px</Location>
+              <Size>830px, 197px</Size>
+              <Items>
+                <Line Name="line1">
+                  <Location>3px, 160px</Location>
+                  <Size>317px, 8px</Size>
+                </Line>
+                <Line Name="line8">
+                  <Location>504px, 159px</Location>
+                  <Size>312px, 8px</Size>
+                </Line>
+                <TextBox Name="textBox1">
+                  <CanShrink>True</CanShrink>
+                  <Location>504px, 167px</Location>
+                  <Size>56px, 16px</Size>
+                  <StyleName>Normal</StyleName>
+                  <Value>Signature</Value>
+                  <VisibleExpr>=[PMChangeOrder.NoteText]&lt;&gt;null</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox2">
+                  <Format>dd-MMM-yyyy</Format>
+                  <Location>8px, 120px</Location>
+                  <Size>170px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[PMChangeOrder.Date]</Value>
+                </TextBox>
+                <TextBox Name="textBox3">
+                  <Location>512px, 32px</Location>
+                  <Size>304px, 79px</Size>
+                  <StyleName>SenderCompany</StyleName>
+                  <Value>=IIf([Vendor.AcctName]&lt;&gt; null, [Vendor.AcctName]+ '{br}', '') #010;+ ' {br}'#010;+IIf([VendorAddress.AddressLine1]&lt;&gt; null, [VendorAddress.AddressLine1] + '{br}', '')#010;+IIf([VendorAddress.AddressLine2]&lt;&gt;null,[VendorAddress.AddressLine2] + '{br}','')#010;+IIf([VendorAddress.AddressLine3]&lt;&gt; null,[VendorAddress.AddressLine3] + '{br}','')#010;+IIf([VendorAddress.City]&lt;&gt;null, [VendorAddress.City],'')#010;+IIf([VendorAddress.City]&lt;&gt;null And [VendorAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([VendorAddress.State]&lt;&gt;null,[VendorAddress.State],'')#010;+IIf([VendorAddress.PostalCode]&lt;&gt;null And [VendorAddress.PostalCode]&lt;&gt;null, ', ', ' ')#010;+IIf([VendorAddress.PostalCode]&lt;&gt;null,[VendorAddress.PostalCode],'')</Value>
+                </TextBox>
+                <TextBox Name="textBox4">
+                  <Format>dd-MMM-yyyy</Format>
+                  <Location>512px, 119px</Location>
+                  <Size>168px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[PMChangeOrder.Date]</Value>
+                </TextBox>
+                <TextBox Name="textBox53">
+                  <Location>0px, 8px</Location>
+                  <Size>320px, 16px</Size>
+                  <Style>
+                    <Color>Black</Color>
+                    <Font>
+                      <Size>14px</Size>
+                    </Font>
+                    <Padding>
+                      <Left>8px</Left>
+                    </Padding>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>ISSUED BY</Value>
+                </TextBox>
+                <TextBox Name="textBox54">
+                  <Location>504px, 8px</Location>
+                  <Size>312px, 16px</Size>
+                  <Style>
+                    <Color>Black</Color>
+                    <Font>
+                      <Size>14px</Size>
+                    </Font>
+                    <Padding>
+                      <Left>8px</Left>
+                    </Padding>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>ISSUED TO</Value>
+                </TextBox>
+                <TextBox Name="textBox56">
+                  <Location>8px, 32px</Location>
+                  <Size>312px, 80px</Size>
+                  <StyleName>SenderCompany</StyleName>
+                  <Value>=IIf([BAccount.AcctName]&lt;&gt; null, [BAccount.AcctName] + '{br}','')#010;+IIf([CompanyAddress.AddressLine1]&lt;&gt; null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2]&lt;&gt;null,[CompanyAddress.AddressLine2] + '{br}','')#010;+IIf([CompanyAddress.AddressLine3]&lt;&gt; null,[CompanyAddress.AddressLine3] + '{br}','')#010;+IIf([CompanyAddress.City]&lt;&gt;null, [CompanyAddress.City],'')#010;+IIf([CompanyAddress.City]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([CompanyAddress.State]&lt;&gt;null,[CompanyAddress.State],'')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null,[CompanyAddress.PostalCode],'')#010;+'{br}'#010;+IIf([CompanyContact.Phone1] &lt;&gt;null,'Phone: ' + [CompanyContact.Phone1]+ '{br}','')#010;+IIf([CompanyContact.Phone3] &lt;&gt;null,'Fax: ' + [CompanyContact.Phone3]+ '{br}','')#010;+IIf([CompanyContact.WebSite]&lt;&gt;null,'Web: '+[CompanyContact.WebSite],'')</Value>
+                </TextBox>
+                <TextBox Name="textBox57">
+                  <CanShrink>True</CanShrink>
+                  <Location>8px, 168px</Location>
+                  <Size>56px, 16px</Size>
+                  <StyleName>Normal</StyleName>
+                  <Value>Signature</Value>
+                  <VisibleExpr>=[PMChangeOrder.NoteText]&lt;&gt;null</VisibleExpr>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="RevenueBudget">
+      <Grouping>
+        <GroupExp>
+          <DataField>PMChangeOrderRevenueBudget.RefNbr</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>FirstDetail</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection2">
+          <Height>1.48148cm</Height>
+          <VisibleExpr>=[PMProject.BudgetLevel]&lt;&gt; 'T'</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>160px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>DESCRIPTION</Value>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <Location>0px, 6px</Location>
+              <Size>824px, 16px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Font>
+                  <Size>14px</Size>
+                </Font>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>COMMITMENTS</Value>
+            </TextBox>
+            <TextBox Name="textBox18">
+              <Location>0px, 24px</Location>
+              <Size>32px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>NO.</Value>
+            </TextBox>
+            <TextBox Name="textBox19">
+              <Location>576px, 24px</Location>
+              <Size>64px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>UNIT COST</Value>
+            </TextBox>
+            <TextBox Name="textBox22">
+              <Location>640px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>CURRENT CO AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>32px, 24px</Location>
+              <Size>56px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Center</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>PROJECT TASK</Value>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Location>88px, 24px</Location>
+              <Size>72px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Padding>
+                  <Left>2px</Left>
+                </Padding>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>=IIf([PMProject.BudgetLevel]= 'C','COST CODE','ITEM')</Value>
+              <VisibleExpr>=[PMProject.BudgetLevel]&lt;&gt; 'T'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>720px, 24px</Location>
+              <Size>104px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Padding>
+                  <Right>8px</Right>
+                </Padding>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>REVISED COMM. AMT</Value>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Location>240px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>SUBCONT./PO</Value>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>320px, 24px</Location>
+              <Size>81px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>COMMITMENT AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>401px, 24px</Location>
+              <Size>111px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>PREV. APPROVED CO AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Location>512px, 24px</Location>
+              <Size>64px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>CURRENT CO QTY</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection3">
+          <Height>1.48148cm</Height>
+          <VisibleExpr>=[PMProject.BudgetLevel]= 'T'</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox11">
+              <Location>512px, 24px</Location>
+              <Size>64px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>CURRENT CO QTY</Value>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <Location>240px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>COMMITMENT NUMBER</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Location>400px, 24px</Location>
+              <Size>112px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>PREV. APPROVED CO AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox21">
+              <Location>320px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>COMMITMENT AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox26">
+              <Location>720px, 24px</Location>
+              <Size>104px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Padding>
+                  <Right>8px</Right>
+                </Padding>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>REVISED COMM. AMT</Value>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Location>32px, 24px</Location>
+              <Size>56px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Center</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>PROJECT TASK</Value>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Location>640px, 24px</Location>
+              <Size>80px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>CURRENT CO AMOUNT</Value>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Location>576px, 24px</Location>
+              <Size>64px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>UNIT COST</Value>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Location>0px, 24px</Location>
+              <Size>32px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>NO.</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>0px, 6px</Location>
+              <Size>824px, 16px</Size>
+              <Style>
+                <Color>Black</Color>
+                <Font>
+                  <Size>14px</Size>
+                </Font>
+                <Padding>
+                  <Left>8px</Left>
+                </Padding>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>COMMITMENTS</Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Location>88px, 24px</Location>
+              <Size>152px, 30px</Size>
+              <Style>
+                <Color>Black</Color>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Heading1BCColoredRightBorder</StyleName>
+              <Value>DESCRIPTION</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <Height>0.84656cm</Height>
+          <Items>
+            <SubReport Name="subReport2">
+              <Location>8px, 8px</Location>
+              <Parameters>
+                <ExternalParameter>
+                  <Name>OrderNbr</Name>
+                  <ValueExpr>=[POOrder.OrderNbr]</ValueExpr>
+                </ExternalParameter>
+              </Parameters>
+              <ReportName>SC645002.rpx</ReportName>
+              <Size>224px, 16px</Size>
+            </SubReport>
+            <TextBox Name="textBox44">
+              <Location>240px, 8px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>='Totals:'</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Location>320px, 8px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([PMCommitment.OrigAmount])#010;#010;/*Sum([POLine.LineAmt])*/</Value>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Format>#,##0.00</Format>
+              <Location>400px, 8px</Location>
+              <Size>112px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$TotalPreviousCOAmt</Value>
+            </TextBox>
+            <TextBox Name="textBox51">
+              <Location>512px, 8px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=sum([PMChangeOrderRevenueBudget.Qty])</Value>
+            </TextBox>
+            <TextBox Name="textBox58">
+              <Format>#,##0.00</Format>
+              <Location>640px, 8px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=sum([PMChangeOrderRevenueBudget.Amount])</Value>
+            </TextBox>
+            <TextBox Name="textBox59">
+              <Format>#,##0.00</Format>
+              <Location>720px, 8px</Location>
+              <Size>104px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <Padding>
+                  <Right>8px</Right>
+                </Padding>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum([PMCommitment.OrigAmount]) + sum([PMChangeOrderRevenueBudget.Amount]) + $TotalPreviousCOAmt</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection3">
+          <Height>3.1746cm</Height>
+          <Items>
+            <Panel Name="panel1">
+              <Location>0px, 8px</Location>
+              <Size>830px, 114px</Size>
+              <Items>
+                <TextBox Name="textBox100">
+                  <Location>504px, 72px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>='Prior Revised Commitment Total (' + [Company.BaseCuryID] + ')'</Value>
+                </TextBox>
+                <TextBox Name="textBox101">
+                  <Location>504px, 88px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>='Revised Commitment Total (' + [Company.BaseCuryID] + ')'</Value>
+                </TextBox>
+                <TextBox Name="textBox102">
+                  <Format>=[PMCommitment.OrigAmount.Format]</Format>
+                  <Location>712px, 72px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$subReport2_OrigAmtTotal + $subReport1_AllLineTotalPrevCommCOAmt#010;#010;/*=Sum([PMBudget.CommittedAmount]) + Sum( [PMChangeOrderPrevioslyAmount.Amount] )*/</Value>
+                </TextBox>
+                <TextBox Name="textBox103">
+                  <Location>504px, 40px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Previously Approved CO Total</Value>
+                </TextBox>
+                <TextBox Name="textBox104">
+                  <Format>=[PMCommitment.OrigAmount.Format]</Format>
+                  <Location>712px, 40px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$subReport1_AllLineTotalPrevCommCOAmt#010;#010;/*$TotalPreviousCOAmt*/</Value>
+                </TextBox>
+                <TextBox Name="textBox105">
+                  <Location>504px, 56px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>='Change Order Total (' + [Company.BaseCuryID] + ')'</Value>
+                </TextBox>
+                <TextBox Name="textBox106">
+                  <Location>504px, 24px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Original Commitment Total</Value>
+                </TextBox>
+                <TextBox Name="textBox107">
+                  <Format>=[PMCommitment.OrigAmount.Format]</Format>
+                  <Location>712px, 24px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$subReport2_OrigAmtTotal</Value>
+                </TextBox>
+                <TextBox Name="textBox108">
+                  <Location>504px, 8px</Location>
+                  <Size>208px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Reference Number</Value>
+                </TextBox>
+                <TextBox Name="textBox109">
+                  <Format>=[PMCommitment.OrigAmount.Format]</Format>
+                  <Location>712px, 56px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=Sum( [PMChangeOrderRevenueBudget.Amount])</Value>
+                </TextBox>
+                <TextBox Name="textBox110">
+                  <Format>=[PMCommitment.OrigAmount.Format]</Format>
+                  <Location>712px, 88px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>= $subReport2_OrigAmtTotal + $subReport1_AllLineTotalPrevCommCOAmt + Sum( [PMChangeOrderRevenueBudget.Amount])</Value>
+                </TextBox>
+                <TextBox Name="textBox111">
+                  <Location>712px, 8px</Location>
+                  <Size>105px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=[PMChangeOrder.RefNbr]</Value>
+                </TextBox>
+                <TextBox Name="textBox12">
+                  <CanGrow>True</CanGrow>
+                  <CanShrink>True</CanShrink>
+                  <Location>120px, 8px</Location>
+                  <Size>264px, 86px</Size>
+                  <StyleName>Normal</StyleName>
+                  <Value>=IIF([PMChangeOrder.Text]&lt;&gt;null And [PMChangeOrder.Text]&lt;&gt;'', [PMChangeOrder.DescriptionAsPlainText],#010;'')</Value>
+                  <VisibleExpr>=[PMChangeOrder.Text]&lt;&gt;null And [PMChangeOrder.Text]&lt;&gt;''</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox13">
+                  <Location>4px, 18px</Location>
+                  <Size>116px, 16px</Size>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Detailed Description</Value>
+                  <VisibleExpr>=[PMChangeOrder.Text]&lt;&gt;null And [PMChangeOrder.Text]&lt;&gt;''</VisibleExpr>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection4">
+          <Height>2.1164cm</Height>
+          <VisibleExpr>=[PMChangeOrder.NoteText]&lt;&gt;null And [PMChangeOrder.NoteText]&lt;&gt;''</VisibleExpr>
+          <Items>
+            <Panel Name="panel2">
+              <Location>0px, 14px</Location>
+              <Size>830px, 66px</Size>
+              <Items>
+                <TextBox Name="textBox52">
+                  <CanGrow>True</CanGrow>
+                  <CanShrink>True</CanShrink>
+                  <Location>48px, 1px</Location>
+                  <Size>776px, 64px</Size>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[PMChangeOrder.NoteText]</Value>
+                  <VisibleExpr>=[PMChangeOrder.NoteText]&lt;&gt;null And [PMChangeOrder.NoteText]&lt;&gt;''</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox55">
+                  <Location>3px, 1px</Location>
+                  <Size>45px, 16px</Size>
+                  <StyleName>Normal</StyleName>
+                  <Value>NOTES</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection6">
+          <Expanded>False</Expanded>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="CommitmentNumber">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[POLine.OrderNbr]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[POLine.LineNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection4">
+          <Height>0.63492cm</Height>
+          <Visible>False</Visible>
+          <Items>
+            <SubReport Name="subReport1">
+              <Location>0px, 0px</Location>
+              <Parameters>
+                <ExternalParameter>
+                  <Name>RefNbr</Name>
+                  <ValueExpr>=[PMChangeOrderRevenueBudget.RefNbr]</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>OrderNbr</Name>
+                  <ValueExpr>=[PMChangeOrderRevenueBudget.POOrderNbr]</ValueExpr>
+                </ExternalParameter>
+                <ExternalParameter>
+                  <Name>LineNbr</Name>
+                  <ValueExpr>=[PMChangeOrderRevenueBudget.POLineNbr]</ValueExpr>
+                </ExternalParameter>
+              </Parameters>
+              <ReportName>SC645001.rpx</ReportName>
+              <Size>824px, 24px</Size>
+            </SubReport>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection5">
+          <Expanded>False</Expanded>
+          <Height>0.21164cm</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

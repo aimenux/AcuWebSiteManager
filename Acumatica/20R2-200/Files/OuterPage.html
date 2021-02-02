@@ -1,0 +1,70 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="utf-8"/>
+    <script type="text/javascript">
+        var baseUri = "http://localhost:5555/qqq";
+        var client_id = "b587c118-d341-4215-aa7a-747f8ec5460c";
+        var client_secret = "zYl0giENT6FxRBwlpDyZGTSbUXFqp84PIhk5kNV6cPo=";
+        var resource = "https://analysis.windows.net/powerbi/api";
+
+        function httpGet(uri, onLoad) {
+            var oReq = new XMLHttpRequest();
+            oReq.addEventListener("load", function() { onLoad(this.status, this.responseText); });
+            oReq.open("GET", uri);
+            oReq.send();
+        }
+
+        function authorize() {
+            httpGet(baseUri + "/auth", function(status, responseText) {
+                var href = baseUri + "/auth/" + responseText;
+                window.open("https://login.windows.net/common/oauth2/authorize?response_type=code" +
+                    "&client_id=" + encodeURIComponent(client_id) +
+                    "&resource=" + encodeURIComponent(resource) +
+                    "&redirect_uri=" + encodeURIComponent(href));
+
+                poll(href);
+            });
+        }
+
+        function poll(href) {
+            httpGet(href, function(status, responseText) {
+                switch (status) {
+                    case 204:
+                        setTimeout(function() { poll(href); }, 1000);
+                        return;
+                    case 200:
+                        getTokens(href, responseText);
+                        return;
+                }
+            });
+        }
+
+        function getTokens(href, code) {
+            httpGet(baseUri + "/token" +
+                "?code=" + encodeURIComponent(code) +
+                "&redirect_uri=" + encodeURIComponent(href) +
+                "&resource=" + encodeURIComponent(resource) +
+                "&client_id=" + encodeURIComponent(client_id) +
+                "&client_secret=" + encodeURIComponent(client_secret),
+                function(status, responseText) {processTokens(JSON.parse(responseText));}
+                );
+        }
+
+        function processTokens(data) {
+            alert("AUTH:\n" + JSON.stringify(data));
+            httpGet(baseUri + "/refresh" +
+                "?refresh_token=" + encodeURIComponent(data.refresh_token) +
+                "&resource=" + encodeURIComponent(resource) +
+                "&client_id=" + encodeURIComponent(client_id) +
+                "&client_secret=" + encodeURIComponent(client_secret),
+                function (status, responseText) { alert("REFRESH:\n" + responseText); }
+            );
+        }
+    </script>
+</head>
+<body>
+    <a href="#" onclick="authorize();">Authorize</a>
+</body>
+</html>

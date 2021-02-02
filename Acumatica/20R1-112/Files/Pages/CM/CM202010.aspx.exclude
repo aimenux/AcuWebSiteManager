@@ -1,0 +1,762 @@
+﻿<%@ Page Language="C#" MasterPageFile="~/MasterPages/FormTab.master" AutoEventWireup="true"
+	ValidateRequest="false" CodeFile="CM202010.aspx.cs" Inherits="Page_CM202010" Title="Untitled Page" %>
+
+<%@ MasterType VirtualPath="~/MasterPages/FormTab.master" %>
+<asp:Content ID="cont1" ContentPlaceHolderID="phDS" runat="Server">
+	<px:PXDataSource ID="ds" runat="server" Visible="True" Width="100%" PrimaryView="CuryRecords"
+		TypeName="PX.Objects.CM.CurrencyMaint">
+		<CallbackCommands>
+			<px:PXDSCallbackCommand Name="Insert" PostData="Self" />
+			<px:PXDSCallbackCommand CommitChanges="True" Name="Save" />
+			<px:PXDSCallbackCommand Name="First" PostData="Self" StartNewGroup="True" />
+			<px:PXDSCallbackCommand Name="Last" PostData="Self" />
+		</CallbackCommands>
+	</px:PXDataSource>
+</asp:Content>
+<asp:Content ID="cont2" ContentPlaceHolderID="phF" runat="Server">
+	<px:PXFormView ID="form" runat="server" DataSourceID="ds" Height="60px" Style="z-index: 100"
+		Width="100%" DataKeyNames="CuryID" DataMember="CuryRecords" Caption="General Info"
+		TabIndex="0">
+		<Searches>
+			<px:PXControlParam ControlID="form" Name="CuryID" PropertyName="NewDataKey[&quot;CuryID&quot;]"
+				Type="String" />
+		</Searches>
+		<Template>
+			<px:PXLabel ID="lblCuryID" runat="server" Style="z-index: 100; left: 9px; position: absolute;
+				top: 9px">Currency ID :</px:PXLabel>
+			<px:PXSelector ID="edCuryID" runat="server" DataField="CuryID" DataKeyNames="CuryID"
+				DataMember="_Currency_" DataSourceID="ds" LabelID="lblCuryID" MaxLength="5" Style="z-index: 101;
+				left: 108px; position: absolute; top: 9px" TabIndex="1" Width="67px" AutoRefresh="True">
+				<GridProperties>
+					<Columns>
+						<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+							<Header Text="Currency ID">
+							</Header>
+						</px:PXGridColumn>
+						<px:PXGridColumn DataField="Description" MaxLength="60" Width="200px">
+							<Header Text="Description">
+							</Header>
+						</px:PXGridColumn>
+					</Columns>
+				</GridProperties>
+				<AutoCallBack Command="Cancel" Enabled="True" Target="ds">
+				</AutoCallBack>
+			</px:PXSelector>
+			<px:PXLabel ID="lblCurySymbol" runat="server" Style="z-index: 102; left: 9px; position: absolute;
+				top: 36px">Currency Symbol :</px:PXLabel>
+			<px:PXSegmentMask ID="edCurySymbol" runat="server" AllowNull="True" DataField="CurySymbol"
+				LabelID="lblCurySymbol" Style="z-index: 103; left: 108px; position: absolute; top: 36px"
+				TabIndex="2" Width="62px" Wildcard="$#@!^%&*()�">
+				<Items>
+					<px:PXMaskItem EditMask="AlphaNumeric" Length="10" Separator="-" TextCase="Upper" />
+				</Items>
+				<GridProperties>
+					<Layout ColumnsMenu="False" />
+				</GridProperties>
+			</px:PXSegmentMask>
+			<px:PXLabel ID="lblDecimalPlaces" runat="server" Style="z-index: 106; left: 234px;
+				position: absolute; top: 9px">Decimal Precision :</px:PXLabel>
+			<px:PXNumberEdit ID="edDecimalPlaces" runat="server" DataField="DecimalPlaces" LabelID="lblDecimalPlaces"
+				MaxLength="1" MaxValue="9" Style="z-index: 107; left: 358px; position: absolute;
+				top: 9px" TabIndex="3" Text="2" ValueType="Int16" Width="11px">
+			</px:PXNumberEdit>
+			<px:PXLabel ID="lblDescription" runat="server" Style="z-index: 108; left: 234px;
+				position: absolute; top: 36px; width: 122px;">Description :</px:PXLabel>
+			<px:PXTextEdit ID="edDescription" runat="server" DataField="Description" LabelID="lblDescription"
+				MaxLength="30" Style="z-index: 109; left: 358px; position: absolute; top: 36px"
+				TabIndex="4" Width="197px">
+			</px:PXTextEdit>
+			&nbsp;&nbsp;
+		</Template>
+	</px:PXFormView>
+</asp:Content>
+<asp:Content ID="cont3" ContentPlaceHolderID="phG" runat="Server">
+	<px:PXTab ID="tab1" runat="server" Width="100%" Height="306px" DataMember="CuryRecords"
+		DataSourceID="ds" DataKeyNames="CuryID" TabIndex="100" RepaintOnDemand="false">
+		<Searches>
+			<px:PXControlParam ControlID="form" Name="CuryID" PropertyName="NewDataKey[&quot;CuryID&quot;]"
+				Type="String" />
+		</Searches>
+		<Items>
+			<px:PXTabItem Text="Realized/Unrealized">
+				<Template>
+					<px:PXPanel ID="PXPanel1" runat="server" GroupText="Realized" Height="126px" Width="97%"
+						Style="left: 9px; position: absolute; top: 9px">
+					</px:PXPanel>
+					<px:PXLabel ID="lblRealGainAcctID" runat="server" Style="z-index: 102; left: 18px;
+						position: absolute; top: 27px; width: 163px;">Realized Gain Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRealGainAcctID" runat="server" AllowNull="True" DataField="RealGainAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRealGainAcctIDH" LabelID="lblRealGainAcctID" Style="z-index: 103;
+						left: 185px; position: absolute; top: 27px" TabIndex="15" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRealGainAcctIDH" runat="server" Style="z-index: 104; left: 294px;
+						position: absolute; top: 27px; width: 561px"></px:PXLabel>
+					<px:PXLabel ID="lblRealGainSubID" runat="server" Style="z-index: 105; left: 18px;
+						position: absolute; top: 54px" Width="163px">Realized Gain Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRealGainSubID" runat="server" AllowNull="True" DataField="RealGainSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.realGainAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRealGainSubIDH" LabelID="lblRealGainSubID"
+						Style="z-index: 106; left: 185px; position: absolute; top: 54px" TabIndex="16"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRealGainSubIDH" runat="server" Style="z-index: 107; left: 357px;
+						position: absolute; top: 54px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRealLossAcctID" runat="server" Style="z-index: 108; left: 18px;
+						position: absolute; top: 81px" Width="163px">Realized Loss Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRealLossAcctID" runat="server" AllowNull="True" DataField="RealLossAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRealLossAcctIDH" LabelID="lblRealLossAcctID" Style="z-index: 109;
+						left: 185px; position: absolute; top: 81px" TabIndex="17" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRealLossAcctIDH" runat="server" Style="z-index: 110; left: 294px;
+						position: absolute; top: 81px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRealLossSubID" runat="server" Style="z-index: 111; left: 18px;
+						position: absolute; top: 108px" Width="163px">Realized Loss Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRealLossSubID" runat="server" AllowNull="True" DataField="RealLossSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.realLossAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRealLossSubIDH" LabelID="lblRealLossSubID"
+						Style="z-index: 112; left: 185px; position: absolute; top: 108px" TabIndex="18"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRealLossSubIDH" runat="server" Style="z-index: 113; left: 356px;
+						position: absolute; top: 108px" Width="561px"></px:PXLabel>
+					<px:PXPanel ID="PXPanel2" runat="server" GroupText="Unrealized" Height="126px" Width="97%"
+						Style="left: 9px; position: absolute; top: 153px">
+					</px:PXPanel>
+					<px:PXLabel ID="lblUnrealizedGainAcctID" runat="server" Style="z-index: 138; left: 18px;
+						position: absolute; top: 171px" Width="163px">Unrealized Gain Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edUnrealizedGainAcctID" runat="server" AllowNull="True" DataField="UnrealizedGainAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblUnrealizedGainAcctIDH" LabelID="lblUnrealizedGainAcctID" Style="z-index: 139;
+						left: 185px; position: absolute; top: 171px" TabIndex="19" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblUnrealizedGainAcctIDH" runat="server" Style="z-index: 140; left: 294px;
+						position: absolute; top: 171px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblUnrealizedGainSubID" runat="server" Style="z-index: 141; left: 18px;
+						position: absolute; top: 198px" Width="163px">Unrealized Gain Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edUnrealizedGainSubID" runat="server" AllowNull="True" DataField="UnrealizedGainSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.unrealizedGainAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblUnrealizedGainSubIDH"
+						LabelID="lblUnrealizedGainSubID" Style="z-index: 142; left: 185px; position: absolute;
+						top: 198px" TabIndex="20" Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblUnrealizedGainSubIDH" runat="server" Style="z-index: 143; left: 356px;
+						position: absolute; top: 198px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblUnrealizedLossAcctID" runat="server" Style="z-index: 144; left: 18px;
+						position: absolute; top: 225px" Width="163px">Unrealized Loss Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edUnrealizedLossAcctID" runat="server" AllowNull="True" DataField="UnrealizedLossAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblUnrealizedLossAcctIDH" LabelID="lblUnrealizedLossAcctID" Style="z-index: 145;
+						left: 185px; position: absolute; top: 225px" TabIndex="21" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblUnrealizedLossAcctIDH" runat="server" Style="z-index: 146; left: 295px;
+						position: absolute; top: 225px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblUnrealizedLossSubID" runat="server" Style="z-index: 147; left: 18px;
+						position: absolute; top: 252px" Width="163px">Unrealized Loss Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edUnrealizedLossSubID" runat="server" AllowNull="True" DataField="UnrealizedLossSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.unrealizedLossAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblUnrealizedLossSubIDH"
+						LabelID="lblUnrealizedLossSubID" Style="z-index: 148; left: 185px; position: absolute;
+						top: 252px" TabIndex="22" Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblUnrealizedLossSubIDH" runat="server" Style="z-index: 149; left: 356px;
+						position: absolute; top: 252px" Width="561px"></px:PXLabel>
+				</Template>
+			</px:PXTabItem>
+			<px:PXTabItem Text="Revaluation/Translation">
+				<Template>
+					<px:PXPanel ID="PXPanel3" runat="server" GroupText="Revaluation" Height="126px" Width="97%"
+						Style="left: 9px; position: absolute; top: 9px">
+					</px:PXPanel>
+					<px:PXLabel ID="lblRevalGainAcctID" runat="server" Style="z-index: 114; left: 18px;
+						position: absolute; top: 27px; width: 164px;">Revaluation Gain Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRevalGainAcctID" runat="server" AllowNull="True" DataField="RevalGainAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRevalGainAcctIDH" LabelID="lblRevalGainAcctID" Style="z-index: 115;
+						left: 185px; position: absolute; top: 27px" TabIndex="23" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRevalGainAcctIDH" runat="server" Style="z-index: 116; left: 294px;
+						position: absolute; top: 27px; width: 561px;"></px:PXLabel>
+					<px:PXLabel ID="lblRevalGainSubID" runat="server" Style="z-index: 117; left: 18px;
+						position: absolute; top: 54px" Width="164px">Revaluation Gain Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRevalGainSubID" runat="server" AllowNull="True" DataField="RevalGainSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.revalGainAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRevalGainSubIDH" LabelID="lblRevalGainSubID"
+						Style="z-index: 118; left: 185px; position: absolute; top: 54px" TabIndex="24"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRevalGainSubIDH" runat="server" Style="z-index: 119; left: 356px;
+						position: absolute; top: 54px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRevalLossAcctID" runat="server" Style="z-index: 120; left: 18px;
+						position: absolute; top: 81px" Width="164px">Revaluation Loss Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRevalLossAcctID" runat="server" AllowNull="True" DataField="RevalLossAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRevalLossAcctIDH" LabelID="lblRevalLossAcctID" Style="z-index: 121;
+						left: 185px; position: absolute; top: 81px" TabIndex="25" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRevalLossAcctIDH" runat="server" Style="z-index: 122; left: 294px;
+						position: absolute; top: 81px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRevalLossSubID" runat="server" Style="z-index: 123; left: 18px;
+						position: absolute; top: 108px" Width="164px">Revaluation Loss Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRevalLossSubID" runat="server" AllowNull="True" DataField="RevalLossSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.revalLossAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRevalLossSubIDH" LabelID="lblRevalLossSubID"
+						Style="z-index: 124; left: 185px; position: absolute; top: 108px" TabIndex="26"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRevalLossSubIDH" runat="server" Style="z-index: 125; left: 356px;
+						position: absolute; top: 108px" Width="561px"></px:PXLabel>
+					<px:PXPanel ID="PXPanel4" runat="server" GroupText="Translation" Height="126px" Width="97%"
+						Style="left: 9px; position: absolute; top: 153px">
+					</px:PXPanel>
+					<px:PXLabel ID="lblTranslationGainAcctID" runat="server" Style="z-index: 126; left: 18px;
+						position: absolute; top: 171px" Width="164px">Translation Gain Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edTranslationGainAcctID" runat="server" AllowNull="True" DataField="TranslationGainAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblTranslationGainAcctIDH" LabelID="lblTranslationGainAcctID" Style="z-index: 127;
+						left: 185px; position: absolute; top: 171px" TabIndex="27" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblTranslationGainAcctIDH" runat="server" Style="z-index: 128; left: 294px;
+						position: absolute; top: 171px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblTranslationGainSubID" runat="server" Style="z-index: 129; left: 18px;
+						position: absolute; top: 198px" Width="164px">Translation Gain Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edTranslationGainSubID" runat="server" AllowNull="True" DataField="TranslationGainSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.translationGainAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblTranslationGainSubIDH"
+						LabelID="lblTranslationGainSubID" Style="z-index: 130; left: 185px; position: absolute;
+						top: 198px" TabIndex="28" Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblTranslationGainSubIDH" runat="server" Style="z-index: 131; left: 356px;
+						position: absolute; top: 198px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblTranslationLossAcctID" runat="server" Style="z-index: 132; left: 18px;
+						position: absolute; top: 225px" Width="164px">Translation Loss Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edTranslationLossAcctID" runat="server" AllowNull="True" DataField="TranslationLossAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblTranslationLossAcctIDH" LabelID="lblTranslationLossAcctID" Style="z-index: 133;
+						left: 185px; position: absolute; top: 225px" TabIndex="29" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblTranslationLossAcctIDH" runat="server" Style="z-index: 134; left: 294px;
+						position: absolute; top: 225px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblTranslationLossSubID" runat="server" Style="z-index: 135; left: 18px;
+						position: absolute; top: 252px" Width="164px">Translation Loss Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edTranslationLossSubID" runat="server" AllowNull="True" DataField="TranslationLossSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.translationLossAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblTranslationLossSubIDH"
+						LabelID="lblTranslationLossSubID" Style="z-index: 136; left: 185px; position: absolute;
+						top: 252px" TabIndex="30" Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblTranslationLossSubIDH" runat="server" Style="z-index: 137; left: 356px;
+						position: absolute; top: 252px" Width="561px"></px:PXLabel>
+				</Template>
+			</px:PXTabItem>
+			<px:PXTabItem Text="Rounding">
+				<Template>
+					<px:PXPanel ID="PXPanel5" runat="server" Height="126px" Style="z-index: 100; left: 9px;
+						position: absolute; top: 9px" Width="97%">
+					</px:PXPanel>
+					<px:PXLabel ID="lblRoundingGainAcctID" runat="server" Style="z-index: 102; left: 18px;
+						position: absolute; top: 27px; width: 164px;">Rounding Gain Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRoundingGainAcctID" runat="server" AllowNull="True" DataField="RoundingGainAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRoundingGainAcctIDH" LabelID="lblRoundingGainAcctID" Style="z-index: 103;
+						left: 185px; position: absolute; top: 27px" TabIndex="15" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRoundingGainAcctIDH" runat="server" Style="z-index: 104; left: 294px;
+						position: absolute; top: 27px; width: 561px"></px:PXLabel>
+					<px:PXLabel ID="lblRoundingGainSubID" runat="server" Style="z-index: 105; left: 18px;
+						position: absolute; top: 54px" Width="164px">Rounding Gain Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRoundingGainSubID" runat="server" AllowNull="True" DataField="RoundingGainSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.roundingGainAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRoundingGainSubIDH" LabelID="lblRoundingGainSubID"
+						Style="z-index: 106; left: 185px; position: absolute; top: 54px" TabIndex="16"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRoundingGainSubIDH" runat="server" Style="z-index: 107; left: 355px;
+						position: absolute; top: 55px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRoundingLossAcctID" runat="server" Style="z-index: 108; left: 18px;
+						position: absolute; top: 81px" Width="164px">Rounding Loss Account :</px:PXLabel>
+					<px:PXSegmentMask ID="edRoundingLossAcctID" runat="server" AllowNull="True" DataField="RoundingLossAcctID"
+						DataKeyNames="AccountCD" DataMember="_Account_E_I_" DataSourceID="ds" HintField="description"
+						HintLabelID="lblRoundingLossAcctIDH" LabelID="lblRoundingLossAcctID" Style="z-index: 109;
+						left: 185px; position: absolute; top: 81px" TabIndex="17" Width="100px" AutoGenerateColumns="true"
+						AllowEdit="True">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="AccountCD" MaxLength="10" Width="70px">
+									<Header Text="Account">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn AllowNull="False" DataField="Type" MaxLength="1" Width="70px">
+									<Header Text="Type">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="30" Width="120px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="CuryID" MaxLength="5" Width="70px">
+									<Header Text="Currency ID">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="Numeric" EmptyChar="_" Length="4" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRoundingLossAcctIDH" runat="server" Style="z-index: 110; left: 294px;
+						position: absolute; top: 81px" Width="561px"></px:PXLabel>
+					<px:PXLabel ID="lblRoundingLossSubID" runat="server" Style="z-index: 111; left: 18px;
+						position: absolute; top: 108px" Width="164px">Rounding Loss Sub :</px:PXLabel>
+					<px:PXSegmentMask ID="edRoundingLossSubID" runat="server" AllowNull="True" DataField="RoundingLossSubID"
+						DataKeyNames="SubCD" DataMember="_Sub_Currency.roundingLossAcctID_AccessInfo.userName_"
+						DataSourceID="ds" HintField="description" HintLabelID="lblRoundingLossSubIDH" LabelID="lblRoundingLossSubID"
+						Style="z-index: 112; left: 185px; position: absolute; top: 108px" TabIndex="18"
+						Width="162px" AutoRefresh="true">
+						<GridProperties FastFilterFields="Description">
+							<Columns>
+								<px:PXGridColumn AllowNull="False" DataField="SubCD" MaxLength="30" Width="120px">
+									<Header Text="Subaccount">
+									</Header>
+								</px:PXGridColumn>
+								<px:PXGridColumn DataField="Description" MaxLength="255" Width="200px">
+									<Header Text="Description">
+									</Header>
+								</px:PXGridColumn>
+							</Columns>
+							<Layout ColumnsMenu="False" />
+						</GridProperties>
+						<Items>
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+							<px:PXMaskItem EditMask="AlphaNumeric" EmptyChar="_" Length="2" Separator="-" TextCase="Upper" />
+						</Items>
+						<AutoCallBack Command="Save" Enabled="True" Target="form">
+						</AutoCallBack>
+					</px:PXSegmentMask>
+					<px:PXLabel ID="lblRoundingLossSubIDH" runat="server" Style="z-index: 113; left: 355px;
+						position: absolute; top: 110px" Width="561px">
+					</px:PXLabel>
+				</Template>
+			</px:PXTabItem>
+		</Items>
+		<AutoSize Enabled="True" Container="Window" />
+	</px:PXTab>
+</asp:Content>

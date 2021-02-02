@@ -1,0 +1,491 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <DrawGrid>False</DrawGrid>
+  <Filters>
+    <FilterExp>
+      <DataField>RowCashAccount.CashAccountCD</DataField>
+      <Value>@CashAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowCATran.Reconciled</DataField>
+      <OpenBraces>2</OpenBraces>
+      <Value>@BoolTrue</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>Greater</Condition>
+      <DataField>RowCATran.ReconDate</DataField>
+      <Value>@StartDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>RowCATran.ReconDate</DataField>
+      <Operator>Or</Operator>
+      <CloseBraces>1</CloseBraces>
+      <Value>@EndDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>RowCATran.Posted</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>@BoolTrue</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>NotEqual</Condition>
+      <DataField>RowCATran.Reconciled</DataField>
+      <Value>@BoolTrue</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>Greater</Condition>
+      <DataField>RowCATran.TranDate</DataField>
+      <Value>@StartDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>RowCATran.TranDate</DataField>
+      <CloseBraces>2</CloseBraces>
+      <Value>@EndDate</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <Tables>
+    <ReportTable Name="RowCATran">
+      <Fields>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BegBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="EndBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DayDesc"></ReportField>
+        <ReportField Name="OrigModule"></ReportField>
+        <ReportField Name="OrigTranType"></ReportField>
+        <ReportField Name="OrigRefNbr"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="CashAccountID"></ReportField>
+        <ReportField Name="TranID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DrCr"></ReportField>
+        <ReportField Name="ReferenceID"></ReportField>
+        <ReportField Name="TranDesc"></ReportField>
+        <ReportField Name="TranPeriodID"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Released">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Posted">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Reconciled">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReconDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ReconNbr"></ReportField>
+        <ReportField Name="CuryTranAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="TranAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BatchNbrIn">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="Cleared">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ClearDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryDebitAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryCreditAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryClearedDebitAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryClearedCreditAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="tstamp">
+          <DataType>Byte</DataType>
+        </ReportField>
+        <ReportField Name="ClearDebit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ClearCredit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CountDebit">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CountCredit">
+          <DataType>Int32</DataType>
+        </ReportField>
+      </Fields>
+    </ReportTable>
+    <ReportTable Name="RowCashAccount">
+      <Fields>
+		  <ReportField Name="AccountID"></ReportField>
+		  <ReportField Name="AccountID_Account_description"></ReportField>
+		  <ReportField Name="AccountID_description"></ReportField>
+		  <ReportField Name="AcctSettingsAllowed">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Active">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="BranchID"></ReportField>
+		  <ReportField Name="BranchID_Branch_acctName"></ReportField>
+		  <ReportField Name="BranchID_description"></ReportField>
+		  <ReportField Name="CashAccountCD"></ReportField>
+		  <ReportField Name="CashAccountID">
+			  <DataType>Int32</DataType>
+		  </ReportField>
+		  <ReportField Name="CashCreatedByID"></ReportField>
+		  <ReportField Name="CashCreatedByID_Creator_username"></ReportField>
+		  <ReportField Name="CashCreatedByID_description"></ReportField>
+		  <ReportField Name="CashCreatedByScreenID"></ReportField>
+		  <ReportField Name="CashCreatedDateTime">
+			  <DataType>DateTime</DataType>
+		  </ReportField>
+		  <ReportField Name="CashLastModifiedByID"></ReportField>
+		  <ReportField Name="CashLastModifiedByID_description"></ReportField>
+		  <ReportField Name="CashLastModifiedByID_Modifier_username"></ReportField>
+		  <ReportField Name="CashLastModifiedByScreenID"></ReportField>
+		  <ReportField Name="CashLastModifiedDateTime">
+			  <DataType>DateTime</DataType>
+		  </ReportField>
+		  <ReportField Name="ClearingAccount">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="CuryID"></ReportField>
+		  <ReportField Name="CuryRateTypeID"></ReportField>
+		  <ReportField Name="Descr"></ReportField>
+		  <ReportField Name="ExtRefNbr"></ReportField>
+		  <ReportField Name="NoteActivity"></ReportField>
+		  <ReportField Name="NoteFiles"></ReportField>
+		  <ReportField Name="NoteID">
+			  <DataType>Int64</DataType>
+		  </ReportField>
+		  <ReportField Name="NoteImages"></ReportField>
+		  <ReportField Name="NoteText"></ReportField>
+		  <ReportField Name="PTInstancesAllowed">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Reconcile">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="ReconNumberingID"></ReportField>
+		  <ReportField Name="ReconNumberingID_description"></ReportField>
+		  <ReportField Name="ReconNumberingID_Numbering_descr"></ReportField>
+		  <ReportField Name="ReferenceID"></ReportField>
+		  <ReportField Name="ReferenceID_BAccountR_acctName"></ReportField>
+		  <ReportField Name="ReferenceID_description"></ReportField>
+		  <ReportField Name="ReferenceID_Vendor_acctName"></ReportField>
+		  <ReportField Name="RestrictVisibilityWithBranch">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Selected">
+			  <DataType>Boolean</DataType>
+		  </ReportField>
+		  <ReportField Name="Signature"></ReportField>
+		  <ReportField Name="SignatureDescr"></ReportField>
+		  <ReportField Name="StatementImportTypeName"></ReportField>
+		  <ReportField Name="SubID"></ReportField>
+		  <ReportField Name="SubID_description"></ReportField>
+		  <ReportField Name="SubID_Sub_description"></ReportField>
+      </Fields>
+    </ReportTable>
+  </Tables>
+  <Sorting>
+    <SortExp>
+      <DataField>RowCATran.OrigRefNbr</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>RowCATran.TranDate</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>RowCATran.ReconDate</DataField>
+    </SortExp>
+  </Sorting>
+  <SchemaUrl>http://localhost/pure</SchemaUrl>
+  <Relations>
+    <ReportRelation>
+      <ChildName>RowCATran</ChildName>
+      <ParentName>RowCashAccount</ParentName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>CashAccountID</ChildField>
+          <ParentField>CashAccountID</ParentField>
+        </RelationRow>
+      </Links>
+    </ReportRelation>
+  </Relations>
+  <Parameters>
+    <ReportParameter>
+      <Name>CashAccountID</Name>
+      <ViewName>=Report.GetFieldSchema('RowCashAccount.CashAccountID')</ViewName>
+      <Prompt>Cash Account</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>BoolTrue</Name>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+      <DefaultValue>true</DefaultValue>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>StartDate</Name>
+      <Type>DateTime</Type>
+      <ViewName>=Report.GetFieldSchema('RowCAReconFilter.StartDate')</ViewName>
+      <InputMask>####-##-##</InputMask>
+      <Prompt>Start Date</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>EndDate</Name>
+      <Type>DateTime</Type>
+      <ViewName>=Report.GetFieldSchema('RowCAReconFilter.EndDate')</ViewName>
+      <InputMask>####-##-##</InputMask>
+      <Prompt>End Date</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Count</Name>
+      <Type>Integer</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+	<StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Sections>
+    <Detail Name="detailSection1">
+      <Height>14px</Height>
+      <DrawGrid>True</DrawGrid>
+      <VisibleExpr>=iif([@Count] &lt; 2, true, false)</VisibleExpr>
+      <GridSize>8px, 8px</GridSize>
+      <Items>
+        <TextBox Name="textBox20">
+          <StyleName>Normal</StyleName>
+          <Location>396px, 0px</Location>
+          <Value>=[RowCATran.ReconDate]</Value>
+          <Size>88px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox55">
+          <StyleName>Normal</StyleName>
+          <Location>492px, 0px</Location>
+          <Value>=[RowCATran.ReconNbr]</Value>
+          <Size>84px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox33">
+          <StyleName>Normal</StyleName>
+          <Location>4px, 0px</Location>
+          <Value>=[RowCATran.ExtRefNbr]</Value>
+          <Size>84px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox36">
+          <StyleName>Normal</StyleName>
+          <Location>816px, 0px</Location>
+          <Value>=IIF([RowCATran.DrCr]='D',[RowCATran.CuryTranAmt], null)</Value>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Format>=[RowCATran.CuryTranAmt.Format]</Format>
+          <Size>80px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <StyleName>Normal</StyleName>
+          <Location>900px, 0px</Location>
+          <Value>=IIF([RowCATran.DrCr]='C',-[RowCATran.CuryTranAmt],null)</Value>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <Format>=[RowCATran.CuryTranAmt.Format]</Format>
+          <Size>96px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox52">
+          <StyleName>Normal</StyleName>
+          <Location>92px, 0px</Location>
+          <Value>=[RowCATran.OrigModule]</Value>
+          <Size>28px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <StyleName>Normal</StyleName>
+          <Location>124px, 0px</Location>
+          <Value>=[RowCATran.OrigTranType]</Value>
+          <Size>80px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox32">
+          <StyleName>Normal</StyleName>
+          <Location>208px, 0px</Location>
+          <Value>=[RowCATran.OrigRefNbr]</Value>
+          <Size>92px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <StyleName>Normal</StyleName>
+          <Location>304px, 0px</Location>
+          <Value>=[RowCATran.TranDate]</Value>
+          <Size>88px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <StyleName>Normal</StyleName>
+          <Location>580px, 0px</Location>
+          <Value>=[RowCATran.ReferenceID_BAccount_acctName]</Value>
+          <Size>112px, 14px</Size>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <StyleName>Normal</StyleName>
+          <Location>696px, 0px</Location>
+          <Value>=[RowCATran.TranDesc]</Value>
+          <Size>116px, 14px</Size>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <DrawGrid>True</DrawGrid>
+      <Height>14px</Height>
+      <Items>
+        <Panel Name="panel3">
+          <Location>4px, 0px</Location>
+          <Style>
+            <BorderColor>
+              <Bottom>Black</Bottom>
+            </BorderColor>
+            <BorderStyle>
+              <Bottom>Solid</Bottom>
+            </BorderStyle>
+            <BorderWidth>
+              <Bottom>1px</Bottom>
+            </BorderWidth>
+          </Style>
+          <Size>992px, 15px</Size>
+          <DrawGrid>False</DrawGrid>
+          <Items>
+            <TextBox Name="textBox27">
+              <StyleName>Heading 1</StyleName>
+              <Location>487px, 0px</Location>
+              <Value>Recon.Nbr.</Value>
+              <Size>84px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox19">
+              <StyleName>Heading 1</StyleName>
+              <Location>394px, 0px</Location>
+              <Value>Recon.Date</Value>
+              <Size>88px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox18">
+              <StyleName>Heading 1</StyleName>
+              <Location>576px, 0px</Location>
+              <Value>Customer\Vendor</Value>
+              <Size>112px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <StyleName>Heading 1</StyleName>
+              <Location>692px, 0px</Location>
+              <Value>Description</Value>
+              <Size>116px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <StyleName>Heading 1</StyleName>
+              <Location>302px, 0px</Location>
+              <Value>Doc. Date</Value>
+              <Size>88px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <StyleName>Heading 1</StyleName>
+              <Location>121px, 0px</Location>
+              <Value>Tran. Type</Value>
+              <Size>80px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <StyleName>Heading 1</StyleName>
+              <Location>0px, 0px</Location>
+              <Value>Doc. Ref.</Value>
+              <Size>83px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <StyleName>Heading 1</StyleName>
+              <Location>206px, 0px</Location>
+              <Value>Doc. Number</Value>
+              <Size>92px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <StyleName>Heading 1</StyleName>
+              <Location>812px, 0px</Location>
+              <Value>Receipt</Value>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <Size>80px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <StyleName>Heading 1</StyleName>
+              <Location>896px, 0px</Location>
+              <Value>Disbursement</Value>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <Size>96px, 14px</Size>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <StyleName>Heading 1</StyleName>
+              <Location>88px, 0px</Location>
+              <Value>Mod.</Value>
+              <Size>28px, 14px</Size>
+            </TextBox>
+          </Items>
+        </Panel>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>RowCATran.TranID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <Height>10px</Height>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>10px</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

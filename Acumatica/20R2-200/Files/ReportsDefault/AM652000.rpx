@@ -1,0 +1,1432 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>30</item>
+    <item>40</item>
+    <item>40</item>
+    <item>25</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>NotEqual</Condition>
+      <DataField>AMProdItem.StatusID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>X</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.ProdOrdID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Production_Nbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Production_Nbr</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.InventoryID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@Inventory_ID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@Inventory_ID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>AMProdItem.OrderType</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrderType</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrderType</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <LayoutUnit>Pixel</LayoutUnit>
+  <MailSettings>
+    <ActivitySource>AMProdItem.NoteID</ActivitySource>
+    <Bcc></Bcc>
+    <Body></Body>
+    <Cc></Cc>
+    <Format></Format>
+    <ParentSource></ParentSource>
+    <Subject></Subject>
+    <TemplateID></TemplateID>
+    <To></To>
+  </MailSettings>
+  <PageSettings>
+    <Landscape>True</Landscape>
+    <Margins>
+      <Bottom>30px</Bottom>
+    </Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>=Report.GetDefExt('AMPSetup.DefaultOrderType')</DefaultValue>
+      <Name>OrderType</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Order Type</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.OrderType')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Production_Nbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Production Nbr:</Prompt>
+      <ViewName>=Report.GetFieldSchema('AMProdItem.ProdOrdID,OrderType')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>Inventory_ID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Inventory ID:</Prompt>
+      <ViewName>=[AMProdItem.InventoryID]</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>AMProdTotal</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>OrderType</ChildField>
+          <OpenBraces>1</OpenBraces>
+          <ParentField>OrderType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ProdOrdID</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <ParentField>ProdOrdID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AMProdItem</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>AMOrderType</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>OrderType</ChildField>
+          <ParentField>OrderType</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>AMProdItem</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl></SchemaUrl>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="AMProdItem">
+      <Fields>
+        <ReportField Name="BaseQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyRemaining">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtyScrapped">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BaseQtytoProd">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BOMEffDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BOMID"></ReportField>
+        <ReportField Name="BuildProductionBom">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConstDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CostMethod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID"></ReportField>
+        <ReportField Name="CustomerID_BAccountR_acctName"></ReportField>
+        <ReportField Name="CustomerID_Customer_acctName"></ReportField>
+        <ReportField Name="CustomerID_description"></ReportField>
+        <ReportField Name="Delete">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="DetailSource">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="EndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="EstimateID"></ReportField>
+        <ReportField Name="EstimateRevisionID"></ReportField>
+        <ReportField Name="ExpireDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="FirmSchedule">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FirstOperationID"></ReportField>
+        <ReportField Name="FMLTime">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FMLTMRPOrdorOP">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="HasMixedProjectTasks">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Hold">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InventoryID"></ReportField>
+        <ReportField Name="InventoryID_description"></ReportField>
+        <ReportField Name="InventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="InvtMult">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="IsConfigurable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastOperationID"></ReportField>
+        <ReportField Name="LocationID"></ReportField>
+        <ReportField Name="LocationID_description"></ReportField>
+        <ReportField Name="LocationID_INLocation_descr"></ReportField>
+        <ReportField Name="LotSerialNbr"></ReportField>
+        <ReportField Name="MultDiv"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="OrdLineRef">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="OrdNbr"></ReportField>
+        <ReportField Name="OrdTypeRef"></ReportField>
+        <ReportField Name="ParentOrderType"></ReportField>
+        <ReportField Name="ParentOrdID"></ReportField>
+        <ReportField Name="PerClose"></ReportField>
+        <ReportField Name="PerEnt"></ReportField>
+        <ReportField Name="ProdDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ProdOrdID"></ReportField>
+        <ReportField Name="ProductManagerID"></ReportField>
+        <ReportField Name="ProductManagerID_description"></ReportField>
+        <ReportField Name="ProductManagerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ProductOrderType"></ReportField>
+        <ReportField Name="ProductOrdID"></ReportField>
+        <ReportField Name="ProductWorkgroupID"></ReportField>
+        <ReportField Name="ProjectID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Qty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyRemaining">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyScrapped">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtytoProd">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="RelDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Reschedule">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RevisionNbr"></ReportField>
+        <ReportField Name="SchdConst"></ReportField>
+        <ReportField Name="SchPriority">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SiteID"></ReportField>
+        <ReportField Name="SiteID_description"></ReportField>
+        <ReportField Name="SiteID_INSite_descr"></ReportField>
+        <ReportField Name="SplitLineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StatusID"></ReportField>
+        <ReportField Name="SubItemID"></ReportField>
+        <ReportField Name="TaskID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UnassignedQty">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="UOM"></ReportField>
+        <ReportField Name="WIPAcctID"></ReportField>
+        <ReportField Name="WIPAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPAcctID_description"></ReportField>
+        <ReportField Name="WIPBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPComp">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPSubID"></ReportField>
+        <ReportField Name="WIPSubID_description"></ReportField>
+        <ReportField Name="WIPSubID_Sub_description"></ReportField>
+        <ReportField Name="WIPTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPVarianceAcctID"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID"></ReportField>
+        <ReportField Name="WIPVarianceSubID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AM.AMProdItem</FullName>
+    </ReportTable>
+    <ReportTable Name="AMProdTotal">
+      <Fields>
+        <ReportField Name="ActualFixedOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualLabor">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualMachine">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualMaterial">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualTool">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ActualVariableOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="PlanCostDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="PlanFixedOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanLabor">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanMachine">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanMaterial">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanQtyToProduce">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanTool">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanUnitCost">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="PlanVariableOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProdOrdID"></ReportField>
+        <ReportField Name="QtyComplete">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="QtyRemaining">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="VarianceFixedOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceLabor">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceMachine">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceMaterial">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceTool">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="VarianceVariableOverhead">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPAdjustment">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPComp">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="WIPTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.AM.AMProdTotal</FullName>
+    </ReportTable>
+    <ReportTable Name="AMOrderType">
+      <Fields>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesItem">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesMatl">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesOper">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesOvhd">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesStep">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CopyNotesTool">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefaultCostMethod">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Descr"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="OrderType"></ReportField>
+        <ReportField Name="ProdNumberingID"></ReportField>
+        <ReportField Name="ProdNumberingID_description"></ReportField>
+        <ReportField Name="ProdNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="WIPAcctID"></ReportField>
+        <ReportField Name="WIPAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPAcctID_description"></ReportField>
+        <ReportField Name="WIPSubID"></ReportField>
+        <ReportField Name="WIPSubID_description"></ReportField>
+        <ReportField Name="WIPSubID_Sub_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_Account_description"></ReportField>
+        <ReportField Name="WIPVarianceAcctID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID"></ReportField>
+        <ReportField Name="WIPVarianceSubID_description"></ReportField>
+        <ReportField Name="WIPVarianceSubID_Sub_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AM.AMOrderType</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="AMProdItem.ProdOrdID"></ViewerField>
+    <ViewerField Name="AMProdItem.StatusID"></ViewerField>
+    <ViewerField Name="AMProdItem.InventoryID"></ViewerField>
+    <ViewerField Name="AMProdItem.OrderType"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanLabor"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanMaterial"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanTool"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanFixedOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanVariableOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanMachine"></ViewerField>
+    <ViewerField Name="AMProdTotal.WIPAdjustment"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualMachine"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualMaterial"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualTool"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualFixedOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualVariableOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.ActualLabor"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceMachine"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceMaterial"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceTool"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceFixedOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceVariableOverhead"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceLabor"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPComp"></ViewerField>
+    <ViewerField Name="AMProdItem.SubItemID"></ViewerField>
+    <ViewerField Name="AMProdItem.SiteID"></ViewerField>
+    <ViewerField Name="AMProdItem.StartDate"></ViewerField>
+    <ViewerField Name="AMProdItem.EndDate"></ViewerField>
+    <ViewerField Name="AMProdItem.WIPBalance"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanTotal"></ViewerField>
+    <ViewerField Name="AMProdTotal.PlanCostDate"></ViewerField>
+    <ViewerField Name="AMProdTotal.LastModifiedDateTime"></ViewerField>
+    <ViewerField Name="AMProdTotal.VarianceTotal"></ViewerField>
+  </ViewerFields>
+  <Width>1026px</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>56px</Height>
+      <Items>
+        <TextBox Name="textBox1">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>922px, 20px</Location>
+          <Size>86px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox18">
+          <Excel>
+            <column>2</column>
+            <row>3</row>
+          </Excel>
+          <Location>84px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowAccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Excel>
+            <column>9</column>
+            <row>3</row>
+          </Excel>
+          <Location>924px, 36px</Location>
+          <Size>84px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox20">
+          <Excel>
+            <row>3</row>
+          </Excel>
+          <Location>4px, 36px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>8</column>
+            <row>2</row>
+          </Excel>
+          <Location>876px, 20px</Location>
+          <Size>44px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>76px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company:</Value>
+        </TextBox>
+        <TextBox Name="textBox27">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>84px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('RowCompanyBAccount.AcctName')</Value>
+        </TextBox>
+        <TextBox Name="textBox39">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <width>2</width>
+          </Excel>
+          <Location>4px, 0px</Location>
+          <Size>236px, 16px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>Production Order Performance</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>504px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Production Nbr:</Value>
+          <VisibleExpr>=([@Production_Nbr]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox50">
+          <Excel>
+            <column>2</column>
+            <row>3</row>
+          </Excel>
+          <Location>504px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Inventory ID</Value>
+          <VisibleExpr>=([@Inventory_ID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox51">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>632px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@Production_Nbr]</Value>
+          <VisibleExpr>=([@Production_Nbr]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox52">
+          <Excel>
+            <column>2</column>
+            <row>3</row>
+          </Excel>
+          <Location>632px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@Inventory_ID]</Value>
+          <VisibleExpr>=([@Inventory_ID]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox72">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>504px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Order Type:</Value>
+          <VisibleExpr>=([@OrderType]&lt;&gt;Null)</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox73">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>632px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[@OrderType]</Value>
+          <VisibleExpr>=([@OrderType]&lt;&gt;Null)#010;</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox9">
+          <Excel>
+            <column>8</column>
+            <row>3</row>
+          </Excel>
+          <Location>876px, 36px</Location>
+          <Size>44px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>120px</Height>
+      <Items>
+        <TextBox Name="textBox19">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>160px, 4px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Labor</Value>
+        </TextBox>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>2</column>
+            <row>6</row>
+          </Excel>
+          <Location>160px, 84px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Variable Overhead</Value>
+        </TextBox>
+        <TextBox Name="textBox23">
+          <Excel>
+            <column>2</column>
+            <row>5</row>
+          </Excel>
+          <Location>160px, 68px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Fixed Overhead</Value>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <Excel>
+            <column>2</column>
+            <row>4</row>
+          </Excel>
+          <Location>160px, 52px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Tool</Value>
+        </TextBox>
+        <TextBox Name="textBox32">
+          <Excel>
+            <column>2</column>
+            <row>3</row>
+          </Excel>
+          <Location>160px, 36px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Material</Value>
+        </TextBox>
+        <TextBox Name="textBox34">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>160px, 20px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Machine</Value>
+        </TextBox>
+        <TextBox Name="textBox37">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>344px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanLabor]</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+            <row>3</row>
+          </Excel>
+          <Location>344px, 36px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanMaterial]</Value>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <Excel>
+            <column>4</column>
+            <row>4</row>
+          </Excel>
+          <Location>344px, 52px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanTool]</Value>
+        </TextBox>
+        <TextBox Name="textBox41">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+            <row>5</row>
+          </Excel>
+          <Location>344px, 68px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanFixedOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox42">
+          <Excel>
+            <column>2</column>
+            <row>7</row>
+          </Excel>
+          <Location>160px, 100px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>Adjustment</Value>
+        </TextBox>
+        <TextBox Name="textBox45">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+            <row>6</row>
+          </Excel>
+          <Location>344px, 84px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanVariableOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox47">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>344px, 20px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.PlanMachine]</Value>
+        </TextBox>
+        <TextBox Name="textBox54">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+            <row>7</row>
+          </Excel>
+          <Location>544px, 100px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.WIPAdjustment]</Value>
+        </TextBox>
+        <TextBox Name="textBox55">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>544px, 20px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualMachine]</Value>
+        </TextBox>
+        <TextBox Name="textBox56">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+            <row>3</row>
+          </Excel>
+          <Location>544px, 36px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualMaterial]</Value>
+        </TextBox>
+        <TextBox Name="textBox57">
+          <Excel>
+            <column>5</column>
+            <row>4</row>
+          </Excel>
+          <Location>544px, 52px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualTool]</Value>
+        </TextBox>
+        <TextBox Name="textBox58">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+            <row>5</row>
+          </Excel>
+          <Location>544px, 68px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualFixedOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox59">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+            <row>6</row>
+          </Excel>
+          <Location>544px, 84px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualVariableOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox60">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>544px, 4px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.ActualLabor]</Value>
+        </TextBox>
+        <TextBox Name="textBox64">
+          <Excel>
+            <column>7</column>
+            <row>2</row>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 20px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceMachine]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <column>7</column>
+            <row>3</row>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 36px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceMaterial]</Value>
+        </TextBox>
+        <TextBox Name="textBox66">
+          <Excel>
+            <column>7</column>
+            <row>4</row>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 52px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceTool]</Value>
+        </TextBox>
+        <TextBox Name="textBox67">
+          <Excel>
+            <column>7</column>
+            <row>5</row>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 68px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceFixedOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox68">
+          <Excel>
+            <column>7</column>
+            <row>6</row>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 84px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceVariableOverhead]</Value>
+        </TextBox>
+        <TextBox Name="textBox69">
+          <Excel>
+            <column>7</column>
+            <width>2</width>
+          </Excel>
+          <Location>776px, 4px</Location>
+          <Size>150px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[AMProdTotal.VarianceLabor]</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>20px</Height>
+    </PageFooter>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.63492cm</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>492px, 4px</Location>
+          <Size>130px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>Mfg to Inventory</Value>
+        </TextBox>
+        <TextBox Name="textBox30">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>280px, 4px</Location>
+          <Size>56px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Subitem</Value>
+        </TextBox>
+        <TextBox Name="textBox31">
+          <Location>56px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Production Nbr</Value>
+        </TextBox>
+        <TextBox Name="textBox35">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>632px, 4px</Location>
+          <Size>130px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Heading 1</StyleName>
+          <Value>WIP Balance</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Location>860px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>End Date</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Location>776px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Start Date</Value>
+        </TextBox>
+        <TextBox Name="textBox53">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>0px, 4px</Location>
+          <Size>56px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Order Type</Value>
+        </TextBox>
+        <TextBox Name="textBox6">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Location>948px, 4px</Location>
+          <Size>72px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Status</Value>
+        </TextBox>
+        <TextBox Name="textBox7">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>160px, 4px</Location>
+          <Multiline>False</Multiline>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Inventory ID</Value>
+        </TextBox>
+        <TextBox Name="textBox8">
+          <CanShrink>True</CanShrink>
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>344px, 4px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>Warehouse</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Grouping>
+        <GroupExp>
+          <DataField>AMProdItem.OrderType</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>AMProdItem.ProdOrdID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <PrintEmpty>False</PrintEmpty>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <StyleName>GroupHighlight</StyleName>
+          <Items>
+            <TextBox Name="textBox10">
+              <Location>56px, 4px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>104px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.ProdOrdID]</Value>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>492px, 4px</Location>
+              <Size>130px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.WIPComp]</Value>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>160px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.InventoryID]</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>280px, 4px</Location>
+              <Size>56px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.SubItemID]</Value>
+            </TextBox>
+            <TextBox Name="textBox14">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>344px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.SiteID]</Value>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Location>776px, 4px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.StartDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Location>860px, 4px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.EndDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Location>948px, 4px</Location>
+              <Size>72px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=SWITCH(([AMProdItem.StatusID] = 'P'),'Planned',([AMProdItem.StatusID] = 'R'),'Released',#010;([AMProdItem.StatusID] = 'I'),'In Process',([AMProdItem.StatusID] = 'H'),'Hold',#010;([AMProdItem.StatusID] = 'M'),'Completed',([AMProdItem.StatusID] = 'C'),'Closed')#010;#010;#010;#010;</Value>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Location>632px, 4px</Location>
+              <Size>130px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.WIPBalance]</Value>
+            </TextBox>
+            <TextBox Name="textBox63">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>0px, 4px</Location>
+              <Size>56px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[AMProdItem.OrderType]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <StyleName>GroupL1Highlight</StyleName>
+          <Items>
+            <TextBox Name="textBox22">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>160px, 4px</Location>
+              <Size>36px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Cost</Value>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>344px, 4px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Planned</Value>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>548px, 4px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Actual</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Excel>
+                <column>7</column>
+                <width>2</width>
+              </Excel>
+              <Location>776px, 4px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Variance</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>40px</Height>
+          <Items>
+            <Line Name="line2">
+              <Location>120px, 1px</Location>
+              <Size>814px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox43">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>160px, 8px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>Total</Value>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <Excel>
+                <column>2</column>
+                <row>2</row>
+              </Excel>
+              <Location>160px, 24px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>Date</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>304px, 8px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[AMProdTotal.PlanTotal]</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>4</column>
+                <row>2</row>
+              </Excel>
+              <Location>304px, 24px</Location>
+              <Size>120px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[AMProdTotal.PlanCostDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox61">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>5</column>
+                <row>2</row>
+              </Excel>
+              <Format>d</Format>
+              <Location>448px, 24px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[AMProdTotal.LastModifiedDateTime]</Value>
+            </TextBox>
+            <TextBox Name="textBox62">
+              <CanShrink>True</CanShrink>
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>448px, 8px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[AMProdTotal.ActualFixedOverhead] + [AMProdTotal.ActualLabor] + [AMProdTotal.ActualMachine] + [AMProdTotal.ActualMaterial] + [AMProdTotal.ActualTool] + [AMProdTotal.ActualVariableOverhead] + [AMProdTotal.WIPAdjustment]</Value>
+            </TextBox>
+            <TextBox Name="textBox70">
+              <Excel>
+                <column>7</column>
+                <row>2</row>
+                <width>2</width>
+              </Excel>
+              <Location>776px, 24px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+            </TextBox>
+            <TextBox Name="textBox71">
+              <Excel>
+                <column>7</column>
+                <width>2</width>
+              </Excel>
+              <Location>776px, 8px</Location>
+              <Size>150px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[AMProdTotal.VarianceTotal]</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

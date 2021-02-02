@@ -1,0 +1,3009 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExportFileName>=Format( 'AR Statement MC {0} {1}', [@StatementCustomerID],[@StatementDate])</ExportFileName>
+  <Filters>
+    <FilterExp>
+      <DataField>Customer.PrintCuryStatements</DataField>
+      <Value>true</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>ARStatement.StatementDate</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>=@StatementDate</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@StatementDate</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>ARStatement.StatementCycleId</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@StatementCycleId</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@StatementCycleId</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>Customer.AcctCD</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@StatementCustomerId</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@StatementCustomerId</DataField>
+    </FilterExp>
+    <FilterExp>
+      <DataField>ARStatement.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@BranchID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@BranchID</DataField>
+    </FilterExp>
+  </Filters>
+  <Locale>=[ARStatement.LocaleName]</Locale>
+  <MailSettings>
+    <ActivitySource>Customer.NoteID</ActivitySource>
+    <Body>='Dear Customer,#010;#010;This is an automatic email to notify you that you have a'  + IIF(Max([ARStatement.PrevEmailedCnt]) &lt;&gt; 0,'n updated',' '+'new') + ' '+'Statement available on your account. You will find a copy of Statement attached to this email.#010;#010;If you have any questions, please don’t hesitate to contact us at email.#010;#010;Thank you for choosing'+' '+[CompanyContact.FullName]+'.'#010;</Body>
+    <Subject>='Statement from:'+' '+IIF([ARSetup.ConsolidatedStatement]=false,[BAccount.AcctName],[ConsolidatedBAccount.AcctName])  + IIF(Max([ARStatement.PrevEmailedCnt]) &lt;&gt; 0,' '+'(Updated Recently)','')</Subject>
+    <To>=IsNull([BillingContact.EMail],'')</To>
+  </MailSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>3</ColumnSpan>
+      <Name>OrganizationID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrganizationID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>3</ColumnSpan>
+      <Name>BranchID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.BranchID,OrganizationID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>3</ColumnSpan>
+      <Name>StatementDate</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Statement Date</Prompt>
+      <Type>DateTime</Type>
+      <ViewName>=Report.GetFieldSchema('ARStatement.StatementDate')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>3</ColumnSpan>
+      <Name>StatementCycleId</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Statement Cycle ID</Prompt>
+      <ViewName>=Report.GetFieldSchema('ARStatement.StatementCycleId')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>3</ColumnSpan>
+      <Name>StatementCustomerId</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Customer ID</Prompt>
+      <ViewName>=Report.GetFieldSchema('RowARInvoice.CustomerId')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>StatementMessage</Name>
+      <Prompt>Message to Customer</Prompt>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>O</DefaultValue>
+      <Name>TypeOpenItem</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>B</DefaultValue>
+      <Name>TypeBalanceForward</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <DefaultValue>1</DefaultValue>
+      <Name>BoolTrue</Name>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <ParamsColumns>3</ParamsColumns>
+  <Relations>
+    <ReportRelation>
+      <ChildName>ARStatementAdjust</ChildName>
+      <JoinType>Full</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CuryID</ChildField>
+          <ParentField>CuryID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>StatementDate</ChildField>
+          <ParentField>StatementDate</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjgDocType</ChildField>
+          <ParentField>DocType</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AdjgRefNbr</ChildField>
+          <ParentField>RefNbr</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatementDetailInfo</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>ARStatement</ChildName>
+      <JoinType>Right</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <OpenBraces>1</OpenBraces>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CuryID</ChildField>
+          <ParentField>CuryID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>StatementDate</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <Operator>Or</Operator>
+          <ParentField>StatementDate</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <OpenBraces>1</OpenBraces>
+          <ParentField>ARStatementDetailInfo.BranchID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CuryID</ChildField>
+          <ParentField>ARStatementDetailInfo.CuryID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>CustomerID</ChildField>
+          <ParentField>ARStatementDetailInfo.CustomerID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>StatementDate</ChildField>
+          <CloseBraces>1</CloseBraces>
+          <ParentField>ARStatementDetailInfo.StatementDate</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatementAdjust</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Branch</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>BranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatement</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>Branch</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>Customer</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>StatementCustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatement</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>CompanyAddress</ChildAlias>
+      <ChildName>Address</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>DefAddressID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>BillingAddress</ChildAlias>
+      <ChildName>Address</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>DefBillAddressID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>Customer</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>CompanyContact</ChildAlias>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>BillingContact</ChildAlias>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefBillContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>Customer</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>ARSetup</ChildName>
+      <JoinType>Cross</JoinType>
+      <ParentName>ARStatement</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>ConsolidatedBranch</ChildAlias>
+      <ChildName>Branch</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BranchID</ChildField>
+          <ParentField>StatementBranchID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARSetup</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>ConsolidatedBAccount</ChildAlias>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>ConsolidatedBranch</ParentAlias>
+      <ParentName>Branch</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>ConsolidatedAddress</ChildAlias>
+      <ChildName>Address</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>AddressID</ChildField>
+          <ParentField>DefAddressID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>ConsolidatedBAccount</ParentAlias>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>ConsolidatedContact</ChildAlias>
+      <ChildName>Contact</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ContactID</ChildField>
+          <ParentField>DefContactID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentAlias>ConsolidatedBAccount</ParentAlias>
+      <ParentName>BAccount</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>DocumentCustomer</ChildAlias>
+      <ChildName>Customer</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>CustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatement</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>AdjustedCustomer</ChildAlias>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>AdjdCustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatementAdjust</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildAlias>AdjustingCustomer</ChildAlias>
+      <ChildName>BAccount</ChildName>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>AdjgCustomerID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>ARStatementAdjust</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/61</SchemaUrl>
+  <StylesTemplate>TemplateFormExternal.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="ARStatement">
+      <Fields>
+        <ReportField Name="AgeBalance00">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AgeBalance01">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AgeBalance02">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AgeBalance03">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AgeBalance04">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AgeBucket01Description"></ReportField>
+        <ReportField Name="AgeBucket02Description"></ReportField>
+        <ReportField Name="AgeBucket03Description"></ReportField>
+        <ReportField Name="AgeBucket04Description"></ReportField>
+        <ReportField Name="AgeBucketCurrentDescription"></ReportField>
+        <ReportField Name="AgeDays00">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="AgeDays01">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="AgeDays02">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="AgeDays03">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="AgeDays04">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="BegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CuryAgeBalance00">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAgeBalance01">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAgeBalance02">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAgeBalance03">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAgeBalance04">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryBegBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryEndBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DontEmail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DontPrint">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Emailed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="EndBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="IsParentCustomerStatement">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LocaleName"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OnDemand">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrevEmailedCnt">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="PrevPrintedCnt">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="PrevStatementDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Printed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Processed">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StatementCustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StatementCycleId"></ReportField>
+        <ReportField Name="StatementDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StatementType"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.ARStatement</FullName>
+    </ReportTable>
+    <ReportTable Name="Branch">
+      <Fields>
+        <ReportField Name="AcctMapNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="Active">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseCuryID"></ReportField>
+        <ReportField Name="BranchCD"></ReportField>
+        <ReportField Name="BranchCD_Segment1"></ReportField>
+        <ReportField Name="BranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BranchOrOrganizationLogoNameReport"></ReportField>
+        <ReportField Name="CEmail"></ReportField>
+        <ReportField Name="CFSFiler">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ContactName"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CTelNumber"></ReportField>
+        <ReportField Name="ForeignEntity">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LedgerCD"></ReportField>
+        <ReportField Name="LedgerID"></ReportField>
+        <ReportField Name="LedgerID_description"></ReportField>
+        <ReportField Name="LedgerID_Ledger_descr"></ReportField>
+        <ReportField Name="LogoName"></ReportField>
+        <ReportField Name="LogoNameReport"></ReportField>
+        <ReportField Name="MainLogoName"></ReportField>
+        <ReportField Name="NameControl"></ReportField>
+        <ReportField Name="OrganizationID"></ReportField>
+        <ReportField Name="OrganizationID_description"></ReportField>
+        <ReportField Name="OrganizationID_Organization_organizationName"></ReportField>
+        <ReportField Name="OrganizationID_Segment1"></ReportField>
+        <ReportField Name="OrganizationLogoNameReport"></ReportField>
+        <ReportField Name="ParentBranchID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PhoneMask"></ReportField>
+        <ReportField Name="Reporting1099">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RoleName"></ReportField>
+        <ReportField Name="RoleName_description"></ReportField>
+        <ReportField Name="RoleName_Roles_descr"></ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TCC"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.GL.Branch</FullName>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ConsolidateToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatingBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsCustomerOrCombined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="Customer">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="AllowOverrideCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AllowOverrideRate">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoApplyPayments">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="BaseBillContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CCProcessingID"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="COGSAcctID"></ReportField>
+        <ReportField Name="COGSAcctID_Account_description"></ReportField>
+        <ReportField Name="COGSAcctID_description"></ReportField>
+        <ReportField Name="COGSSubID"></ReportField>
+        <ReportField Name="COGSSubID_description"></ReportField>
+        <ReportField Name="COGSSubID_Sub_description"></ReportField>
+        <ReportField Name="ConsolidateStatements">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidateToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatingBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreditDaysPastDue">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="CreditLimit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CreditRule"></ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryRateTypeID"></ReportField>
+        <ReportField Name="CustomerClassID"></ReportField>
+        <ReportField Name="CustomerClassID_CustomerClass_descr"></ReportField>
+        <ReportField Name="CustomerClassID_description"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefBillAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefBillContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="DefPaymentMethodID"></ReportField>
+        <ReportField Name="DefPaymentMethodID_description"></ReportField>
+        <ReportField Name="DefPaymentMethodID_PaymentMethod_descr"></ReportField>
+        <ReportField Name="DefPMInstanceID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefSOAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DiscTakenAcctID"></ReportField>
+        <ReportField Name="DiscTakenAcctID_Account_description"></ReportField>
+        <ReportField Name="DiscTakenAcctID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID"></ReportField>
+        <ReportField Name="DiscTakenSubID_description"></ReportField>
+        <ReportField Name="DiscTakenSubID_Sub_description"></ReportField>
+        <ReportField Name="FinChargeApply">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="GroupMask">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="Included">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsBillContSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsBillSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCustomerOrCombined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LanguageID"></ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LocaleName"></ReportField>
+        <ReportField Name="LocaleName_description"></ReportField>
+        <ReportField Name="LocaleName_Locale_translatedName"></ReportField>
+        <ReportField Name="MailDunningLetters">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="MailInvoices">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="PayToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrepaymentAcctID"></ReportField>
+        <ReportField Name="PrepaymentAcctID_Account_description"></ReportField>
+        <ReportField Name="PrepaymentAcctID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID"></ReportField>
+        <ReportField Name="PrepaymentSubID_description"></ReportField>
+        <ReportField Name="PrepaymentSubID_Sub_description"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="PrintCuryStatements">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintDunningLetters">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintInvoices">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintStatements">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Secured">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SendStatementByEmail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SharedCreditChild">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SharedCreditCustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="SharedCreditPolicy">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SmallBalanceAllow">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="SmallBalanceLimit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="StatementChild">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="StatementCustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="StatementCycleId"></ReportField>
+        <ReportField Name="StatementLastDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="StatementType"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="TermsID"></ReportField>
+        <ReportField Name="TermsID_description"></ReportField>
+        <ReportField Name="TermsID_Terms_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.Customer</FullName>
+    </ReportTable>
+    <ReportTable Name="ARStatementDetailInfo">
+      <Fields>
+        <ReportField Name="BalanceSign">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CuryDocBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryDocBalanceSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CuryInfoID">
+          <DataType>Int64</DataType>
+        </ReportField>
+        <ReportField Name="CuryInitDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryInitDocBalSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryOrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryOrigDocAmtSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DocBalance">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocBalanceSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DocDesc"></ReportField>
+        <ReportField Name="DocExtRefNbr"></ReportField>
+        <ReportField Name="DocStatementDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="DueDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="InitDocBal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="InitDocBalSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="InvoiceNbr"></ReportField>
+        <ReportField Name="IsMigratedRecord">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsOpen">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="OrigDocAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="OrigDocAmtSigned">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="Payable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="PrintDocType"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="StatementDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.ARStatementDetailInfo</FullName>
+    </ReportTable>
+    <ReportTable Name="Address">
+      <Fields>
+        <ReportField Name="AddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AddressLine1"></ReportField>
+        <ReportField Name="AddressLine2"></ReportField>
+        <ReportField Name="AddressLine3"></ReportField>
+        <ReportField Name="AddressType"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="City"></ReportField>
+        <ReportField Name="CountryID"></ReportField>
+        <ReportField Name="CountryID_Country_description"></ReportField>
+        <ReportField Name="CountryID_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="IsValidated">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="PostalCode"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="State"></ReportField>
+        <ReportField Name="State_description"></ReportField>
+        <ReportField Name="State_State_name"></ReportField>
+        <ReportField Name="TaxLocationCode"></ReportField>
+        <ReportField Name="TaxMunicipalCode"></ReportField>
+        <ReportField Name="TaxSchoolCode"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Address</FullName>
+    </ReportTable>
+    <ReportTable Name="Contact">
+      <Fields>
+        <ReportField Name="Address"></ReportField>
+        <ReportField Name="Anniversary">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="AssignDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccount_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="CampaignID"></ReportField>
+        <ReportField Name="CampaignID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignID_description"></ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRContactClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactPriority">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ContactType"></ReportField>
+        <ReportField Name="ConvertedBy"></ReportField>
+        <ReportField Name="ConvertedBy_description"></ReportField>
+        <ReportField Name="ConvertedBy_Users_fullName"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DateOfBirth">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DeletedDatabaseRecord">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DisplayName"></ReportField>
+        <ReportField Name="DuplicateFound">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DuplicateStatus"></ReportField>
+        <ReportField Name="EMail"></ReportField>
+        <ReportField Name="ExtRefNbr"></ReportField>
+        <ReportField Name="Fax"></ReportField>
+        <ReportField Name="FaxType"></ReportField>
+        <ReportField Name="FirstName"></ReportField>
+        <ReportField Name="FullName"></ReportField>
+        <ReportField Name="Gender"></ReportField>
+        <ReportField Name="GrammValidationDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Date">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="GrammValidationDateTime_Time">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="Img"></ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsAddressSameAsMain">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsConvertable">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastName"></ReportField>
+        <ReportField Name="LOCATION_Attributes"></ReportField>
+        <ReportField Name="MajorStatus">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="MaritalStatus"></ReportField>
+        <ReportField Name="Method"></ReportField>
+        <ReportField Name="MidName"></ReportField>
+        <ReportField Name="NoCall">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoEMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoFax">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMarketing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoMassMail">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="Phone1"></ReportField>
+        <ReportField Name="Phone1Type"></ReportField>
+        <ReportField Name="Phone2"></ReportField>
+        <ReportField Name="Phone2Type"></ReportField>
+        <ReportField Name="Phone3"></ReportField>
+        <ReportField Name="Phone3Type"></ReportField>
+        <ReportField Name="POSITION_Attributes"></ReportField>
+        <ReportField Name="PRODREQ_Attributes"></ReportField>
+        <ReportField Name="QualificationDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="ResetOwner">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Resolution"></ReportField>
+        <ReportField Name="RevisionID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Salutation"></ReportField>
+        <ReportField Name="Attention"></ReportField>
+        <ReportField Name="SearchSuggestion"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Source"></ReportField>
+        <ReportField Name="Spouse"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="Synchronize">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Title"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UserID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="WebSite"></ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.Contact</FullName>
+    </ReportTable>
+    <ReportTable Name="ARSetup">
+      <Fields>
+        <ReportField Name="AgeCredits">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AlwaysFromBaseCury">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoReleaseDunningFee">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoReleaseDunningLetter">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="AutoReleasePPDCreditMemo">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="BalanceWriteOff"></ReportField>
+        <ReportField Name="BatchNumberingID"></ReportField>
+        <ReportField Name="BatchNumberingID_description"></ReportField>
+        <ReportField Name="BatchNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="ConsolidatedDunningLetter">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatedStatement">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreditAdjNumberingID"></ReportField>
+        <ReportField Name="CreditAdjNumberingID_description"></ReportField>
+        <ReportField Name="CreditAdjNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="CreditCheckError">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="CreditWriteOff"></ReportField>
+        <ReportField Name="DebitAdjNumberingID"></ReportField>
+        <ReportField Name="DebitAdjNumberingID_description"></ReportField>
+        <ReportField Name="DebitAdjNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="DefaultRateTypeID"></ReportField>
+        <ReportField Name="DefaultTranDesc"></ReportField>
+        <ReportField Name="DefFinChargeFromCycle">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="DfltCustomerClassID"></ReportField>
+        <ReportField Name="DunningFeeInventoryID"></ReportField>
+        <ReportField Name="DunningFeeInventoryID_description"></ReportField>
+        <ReportField Name="DunningFeeInventoryID_InventoryItem_descr"></ReportField>
+        <ReportField Name="DunningLetterBranchID"></ReportField>
+        <ReportField Name="DunningLetterBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="DunningLetterBranchID_description"></ReportField>
+        <ReportField Name="DunningLetterProcessType">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="EmailBeforeRelease">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinChargeFirst">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="FinChargeNumberingID"></ReportField>
+        <ReportField Name="FinChargeNumberingID_description"></ReportField>
+        <ReportField Name="FinChargeNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="FinChargeOnCharge">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="HoldEntry">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IgnoreDiscountsIfPriceDefined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IncludeNonOverdueDunning">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IntegratedCCProcessing">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="InvoiceNumberingID"></ReportField>
+        <ReportField Name="InvoiceNumberingID_description"></ReportField>
+        <ReportField Name="InvoiceNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="InvoicePrecision"></ReportField>
+        <ReportField Name="InvoiceRounding"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LineDiscountTarget"></ReportField>
+        <ReportField Name="NumberOfMonths">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="PaymentNumberingID"></ReportField>
+        <ReportField Name="PaymentNumberingID_description"></ReportField>
+        <ReportField Name="PaymentNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="PerRetainHist">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="PerRetainTran">
+          <DataType>Int16</DataType>
+        </ReportField>
+        <ReportField Name="PPDCreditMemoDescr"></ReportField>
+        <ReportField Name="PriceWSNumberingID"></ReportField>
+        <ReportField Name="PriceWSNumberingID_description"></ReportField>
+        <ReportField Name="PriceWSNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="PrintBeforeRelease">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RequireControlTotal">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RequireExtRef">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RetentionType"></ReportField>
+        <ReportField Name="SalesSubMask"></ReportField>
+        <ReportField Name="SPCommnCalcType"></ReportField>
+        <ReportField Name="SPCommnPeriodType"></ReportField>
+        <ReportField Name="StatementBranchID"></ReportField>
+        <ReportField Name="StatementBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="StatementBranchID_description"></ReportField>
+        <ReportField Name="SummaryPost">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="TransactionPosting"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="UsageNumberingID"></ReportField>
+        <ReportField Name="UsageNumberingID_description"></ReportField>
+        <ReportField Name="UsageNumberingID_Numbering_descr"></ReportField>
+        <ReportField Name="WriteOffNumberingID"></ReportField>
+        <ReportField Name="WriteOffNumberingID_description"></ReportField>
+        <ReportField Name="WriteOffNumberingID_Numbering_descr"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.ARSetup</FullName>
+    </ReportTable>
+    <ReportTable Name="ARStatementAdjust">
+      <Fields>
+        <ReportField Name="AdjAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AdjdBranchID"></ReportField>
+        <ReportField Name="AdjdBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="AdjdBranchID_description"></ReportField>
+        <ReportField Name="AdjdCuryID"></ReportField>
+        <ReportField Name="AdjdCustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AdjdDocType"></ReportField>
+        <ReportField Name="AdjDiscAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AdjdRefNbr"></ReportField>
+        <ReportField Name="AdjgBranchID"></ReportField>
+        <ReportField Name="AdjgBranchID_Branch_acctName"></ReportField>
+        <ReportField Name="AdjgBranchID_description"></ReportField>
+        <ReportField Name="AdjgCuryID"></ReportField>
+        <ReportField Name="AdjgCustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AdjgDocType"></ReportField>
+        <ReportField Name="AdjgRefNbr"></ReportField>
+        <ReportField Name="AdjNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="AdjWOAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="CuryAdjdAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAdjdDiscAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAdjdWOAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAdjgAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAdjgDiscAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryAdjgWOAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="CuryID"></ReportField>
+        <ReportField Name="CustomerID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="IsIncomingApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsInterBranchApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsInterCurrencyApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsInterCustomerApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsInterStatementApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsOutgoingApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsSelfVoidingVoidApplication">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ReverseGainLoss">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="RGOLAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="SignBalanceDelta">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="StatementDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.AR.ARStatementAdjust</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="ARStatement.StatementCycleId"></ViewerField>
+    <ViewerField Name="ARStatement.StatementDate"></ViewerField>
+    <ViewerField Name="ARStatement.CustomerID"></ViewerField>
+    <ViewerField Name="ARStatement.CuryID"></ViewerField>
+    <ViewerField Name="Customer.PrintStatements"></ViewerField>
+    <ViewerField Name="Customer.SendStatementByEmail"></ViewerField>
+    <ViewerField Name="ARStatement.StatementCustomerID"></ViewerField>
+  </ViewerFields>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <Height>0.12cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>vCompanyName</Name>
+          <ValueExpr>=[BAccount.AcctName]</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>4px, 4px</GridSize>
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <Height>0px</Height>
+      <Visible>False</Visible>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="groupCustomer">
+      <Grouping>
+        <GroupExp>
+          <DataField>Customer.AcctCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_Customer">
+          <Height>0px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>hasChildren</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>groupCustomer</ResetGroup>
+              <ValueExpr>=Last( [DocumentCustomer.BAccountID] ) &lt;&gt; [Customer.BAccountID]</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>defaultAgeBucketCurrentDescription</Name>
+              <ValueExpr>='Current'</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>defaultAgeBucket01Description</Name>
+              <ValueExpr>= Format('{0}-{1} Days Past Due', ([ARStatement.AgeDays00] + 1), [ARStatement.AgeDays01])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>defaultAgeBucket02Description</Name>
+              <ValueExpr>= Format('{0}-{1} Days Past Due', ([ARStatement.AgeDays01] + 1), [ARStatement.AgeDays02])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>defaultAgeBucket03Description</Name>
+              <ValueExpr>= Format('{0}-{1} Days Past Due', ([ARStatement.AgeDays02] + 1), [ARStatement.AgeDays03])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>defaultAgeBucket04Description</Name>
+              <ValueExpr>= Format('Over {0} Days Past Due', [ARStatement.AgeDays03])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ageBucketCurrentDescription</Name>
+              <ValueExpr>= ISNULL([ARStatement.AgeBucketCurrentDescription], $defaultAgeBucketCurrentDescription)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ageBucket01Description</Name>
+              <ValueExpr>= ISNULL([ARStatement.AgeBucket01Description], $defaultAgeBucket01Description)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ageBucket02Description</Name>
+              <ValueExpr>= ISNULL([ARStatement.AgeBucket02Description], $defaultAgeBucket02Description)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ageBucket03Description</Name>
+              <ValueExpr>= ISNULL([ARStatement.AgeBucket03Description], $defaultAgeBucket03Description)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ageBucket04Description</Name>
+              <ValueExpr>= ISNULL([ARStatement.AgeBucket04Description], $defaultAgeBucket04Description)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>customerDetails</Name>
+              <ResetGroup>groupCustomer</ResetGroup>
+              <ValueExpr>= IIF([BillingContact.FullName] &lt;&gt; NULL, [BillingContact.FullName] + '{br}', '') #010;	+ IIF([BillingAddress.AddressLine1] &lt;&gt; NULL, [BillingAddress.AddressLine1] + '{br}','')#010;	+ IIF([BillingAddress.AddressLine2] &lt;&gt; NULL, [BillingAddress.AddressLine2] + '{br}','')#010;	+ IIF([BillingAddress.AddressLine3] &lt;&gt; NULL, [BillingAddress.AddressLine3] + '{br}','')#010;	+ IIF([BillingAddress.City] &lt;&gt; NULL, [BillingAddress.City] + ' ', '')#010;	+ IIF([BillingAddress.State] &lt;&gt; NULL, [BillingAddress.State] + ' ', '')#010;	+ IIF([BillingAddress.PostalCode] &lt;&gt; NULL, [BillingAddress.PostalCode],'')#010;	+ IIF(#010;		[BillingAddress.City] &lt;&gt; NULL #010;			OR [BillingAddress.State] &lt;&gt; NULL #010;			OR [BillingAddress.PostalCode] &lt;&gt; NULL,#010;		'{br}',#010;		'') #010;	+ IIF(#010;		[BillingAddress.CountryID] &lt;&gt; NULL, #010;		[BillingAddress.CountryID_Country_Description] + '{br}', #010;		'')#010;	+ IIF([BillingContact.EMail] &lt;&gt; NULL, [BillingContact.EMail] + '{br}', '')#010;	+ IIF([BillingContact.Attention] &lt;&gt; NULL, 'Attn: ' + [BillingContact.Attention], '')</ValueExpr>
+            </ReportVariable>
+          </Variables>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection_Customer">
+          <Height>0px</Height>
+          <PageBreak>After</PageBreak>
+          <PrintEmpty>False</PrintEmpty>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="groupCurrency">
+      <Grouping>
+        <GroupExp>
+          <DataField>ARStatement.CuryID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_Currency">
+          <GridSize>4px, 4px</GridSize>
+          <Height>10.79365cm</Height>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <ProcessOrder>Always</ProcessOrder>
+          <Style>
+            <BorderStyle>
+              <Bottom>None</Bottom>
+            </BorderStyle>
+          </Style>
+          <Variables>
+            <ReportVariable>
+              <Name>CuryBegBalanceConsolidated</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=IIf([ARStatement.StatementType]=[@TypeBalanceForward],[ARStatement.CuryBegBalance],0)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>someWerePrinted</Name>
+              <ValueExpr>=Max( [ARStatement.PrevPrintedCnt] ) &lt;&gt; 0</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>someWereEmailed</Name>
+              <ValueExpr>=Max( [ARStatement.PrevEmailedCnt] ) &lt;&gt; 0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=True,True,False)</VisibleExpr>
+          <Items>
+            <Panel Name="pane1l4">
+              <GridSize>8px, 8px</GridSize>
+              <Location>376px, 220px</Location>
+              <Size>240px, 48px</Size>
+              <Style>
+                <BorderColor>
+                  <Default>Black</Default>
+                </BorderColor>
+                <BorderStyle>
+                  <Default>Solid</Default>
+                </BorderStyle>
+                <BorderWidth>
+                  <Default>1px</Default>
+                </BorderWidth>
+              </Style>
+              <Visible>False</Visible>
+              <Items>
+                <TextBox Name="textBox211">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>4px, 20px</Location>
+                  <Size>112px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=IIf([ARStatement.StatementType]='B',[ARStatement.BegBalance],0)+ Sum( IIf([ARStatement.StatementType]='O',IIf([ARStatementDetailInfo.Payable],[ARStatementDetailInfo.DocBalance],-[ARStatementDetailInfo.DocBalance]),IIf([ARStatementDetailInfo.Payable],[ARStatementDetailInfo.OrigDocAmt],-[ARStatementDetailInfo.OrigDocAmt])))</Value>
+                </TextBox>
+                <TextBox Name="textBox219">
+                  <Location>0px, 0px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Due</Value>
+                </TextBox>
+                <TextBox Name="textBox221">
+                  <Location>120px, 0px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Enc</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <Panel Name="pane2l3">
+              <GridSize>8px, 8px</GridSize>
+              <Location>0px, 388px</Location>
+              <Size>696px, 16px</Size>
+              <Items>
+                <TextBox Name="textBox217">
+                  <Location>592px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Balance</Value>
+                </TextBox>
+                <TextBox Name="textBox230">
+                  <Location>488px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Due</Value>
+                  <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',True ,False)</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox239">
+                  <Location>144px, 0px</Location>
+                  <Size>76px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Doc. Type</Value>
+                </TextBox>
+                <TextBox Name="textBox240">
+                  <Location>0px, 0px</Location>
+                  <Size>72px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Date</Value>
+                </TextBox>
+                <TextBox Name="textBox251">
+                  <Location>220px, 0px</Location>
+                  <Size>92px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Ref. Nbr.</Value>
+                </TextBox>
+                <TextBox Name="textBox252">
+                  <Location>312px, 0px</Location>
+                  <Size>88px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Ext. Ref. Nbr.</Value>
+                </TextBox>
+                <TextBox Name="textBox253">
+                  <Location>400px, 0px</Location>
+                  <Size>88px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>=IIf([ARStatement.StatementType]='O','Orig.Amount','')</Value>
+                </TextBox>
+                <TextBox Name="textBox254">
+                  <Location>72px, 0px</Location>
+                  <Size>72px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Due Date</Value>
+                </TextBox>
+                <TextBox Name="textBox27">
+                  <Location>488px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount</Value>
+                  <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+                </TextBox>
+              </Items>
+            </Panel>
+            <Panel Name="panel08">
+              <GridSize>8px, 8px</GridSize>
+              <Location>0px, 264px</Location>
+              <Size>368px, 120px</Size>
+              <Items>
+                <TextBox Name="textBox215">
+                  <Location>0px, 18px</Location>
+                  <Size>352px, 96px</Size>
+                  <StyleName>RecepientCompany</StyleName>
+                  <Value>= $customerDetails</Value>
+                </TextBox>
+                <TextBox Name="textBox216">
+                  <Location>1px, 1px</Location>
+                  <Size>366px, 16px</Size>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>To:</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <PictureBox Name="pictureBox1">
+              <Location>8px, 0px</Location>
+              <MimeType>image/gif</MimeType>
+              <QRCodeSettings />
+              <Size>420px, 100px</Size>
+              <Source>Database</Source>
+              <Value>=[ConsolidatedBranch.BranchOrOrganizationLogoNameReport]</Value>
+            </PictureBox>
+            <TextBox Name="textBox18">
+              <CanGrow>True</CanGrow>
+              <Location>376px, 272px</Location>
+              <Size>200px, 16px</Size>
+              <Style>
+                <Color>Red</Color>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Note: statement was recently updated</Value>
+              <VisibleExpr>= ($someWerePrinted = True) or ($someWereEmailed = True)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox212">
+              <Location>0px, 152px</Location>
+              <Size>352px, 112px</Size>
+              <StyleName>SenderCompany</StyleName>
+              <Value>=IIf([ConsolidatedContact.FullName]&lt;&gt; null, [ConsolidatedContact.FullName] + '{br}','')#010;+IIf([ConsolidatedAddress.AddressLine1]&lt;&gt; null, [ConsolidatedAddress.AddressLine1] + '{br}', '')#010;+IIf([ConsolidatedAddress.AddressLine2]&lt;&gt;null,[ConsolidatedAddress.AddressLine2] + '{br}','')#010;+IIf([ConsolidatedAddress.AddressLine3]&lt;&gt; null,[ConsolidatedAddress.AddressLine3] + '{br}','')#010;+IIf([ConsolidatedAddress.City]&lt;&gt;null, [ConsolidatedAddress.City],'')#010;+IIf([ConsolidatedAddress.City]&lt;&gt;null And [ConsolidatedAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([ConsolidatedAddress.State]&lt;&gt;null,[ConsolidatedAddress.State],'')#010;+IIf([ConsolidatedAddress.PostalCode]&lt;&gt;null And [ConsolidatedAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([ConsolidatedAddress.PostalCode]&lt;&gt;null,[ConsolidatedAddress.PostalCode],'')#010;+'{br}'#010;+IIf([ConsolidatedContact.Phone1] &lt;&gt;null,'Phone: ' + [ConsolidatedContact.Phone1]+ '{br}','')#010;+IIf([ConsolidatedContact.Phone3] &lt;&gt;null,'Fax: ' + [ConsolidatedContact.Phone3]+ '{br}','')#010;+IIF([ConsolidatedBAccount.TaxRegistrationID] &lt;&gt; NULL, 'Tax Registration ID: ' + [ConsolidatedBAccount.TaxRegistrationID] + '{br}', '')#010;+IIF([ConsolidatedContact.EMail] &lt;&gt; NULL, 'Email: ' + [ConsolidatedContact.EMail] + '{br}', '')#010;+IIf([ConsolidatedContact.WebSite]&lt;&gt;null,'Web: '+[ConsolidatedContact.WebSite],'')</Value>
+            </TextBox>
+            <TextBox Name="textBox213">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>432px, 0px</Location>
+              <Size>264px, 40px</Size>
+              <Style>
+                <Font>
+                  <Size>21px</Size>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Document Name</StyleName>
+              <Value>='Customer Statement MC'</Value>
+            </TextBox>
+            <TextBox Name="textBox228">
+              <CanGrow>True</CanGrow>
+              <Location>560px, 44px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[Customer.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox233">
+              <Location>436px, 76px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Currency:</Value>
+            </TextBox>
+            <TextBox Name="textBox234">
+              <Location>560px, 76px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.CuryID]</Value>
+            </TextBox>
+            <TextBox Name="textBox235">
+              <Location>436px, 60px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Date:</Value>
+            </TextBox>
+            <TextBox Name="textBox236">
+              <Format>='d'</Format>
+              <Location>560px, 60px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.StatementDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox241">
+              <Location>436px, 44px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Customer ID:</Value>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Format>='d'</Format>
+              <Location>560px, 92px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.PrevStatementDate]</Value>
+              <VisibleExpr>=[ARStatement.PrevStatementDate] &lt;&gt; null and [ARStatement.StatementType]='B'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Location>436px, 92px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Last Statement Date:</Value>
+              <VisibleExpr>=[ARStatement.PrevStatementDate] &lt;&gt; null and [ARStatement.StatementType]='B'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox59">
+              <CanGrow>True</CanGrow>
+              <ExcelVisible>False</ExcelVisible>
+              <Location>0px, 384px</Location>
+              <Size>692px, 4px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=@StatementMessage</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection_CurrencyBalForward">
+          <GridSize>4px, 4px</GridSize>
+          <Height>0.5492cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <VisibleExpr>=IIf([ARStatement.StatementType]='B' And ([ARSetup.ConsolidatedStatement]=True), True,False)</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox514">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>568px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$CustBegBalance</Value>
+              <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox525">
+              <Location>4px, 4px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Balance Forward</Value>
+              <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection_Currency">
+          <PageBreak>After</PageBreak>
+          <PrintAtBottom>True</PrintAtBottom>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <ProcessOrder>Always</ProcessOrder>
+          <ResetPageNumber>True</ResetPageNumber>
+          <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=True,True,False)</VisibleExpr>
+          <Items>
+            <Panel Name="pane3l2">
+              <Location>0px, 16px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>696px, 72px</Size>
+              <VisibleExpr>=([PageIndex]=[PageCount])</VisibleExpr>
+              <Items>
+                <Line Name="line303">
+                  <Location>0px, 40px</Location>
+                  <Size>694px, 2px</Size>
+                </Line>
+                <TextBox Name="textBox301">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>0px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance00</Value>
+                </TextBox>
+                <TextBox Name="textBox302">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>112px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance01</Value>
+                </TextBox>
+                <TextBox Name="textBox303">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>224px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance02</Value>
+                </TextBox>
+                <TextBox Name="textBox304">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>336px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance03</Value>
+                </TextBox>
+                <TextBox Name="textBox305">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>448px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance04</Value>
+                </TextBox>
+                <TextBox Name="textBox306">
+                  <Location>112px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket01Description</Value>
+                </TextBox>
+                <TextBox Name="textBox307">
+                  <Location>568px, 8px</Location>
+                  <Size>122px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Amount Due</Value>
+                </TextBox>
+                <TextBox Name="textBox308">
+                  <Location>224px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket02Description</Value>
+                </TextBox>
+                <TextBox Name="textBox309">
+                  <Location>336px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket03Description</Value>
+                </TextBox>
+                <TextBox Name="textBox310">
+                  <Location>448px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket04Description</Value>
+                </TextBox>
+                <TextBox Name="textBox329">
+                  <Location>0px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucketCurrentDescription</Value>
+                </TextBox>
+                <TextBox Name="textBox332">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>568px, 48px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=$CustAgeBalance00+$CustAgeBalance01+$CustAgeBalance02+$CustAgeBalance03+$CustAgeBalance04</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <TextBox Name="textBox343">
+              <Location>576px, 96px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PageOf]</Value>
+            </TextBox>
+            <TextBox Name="textBox344">
+              <Location>280px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>160px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Continued...</Value>
+              <VisibleExpr>=([PageIndex]&lt;&gt;[PageCount])</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="groupBranch">
+      <Grouping>
+        <GroupExp>
+          <DataField>Branch.BranchCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_Branch">
+          <GridSize>4px, 4px</GridSize>
+          <Height>10.79365cm</Height>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <Style>
+            <BorderStyle>
+              <Bottom>None</Bottom>
+            </BorderStyle>
+          </Style>
+          <Variables>
+            <ReportVariable>
+              <Name>CuryBegBalance</Name>
+              <ResetGroup>groupBranch</ResetGroup>
+              <ValueExpr>=IIf([ARStatement.StatementType]=[@TypeBalanceForward],[ARStatement.CuryBegBalance],0)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>someWerePrinted</Name>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>someWereEmailed</Name>
+              <ValueExpr>=Max( [ARStatement.PrevEmailedCnt] ) &lt;&gt; 0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=False,True,False)</VisibleExpr>
+          <Items>
+            <Panel Name="panel1">
+              <GridSize>8px, 8px</GridSize>
+              <Location>0px, 264px</Location>
+              <Size>368px, 120px</Size>
+              <Items>
+                <TextBox Name="textBox15">
+                  <Location>0px, 18px</Location>
+                  <Size>352px, 96px</Size>
+                  <StyleName>RecepientCompany</StyleName>
+                  <Value>= $customerDetails</Value>
+                </TextBox>
+                <TextBox Name="textBox16">
+                  <Location>1px, 1px</Location>
+                  <Size>366px, 16px</Size>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>To:</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <Panel Name="panel3">
+              <GridSize>8px, 8px</GridSize>
+              <Location>0px, 388px</Location>
+              <Size>696px, 16px</Size>
+              <Items>
+                <TextBox Name="textBox17">
+                  <Location>592px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Balance</Value>
+                </TextBox>
+                <TextBox Name="textBox24">
+                  <Location>488px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount</Value>
+                  <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox26">
+                  <Location>488px, 0px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Due</Value>
+                  <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',True ,False)</VisibleExpr>
+                </TextBox>
+                <TextBox Name="textBox39">
+                  <Location>144px, 0px</Location>
+                  <Size>76px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Doc. Type</Value>
+                </TextBox>
+                <TextBox Name="textBox40">
+                  <Location>0px, 0px</Location>
+                  <Size>72px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Date</Value>
+                </TextBox>
+                <TextBox Name="textBox51">
+                  <Location>220px, 0px</Location>
+                  <Size>92px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Ref. Nbr.</Value>
+                </TextBox>
+                <TextBox Name="textBox52">
+                  <Location>312px, 0px</Location>
+                  <Size>88px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Ext. Ref. Nbr.</Value>
+                </TextBox>
+                <TextBox Name="textBox53">
+                  <Location>400px, 0px</Location>
+                  <Size>88px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>=IIf([ARStatement.StatementType]='O','Orig.Amount','')</Value>
+                </TextBox>
+                <TextBox Name="textBox54">
+                  <Location>72px, 0px</Location>
+                  <Size>72px, 16px</Size>
+                  <Style>
+                    <TextAlign>Left</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Due Date</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <Panel Name="panel4">
+              <GridSize>8px, 8px</GridSize>
+              <Location>376px, 220px</Location>
+              <Size>240px, 48px</Size>
+              <Style>
+                <BorderColor>
+                  <Default>Black</Default>
+                </BorderColor>
+                <BorderStyle>
+                  <Default>Solid</Default>
+                </BorderStyle>
+                <BorderWidth>
+                  <Default>1px</Default>
+                </BorderWidth>
+              </Style>
+              <Visible>False</Visible>
+              <Items>
+                <TextBox Name="textBox11">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>4px, 20px</Location>
+                  <Size>112px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=IIf([ARStatement.StatementType]='B',[ARStatement.BegBalance],0)#010;+ Sum( IIf([ARStatement.StatementType]='O',#010;			IIf([ARStatementDetailInfo.Payable],[ARStatementDetailInfo.DocBalance],-[ARStatementDetailInfo.DocBalance]),#010;			IIf([ARStatementDetailInfo.Payable], 1, -1) #010;			* #010;			IIF([ARStatementDetailInfo.IsMigratedRecord] And [ARStatement.StatementType]='B'#010;				,[ARStatementDetailInfo.InitDocBalSigned]#010;				,[ARStatementDetailInfo.OrigDocAmtSigned]#010;			)#010;		)#010;)</Value>
+                </TextBox>
+                <TextBox Name="textBox19">
+                  <Location>0px, 0px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Due</Value>
+                </TextBox>
+                <TextBox Name="textBox21">
+                  <Location>120px, 0px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading1BCColored</StyleName>
+                  <Value>Amount Enc</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <PictureBox Name="pictureBox2">
+              <Location>8px, 0px</Location>
+              <MimeType>image/gif</MimeType>
+              <QRCodeSettings />
+              <Size>420px, 100px</Size>
+              <Source>Database</Source>
+              <Value>=[Branch.BranchOrOrganizationLogoNameReport]</Value>
+            </PictureBox>
+            <TextBox Name="textBox12">
+              <Location>0px, 152px</Location>
+              <Size>352px, 112px</Size>
+              <StyleName>SenderCompany</StyleName>
+              <Value>=IIf([CompanyContact.FullName]&lt;&gt; null, [CompanyContact.FullName] + '{br}','')#010;+IIf([CompanyAddress.AddressLine1]&lt;&gt; null, [CompanyAddress.AddressLine1] + '{br}', '')#010;+IIf([CompanyAddress.AddressLine2]&lt;&gt;null,[CompanyAddress.AddressLine2] + '{br}','')#010;+IIf([CompanyAddress.AddressLine3]&lt;&gt; null,[CompanyAddress.AddressLine3] + '{br}','')#010;+IIf([CompanyAddress.City]&lt;&gt;null, [CompanyAddress.City],'')#010;+IIf([CompanyAddress.City]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', '')#010;+IIf([CompanyAddress.State]&lt;&gt;null,[CompanyAddress.State],'')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null And [CompanyAddress.State]&lt;&gt;null, ', ', ' ')#010;+IIf([CompanyAddress.PostalCode]&lt;&gt;null,[CompanyAddress.PostalCode],'')#010;+'{br}'#010;+IIf([CompanyContact.Phone1] &lt;&gt;null,'Phone: ' + [CompanyContact.Phone1]+ '{br}','')#010;+IIf([CompanyContact.Phone3] &lt;&gt;null,'Fax: ' + [CompanyContact.Phone3]+ '{br}','')#010;+IIF([BAccount.TaxRegistrationID] &lt;&gt; NULL, 'Tax Registration ID: ' + [BAccount.TaxRegistrationID] + '{br}', '')#010;+IIF([CompanyContact.EMail] &lt;&gt; NULL, 'Email: ' + [CompanyContact.EMail] + '{br}', '')#010;+IIf([CompanyContact.WebSite]&lt;&gt;null,'Web: '+[CompanyContact.WebSite],'')</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <CanGrow>True</CanGrow>
+              <CanShrink>True</CanShrink>
+              <Location>432px, 0px</Location>
+              <Size>264px, 40px</Size>
+              <Style>
+                <Font>
+                  <Size>21px</Size>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Document Name</StyleName>
+              <Value>='Customer Statement MC'</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <CanGrow>True</CanGrow>
+              <Location>376px, 272px</Location>
+              <Size>200px, 16px</Size>
+              <Style>
+                <Color>Red</Color>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Note: statement was recently updated</Value>
+              <VisibleExpr>= ($someWerePrinted = True) OR ($someWereEmailed = True)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <CanGrow>True</CanGrow>
+              <Location>564px, 44px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[Customer.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox33">
+              <Location>436px, 76px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Currency:</Value>
+            </TextBox>
+            <TextBox Name="textBox34">
+              <Location>564px, 76px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.CuryID]</Value>
+            </TextBox>
+            <TextBox Name="textBox35">
+              <Location>436px, 60px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Date:</Value>
+            </TextBox>
+            <TextBox Name="textBox36">
+              <Format>='d'</Format>
+              <Location>564px, 60px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.StatementDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Format>='d'</Format>
+              <Location>564px, 92px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Report Params</StyleName>
+              <Value>=[ARStatement.PrevStatementDate]</Value>
+              <VisibleExpr>=[ARStatement.PrevStatementDate] &lt;&gt; null and [ARStatement.StatementType]='B'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox41">
+              <Location>436px, 44px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Customer ID:</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Location>436px, 92px</Location>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Last Statement Date:</Value>
+              <VisibleExpr>=[ARStatement.PrevStatementDate] &lt;&gt; null and [ARStatement.StatementType]='B'</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox58">
+              <CanGrow>True</CanGrow>
+              <ExcelVisible>False</ExcelVisible>
+              <Location>0px, 384px</Location>
+              <Size>692px, 4px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Middle</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=@StatementMessage</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection_CurrencyBranchBalForward">
+          <GridSize>4px, 4px</GridSize>
+          <Height>0.5492cm</Height>
+          <VisibleExpr>=IIf([ARStatement.StatementType]='B' And ([ARSetup.ConsolidatedStatement]=False), True,False)</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox14">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>568px, 4px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatement.CuryBegBalance]</Value>
+              <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>4px, 4px</Location>
+              <Size>128px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Balance Forward</Value>
+              <VisibleExpr>=IIf([ARStatement.StatementType]&lt;&gt;'B',False,True)</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection_Branch">
+          <PageBreak>After</PageBreak>
+          <PrintAtBottom>True</PrintAtBottom>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <ProcessOrder>Always</ProcessOrder>
+          <ResetPageNumber>True</ResetPageNumber>
+          <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=False,True,False)</VisibleExpr>
+          <Items>
+            <Panel Name="panel2">
+              <Location>0px, 16px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>696px, 72px</Size>
+              <VisibleExpr>=([PageIndex]=[PageCount])</VisibleExpr>
+              <Items>
+                <Line Name="line3">
+                  <Location>0px, 40px</Location>
+                  <Size>694px, 2px</Size>
+                </Line>
+                <TextBox Name="textBox1">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>0px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance00]</Value>
+                </TextBox>
+                <TextBox Name="textBox10">
+                  <Location>448px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket04Description</Value>
+                </TextBox>
+                <TextBox Name="textBox2">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>112px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance01]</Value>
+                </TextBox>
+                <TextBox Name="textBox29">
+                  <Location>0px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucketCurrentDescription</Value>
+                </TextBox>
+                <TextBox Name="textBox3">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>224px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance02]</Value>
+                </TextBox>
+                <TextBox Name="textBox32">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>568px, 48px</Location>
+                  <Size>120px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance00] + [ARStatement.CuryAgeBalance01]+ [ARStatement.CuryAgeBalance02]+[ARStatement.CuryAgeBalance03]+[ARStatement.CuryAgeBalance04]</Value>
+                </TextBox>
+                <TextBox Name="textBox4">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>336px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance03]</Value>
+                </TextBox>
+                <TextBox Name="textBox5">
+                  <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+                  <Location>448px, 48px</Location>
+                  <Size>104px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Normal</StyleName>
+                  <Value>=[ARStatement.CuryAgeBalance04]</Value>
+                </TextBox>
+                <TextBox Name="textBox6">
+                  <Location>112px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket01Description</Value>
+                </TextBox>
+                <TextBox Name="textBox7">
+                  <Location>568px, 8px</Location>
+                  <Size>122px, 16px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>Amount Due</Value>
+                </TextBox>
+                <TextBox Name="textBox8">
+                  <Location>224px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket02Description</Value>
+                </TextBox>
+                <TextBox Name="textBox9">
+                  <Location>336px, 8px</Location>
+                  <Size>104px, 32px</Size>
+                  <Style>
+                    <TextAlign>Right</TextAlign>
+                    <VerticalAlign>Top</VerticalAlign>
+                  </Style>
+                  <StyleName>Heading 1</StyleName>
+                  <Value>=$ageBucket03Description</Value>
+                </TextBox>
+              </Items>
+            </Panel>
+            <TextBox Name="textBox43">
+              <Location>576px, 96px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>120px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[PageOf]</Value>
+            </TextBox>
+            <TextBox Name="textBox44">
+              <Location>280px, 0px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>160px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Continued...</Value>
+              <VisibleExpr>=([PageIndex]&lt;&gt;[PageCount])</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="groupDocCustomer">
+      <Grouping>
+        <GroupExp>
+          <DataField>DocumentCustomer.ParentBAccountID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>DocumentCustomer.AcctCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_DocumentCustomer">
+          <GridSize>4px, 4px</GridSize>
+          <Height>20px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>CustBegBalance</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=IIf([ARStatement.StatementType]=[@TypeBalanceForward],IIf([ARStatement.CuryBegBalance]&lt;&gt;null,[ARStatement.CuryBegBalance],0),0) + $CustBegBalance </ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustAgeBalance00</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=[ARStatement.CuryAgeBalance00]+$CustAgeBalance00</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustAgeBalance01</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=[ARStatement.CuryAgeBalance01]+$CustAgeBalance01</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustAgeBalance02</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=[ARStatement.CuryAgeBalance02]+$CustAgeBalance02</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustAgeBalance03</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=[ARStatement.CuryAgeBalance03]+$CustAgeBalance03</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>CustAgeBalance04</Name>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>=[ARStatement.CuryAgeBalance04]+$CustAgeBalance04</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>=[ARStatementDetailInfo.RefNbr]&lt;&gt;null  AND $hasChildren&lt;&gt;0</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox50">
+              <Location>0px, 4px</Location>
+              <Size>200px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[DocumentCustomer.AcctName]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection_DocumentCustomer">
+          <GridSize>4px, 4px</GridSize>
+          <Height>36px</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <VisibleExpr>=[ARStatementDetailInfo.RefNbr]&lt;&gt;null AND [Customer.StatementType]='O' AND $hasChildren&lt;&gt;0</VisibleExpr>
+          <Items>
+            <Line Name="line1">
+              <LineColor>Navy</LineColor>
+              <Location>404px, 1px</Location>
+              <Size>294px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox55">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>592px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$ConsolLineBalance + $CustBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=True,True,False)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox56">
+              <Format>=[ARStatementDetailInfo.OrigDocAmt.Format]</Format>
+              <Location>592px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$LineBalance+$CuryBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=false,True,False)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox57">
+              <Location>404px, 4px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Customer Total:</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="groupDocument">
+      <Description>Grouping by Document</Description>
+      <Grouping>
+        <GroupExp>
+          <DataField>=[ARStatementDetailInfo.StatementDate]</DataField>
+          <SortOrder>Descending</SortOrder>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[ARStatementDetailInfo.DocDate]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[ARStatementDetailInfo.RefNbr]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[ARStatementDetailInfo.DocType]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_DocumentBalances">
+          <GridSize>4px, 4px</GridSize>
+          <Height>0.53492cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Variables>
+            <ReportVariable>
+              <Name>LineAmount</Name>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <ValueExpr>= IIF([ARStatement.StatementType] = [@TypeOpenItem],#010;		[ARStatementDetailInfo.CuryDocBalanceSigned],#010;		IIF([ARStatementDetailInfo.IsMigratedRecord], #010;				[ARStatementDetailInfo.CuryInitDocBalSigned],	#010;				[ARStatementDetailInfo.CuryOrigDocAmtSigned]))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>LineBalance</Name>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <ResetGroup>groupDocCustomer</ResetGroup>
+              <ValueExpr>= $LineBalance + $LineAmount</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ConsolLineBalance</Name>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <ResetGroup>groupCurrency</ResetGroup>
+              <ValueExpr>= $ConsolLineBalance + $LineAmount</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>= [ARStatementDetailInfo.RefNbr] &lt;&gt; NULL#010;	AND (#010;		[ARStatement.StatementType] &lt;&gt; [@TypeOpenItem]#010;		OR [ARStatementDetailInfo.CuryDocBalanceSigned] &lt;&gt; 0)</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox22">
+              <CanGrow>True</CanGrow>
+              <Location>312px, 4px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatementDetailInfo.DocExtRefNbr]#010;</Value>
+              <VisibleExpr>=[ARStatementDetailInfo.RefNbr]&lt;&gt;Null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Location>0px, 4px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatementDetailInfo.DocDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox38">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>592px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$LineBalance + $CuryBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=false,True,False)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Location>72px, 4px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatementDetailInfo.DueDate]</Value>
+            </TextBox>
+            <TextBox Name="textBox438">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>592px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$ConsolLineBalance + $CustBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=True,True,False)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox46">
+              <Location>220px, 4px</Location>
+              <Size>92px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatementDetailInfo.RefNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox47">
+              <CanGrow>True</CanGrow>
+              <Location>144px, 4px</Location>
+              <Size>76px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= IIF(#010;	[ARStatementDetailInfo.PrintDocType] &lt;&gt; NULL,#010;	Report.ExtToUI('ARStatementDetailInfo.PrintDocType', [ARStatementDetailInfo.PrintDocType]),#010;	Report.ExtToUI('ARStatementDetailInfo.DocType', [ARStatementDetailInfo.DocType]))</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Location>400px, 4px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=IIf([ARStatement.StatementType]=[@TypeOpenItem], [ARStatementDetailInfo.CuryOrigDocAmtSigned],null)#010;</Value>
+            </TextBox>
+            <TextBox Name="txtDocAmt">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>488px, 4px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$LineAmount</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection_DocumentDescription">
+          <Height>0.48328cm</Height>
+          <VisibleExpr>= [ARStatementDetailInfo.DocDesc] &lt;&gt; NULL#010;	AND (#010;		[ARStatement.StatementType] &lt;&gt; [@TypeOpenItem]#010;		OR [ARStatementDetailInfo.CuryDocBalanceSigned] &lt;&gt; 0)</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox45">
+              <Location>72px, 0px</Location>
+              <Size>504px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[ARStatementDetailInfo.DocDesc]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="groupAdjustedDocument">
+      <Description>Grouping by Adjusted Document</Description>
+      <Grouping>
+        <GroupExp>
+          <DataField>=[ARStatementAdjust.AdjdRefNbr]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[ARStatementAdjust.AdjdDocType]</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection_Application">
+          <GridSize>4px, 4px</GridSize>
+          <Height>0.48328cm</Height>
+          <ProcessOrder>Always</ProcessOrder>
+          <Variables>
+            <ReportVariable>
+              <Name>isOrphanApplication</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>=[ARStatementDetailInfo.RefNbr] = NULL</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>foreignBranchDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= IIF(#010;	[ARStatementAdjust.IsIncomingApplication],#010;	[ARStatementAdjust.AdjgBranchID],#010;	[ARStatementAdjust.AdjdBranchID])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>foreignCustomerDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= IIF(#010;	[ARStatementAdjust.IsInterCustomerApplication],#010;	[AdjustingCustomer.AcctCD],#010;	[AdjustedCustomer.AcctCD])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalGainLoss</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= 0 /* because the value is already contained in CuryAdjdAmt */</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalWriteOff</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= IIF(#010;	[ARStatementAdjust.IsIncomingApplication],#010;	Sum([ARStatementAdjust.CuryAdjdWOAmt]),#010;	Sum([ARStatementAdjust.CuryAdjgWOAmt]))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalCashDiscount</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= IIF(#010;	[ARStatementAdjust.IsIncomingApplication],#010;	Sum([ARStatementAdjust.CuryAdjdDiscAmt]),#010;	Sum([ARStatementAdjust.CuryAdjgDiscAmt]))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalApplication</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= IIF(#010;	[ARStatementAdjust.IsIncomingApplication],#010;	Sum([ARStatementAdjust.CuryAdjdAmt]),#010;	Sum([ARStatementAdjust.CuryAdjgAmt]))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalBalanceDelta</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= [ARStatementAdjust.SignBalanceDelta] * (#010;	IIF(#010;		[ARStatementAdjust.IsIncomingApplication],#010;		$totalGainLoss + $totalWriteOff + $totalCashDiscount,#010;		0)#010;	+ IIF(#010;		([ARStatementAdjust.IsInterStatementApplication] = True)#010;			OR ([ARStatementAdjust.IsSelfVoidingVoidApplication] = True), #010;		$totalApplication, #010;		0))</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>amountDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= Payments.GetAmountDescriptionForStatementApplication(#010;	CDec($totalWriteOff), #010;	CDec($totalCashDiscount), #010;	CDec($totalGainLoss), #010;	[ARStatement.LocaleName])</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>adjustingDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= Report.ExtToUI('ARStatementAdjust.AdjgDocType', [ARStatementAdjust.AdjgDocType])#010;	+ ' ' #010;	+ [ARStatementAdjust.AdjgRefNbr]#010;	+ IIF(#010;		[ARStatementAdjust.IsInterCurrencyApplication]#010;			AND [ARStatementAdjust.AdjgCuryID] &lt;&gt; [ARStatement.CuryID], #010;		' (' + [ARStatementAdjust.AdjgCuryID] + ')',#010;		'')#010;	+ IIF(#010;		[ARStatementAdjust.IsInterCustomerApplication]#010;			AND [ARStatementAdjust.AdjgCustomerID] &lt;&gt; [ARStatement.CustomerID],#010;		' (' + [AdjustingCustomer.AcctCD] + ')',#010;		'')#010;	+ IIF(#010;		[ARStatementAdjust.IsInterBranchApplication]#010;			AND [ARStatementAdjust.AdjgBranchID] &lt;&gt; [ARStatement.BranchID],#010;		' by ' + [ARStatementAdjust.AdjgBranchID],#010;		'')</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>adjustedDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= Report.ExtToUI('ARStatementAdjust.AdjdDocType', [ARStatementAdjust.AdjdDocType])#010;	+ ' ' #010;	+ [ARStatementAdjust.AdjdRefNbr]#010;	+ IIF(#010;		[ARStatementAdjust.IsInterCurrencyApplication]#010;			AND [ARStatementAdjust.AdjdCuryID] &lt;&gt; [ARStatement.CuryID], #010;		' (' + [ARStatementAdjust.AdjdCuryID] + ')',#010;		'')#010;	+ IIF(#010;		[ARStatementAdjust.IsInterCustomerApplication]#010;			AND [ARStatementAdjust.AdjdCustomerID] &lt;&gt; [ARStatement.CustomerID],#010;		' (' + [AdjustedCustomer.AcctCD] + ')',#010;		'')#010;	+ IIF(#010;		[ARStatementAdjust.IsInterBranchApplication]#010;			AND [ARStatementAdjust.AdjdBranchID] &lt;&gt; [ARStatement.BranchID],#010;		' by ' + [ARStatementAdjust.AdjdBranchID],#010;		'')</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>applicationDescription</Name>
+              <ResetGroup>groupAdjustedDocument</ResetGroup>
+              <ValueExpr>= ''#010;	+ IIF(#010;		NOT([ARStatementAdjust.IsInterStatementApplication]), #010;		$amountDescription + ' ',#010;		'')#010;	+ IIF(#010;		([ARStatementAdjust.IsInterStatementApplication] = True)#010;			OR ([ARStatementAdjust.IsSelfVoidingVoidApplication] = True)#010;			OR $isOrphanApplication, #010;		$adjustingDescription#010;			+ ' '#010;			+ Payments.AppliedToLocalized([ARStatement.LocaleName])#010;			+ ' ', #010;		'')#010;	+ $adjustedDescription</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>LineBalance</Name>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <ValueExpr>= $LineBalance + $totalBalanceDelta</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>ConsolLineBalance</Name>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <ValueExpr>= $ConsolLineBalance + $totalBalanceDelta</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <VisibleExpr>= [ARStatementAdjust.AdjgRefNbr] &lt;&gt; NULL #010;	AND $totalBalanceDelta &lt;&gt; 0</VisibleExpr>
+          <Items>
+            <TextBox Name="textBox58_a75">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>592px, 0px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$LineBalance + $CuryBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=false,True,False)</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox59_9a9">
+              <CanGrow>True</CanGrow>
+              <Location>72px, 0px</Location>
+              <Size>416px, 16px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$applicationDescription</Value>
+            </TextBox>
+            <TextBox Name="textBox60">
+              <Format>=[ARStatementDetailInfo.OrigDocAmt.Format]</Format>
+              <Location>488px, 0px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+                <VerticalAlign>Top</VerticalAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$totalBalanceDelta</Value>
+            </TextBox>
+            <TextBox Name="textBox61">
+              <Format>=[ARStatementDetailInfo.CuryOrigDocAmt.Format]</Format>
+              <Location>592px, 0px</Location>
+              <ProcessOrder>WhilePrint</ProcessOrder>
+              <Size>104px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$ConsolLineBalance + $CustBegBalance</Value>
+              <VisibleExpr>=IIF([ARSetup.ConsolidatedStatement]=True,True,False)</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection2">
+          <Height>0px</Height>
+          <Visible>False</Visible>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

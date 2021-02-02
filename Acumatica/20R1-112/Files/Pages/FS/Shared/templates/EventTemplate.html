@@ -1,0 +1,119 @@
+﻿<textarea id="bodyTemplate-appointment" class="x-hidden-display" > 
+        <div style="text-align: center;" style="font-weight: normal">
+            <tpl if="WarningCounter&amp;gt;0">
+                <div class="x-fa fa-exclamation-triangle" style="float: left;" data-qtip="
+                <tpl if="WarningResourceAvailableFlag">
+                    - {Messages.WARNING_RESOURCE_AVAILABLE} <br>
+                </tpl>
+                <tpl if="WarningAppointmentValidFlag">
+                    - {Messages.WARNING_APPOINTMENT_OVERLAPPING} <br>
+                </tpl>
+                <tpl if="WarningAppointmentValidatedByDispatcherFlag">
+                    - {Messages.WARNING_APPOINTMENT_VALIDATED_BY_DISPATCHER} <br>
+                </tpl>
+                "></div>
+            </tpl>
+            
+            <tpl if="Appointment.EmployeeCount&amp;gt;1">
+                <div class="x-fa fa-users" style="float: left;" data-qtip = "{TotalEmployeesMessage}"></div>
+            </tpl>  
+
+            <tpl if="Appointment.CanDeleteAppointment && !Ext.isEmpty(StatusName) && StatusName!='Closed' && StatusName!='Canceled' && StatusName!='Completed'">
+                <div class="x-fa fa-trash" style="float: right;"></div>
+            </tpl>
+
+            <span id="appointmentRefNbr" class="sch-event-header link-appointment" >
+                    {Appointment.RefNbr}
+            </span>
+        </div>
+        
+        <tpl for="Preferences">
+            
+            <!--Service Order Reference Number--> 
+            <tpl if="FieldName=='SORefNbr' && parent.Appointment.SORefNbr!=''">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-file-text-o" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_SERVICE_ORDER}: {parent.Appointment.SORefNbr}"></div>
+                    <span id="serviceOrderRefNbr" class="link-serviceOrder">{parent.Appointment.SORefNbr:ellipsis(25, true)}</span>
+                </div>   
+            </tpl>
+        
+            <!--Customer Contact--> 
+            <tpl if="FieldName=='Customer' && parent.Appointment.ContactName!=''">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-user" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CUSTOMER}: {parent.Appointment.ContactName}"></div>
+                    <span>{parent.Appointment.ContactName:ellipsis(25, true)}</span>
+                </div>
+            </tpl>
+        
+            <!--Contact Phone-->
+            <tpl if="FieldName=='Contact' && !Ext.isEmpty(parent.Appointment.ContactPhone)">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-phone" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CONTACT}: {parent.Appointment.ContactPhone}"></div>
+                    <span>{parent.Appointment.ContactPhone:ellipsis(25, true)}</span>
+                </div>   
+            </tpl>
+        
+            <!--Customer Name-->
+            <tpl if="FieldName=='CustomerName' && !Ext.isEmpty(parent.Appointment.CustomerName)">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-industry" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CUSTOMER_NAME}: {parent.Appointment.CustomerName}"></div>
+                    <span>{parent.Appointment.CustomerName:ellipsis(25, true)}</span>
+                </div>   
+            </tpl>
+        
+            <!--Location -->
+            <tpl if="FieldName=='CustomerLocation' && !Ext.isEmpty(parent.Appointment.LocationDesc)">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-map-marker" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CUSTOMER_LOCATION}: {parent.Appointment.LocationDesc}"></div>
+                    <span>{parent.Appointment.LocationDesc:ellipsis(25, true)}</span>
+                </div>   
+            </tpl>
+            
+            <!--Fist Service-->
+            <tpl if="FieldName=='FirstService' && !Ext.isEmpty(parent.Appointment.FirstServiceDesc)">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-list-ol" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_FIRST_SERVICE}: {parent.Appointment.FirstServiceDesc}"></div>
+                    <span>{parent.Appointment.FirstServiceDesc:ellipsis(25, true)}</span>
+                </div>   
+            </tpl>
+            
+            <!--Status-->
+            <tpl if="FieldName=='Status' && parent.StatusName!=''">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-calendar-check-o" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_STATUS}: {parent.StatusName}"> </div>
+                    <span>{parent.StatusName}</span>
+                </div>   
+            </tpl>
+        
+            <tpl if="FieldName=='Confirmed'">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>">
+                    <tpl if="parent.Appointment.Confirmed">
+                        <div class="sch-event-footer x-fa fa-check-circle" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CONFIRMATION}: {parent.Messages.TOOLTIP_BOX_CONFIRMED}"></div>
+                        <span>Confirmed</span>
+                    </tpl>  
+                    <tpl if="!parent.Appointment.Confirmed">
+                        <div class="sch-event-footer x-fa fa-minus-circle" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_CONFIRMATION}: {parent.Messages.TOOLTIP_BOX_NOT_CONFIRMED}"></div>
+                        <span>Not Confirmed</span>
+                    </tpl>
+                </div>
+            </tpl>
+        
+            <!--Room-->
+            <tpl if="FieldName=='Room' && !Ext.isEmpty(parent.Appointment.RoomDesc)">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-home" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_ROOM}: {parent.Appointment.RoomDesc}"> </div>
+                    <span>{parent.Appointment.RoomDesc:ellipsis(25, true)}</span>
+                </div>
+            </tpl>
+
+            <!--WorkflowStage-->
+            <tpl if="FieldName=='WorkflowStage' && parent.Appointment.WFStageCD!=''">
+                <div style="<tpl if="parent.ViewMode=='horizontal'">display:inline-block;</tpl>"> 
+                    <div class="sch-event-footer x-fa fa-retweet" style="float: left; width: <tpl if="parent.ViewMode=='horizontal'">13<tpl else>18</tpl>px;" data-qtip="{parent.Messages.APPOINTMENT_BOX_WORKFLOW_STAGE}: {parent.Appointment.WFStageCD}"> </div>
+                    <span>{parent.Appointment.WFStageCD}</span>
+                </div> 
+            </tpl>
+        
+        </tpl>
+        
+        </textarea>

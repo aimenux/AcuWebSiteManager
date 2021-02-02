@@ -1,0 +1,38 @@
+﻿<textarea id="bodyTemplate-appointment" class="x-hidden-display">   
+    <div class="sch-event-footer">
+        <tpl if="WarningCounter&amp;gt;0">
+            <div class="alert" data-qtip="
+                <tpl if="WarningResourceAvailableFlag">
+                    - {WarningResourceAvailableMessage} <br>
+                </tpl>
+                <tpl if="WarningAppointmentValidFlag">
+                    - {WarningAppointmentValidMessage} <br>
+                </tpl>
+                <tpl if="WarningAppointmentValidatedByDispatcherFlag">
+                    - {WarningAppointmentValidatedByDispatcherMessage} <br>
+                </tpl>
+                "></div>
+        </tpl>
+        <tpl if="Appointment.EmployeeCount&amp;gt;1">
+            <div class="users" data-qtip = "{TotalEmployeesMessage}" ></div>
+        </tpl>
+        <tpl if="Appointment.CanDeleteAppointment && !Ext.isEmpty(StatusName) && StatusName!='Closed' && StatusName!='Canceled' && StatusName!='Completed'">
+            <div class="delete" data-qtip="Delete {AppointmentName}"></div>
+        </tpl>
+        <div id="appointmentRefNbr" class="appointment-header link-appointment">{Text}</div>
+    </div> 
+    <div class="appointment-description" style="text-align: left !important;">
+        <tpl for="Preferences">
+            <!--Service Order Reference Number--> 
+            <tpl if="FieldName=='SORefNbr' && parent.Appointment.SORefNbr!=''">
+                <div class="service-order-number" data-qtip="Service Order: {parent.Appointment.SORefNbr}"></div>
+                <div id="serviceOrderRefNbr" class="sch-event-contact link-serviceOrder">{parent.Appointment.SORefNbr:ellipsis(25, true)}&nbsp;</div> 
+            </tpl>
+            <!--Customer Contact--> 
+            <tpl if="FieldName=='Customer' && parent.Appointment.ContactName!=''">
+                <div class="customer" data-qtip="Customer: {parent.Appointment.ContactName}"></div>
+                <div class="sch-event-customer">{parent.Appointment.ContactName:ellipsis(25, true)}&nbsp;</div> 
+            </tpl>
+        </tpl>
+    </div>
+</textarea>

@@ -1,0 +1,1214 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <ExcelColumns>
+    <item>14</item>
+    <item>13</item>
+    <item>20</item>
+    <item>31</item>
+    <item>8</item>
+    <item>24</item>
+    <item>20</item>
+    <item>20</item>
+    <item>20</item>
+    <item>20</item>
+  </ExcelColumns>
+  <ExcelMode>Manual</ExcelMode>
+  <Filters>
+    <FilterExp>
+      <DataField>DRScheduleDetail.Module</DataField>
+      <Value>@paramModule</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>DRSchedule.IsDraft</DataField>
+      <Value>0</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>DRScheduleDetail.IsOpen</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>1</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNotNull</Condition>
+      <DataField>@FinPeriodID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>LessOrEqual</Condition>
+      <DataField>DRScheduleTran.FinPeriodID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Value>@FinPeriodID</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>DRScheduleTran.Status</DataField>
+      <Operator>Or</Operator>
+      <Value>='P'</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@FinPeriodID</DataField>
+    </FilterExp>
+    <FilterExp>
+      <Condition>BelongsTo</Condition>
+      <DataField>DRScheduleTran.BranchID</DataField>
+      <OpenBraces>1</OpenBraces>
+      <Operator>Or</Operator>
+      <Value>@OrgBAccountID</Value>
+    </FilterExp>
+    <FilterExp>
+      <CloseBraces>1</CloseBraces>
+      <Condition>IsNull</Condition>
+      <DataField>@OrgBAccountID</DataField>
+    </FilterExp>
+  </Filters>
+  <GridSize>4px, 4px</GridSize>
+  <PageSettings>
+    <Landscape>True</Landscape>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.OrgBAccountID')</DefaultValue>
+      <Name>OrgBAccountID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Company/Branch</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.OrgBAccountID')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>AR</DefaultValue>
+      <Name>paramModule</Name>
+      <Prompt>Type</Prompt>
+      <ViewName>=Report.GetFieldSchema('DRScheduleDetail.Module')</ViewName>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>=Report.GetDefExt('OrganizationBranchReportParameters.FinPeriodID')</DefaultValue>
+      <Name>FinPeriodID</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Financial Period</Prompt>
+      <ViewName>=Report.GetFieldSchema('OrganizationBranchReportParameters.FinPeriodIDByBAccount,OrgBAccountID')</ViewName>
+    </ReportParameter>
+  </Parameters>
+  <Relations>
+    <ReportRelation>
+      <ChildName>DRScheduleDetail</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>ScheduleID</ChildField>
+          <ParentField>ScheduleID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRSchedule</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>BAccount</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>BAccountID</ChildField>
+          <ParentField>BAccountID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRSchedule</ParentName>
+    </ReportRelation>
+    <ReportRelation>
+      <ChildName>DRScheduleTran</ChildName>
+      <JoinType>Inner</JoinType>
+      <Links>
+        <RelationRow>
+          <ChildField>ScheduleID</ChildField>
+          <ParentField>ScheduleID</ParentField>
+        </RelationRow>
+        <RelationRow>
+          <ChildField>ComponentID</ChildField>
+          <ParentField>ComponentID</ParentField>
+        </RelationRow>
+      </Links>
+      <ParentName>DRScheduleDetail</ParentName>
+    </ReportRelation>
+  </Relations>
+  <SchemaUrl>http://localhost/Sheldon</SchemaUrl>
+  <Sorting>
+    <SortExp>
+      <DataField>DRSchedule.BAccountID</DataField>
+    </SortExp>
+    <SortExp>
+      <DataField>DRSchedule.ScheduleID</DataField>
+    </SortExp>
+  </Sorting>
+  <StylesTemplate>TemplateReport.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="DRSchedule">
+      <Fields>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BAccountLocID"></ReportField>
+        <ReportField Name="BAccountLocID_Segment1"></ReportField>
+        <ReportField Name="BAccountType"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DocDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DocDate_Day"></ReportField>
+        <ReportField Name="DocDate_Hour"></ReportField>
+        <ReportField Name="DocDate_Month"></ReportField>
+        <ReportField Name="DocDate_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="DocumentType"></ReportField>
+        <ReportField Name="DocumentTypeEx"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="IsCustom">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsDraft">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OrigLineAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_description"></ReportField>
+        <ReportField Name="ProjectID_PMProject_description"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="ScheduleID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ScheduleNbr"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaskID"></ReportField>
+        <ReportField Name="TaskID_description"></ReportField>
+        <ReportField Name="TaskID_PMTask_description"></ReportField>
+        <ReportField Name="TaskID_Segment1"></ReportField>
+        <ReportField Name="TermEndDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TermEndDate_Day"></ReportField>
+        <ReportField Name="TermEndDate_Hour"></ReportField>
+        <ReportField Name="TermEndDate_Month"></ReportField>
+        <ReportField Name="TermEndDate_Quarter"></ReportField>
+        <ReportField Name="TermStartDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TermStartDate_Day"></ReportField>
+        <ReportField Name="TermStartDate_Hour"></ReportField>
+        <ReportField Name="TermStartDate_Month"></ReportField>
+        <ReportField Name="TermStartDate_Quarter"></ReportField>
+        <ReportField Name="TranDesc"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.DR.DRSchedule</FullName>
+    </ReportTable>
+    <ReportTable Name="DRScheduleDetail">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AccountID_Segment1"></ReportField>
+        <ReportField Name="BAccountID"></ReportField>
+        <ReportField Name="BAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="BAccountID_description"></ReportField>
+        <ReportField Name="BAccountType"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="CloseFinPeriodID"></ReportField>
+        <ReportField Name="ComponentID"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="CreditLineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAcctID"></ReportField>
+        <ReportField Name="DefAcctID_Account_description"></ReportField>
+        <ReportField Name="DefAcctID_description"></ReportField>
+        <ReportField Name="DefAcctID_Segment1"></ReportField>
+        <ReportField Name="DefAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DefCode"></ReportField>
+        <ReportField Name="DefCodeType"></ReportField>
+        <ReportField Name="DefSubID"></ReportField>
+        <ReportField Name="DefSubID_description"></ReportField>
+        <ReportField Name="DefSubID_Segment1"></ReportField>
+        <ReportField Name="DefSubID_Segment2"></ReportField>
+        <ReportField Name="DefSubID_Sub_description"></ReportField>
+        <ReportField Name="DefTotal">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="DocDate_Day"></ReportField>
+        <ReportField Name="DocDate_Hour"></ReportField>
+        <ReportField Name="DocDate_Month"></ReportField>
+        <ReportField Name="DocDate_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="DocumentType"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="IsCustom">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsOpen">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsResidual">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LastRecFinPeriodID"></ReportField>
+        <ReportField Name="LineCntr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Module"></ReportField>
+        <ReportField Name="ProjectID"></ReportField>
+        <ReportField Name="ProjectID_Segment1"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="ScheduleID"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Segment1"></ReportField>
+        <ReportField Name="SubID_Segment2"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TaskID"></ReportField>
+        <ReportField Name="TotalAmt">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.DR.DRScheduleDetail</FullName>
+    </ReportTable>
+    <ReportTable Name="BAccount">
+      <Fields>
+        <ReportField Name="AcctCD"></ReportField>
+        <ReportField Name="AcctCD_Segment1"></ReportField>
+        <ReportField Name="AcctName"></ReportField>
+        <ReportField Name="AcctReferenceNbr"></ReportField>
+        <ReportField Name="BAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CampaignSourceID"></ReportField>
+        <ReportField Name="CampaignSourceID_CRCampaign_campaignName"></ReportField>
+        <ReportField Name="CampaignSourceID_description"></ReportField>
+        <ReportField Name="CasesCount">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="ClassID"></ReportField>
+        <ReportField Name="ClassID_CRCustomerClass_description"></ReportField>
+        <ReportField Name="ClassID_description"></ReportField>
+        <ReportField Name="COMPREV_Attributes"></ReportField>
+        <ReportField Name="COMPSIZE_Attributes"></ReportField>
+        <ReportField Name="ConsolidateToParent">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="ConsolidatingBAccountID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Count">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DefAddressID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefAddressID_Address_displayName"></ReportField>
+        <ReportField Name="DefAddressID_description"></ReportField>
+        <ReportField Name="DefContactID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="DefLocationID_description"></ReportField>
+        <ReportField Name="DefLocationID_Location_locationCD"></ReportField>
+        <ReportField Name="EntityTypeID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="INDUSTRY_Attributes"></ReportField>
+        <ReportField Name="IsCustomerOrCombined">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastActivity">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="NoteActivity"></ReportField>
+        <ReportField Name="NoteFiles"></ReportField>
+        <ReportField Name="NoteID">
+          <DataType>Object</DataType>
+        </ReportField>
+        <ReportField Name="NoteImages"></ReportField>
+        <ReportField Name="NoteText"></ReportField>
+        <ReportField Name="OwnerID"></ReportField>
+        <ReportField Name="OwnerID_description"></ReportField>
+        <ReportField Name="OwnerID_EPEmployee_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID"></ReportField>
+        <ReportField Name="ParentBAccountID_BAccountR_acctName"></ReportField>
+        <ReportField Name="ParentBAccountID_description"></ReportField>
+        <ReportField Name="ParentBAccountID_Segment1"></ReportField>
+        <ReportField Name="PreviewHtml"></ReportField>
+        <ReportField Name="Selected">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="TaxRegistrationID"></ReportField>
+        <ReportField Name="TaxZoneID"></ReportField>
+        <ReportField Name="TaxZoneID_description"></ReportField>
+        <ReportField Name="TaxZoneID_TaxZone_descr"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+        <ReportField Name="Type"></ReportField>
+        <ReportField Name="ViewInCrm">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="WorkgroupID"></ReportField>
+        <ReportField Name="WorkgroupID_description"></ReportField>
+        <ReportField Name="WorkgroupID_EPCompanyTree_description"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.CR.BAccount</FullName>
+    </ReportTable>
+    <ReportTable Name="DRScheduleTran">
+      <Fields>
+        <ReportField Name="AccountID"></ReportField>
+        <ReportField Name="AccountID_Account_description"></ReportField>
+        <ReportField Name="AccountID_description"></ReportField>
+        <ReportField Name="AccountID_Segment1"></ReportField>
+        <ReportField Name="AdjgDocType"></ReportField>
+        <ReportField Name="AdjgRefNbr"></ReportField>
+        <ReportField Name="AdjNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BatchNbr"></ReportField>
+        <ReportField Name="BranchID"></ReportField>
+        <ReportField Name="BranchID_Branch_acctName"></ReportField>
+        <ReportField Name="BranchID_description"></ReportField>
+        <ReportField Name="BranchID_Segment1"></ReportField>
+        <ReportField Name="ComponentID">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="FinPeriodID"></ReportField>
+        <ReportField Name="IsSamePeriod">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RecDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="RecDate_Day"></ReportField>
+        <ReportField Name="RecDate_Hour"></ReportField>
+        <ReportField Name="RecDate_Month"></ReportField>
+        <ReportField Name="RecDate_Quarter"></ReportField>
+        <ReportField Name="ScheduleID"></ReportField>
+        <ReportField Name="Status"></ReportField>
+        <ReportField Name="SubID"></ReportField>
+        <ReportField Name="SubID_description"></ReportField>
+        <ReportField Name="SubID_Segment1"></ReportField>
+        <ReportField Name="SubID_Segment2"></ReportField>
+        <ReportField Name="SubID_Sub_description"></ReportField>
+        <ReportField Name="TranDate">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="TranDate_Day"></ReportField>
+        <ReportField Name="TranDate_Hour"></ReportField>
+        <ReportField Name="TranDate_Month"></ReportField>
+        <ReportField Name="TranDate_Quarter"></ReportField>
+        <ReportField Name="tstamp"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.DR.DRScheduleTran</FullName>
+    </ReportTable>
+  </Tables>
+  <ViewerFields>
+    <ViewerField Name="BAccount.BAccountID"></ViewerField>
+  </ViewerFields>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <ExcelMargin>
+        <bottom>1</bottom>
+      </ExcelMargin>
+      <GridSize>8px, 4px</GridSize>
+      <Height>1.48148cm</Height>
+      <Items>
+        <TextBox Name="textBox21">
+          <Excel>
+            <column>4</column>
+            <row>2</row>
+          </Excel>
+          <Location>320px, 4px</Location>
+          <Size>88px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Financial Period:</Value>
+          <VisibleExpr>=[@FinPeriodID]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox22">
+          <Excel>
+            <column>5</column>
+            <row>2</row>
+          </Excel>
+          <Location>408px, 4px</Location>
+          <Size>104px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.ExtToUI( 'DRSchedule.FinPeriodID', @FinPeriodID )</Value>
+          <VisibleExpr>=[@FinPeriodID]&lt;&gt;null</VisibleExpr>
+        </TextBox>
+        <TextBox Name="textBox28">
+          <CanGrow>True</CanGrow>
+          <Excel>
+            <column>10</column>
+            <row>3</row>
+          </Excel>
+          <Location>920px, 36px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Report.GetDefUI('AccessInfo.DisplayName')</Value>
+        </TextBox>
+        <TextBox Name="textBox29">
+          <Excel>
+            <column>9</column>
+            <row>3</row>
+          </Excel>
+          <Location>880px, 36px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>User:</Value>
+        </TextBox>
+        <TextBox Name="textBox38">
+          <Location>4px, 0px</Location>
+          <Size>300px, 18px</Size>
+          <StyleName>Report Name</StyleName>
+          <Value>='Deferral Schedule Summary (' + IIF([@paramModule]='AR', 'Revenue', 'Expense') + ')'</Value>
+        </TextBox>
+        <TextBox Name="textBox40">
+          <Excel>
+            <column>9</column>
+            <row>2</row>
+          </Excel>
+          <Location>880px, 20px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Date:</Value>
+        </TextBox>
+        <TextBox Name="textBox41">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>880px, 4px</Location>
+          <Size>36px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Page:</Value>
+        </TextBox>
+        <TextBox Name="textBox44">
+          <Excel>
+            <column>10</column>
+          </Excel>
+          <ExcelVisible>False</ExcelVisible>
+          <Location>920px, 4px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=[PageOf]</Value>
+        </TextBox>
+        <TextBox Name="textBox46">
+          <Excel>
+            <column>10</column>
+            <row>2</row>
+          </Excel>
+          <Format>g</Format>
+          <Location>920px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Report Params</StyleName>
+          <Value>=Now()</Value>
+        </TextBox>
+        <TextBox Name="textBox63">
+          <Excel>
+            <column>2</column>
+            <row>2</row>
+          </Excel>
+          <Location>104px, 20px</Location>
+          <Size>168px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>=[@OrgBAccountID]</Value>
+        </TextBox>
+        <TextBox Name="textBox65">
+          <Excel>
+            <row>2</row>
+          </Excel>
+          <Location>4px, 20px</Location>
+          <Size>100px, 14px</Size>
+          <StyleName>Report Params</StyleName>
+          <Value>Company/Branch:</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0.42328cm</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Recognized</Name>
+          <ProcessOrder>Always</ProcessOrder>
+          <ResetGroup>group2</ResetGroup>
+          <ValueExpr>=$Recognized + iif([DRScheduleTran.Status]='P' and [DRScheduleTran.LineNbr]&lt;&gt;[DRScheduleDetail.CreditLineNbr], [DRScheduleTran.Amount],0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>RecognizedPeriod</Name>
+          <ProcessOrder>Always</ProcessOrder>
+          <ResetGroup>group2</ResetGroup>
+          <ValueExpr>=$RecognizedPeriod + iif([DRScheduleTran.Status]='P' and [DRScheduleTran.LineNbr]&lt;&gt;[DRScheduleDetail.CreditLineNbr] and [DRScheduleTran.FinPeriodID]=[@FinPeriodID], [DRScheduleTran.Amount],0)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+      <Visible>False</Visible>
+      <Items>
+        <TextBox Name="textBox13">
+          <Excel>
+            <column>2</column>
+          </Excel>
+          <Location>84px, 0px</Location>
+          <Size>80px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.DefCode]</Value>
+        </TextBox>
+        <TextBox Name="textBox14">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>164px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.DefAcctID]</Value>
+        </TextBox>
+        <TextBox Name="textBox15">
+          <Excel>
+            <column>4</column>
+          </Excel>
+          <Location>284px, 0px</Location>
+          <Size>184px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.DefSubID]</Value>
+        </TextBox>
+        <TextBox Name="textBox2">
+          <Location>4px, 0px</Location>
+          <NavigateMethod>Server</NavigateMethod>
+          <Size>80px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRSchedule.ScheduleNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox25">
+          <Excel>
+            <column>5</column>
+          </Excel>
+          <Location>468px, 0px</Location>
+          <Size>52px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.DocType]</Value>
+        </TextBox>
+        <TextBox Name="textBox26">
+          <Excel>
+            <column>6</column>
+          </Excel>
+          <Location>520px, 0px</Location>
+          <Size>140px, 14px</Size>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.RefNbr]</Value>
+        </TextBox>
+        <TextBox Name="textBox3">
+          <Excel>
+            <column>7</column>
+          </Excel>
+          <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+          <Location>660px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.TotalAmt]*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</Value>
+        </TextBox>
+        <TextBox Name="textBox4">
+          <Excel>
+            <column>8</column>
+          </Excel>
+          <Format>=[DRScheduleDetail.TotalAmt.Format]</Format>
+          <Location>780px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=$Recognized</Value>
+        </TextBox>
+        <TextBox Name="textBox5">
+          <Excel>
+            <column>9</column>
+          </Excel>
+          <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+          <Location>900px, 0px</Location>
+          <Size>120px, 14px</Size>
+          <Style>
+            <TextAlign>Right</TextAlign>
+          </Style>
+          <StyleName>Normal</StyleName>
+          <Value>=[DRScheduleDetail.DefAmt]*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</Value>
+        </TextBox>
+      </Items>
+    </Detail>
+    <PageHeader Name="pageHeaderSection2">
+      <GridSize>8px, 8px</GridSize>
+      <Height>24px</Height>
+      <StyleName>ColumnsHeaderSection</StyleName>
+      <Items>
+        <TextBox Name="textBox54">
+          <Location>4px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>=IIf( [@paramModule]='AR', 'Customer', 'Vendor')#010;</Value>
+        </TextBox>
+        <TextBox Name="textBox57">
+          <Excel>
+            <column>3</column>
+          </Excel>
+          <Location>124px, 4px</Location>
+          <Size>120px, 14px</Size>
+          <StyleName>Heading 1</StyleName>
+          <Value>=IIf( [@paramModule]='AR', 'Customer Name', 'Vendor Name')#010;</Value>
+        </TextBox>
+      </Items>
+    </PageHeader>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="group1">
+      <Description>=[BAccount.AcctCD] + ' - ' + [BAccount.AcctName]</Description>
+      <Grouping>
+        <GroupExp>
+          <DataField>BAccount.AcctCD</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>24px</Height>
+          <PrintOnEveryPage>True</PrintOnEveryPage>
+          <StyleName>GroupHighlight</StyleName>
+          <Variables>
+            <ReportVariable>
+              <Name>total</Name>
+              <ValueExpr>0</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>recognized</Name>
+              <ValueExpr>0</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>deferred</Name>
+              <ValueExpr>0</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox1">
+              <Location>4px, 4px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>120px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[BAccount.AcctCD]</Value>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <CanGrow>True</CanGrow>
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>124px, 4px</Location>
+              <Size>368px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=[BAccount.AcctName]</Value>
+            </TextBox>
+          </Items>
+        </Header>
+        <Header Name="groupHeaderSection2">
+          <GridSize>8px, 8px</GridSize>
+          <Height>20px</Height>
+          <StyleName>GroupL1Highlight</StyleName>
+          <Items>
+            <TextBox Name="textBox12">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Location>796px, 4px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Deferred</Value>
+            </TextBox>
+            <TextBox Name="textBox16">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Location>908px, 4px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Total</Value>
+            </TextBox>
+            <TextBox Name="textBox17">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>104px, 4px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Def. Code</Value>
+            </TextBox>
+            <TextBox Name="textBox18">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Location>504px, 4px</Location>
+              <Size>72px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Ref. Number</Value>
+            </TextBox>
+            <TextBox Name="textBox19">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>440px, 4px</Location>
+              <Size>60px, 14px</Size>
+              <Style>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Doc. Type</Value>
+            </TextBox>
+            <TextBox Name="textBox20">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>296px, 4px</Location>
+              <Size>144px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Def. Subaccount</Value>
+            </TextBox>
+            <TextBox Name="textBox23">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Location>576px, 4px</Location>
+              <Size>108px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Recognized (Period)</Value>
+              <VisibleExpr>=[@FinPeriodID]&lt;&gt;null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox31">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>184px, 4px</Location>
+              <Size>108px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Def. Account</Value>
+            </TextBox>
+            <TextBox Name="textBox32">
+              <Location>4px, 4px</Location>
+              <Size>100px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>Schedule Number</Value>
+            </TextBox>
+            <TextBox Name="textBox62">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Location>684px, 4px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading 1</StyleName>
+              <Value>Recognized</Value>
+            </TextBox>
+          </Items>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>18px</Height>
+          <Items>
+            <Line Name="line1">
+              <Excel>
+                <column>6</column>
+                <width>5</width>
+              </Excel>
+              <Location>472px, 0px</Location>
+              <Size>554px, 1px</Size>
+            </Line>
+            <TextBox Name="textBox27">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.TotalAmt.Format]</Format>
+              <Location>576px, 3px</Location>
+              <Size>108px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$totalRecognizedPeriod</Value>
+              <VisibleExpr>=[@FinPeriodID]&lt;&gt;null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+              <Location>908px, 3px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$total</Value>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.TotalAmt.Format]</Format>
+              <Location>684px, 3px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$totalRecognized</Value>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+              <Location>796px, 3px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$totalDeferred</Value>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Location>472px, 3px</Location>
+              <Size>104px, 14px</Size>
+              <StyleName>Heading 1</StyleName>
+              <Value>=IIf( [@paramModule]='AR', 'Customer Total:', 'Vendor Total:')#010;</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+        <Footer Name="groupFooterSection2">
+          <ExcelMargin>
+            <bottom>1</bottom>
+          </ExcelMargin>
+          <GridSize>8px, 8px</GridSize>
+          <Height>7px</Height>
+        </Footer>
+      </Footers>
+    </Group>
+    <Group Name="group2">
+      <Description>scheduledetail</Description>
+      <Grouping>
+        <GroupExp>
+          <DataField>DRScheduleDetail.ScheduleID</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>DRScheduleDetail.ComponentID</DataField>
+        </GroupExp>
+      </Grouping>
+      <Headers>
+        <Header Name="groupHeaderSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.42328cm</Height>
+          <Visible>False</Visible>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection3">
+          <GridSize>8px, 8px</GridSize>
+          <Height>16px</Height>
+          <Variables>
+            <ReportVariable>
+              <Name>lineDeferred</Name>
+              <ValueExpr>=([DRScheduleDetail.TotalAmt] - $Recognized) * IIF([DRScheduleDetail.DocType] = 'CRM' Or [DRScheduleDetail.DocType] = 'ADR', -1, 1)</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>total</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>group1</ResetGroup>
+              <ValueExpr>=$total + [DRScheduleDetail.TotalAmt]*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalRecognized</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>group1</ResetGroup>
+              <ValueExpr>=$totalRecognized + $Recognized*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalDeferred</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>group1</ResetGroup>
+              <ValueExpr>= $totalDeferred + $lineDeferred</ValueExpr>
+            </ReportVariable>
+            <ReportVariable>
+              <Name>totalRecognizedPeriod</Name>
+              <ProcessOrder>Always</ProcessOrder>
+              <ResetGroup>group1</ResetGroup>
+              <ValueExpr>=$totalRecognizedPeriod + $RecognizedPeriod*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</ValueExpr>
+            </ReportVariable>
+          </Variables>
+          <Items>
+            <TextBox Name="textBox24">
+              <Excel>
+                <column>7</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.TotalAmt.Format]</Format>
+              <Location>576px, 0px</Location>
+              <Size>108px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$RecognizedPeriod*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</Value>
+              <VisibleExpr>=[@FinPeriodID]&lt;&gt;null</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox37">
+              <Excel>
+                <column>9</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+              <Location>796px, 0px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$lineDeferred</Value>
+            </TextBox>
+            <TextBox Name="textBox39">
+              <Excel>
+                <column>8</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.TotalAmt.Format]</Format>
+              <Location>684px, 0px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Recognized*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</Value>
+            </TextBox>
+            <TextBox Name="textBox42">
+              <Excel>
+                <column>10</column>
+              </Excel>
+              <Format>=[DRScheduleDetail.DefTotal.Format]</Format>
+              <Location>908px, 0px</Location>
+              <Size>112px, 14px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.TotalAmt]*IIf( [DRScheduleDetail.DocType]='CRM' Or [DRScheduleDetail.DocType]='ADR', -1, 1 )</Value>
+            </TextBox>
+            <TextBox Name="textBox47">
+              <Excel>
+                <column>6</column>
+              </Excel>
+              <Location>504px, 0px</Location>
+              <Size>72px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.RefNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox48">
+              <Excel>
+                <column>5</column>
+              </Excel>
+              <Location>456px, 0px</Location>
+              <Size>44px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.DocType]</Value>
+            </TextBox>
+            <TextBox Name="textBox49">
+              <Location>4px, 0px</Location>
+              <NavigateMethod>Server</NavigateMethod>
+              <Size>100px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRSchedule.ScheduleNbr]</Value>
+            </TextBox>
+            <TextBox Name="textBox50">
+              <Excel>
+                <column>4</column>
+              </Excel>
+              <Location>296px, 0px</Location>
+              <Size>156px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.DefSubID]</Value>
+            </TextBox>
+            <TextBox Name="textBox51">
+              <Excel>
+                <column>3</column>
+              </Excel>
+              <Location>184px, 0px</Location>
+              <Size>108px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.DefAcctID]</Value>
+            </TextBox>
+            <TextBox Name="textBox52">
+              <Excel>
+                <column>2</column>
+              </Excel>
+              <Location>104px, 0px</Location>
+              <Size>80px, 14px</Size>
+              <StyleName>Normal</StyleName>
+              <Value>=[DRScheduleDetail.DefCode]</Value>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

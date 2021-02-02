@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PRDirectDepositSplit.RefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRDirectDepositSplit.DocType</DataField>
+      <Value>@DocType</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>REG</DefaultValue>
+      <Name>DocType</Name>
+      <Prompt>Check Type:</Prompt>
+      <Required>True</Required>
+      <ViewName>=[PRPaymentPTOBank.DocType]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <Name>RefNbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Ref Number</Prompt>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <ColumnSpan>2</ColumnSpan>
+      <DefaultValue>0</DefaultValue>
+      <Name>TotalNetAmt</Name>
+      <Prompt>Net Amt</Prompt>
+      <Required>True</Required>
+      <Type>Float</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://localhost/AcumaticaDB0021/</SchemaUrl>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PRDirectDepositSplit">
+      <Fields>
+        <ReportField Name="Amount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BankAcctNbr"></ReportField>
+        <ReportField Name="BankAcctType"></ReportField>
+        <ReportField Name="BankName"></ReportField>
+        <ReportField Name="BankRoutingNbr"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="LineNbr">
+          <DataType>Int32</DataType>
+        </ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRDirectDepositSplit</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>3.17708in</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>Acc00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, [PRDirectDepositSplit.BankAcctNbr], $Acc00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Acc01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, [PRDirectDepositSplit.BankAcctNbr], $Acc01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AcType00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, [PRDirectDepositSplit.BankAcctType], $AcType00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AcType01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, [PRDirectDepositSplit.BankAcctType], $AcType01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, [PRDirectDepositSplit.Amount], $AAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, [PRDirectDepositSplit.Amount], $AAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>PAmt00</Name>
+          <ValueExpr>=IIF($LineNbr=0, IIF([@TotalNetAmt]&gt;0, ($AAmt00/[@TotalNetAmt])*100,0), $PAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>PAmt01</Name>
+          <ValueExpr>=IIF($LineNbr=1, IIF([@TotalNetAmt]&gt;0, ($AAmt01/[@TotalNetAmt])*100,0), $PAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LineNbr</Name>
+          <ValueExpr>=$LineNbr+1</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt02</Name>
+          <ValueExpr>=$AAmt02+IIF($LineNbr &gt;2,[PRDirectDepositSplit.Amount] ,0)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>PAmt02</Name>
+          <ValueExpr>=IIF($LineNbr&gt;2, IIF([@TotalNetAmt]&gt;0, ($AAmt02/[@TotalNetAmt])*100,0), $PAmt02)</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpEmployee">
+      <Grouping>
+        <GroupExp>
+          <DataField>=[PRDirectDepositSplit.DocType]</DataField>
+        </GroupExp>
+        <GroupExp>
+          <DataField>=[PRDirectDepositSplit.RefNbr]</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.9375in</Height>
+          <Style>
+            <BackColor>Transparent</BackColor>
+          </Style>
+          <Items>
+            <Line Name="line2">
+              <LineColor>Silver</LineColor>
+              <Location>2px, 64px</Location>
+              <Size>300px, 3px</Size>
+            </Line>
+            <TextBox Name="textBox1">
+              <Format>N</Format>
+              <Location>172px, 48px</Location>
+              <Size>68px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <Format>N</Format>
+              <Location>240px, 16px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$PAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Format>N</Format>
+              <Location>240px, 32px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$PAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <Location>88px, 0px</Location>
+              <Size>84px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Account Type</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Location>88px, 32px</Location>
+              <Size>84px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=isNull(Switch($AcType01='SAV', 'Saving', $AcType01='CHK', 'Checking'), $AcType01)</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <Location>0px, 48px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Others</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Format>N</Format>
+              <Location>0px, 32px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <BackColor>Transparent</BackColor>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= '******'+IIF( Len ($Acc01)&gt;4, Right($Acc01,4), $Acc01)</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Location>0px, 16px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <BackColor>Transparent</BackColor>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>= '******'+IIF( Len ($Acc00)&gt;4, Right($Acc00,4), $Acc00)</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Format>N</Format>
+              <Location>172px, 16px</Location>
+              <Size>68px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>0px, 0px</Location>
+              <Size>88px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Account Nbr.</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>172px, 0px</Location>
+              <Size>68px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Amount</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox52">
+              <Location>2px, 73px</Location>
+              <Size>166px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>Total:</Value>
+            </TextBox>
+            <TextBox Name="textBox55">
+              <Format>N</Format>
+              <Location>172px, 73px</Location>
+              <ProcessOrder>Always</ProcessOrder>
+              <Size>68px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=Sum( [PRDirectDepositSplit.Amount])</Value>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>240px, 0px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>% of Net</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>88px, 16px</Location>
+              <Size>84px, 16px</Size>
+              <Style>
+                <BackColor>Transparent</BackColor>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=isNull(Switch($AcType00='SAV', 'Saving', $AcType00='CHK', 'Checking'), $AcType00)</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Format>N</Format>
+              <Location>172px, 32px</Location>
+              <Size>68px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Format>N</Format>
+              <Location>240px, 48px</Location>
+              <Size>64px, 16px</Size>
+              <Style>
+                <TextAlign>Right</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$PAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>

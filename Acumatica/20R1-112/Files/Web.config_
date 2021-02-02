@@ -1,0 +1,814 @@
+<?xml version="1.0"?>
+<configuration>
+	<configSections>
+		<sectionGroup name="system.web" type="System.Web.Configuration.SystemWebSectionGroup, System.Web, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+			<section name="pxaccess" type="PX.Data.PXAccessSection, PX.Data"/>
+			<section name="pxdatabase" type="PX.Data.PXDatabaseSection, PX.Data"/>
+			<section name="pxtrace" type="PX.Data.PXTraceSection, PX.Data"/>
+			<section name="pxtranslate" type="PX.Data.PXTranslationSection, PX.Data"/>
+			<section name="basicAuth" type="PX.Export.Authentication.BasicAuthenticationSection, PX.Export"/>
+			<section name="formsAuth" type="PX.Export.Authentication.FormsAuthenticationSection, PX.Export"/>
+			<section name="multiAuth" type="PX.Export.Authentication.AuthenticationManagerSection, PX.Export"/>
+			<section name="externalAuth" type="PX.Export.Authentication.ExternalAuthenticationSection, PX.Export"/>
+			<section name="webDAV" type="PX.Export.WebDAV.WebDAVSection, PX.Export"/>
+			<section name="activeDirectory" type="PX.Data.Access.ActiveDirectorySection, PX.Data"/>
+			<section name="odata" type="PX.Api.OData.ODataConfigurationSection, PX.Api.OData" />
+			<section name="fullTrustAssemblies" type="System.Web.Configuration.FullTrustAssembliesSection, System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" allowDefinition="MachineToApplication"/>
+		</sectionGroup>
+		<section name="system.identityModel" type="System.IdentityModel.Configuration.SystemIdentityModelSection, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+		<section name="system.identityModel.services" type="System.IdentityModel.Services.Configuration.SystemIdentityModelServicesSection, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089" />
+    <section name="primaryQueueSettings" type="PX.PushNotifications.Configuration.PrimaryQueueConfigurationSection, PX.PushNotifications" allowLocation="true" allowDefinition="Everywhere" />
+    <section name="aatrixConfiguration" type="PX.Objects.PR.AatrixConfiguration, PX.Objects.PR" />
+	</configSections>
+	<connectionStrings>
+    <add name="ProjectX" providerName="System.Data.SqlClient" connectionString="Data Source=[YourServer];Initial Catalog=[YourDatabase];Integrated Security=True;" />
+    <add name="ProjectX_MySql" providerName="System.Data.SqlClient" connectionString="Server=[YourServer];Database=[YourDatabase];Uid=[User];Pwd=[Password];found rows=true;Unicode=true;" />
+  </connectionStrings>
+	<appSettings>
+    <clear/>
+		<add key="HomePageUrl" value="https://www.acumatica.com/embed-api/welcome-page/" />
+    <add key="aspnet:UseTaskFriendlySynchronizationContext" value="True"/>
+    <add key="Version" value="1.04.0018"/>
+		<add key="DefaultWikiCSS" value="App_Themes\Wiki.css"/>
+		<add key="ActivityTotalsVisible" value="false"/>
+		<add key="ReminderVisible" value="false"/>
+		<add key="ReminderRequestPeriod" value="60"/>
+		<add key="ReminderActiveMode" value="false"/>
+		<add key="aspnet:IgnoreFormActionAttribute" value="true"/>
+		<add key="FilesPath" value="~/Files"/>
+		<add key="AutoUpdate" value="False"/>
+    <add key="EnableExportOptimization" value="true" />
+		<add key="ChartImageHandler" value="Storage=session;Timeout=20;"/>
+		<add key="EnableFirstChanceExceptionsLogging" value="false" />
+		<add key="FirstChanceExceptionsLogFileName" value="firstchanceexceptions.log" />
+		<add key="PageValidation" value="False" />
+		<add key="vs:EnableBrowserLink" value="false" />
+		<add key="RestrictUpdates" value="false" />
+		<add key="EnableAutoNumberingInSeparateConnection" value="false" />
+    <add key="EnableCompression" value="true" />
+    <add key="CompressionThreshold" value="860" />
+    	<add key="AskEula" value="true" />
+		<add key="CompilePages" value="False"/> 
+		<add key="DisableScheduleProcessor" value="True"/>
+    <add key="EnableWorkflowValidationOnStartup" value="True"/>
+		<add key="ProtectWebConfig" value="False"/>
+  </appSettings>
+	<location inheritInChildApplications="false">
+		<system.web>
+			<machineKey validationKey="0EDE25D139379866234C7429F0EBA48DBDABE54B8378382819F89447430930227FA0407A0DB0E7F6B5E524E51CE3AC5154D27CEBC01439B5C05DEF2960B96AB0" decryptionKey="F3F6FD6F1B62B3A10E7E6D95F8CB167F5BD4AE2CBD2A5834" validation="SHA1"/>
+			<securityPolicy>
+				<trustLevel name="ProjectX" policyFile="web_project_x.config"/>
+			</securityPolicy>
+			<trust level="Full" originUrl=""/>
+			<fullTrustAssemblies/>
+			<pxdatabase defaultProvider="PXSqlDatabaseProvider">
+				<providers>
+					<add name="PXSqlDatabaseProvider" type="PX.Data.PXSqlDatabaseProvider, PX.Data" connectionStringName="ProjectX" companyID="" />
+					<!--<add name="PXSqlDatabaseProvider" type="PX.MySql.MySqlDatabaseProvider, PX.MySql" connectionStringName="ProjectX_MySql" companyID="" secureCompanyID="false" />-->
+				</providers>
+			</pxdatabase>
+			<pxaccess defaultProvider="PXDatabaseAccessProvider">
+				<providers>
+					<add name="PXDatabaseAccessProvider" type="PX.Data.PXDBFeatureAccessProvider, PX.Data" applicationName="/" administratorRole="Administrator"/>
+				</providers>
+			</pxaccess>
+			<pxtrace>
+				<providers>
+					<add name="PXSessionTraceProvider" type="PX.Data.PXSessionTraceProvider, PX.Data"/>
+					<!--<add name="PXFileTraceProvider" type="PX.Data.PXSessionTraceProvider, PX.Data" />-->
+				</providers>
+			</pxtrace>
+			<pxtranslate defaultProvider="PXDBTranslatonProvider">
+				<providers>
+					<add name="PXDBTranslatonProvider" type="PX.Data.PXDBTranslatonProvider, PX.Data"/>
+				</providers>
+			</pxtranslate>
+			<odata showInitializationErrors="false">
+				<cors enabled="true" origins="*" methods="*" headers="*" exposedHeaders="DataServiceVersion,MaxDataServiceVersion,OData-Version,OData-MaxVersion" />
+			</odata>
+			<activeDirectory enabled="false" path="projectx" dc="projectx" user="pxad@projectx" password="Aw34esz"/>
+			<!--<activeDirectory enabled="false" protocol="ADAL" path="" dc="" user="" password=""/>-->
+			<roleManager enabled="true" defaultProvider="PXActiveDirectorySyncRoleProvider" cacheRolesInCookie="false">
+				<providers>
+					<remove name="MySQLRoleProvider" />
+					<add applicationName="/" name="PXActiveDirectorySyncRoleProvider" type="PX.Data.PXActiveDirectorySyncRoleProvider" mainProviderType="PX.Data.PXDatabaseRoleProvider"/>
+				</providers>
+			</roleManager>
+			<membership defaultProvider="PXActiveDirectorySyncMembershipProvider">
+				<providers>
+					<remove name="MySQLMembershipProvider" />
+					<add name="PXActiveDirectorySyncMembershipProvider" type="PX.Data.PXActiveDirectorySyncMembershipProvider, PX.Data" mainProviderType="PX.Data.PXDatabaseMembershipProvider" enablePasswordRetrieval="false" enablePasswordReset="true" requiresQuestionAndAnswer="true" applicationName="/" requiresUniqueEmail="false" passwordFormat="Hashed" maxInvalidPasswordAttempts="5" minRequiredPasswordLength="7" minRequiredNonalphanumericCharacters="1" passwordAttemptWindow="10" passwordStrengthRegularExpression=""/>
+				</providers>
+			</membership>
+			<siteMap enabled="true" defaultProvider="PXWizardSiteMapProvider">
+				<providers>
+					<remove name="MySqlSiteMapProvider" /> <!-- that can be planted into machine.config by mysql .net connector installation -->
+					<remove name="PXOuterSiteMapProvider"/>
+					<add name="PXDatabaseSiteMapProvider" type="PX.Data.PXDatabaseSiteMapProvider, PX.Data" securityTrimmingEnabled="true" table="PX.SM.SiteMap"/>
+          <add name="PXWizardSiteMapProvider" type="PX.Objects.WZ.PXWizardSiteMapProvider, PX.Objects" securityTrimmingEnabled="true"/>
+					<add name="PXWikiProvider" type="PX.Data.PXWikiProvider, PX.Data" securityTrimmingEnabled="true"/>
+				</providers>
+			</siteMap>
+			<webDAV>
+				<locations>
+					<add path="/" requireSSL="false"/>
+					<add path="/Files" requireSSL="true"/>
+				</locations>
+			</webDAV>
+			<globalization culture="en-US" uiCulture="en-US"/>
+			<!--<authentication mode="Forms">
+				<forms loginUrl="./Frames/Login.aspx" />
+			</authentication>-->
+			<formsAuth loginUrl="Frames/Login.aspx" timeout="60"/>
+      <externalAuth
+        authUrl="Frames/AuthDock.ashx" silentLogin="None" externalLogout="False" selfAssociate="True" instanceKey="" claimsAuth="False" >
+        <providers>
+          <add name="Google" type="PX.Data.Auth.PXGoogleOAuthClient, PX.Data"/>
+          <add name="MicrosoftAccount" type="PX.Data.Auth.PXWindowsLiveClient, PX.Data"/>
+        </providers>
+      </externalAuth>
+			<multiAuth>
+				<locations>
+					<clear/>
+					<add path="/">
+						<providers>
+							<!--<add name="external" type="PX.Data.Auth.ExternalAuthenticationModule, PX.Data"/>-->
+							<add name="forms" type="PX.Export.Authentication.BrowserAuthenticationModule, PX.Export"/>
+							<add name="basic" type="PX.SM.PXBasicAuthenticationModule, PX.Data"/>
+						</providers>
+					</add>
+					<add path="/Files">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="basic" type="PX.SM.PXBasicAuthenticationModule, PX.Data"/>
+						</providers>
+					</add>
+					<add path="/Api">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/Outlook">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export" />
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export" />
+						</providers>
+					</add>
+					<add path="/Soap">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Export">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="basic" type="PX.SM.PXBasicAuthenticationWithoutCompanyModule, PX.Data"/>
+						</providers>
+					</add>
+					<add path="/calendarSync.ics">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/HubSpotWebHooks.axd">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Images">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/App_Themes">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Icons">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/App_Themes/GetCSS.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/PasswordRemind.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+          <add path="/Frames/MobileAuth.aspx">
+            <providers>
+              <add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+              <add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+            </providers>
+          </add>
+					<add path="/Frames/LoginRemind.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/Error.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/Maintenance.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/BrowserWarning.aspx">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Frames/PaymentConnector.html">
+						<providers>
+							<add name="coockie" type="PX.Export.Authentication.CoockieAuthenticationModule, PX.Export"/>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/Handlers">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/favicon.ico">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export"/>
+						</providers>
+					</add>
+					<add path="/EULA">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export" />
+						</providers>
+					</add>
+					<add path="/robots.txt">
+						<providers>
+							<add name="anonymous" type="PX.Export.Authentication.AnonymousAuthenticationModule, PX.Export" />
+						</providers>
+					</add>
+				</locations>
+			</multiAuth>
+			<authentication mode="None"/>
+			<basicAuth>
+				<locations>
+					<add path="/Files" requireSSL="true" realm="files_realm"/>
+				</locations>
+			</basicAuth>
+			<authorization>
+				<!--<allow roles="Administrator"/>-->
+				<deny users="?"/>
+			</authorization>
+			<trace enabled="false" localOnly="true" traceMode="SortByCategory" pageOutput="false"/>
+			<sessionState cookieless="UseCookies" mode="Custom" customProvider="PXSessionStateStore" timeout="60" sessionIDManagerType="PX.Owin.SessionIdManager, PX.Owin">
+				<providers>
+					<add name="PXSessionStateStore" type="PX.Data.PXSessionStateStore, PX.Data" ignoreUrl="~/Frames/Menu.aspx,~/Frames/GetFile.ashx,~/Frames/Error.aspx"/>
+				</providers>
+			</sessionState>
+			<customErrors mode="Off"/>
+			<webParts>
+				<personalization>
+					<authorization>
+						<allow verbs="enterSharedScope" users="admin"/>
+					</authorization>
+				</personalization>
+			</webParts>
+			<pages styleSheetTheme="Default" controlRenderingCompatibilityVersion="3.5" clientIDMode="AutoID">
+				<controls>
+					<add tagPrefix="px" assembly="PX.Web.UI" namespace="PX.Web.UI"/>
+					<add tagPrefix="pxa" assembly="PX.Web.Controls" namespace="PX.Web.Controls"/>
+					<add tagPrefix="pxd" assembly="PX.Dashboards.Widgets" namespace="PX.Dashboards.Widgets"/>
+					<add tagPrefix="px_pt" tagName="PageTitle" src="~/Controls/PageTitle.ascx"/>
+					<add tagPrefix="px_pf" tagName="PageFooter" src="~/Controls/PageFooter.ascx"/>
+					<add tagPrefix="px_log" tagName="Login" src="~/Controls/Login.ascx"/>
+					<add tagPrefix="px_srch" tagName="Search" src="~/Controls/Search.ascx"/>
+					<add tagPrefix="px_srchsp" tagName="SearchSP" src="~/Controls/SearchSP.ascx"/>
+					<add tagPrefix="px_pswd" tagName="PasswordRemind" src="~/Controls/PasswordRemind.ascx"/>
+					<add tagPrefix="px_logrecov" tagName="LoginRemind" src="~/Controls/LoginRemind.ascx"/>
+					<add tagPrefix="asp" namespace="System.Web.UI.DataVisualization.Charting" assembly="System.Web.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"/>
+				</controls>
+			</pages>
+			<webServices>
+        <protocols>
+          <remove name="HttpSoap12"/>
+        </protocols>
+        <soapExtensionTypes>
+					<add type="PX.Api.Soap.Screen.TransformClassExtension, PX.Data" priority="1" group="0"/>
+				</soapExtensionTypes>
+				<wsdlHelpGenerator href="Frames/WsdlHelp.aspx"/>
+			</webServices>
+			<httpRuntime executionTimeout="300" requestValidationMode="2.0" maxRequestLength="1048576" enableVersionHeader="false" />
+		</system.web>
+		<system.identityModel>
+			<identityConfiguration>
+				<issuerNameRegistry type="PX.Data.Auth.DatabaseIssuerNameRegistry, PX.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e"/>
+				<claimsAuthenticationManager type="PX.Data.Auth.PXClaimsTransformationModule, PX.Data, Version=1.0.0.0, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+				<audienceUris>
+					<add value="" />
+				</audienceUris>
+				<securityTokenHandlers>
+					<add type="System.IdentityModel.Services.Tokens.MachineKeySessionSecurityTokenHandler, System.IdentityModel.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+					<remove type="System.IdentityModel.Tokens.SessionSecurityTokenHandler, System.IdentityModel, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+				</securityTokenHandlers>
+				<certificateValidation certificateValidationMode="None" />
+			</identityConfiguration>
+		</system.identityModel>
+		<system.identityModel.services>
+			<federationConfiguration>
+				<wsFederation passiveRedirectEnabled="false" issuer="" realm="/" requireHttps="false" PersistentCookiesOnPassiveRedirects="false" />
+			</federationConfiguration>
+		</system.identityModel.services>
+	</location>
+	<system.web>
+		<compilation debug="true" defaultLanguage="c#" numRecompilesBeforeAppRestart="9999" targetFramework="4.8" batch="False" optimizeCompilations="True" >
+			<codeSubDirectories>
+				<!--<add directoryName="Caches"/>-->
+				<!--<add directoryName="Graphs" />-->
+			</codeSubDirectories>
+			<assemblies>
+				<add assembly="System.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+				<add assembly="System.Drawing.Design, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Transactions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+				<add assembly="System.Configuration.Install, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Web, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Web.Services, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+				<add assembly="System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+				<add assembly="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Data, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B77A5C561934E089"/>
+				<add assembly="System.Configuration, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.DirectoryServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.DirectoryServices.Protocols, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.EnterpriseServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.ServiceProcess, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Web.RegularExpressions, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Management, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Security, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+				<add assembly="System.Web.DataVisualization, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31BF3856AD364E35"/>
+				<add assembly="System.Collections, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+				<add assembly="System.Runtime, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a"/>
+				<add assembly="netstandard, Version=2.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51" />
+			</assemblies>
+			<buildProviders>
+				<!--add extension=".api" type="PX.Api.ApiBuildProvider, PX.Objects"/-->
+				<add extension=".name" type="PX.Web.UI.PXCodeNameProvider, PX.Web.UI"/>
+			</buildProviders>
+		</compilation>
+	</system.web>
+	<location path="Images">
+		<system.web>
+			<authorization>
+				<deny users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="App_Themes/GetCSS.aspx">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="App_Themes/Default">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="App_Themes/Default/Images">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Api">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="odata">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Soap">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Export">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Files">
+		<system.web>
+			<authorization>
+				<allow users="?"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/Outlook">
+		<system.web>
+			<authorization>
+				<allow users="*" />
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/PasswordRemind.aspx">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/LoginRemind.aspx">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/Error.aspx">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/Maintenance.aspx">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Frames/PaymentConnector.html">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="calendarSync.ics">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="HubSpotWebHooks.axd">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="Handlers">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="favicon.ico">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<location path="EULA">
+		<system.web>
+			<authorization>
+				<allow users="*" />
+			</authorization>
+		</system.web>
+	</location>
+	<location path="robots.txt">
+		<system.web>
+			<authorization>
+				<allow users="*"/>
+			</authorization>
+		</system.web>
+	</location>
+	<system.webServer>
+		<validation validateIntegratedModeConfiguration="false"/>
+    <modules runAllManagedModulesForAllRequests="true">
+			<remove name="UrlRoutingModule-4.0" />
+			<add name="UrlRoutingModule-4.0" type="System.Web.Routing.UrlRoutingModule" preCondition="" />
+			<remove name="WebDAVModule"/>
+			<remove name="AuthManagerModule"/>
+			<add name="AuthManagerModule" type="PX.Export.Authentication.AuthenticationManagerModule, PX.Export, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e"/>
+		</modules>
+		<handlers>
+      <remove name="ExternalAuthHandler" />
+      <remove name="PageUnloadHandler" />
+      <remove name="ChartHttpHandler" />
+      <remove name="FileOutlookGetter" />
+      <remove name="FileSizeChecker" />
+      <remove name="RSSGetter" />
+      <remove name="CSSGetter" />
+      <remove name="FileGetter" />
+      <remove name="StreamGetter" />
+      <remove name="AssemblyResourceLoader" />
+      <remove name="PXScriptLoader" />
+      <remove name="HttpHandler" />
+      <remove name="HandlerFactory" />
+      <remove name="HttpRoutingHandler___" />
+      <remove name="HttpRoutingHandler__" />
+      <remove name="HttpRoutingHandler_" />
+      <remove name="HttpRoutingHandler" />
+      <remove name="ApiServiceFactoryRedirect" />
+      <remove name="PXGenInqExcelFileHandler" />
+      <remove name="PXGenInqExcelWebQueryHandler" />
+      <remove name="PXExportHandlerIqy" />
+      <remove name="PXReminderSyncHandler" />
+      <remove name="PXExportHandlerVcf" />
+      <remove name="PXExportHandlerIcs" />
+      <remove name="PXCalendarSyncHandler" />
+      <remove name="HubSpotWebHooksHandler" />
+      <remove name="PXExportHandlerEml" />
+      <remove name="PXExportHandlerDita" />
+      <remove name="PXGridExportIqyHandler" />
+      <remove name="PXPivotExportXlsxHandler" />
+      <remove name="PXGridExportXlsxHandler" />
+      <remove name="PXExportHandlerExcel" />
+      <remove name="PXDefaultExcelQueryHandler" />
+      <remove name="PXServerWebDAVHandler" />
+      <remove name="PXFileWebDAVHandler" />
+	  <remove name="ExtensionlessUrlHandler-Integrated-4.0" />
+      <add name="PXFileWebDAVHandler" path="Files" verb="GET,HEAD,POST,TRACE,OPTIONS,PROPFIND,PUT,LOCK,UNLOCK,MOVE,COPY,PROPPATCH,MKCOL,DELETE,VERSIONCONTROL,REPORT" type="PX.SM.PXFileWebDAVHandler, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXServerWebDAVHandler" path="*" verb="OPTIONS,PROPFIND,LOCK,UNLOCK,MOVE,COPY,PROPPATCH,MKCOL,DELETE,VERSIONCONTROL,REPORT" type="PX.SM.PXServerWebDAVHandler, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXDefaultExcelQueryHandler" path="ExcelQuery.axd" verb="*" type="PX.Web.UI.PXDefaultExcelQueryHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXExportHandlerExcel" path="ExportExcel.axd" verb="GET" type="PX.Web.UI.PXExportHandlerExcel, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXGridExportXlsxHandler" path="ExportXlsx.axd" verb="GET" type="PX.Web.UI.PXGridExportXlsxHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXPivotExportXlsxHandler" path="ExportPXlsx.axd" verb="GET" type="PX.Web.UI.PXPivotExportXlsxHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXGridExportIqyHandler" path="ExportIqy.axd" verb="GET" type="PX.Web.UI.PXGridExportIqyHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXExportHandlerDita" path="ExportDita.axd" verb="GET" type="PX.Web.UI.PXExportHandlerDita, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXExportHandlerEml" path="ExportEmail.axd" verb="GET" type="PX.Objects.EP.PXExportHandlerEml, PX.Objects, Version=1.*, Culture=neutral, PublicKeyToken=null" />
+      <add name="PXCalendarSyncHandler" path="calendarSync.ics" verb="*" type="PX.Objects.EP.PXCalendarSyncHandler, PX.Objects, Version=1.*, Culture=neutral, PublicKeyToken=null" />
+      <add name="HubSpotWebHooksHandler" path="HubSpotWebHooks.axd" verb="*" type="PX.DataSync.HubSpot.HubSpotWebHooksHandler, PX.DataSync.HubSpot, Version=1.*, Culture=neutral, PublicKeyToken=null" />
+      <add name="PXExportHandlerIcs" path="*ExportICS.axd" verb="GET" type="PX.Export.PXExportHandlerIcs, PX.Export, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXExportHandlerVcf" path="*.vcf" verb="GET" type="PX.Export.PXExportHandlerVcf, PX.Export, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXReminderSyncHandler" path="Reminder.axd" verb="*" type="PX.Objects.EP.PXReminderSyncHandler, PX.Objects, Version=1.*, Culture=neutral, PublicKeyToken=null" />
+      <add name="PXExportHandlerIqy" path="GenInqIqy.axd" verb="*" type="PX.Export.PXExportHandlerIqy, PX.Export, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXGenInqExcelWebQueryHandler" path="GenInqExcelQuery.axd" verb="*" type="PX.Web.UI.PXGenInqExcelWebQueryHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXGenInqExcelFileHandler" path="GenInqExcelFile.axd" verb="*" type="PX.Web.UI.PXGenInqExcelFileHandler, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="ApiServiceFactoryRedirect" path="Api/Interface.asmx" verb="*" type="PX.Api.ApiServiceFactoryRedirect, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="HandlerFactory" path="Soap/*.asmx" verb="*" type="PX.Api.Soap.HandlerFactory, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="HttpHandler" path="PX.ReportViewer.axd" verb="*" type="PX.Reports.Web.HttpHandler, PX.Reports, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="PXScriptLoader" path="PX.ScriptBatch.axd" verb="*" type="PX.Web.UI.PXScriptLoader, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="AssemblyResourceLoader" path="QR.axd" verb="GET" type="PX.Web.UI.AssemblyResourceLoader, PX.Web.UI, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="StreamGetter" path="Frames/GetStream.ashx" verb="*" type="PX.Data.Handlers.StreamGetter, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="FileGetter" path="Frames/GetFile.ashx" verb="*" type="PX.Data.Handlers.FileGetter, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="CSSGetter" path="App_Themes/GetCSS.aspx" verb="*" type="PX.Data.Handlers.CSSGetter, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="RSSGetter" path="Frames/GetRSS.ashx" verb="*" type="PX.Data.Handlers.RSSGetter, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="FileSizeChecker" path="Frames/CheckFileSize.ashx" verb="*" type="PX.Data.Handlers.FileSizeChecker, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="FileOutlookGetter" path="OutlookAddinManifest" verb="GET,HEAD" type="PX.Objects.CR.Handlers.FileOutlookGetter, PX.Objects, Version=1.*, Culture=neutral, PublicKeyToken=null" />
+      <add name="ChartHttpHandler" path="ChartImg.axd" verb="GET,HEAD,POST" type="System.Web.UI.DataVisualization.Charting.ChartHttpHandler, System.Web.DataVisualization, Version=3.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+      <add name="PageUnloadHandler" path="PageUnload.axd" verb="*" type="PX.Data.Handlers.PageUnloadHandler, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+      <add name="ExternalAuthHandler" path="Frames/AuthDock.ashx" verb="*" type="PX.Data.Auth.ExternalAuthHandler, PX.Data, Version=1.*, Culture=neutral, PublicKeyToken=3b136cac2f602b8e" />
+	  <add name="ExtensionlessUrlHandler-Integrated-4.0" path="*." verb="GET,HEAD,POST,DEBUG,PUT,DELETE" type="System.Web.Handlers.TransferRequestHandler" resourceType="Unspecified" requireAccess="Script" preCondition="integratedMode,runtimeVersionv4.0" />
+    </handlers>
+		<security>
+			<requestFiltering>
+				<verbs allowUnlisted="true">
+					<remove verb="PROPFIND,LOCK,UNLOCK,MOVE,COPY,PROPPATCH,MKCOL,DELETE,VERSIONCONTROL,REPORT"/>
+					<add allowed="true" verb="PROPFIND,LOCK,UNLOCK,MOVE,COPY,PROPPATCH,MKCOL,DELETE,VERSIONCONTROL,REPORT"/>
+				</verbs>
+				<requestLimits maxAllowedContentLength="1073741824"/>
+			</requestFiltering>
+		</security>
+		<staticContent>
+			<clientCache cacheControlMode="UseMaxAge" cacheControlMaxAge="70.00:00:00"/>
+		</staticContent>
+		<defaultDocument>
+			<files>
+				<clear/>
+			</files>
+		</defaultDocument>
+		<httpProtocol>
+			<customHeaders>
+				<remove name="X-Powered-By" />
+			</customHeaders>
+		</httpProtocol>
+    </system.webServer>
+  <system.serviceModel>
+    <serviceHostingEnvironment aspNetCompatibilityEnabled="true"/>
+    <behaviors>
+      <serviceBehaviors>
+        <behavior>
+          <serviceDebug includeExceptionDetailInFaults="true"/>
+        </behavior>
+      </serviceBehaviors>
+    </behaviors>
+      <bindings>
+          <basicHttpBinding>
+              <binding
+                  maxBufferPoolSize="1073741824"
+                  maxReceivedMessageSize="1073741824"
+                  maxBufferSize="1073741824" transferMode="Streamed">
+                  <readerQuotas maxDepth="32" maxStringContentLength="2147483647" maxArrayLength="2147483647" maxBytesPerRead="2147483647" maxNameTableCharCount="2147483647" />
+                  <security mode="Transport">
+                      <transport clientCredentialType="None" />
+                  </security>
+              </binding>
+          </basicHttpBinding>
+      </bindings>
+      <client>
+        <endpoint address="https://payroll.acumatica.com/" binding="basicHttpBinding"
+                  contract="PX.Api.Payroll.IPayrollBaseService" name="PayrollHttpsBinding" />
+      </client>
+  </system.serviceModel>
+  <system.codedom>
+    <compilers>
+      <compiler language="c#;cs;csharp" extension=".cs"
+				type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.CSharpCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+				warningLevel="4" compilerOptions="/langversion:default /nowarn:1659;1699;1701"/>
+      <compiler language="vb;vbs;visualbasic;vbscript" extension=".vb"
+				type="Microsoft.CodeDom.Providers.DotNetCompilerPlatform.VBCodeProvider, Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35"
+				warningLevel="4" compilerOptions="/langversion:default /nowarn:41008 /define:_MYTYPE=\&quot;Web\&quot; /optionInfer+"/>
+    </compilers>
+  </system.codedom>
+  <!--<primaryQueueSettings>
+    <primaryQueue url="[Your MSMQ url]" enableDispatcher="[true if this is push notification dispatcher node, false in other case. dispatcher node should be the only one]"/>
+  </primaryQueueSettings>-->
+  <aatrixConfiguration
+    webformsUrl="https://webforms.aatrix.com"
+    vendorID="ACU064"
+    transactionTimeoutMs="30000"
+    getAvailableFormsListEndpoint="/api/webforms/getavailableformslist"
+    uploadAufEndpoint="/api/storagebays/uploadauf" />
+	<runtime>
+		<assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+			<dependentAssembly>
+				<assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-12.0.0.0" newVersion="12.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Data.Edm" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.6.4.0" newVersion="5.6.4.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Data.OData" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.6.4.0" newVersion="5.6.4.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Net.Http.Primitives" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.2.28.0" newVersion="4.2.28.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Spatial" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.6.4.0" newVersion="5.6.4.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Http" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.5.0" newVersion="5.2.5.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Net.Http.Formatting" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.5.0" newVersion="5.2.5.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Data.Services.Client" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.6.4.0" newVersion="5.6.4.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Autofac" publicKeyToken="17863af14b0044da" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.9.4.0" newVersion="4.9.4.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.1.0" newVersion="4.0.1.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Autofac.Integration.WebApi" publicKeyToken="17863af14b0044da" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.0.0" newVersion="4.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Http.Owin" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.5.0" newVersion="5.2.5.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.WindowsAzure.ServiceRuntime" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-2.7.0.0" newVersion="2.7.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.AspNet.SignalR.Core" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-2.2.1.0" newVersion="2.2.1.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Microsoft.Owin.Security" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.1.0" newVersion="4.0.1.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35" />
+				<bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35" />
+				<bindingRedirect oldVersion="1.0.0.0-3.0.0.0" newVersion="3.0.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="Autofac.Integration.Owin" publicKeyToken="17863af14b0044da" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.ValueTuple" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-4.0.2.0" newVersion="4.0.2.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-5.2.3.0" newVersion="5.2.3.0" />
+			</dependentAssembly>
+			<dependentAssembly>
+				<assemblyIdentity name="StackExchange.Redis.StrongName" publicKeyToken="c219ff1ca8c2ce46" culture="neutral" />
+				<bindingRedirect oldVersion="0.0.0.0-1.2.6.0" newVersion="1.2.6.0" />
+			</dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="CommonServiceLocator" publicKeyToken="489b6accfaf20ef0" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-2.0.4.0" newVersion="2.0.4.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="HtmlAgilityPack" culture="neutral" publicKeyToken="bd319b19eaf3b43a" />
+        <bindingRedirect oldVersion="0.0.0.0-1.11.16.0" newVersion="1.11.16.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Collections.Immutable" culture="neutral" publicKeyToken="b03f5f7f11d50a3a" />
+        <bindingRedirect oldVersion="0.0.0.0-1.2.4.0" newVersion="1.2.4.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Reflection.Metadata" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.4.4.0" newVersion="1.4.4.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.1.1" newVersion="4.0.1.1" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Extensions.Primitives" publicKeyToken="adb9793829ddae60" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.2.0" newVersion="3.1.2.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Extensions.Options" publicKeyToken="adb9793829ddae60" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.2.0" newVersion="3.1.2.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Extensions.Caching.Abstractions" publicKeyToken="adb9793829ddae60" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.2.0" newVersion="3.1.2.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Extensions.Configuration.Abstractions" publicKeyToken="adb9793829ddae60" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.2.0" newVersion="3.1.2.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Threading.Tasks.Extensions" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Extensions.Logging.Abstractions" publicKeyToken="adb9793829ddae60" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-3.1.1.0" newVersion="3.1.1.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-4.0.6.0" newVersion="4.0.6.0" />
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.Data.SqlClient" publicKeyToken="23ec7fc2d6eaa4a5" culture="neutral" />
+        <bindingRedirect oldVersion="0.0.0.0-1.11.20045.2" newVersion="1.11.20045.2" />
+      </dependentAssembly>
+		<dependentAssembly>
+			<assemblyIdentity name="SerilogTimings" publicKeyToken="ea6fc7d88906f03a" culture="neutral" />
+        	<bindingRedirect oldVersion="0.0.0.0-2.3.0.0" newVersion="2.3.0.0" />
+		</dependentAssembly>
+		</assemblyBinding>
+	</runtime>
+</configuration> 

@@ -1,0 +1,522 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report Name="report1">
+  <Filters>
+    <FilterExp>
+      <DataField>PRPaymentPTOBank.RefNbr</DataField>
+      <Value>@RefNbr</Value>
+    </FilterExp>
+    <FilterExp>
+      <DataField>PRPaymentPTOBank.DocType</DataField>
+      <Value>@DocType</Value>
+    </FilterExp>
+  </Filters>
+  <GridSize>5px, 5px</GridSize>
+  <LayoutUnit>Inch</LayoutUnit>
+  <PageSettings>
+    <Margins></Margins>
+  </PageSettings>
+  <Parameters>
+    <ReportParameter>
+      <DefaultValue>REG</DefaultValue>
+      <Name>DocType</Name>
+      <Prompt>Check Type:</Prompt>
+      <Required>True</Required>
+      <ValidValues>
+        <ParameterValue>
+          <Label>Regular Pay Check</Label>
+          <Value>REG</Value>
+        </ParameterValue>
+      </ValidValues>
+      <ViewName>=[PRPaymentPTOBank.DocType]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>RefNbr</Name>
+      <Nullable>True</Nullable>
+      <Prompt>Ref Number</Prompt>
+      <ViewName>=[PRPayment.RefNbr]</ViewName>
+      <Visible>False</Visible>
+    </ReportParameter>
+    <ReportParameter>
+      <Name>CalcYTD</Name>
+      <Required>True</Required>
+      <Type>Boolean</Type>
+      <Visible>False</Visible>
+    </ReportParameter>
+  </Parameters>
+  <SchemaUrl>http://localhost/AcumaticaDB0021/</SchemaUrl>
+  <StylesTemplate>TemplateForm.rpx</StylesTemplate>
+  <Tables>
+    <ReportTable Name="PRPaymentPTOBank">
+      <Fields>
+        <ReportField Name="AccrualAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AccrualLimit">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AccrualRate">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AccumulatedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="AvailableAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="BankID"></ReportField>
+        <ReportField Name="BankID_description"></ReportField>
+        <ReportField Name="BankID_PRPTOBank_description"></ReportField>
+        <ReportField Name="CreatedByID"></ReportField>
+        <ReportField Name="CreatedByID_Creator_displayName"></ReportField>
+        <ReportField Name="CreatedByID_Creator_Username"></ReportField>
+        <ReportField Name="CreatedByID_description"></ReportField>
+        <ReportField Name="CreatedByScreenID"></ReportField>
+        <ReportField Name="CreatedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="CreatedDateTime_Day"></ReportField>
+        <ReportField Name="CreatedDateTime_Hour"></ReportField>
+        <ReportField Name="CreatedDateTime_Month"></ReportField>
+        <ReportField Name="CreatedDateTime_Quarter"></ReportField>
+        <ReportField Name="DisbursementAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+        <ReportField Name="DocType"></ReportField>
+        <ReportField Name="EarningTypeCD"></ReportField>
+        <ReportField Name="IsActive">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="IsCertifiedJob">
+          <DataType>Boolean</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedByID"></ReportField>
+        <ReportField Name="LastModifiedByID_description"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_displayName"></ReportField>
+        <ReportField Name="LastModifiedByID_Modifier_Username"></ReportField>
+        <ReportField Name="LastModifiedByScreenID"></ReportField>
+        <ReportField Name="LastModifiedDateTime">
+          <DataType>DateTime</DataType>
+        </ReportField>
+        <ReportField Name="LastModifiedDateTime_Day"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Hour"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Month"></ReportField>
+        <ReportField Name="LastModifiedDateTime_Quarter"></ReportField>
+        <ReportField Name="RefNbr"></ReportField>
+        <ReportField Name="TStamp"></ReportField>
+        <ReportField Name="UsedAmount">
+          <DataType>Decimal</DataType>
+        </ReportField>
+      </Fields>
+      <FullName>PX.Objects.PR.PRPaymentPTOBank</FullName>
+    </ReportTable>
+  </Tables>
+  <Width>4.27083in</Width>
+  <Sections>
+    <PageHeader Name="pageHeaderSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageHeader>
+    <Detail Name="detailSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+      <Variables>
+        <ReportVariable>
+          <Name>YAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, [PRPaymentPTOBank.AccumulatedAmount]-[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount]-[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0), $YAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, [PRPaymentPTOBank.AccumulatedAmount]-[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount]-[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0), $YAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>YAmt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, [PRPaymentPTOBank.AccumulatedAmount]-[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount]-[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0), $YAmt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentPTOBank.AccrualAmount',[PRPaymentPTOBank.AccrualAmount]), $Amt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentPTOBank.AccrualAmount',[PRPaymentPTOBank.AccrualAmount]), $Amt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>Amt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentPTOBank.AccrualAmount',[PRPaymentPTOBank.AccrualAmount]), $Amt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentPTOBank.BankID_description',[[PRPaymentPTOBank.BankID_description]), $DocType00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentPTOBank.BankID_description',[[PRPaymentPTOBank.BankID_description]), $DocType01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>DocType02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentPTOBank.BankID_description',[[PRPaymentPTOBank.BankID_description]), $DocType02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentPTOBank.AccumulatedAmount',[PRPaymentPTOBank.AccumulatedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount],[@CalcYTD]=False,0)), $AAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentPTOBank.AccumulatedAmount',[PRPaymentPTOBank.AccumulatedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount],[@CalcYTD]=False,0)), $AAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>AAmt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentPTOBank.AccumulatedAmount',[PRPaymentPTOBank.AccumulatedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.AccrualAmount],[@CalcYTD]=False,0)), $AAmt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>UAmt00</Name>
+          <ValueExpr>=IIF($LineNbr = 0, Report.IntToUI('PRPaymentPTOBank.UsedAmount',[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0)), $UAmt00)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>UAmt01</Name>
+          <ValueExpr>=IIF($LineNbr = 1, Report.IntToUI('PRPaymentPTOBank.UsedAmount',[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0)), $UAmt01)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>UAmt02</Name>
+          <ValueExpr>=IIF($LineNbr = 2, Report.IntToUI('PRPaymentPTOBank.UsedAmount',[PRPaymentPTOBank.UsedAmount]+Switch([@CalcYTD]=True,[PRPaymentPTOBank.DisbursementAmount],[@CalcYTD]=False,0)), $UAmt02)</ValueExpr>
+        </ReportVariable>
+        <ReportVariable>
+          <Name>LineNbr</Name>
+          <ValueExpr>=$LineNbr+1</ValueExpr>
+        </ReportVariable>
+      </Variables>
+    </Detail>
+    <PageFooter Name="pageFooterSection1">
+      <GridSize>8px, 8px</GridSize>
+      <Height>0in</Height>
+    </PageFooter>
+  </Sections>
+  <Items />
+  <Groups>
+    <Group Name="grpEmployee">
+      <Grouping>
+        <GroupExp>
+          <DataField>PRPaymentPTOBank.RefNbr</DataField>
+        </GroupExp>
+      </Grouping>
+      <KeepTogether>WholeGroup</KeepTogether>
+      <Headers>
+        <Header Name="groupHeaderSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0in</Height>
+        </Header>
+      </Headers>
+      <Footers>
+        <Footer Name="groupFooterSection1">
+          <GridSize>8px, 8px</GridSize>
+          <Height>0.72917in</Height>
+          <Style>
+            <BackColor>Transparent</BackColor>
+          </Style>
+          <Items>
+            <TextBox Name="textBox1">
+              <Format>#0.00</Format>
+              <Location>168px, 48px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox10">
+              <Format>#0.00</Format>
+              <Location>248px, 16px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$UAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox11">
+              <Format>#0.00</Format>
+              <Location>248px, 32px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$UAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox12">
+              <Location>0px, 0px</Location>
+              <Size>96px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>PTO Banks</Value>
+            </TextBox>
+            <TextBox Name="textBox13">
+              <Location>0px, 32px</Location>
+              <Size>96px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$DocType01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox15">
+              <Location>0px, 48px</Location>
+              <Size>96px, 16px</Size>
+              <Style>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$DocType02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox2">
+              <Location>328px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Avail. Hrs</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox24">
+              <Format>#0.00</Format>
+              <Location>96px, 32px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox25">
+              <Format>#0.00</Format>
+              <Location>96px, 16px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox27">
+              <Format>#0.00</Format>
+              <Location>328px, 32px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox28">
+              <Format>#0.00</Format>
+              <Location>328px, 16px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox29">
+              <Format>#0.00</Format>
+              <Location>328px, 48px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$YAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox3">
+              <Format>#0.00</Format>
+              <Location>168px, 16px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox30">
+              <Format>#0.00</Format>
+              <Location>96px, 48px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$Amt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox4">
+              <Location>96px, 0px</Location>
+              <Size>72px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Accrual Hrs</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox5">
+              <Location>168px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Accrued Hrs</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox6">
+              <Location>248px, 0px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Heading1BCColored</StyleName>
+              <Value>Used Hrs</Value>
+              <Visible>False</Visible>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox7">
+              <Location>0px, 16px</Location>
+              <Size>96px, 16px</Size>
+              <Style>
+                <BorderColor>
+                  <Top>Silver</Top>
+                </BorderColor>
+                <BorderWidth>
+                  <Top>1px</Top>
+                </BorderWidth>
+                <Font>
+                  <Style>Bold</Style>
+                </Font>
+                <TextAlign>Left</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$DocType00</Value>
+              <VisibleExpr>=$LineNbr&gt;0</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox8">
+              <Format>#0.00</Format>
+              <Location>168px, 32px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$AAmt01</Value>
+              <VisibleExpr>=$LineNbr&gt;1</VisibleExpr>
+            </TextBox>
+            <TextBox Name="textBox9">
+              <Format>#0.00</Format>
+              <Location>248px, 48px</Location>
+              <Size>80px, 16px</Size>
+              <Style>
+                <TextAlign>Center</TextAlign>
+              </Style>
+              <StyleName>Normal</StyleName>
+              <Value>=$UAmt02</Value>
+              <VisibleExpr>=$LineNbr&gt;2</VisibleExpr>
+            </TextBox>
+          </Items>
+        </Footer>
+      </Footers>
+    </Group>
+  </Groups>
+</Report>
