@@ -10,6 +10,7 @@ using Lib.Handlers.Reporting;
 using Lib.Handlers.Serialization;
 using Lib.Handlers.WebServer;
 using Lib.Helpers;
+using Lib.Models;
 using Lib.Validators;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -80,7 +81,7 @@ namespace App
             services.AddSingleton(serviceProvider =>
             {
                 var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
-                return loggerFactory.CreateLogger("AcuWebSiteManagerPoc");
+                return loggerFactory.CreateLogger(Settings.ApplicationName);
             });
         }
     }

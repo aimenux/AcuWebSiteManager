@@ -2,6 +2,7 @@
 {
     public class Settings
     {
-        public const string DefaultPassword = "AutoSetup";
+        public const string ApplicationName = "AcuWebSiteManager";
+        public const string DefaultApplicationPassword = "Acumatica";
     }
 }

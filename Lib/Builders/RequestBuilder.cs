@@ -3,6 +3,7 @@ using System.Linq;
 using System.Xml.Linq;
 using Lib.Helpers;
 using Lib.Models;
+using static Lib.Models.Settings;
 
 namespace Lib.Builders
 {
@@ -45,7 +46,7 @@ namespace Lib.Builders
             request.SiteDirectoryName = _xmlHelper.GetAttributeValue(xmlDoc, siteDirNameXpath, attribute);
             request.SiteDirectoryPath = _xmlHelper.GetAttributeValue(xmlDoc, siteDirPathXpath, attribute);
             request.SiteVirtualDirectoryName = _xmlHelper.GetAttributeValue(xmlDoc, siteVDirNameXpath, attribute);
-            request.Password = _xmlHelper.GetAttributeValue(xmlDoc, userPassXpath, attribute) ?? Settings.DefaultPassword;
+            request.Password = _xmlHelper.GetAttributeValue(xmlDoc, userPassXpath, attribute) ?? DefaultApplicationPassword;
 
             request.DefaultDirectories = new[]
             {
