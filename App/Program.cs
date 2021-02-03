@@ -42,7 +42,7 @@ namespace App
                     loggingBuilder.AddNonGenericLogger();
                     loggingBuilder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                 })
-                .ConfigureServices((hostingContext, services) =>
+                .ConfigureServices((_, services) =>
                 {
                     services.AddTransient<MainSiteCommand>();
                     services.AddTransient<ListSitesCommand>();
