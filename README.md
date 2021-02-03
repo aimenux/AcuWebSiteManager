@@ -17,10 +17,10 @@ Providing net global tool in order to manage acumatica website creation and dele
 > - `.\App.exe DeleteSite -x [XmlConfigFile]`
 > - `.\App.exe ListSites`
 >
-
 > To install, run, uninstall global tool from a local source path, type commands :
 > - `dotnet tool install -g --add-source .\Nugets\ --configfile .\Nugets\nuget.config AcuWebSiteManager`
 > - `AcuWebSiteManager -h`
+> - `AcuWebSiteManager ListSites`
 > - `AcuWebSiteManager CreateSite -h`
 > - `AcuWebSiteManager DeleteSite -h`
 > - `AcuWebSiteManager CreateSite -x [XmlConfigFile]`
