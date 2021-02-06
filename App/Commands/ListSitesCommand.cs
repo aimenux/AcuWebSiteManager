@@ -1,6 +1,7 @@
 ﻿using System;
 using Lib.ChainOfResponsibilityPattern;
 using Lib.Handlers.Reporting;
+using Lib.Models;
 using McMaster.Extensions.CommandLineUtils;
 using Microsoft.Extensions.Logging;
 
@@ -22,8 +23,9 @@ namespace App.Commands
 
         public void OnExecute(CommandLineApplication _)
         {
+            const Request request = null;
             var chain = new RequestHandlerChain(_reportingHandler);
-            var elapsed = chain.Handle(null);
+            var elapsed = chain.Handle(request);
 
             LogCommandInfo(elapsed);
         }
