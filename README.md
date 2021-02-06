@@ -28,6 +28,6 @@ Providing net global tool in order to manage acumatica website creation and dele
 > - `dotnet tool uninstall -g AcuWebSiteManager`
 >
 > To install global tool from [nuget source](https://www.nuget.org/packages/AcuWebSiteManager), type these command :
-> - `dotnet tool install --global AcuWebSiteManager`
+> - `dotnet tool install --global AcuWebSiteManager --ignore-failed-sources`
 
 **`Tools`** : vs19, net 5.0
