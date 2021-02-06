@@ -42,7 +42,7 @@ namespace App
                     loggingBuilder.AddNonGenericLogger();
                     loggingBuilder.AddConfiguration(hostingContext.Configuration.GetSection("Logging"));
                 })
-                .ConfigureServices((_, services) =>
+                .ConfigureServices((hostingContext, services) =>
                 {
                     services.AddTransient<MainSiteCommand>();
                     services.AddTransient<ListSitesCommand>();
@@ -62,6 +62,7 @@ namespace App
                     services.AddTransient<IDeleteSiteValidator, DeleteSiteValidator>();
                     services.AddTransient<ISerializationHandler, SerializationHandler>();
                     services.AddTransient<IDetailsReportingHandler, DetailsReportingHandler>();
+                    services.Configure<Settings>(hostingContext.Configuration.GetSection(nameof(Settings)));
                 });
 
         private static void AddConsoleLogger(this ILoggingBuilder loggingBuilder)

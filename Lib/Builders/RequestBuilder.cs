@@ -46,7 +46,7 @@ namespace Lib.Builders
             request.SiteDirectoryName = _xmlHelper.GetAttributeValue(xmlDoc, siteDirNameXpath, attribute);
             request.SiteDirectoryPath = _xmlHelper.GetAttributeValue(xmlDoc, siteDirPathXpath, attribute);
             request.SiteVirtualDirectoryName = _xmlHelper.GetAttributeValue(xmlDoc, siteVDirNameXpath, attribute);
-            request.Password = _xmlHelper.GetAttributeValue(xmlDoc, userPassXpath, attribute) ?? DefaultApplicationPassword;
+            request.Password = _xmlHelper.GetAttributeValue(xmlDoc, userPassXpath, attribute) ?? ApplicationPassword;
 
             request.DefaultDirectories = new[]
             {

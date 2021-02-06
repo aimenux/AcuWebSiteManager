@@ -1,19 +1,24 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Dapper;
 using Lib.ChainOfResponsibilityPattern;
 using Lib.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
 namespace Lib.Handlers.Password
 {
     public class PasswordHandler : AbstractRequestHandler, IPasswordHandler
     {
         private readonly ILogger _logger;
+        private readonly Settings _settings;
 
-        public PasswordHandler(ILogger logger)
+        public PasswordHandler(ILogger logger, IOptions<Settings> options)
         {
             _logger = logger;
+            _settings = options.Value;
         }
 
         public override void Handle(Request request)
@@ -26,20 +31,40 @@ namespace Lib.Handlers.Password
         {
             try
             {
-                var connectionString = $"Data Source={request.ServerName};Initial Catalog={request.DatabaseName};Integrated Security=SSPI;";
+                var sqlUpdate = GetSqlUpdate(_settings);
+                var connectionString = GetConnectionString(request);
                 using (var connection = new SqlConnection(connectionString))
                 {
-                    const string updateSql = @"UPDATE [Users] SET 
-                                                [Password] = @UserPassword,
-                                                [PasswordChangeOnNextLogin] = 0
-                                              WHERE [Username] = 'admin' AND [CompanyID] = 2";
-                    connection.Execute(updateSql, new { UserPassword = request.Password });
+                    connection.Execute(sqlUpdate, new { UserPassword = request.Password });
                 }
             }
             catch (Exception ex)
             {
                 LogPasswordException(ex);
             }
+        }
+
+        private static string GetConnectionString(Request request)
+        {
+            var serverName = request.ServerName;
+            var databaseName = request.DatabaseName;
+            return $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=SSPI;";
+        }
+
+        private static string GetSqlUpdate(Settings settings)
+        {
+            var tenants = settings.Tenants ?? new List<int>();
+            if (!tenants.Any())
+            {
+                const int defaultTenantId = 2;
+                tenants.Add(defaultTenantId);
+            }
+
+            var ids = string.Join(", ", tenants);
+            return $@"UPDATE [Users] SET 
+                         [Password] = @UserPassword,
+                         [PasswordChangeOnNextLogin] = 0
+                      WHERE [Username] = 'admin' AND [CompanyID] IN ({ids})";
         }
 
         private void LogPasswordException(Exception ex)
