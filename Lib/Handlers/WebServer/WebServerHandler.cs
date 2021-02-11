@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Lib.ChainOfResponsibilityPattern;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.Administration;
@@ -52,6 +53,11 @@ namespace Lib.Handlers.WebServer
 
         public void RemoveApplicationPool(string appPoolName)
         {
+            if (!CanRemoveApplicationPool(appPoolName))
+            {
+                return;
+            }
+
             using (var serverManager = new ServerManager())
             {
                 var appPool = serverManager.ApplicationPools[appPoolName];
@@ -87,5 +93,7 @@ namespace Lib.Handlers.WebServer
         {
             _logger.LogWarning(message);
         }
+
+        private static bool CanRemoveApplicationPool(string appPoolName) => !string.Equals(appPoolName, @"DefaultAppPool", StringComparison.OrdinalIgnoreCase);
     }
 }
