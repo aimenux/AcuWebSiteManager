@@ -1,4 +1,5 @@
-﻿using Lib.ChainOfResponsibilityPattern;
+﻿using System.Linq;
+using Lib.ChainOfResponsibilityPattern;
 using Microsoft.Extensions.Logging;
 using Microsoft.Web.Administration;
 using Request = Lib.Models.Request;
@@ -17,6 +18,7 @@ namespace Lib.Handlers.WebServer
         public override void Handle(Request request)
         {
             RemoveSite(request.AppPoolName, request.SiteVirtualDirectoryName);
+            RemoveApplicationPool(request.AppPoolName);
             base.Handle(request);
         }
 
@@ -27,7 +29,6 @@ namespace Lib.Handlers.WebServer
                 var appPool = serverManager.ApplicationPools[appPoolName];
                 if (appPool == null)
                 {
-                    LogProcessError($"AppPool {appPoolName} is not found");
                     return;
                 }
 
@@ -36,7 +37,7 @@ namespace Lib.Handlers.WebServer
                     appPool.Recycle();
                     appPool.Start();
                 }
-		
+
                 var site = serverManager.Sites["Default Web Site"];
                 var application = site.Applications[$"/{siteVirtualDirectoryName}"];
                 if (application != null)
@@ -49,14 +50,42 @@ namespace Lib.Handlers.WebServer
             }
         }
 
+        public void RemoveApplicationPool(string appPoolName)
+        {
+            using (var serverManager = new ServerManager())
+            {
+                var appPool = serverManager.ApplicationPools[appPoolName];
+                if (appPool == null)
+                {
+                    return;
+                }
+
+                var applications = serverManager.Sites
+                    .SelectMany(site => site.Applications)
+                    .Where(app => app.ApplicationPoolName.Equals(appPoolName))
+                    .ToList();
+
+                if (applications.Any())
+                {
+                    LogProcessWarning($"Application pool [{appPoolName}] [{applications.Count} application(s)] removing is skipped");
+                    return;
+                }
+
+                var appPoolCollection = serverManager.ApplicationPools;
+                appPoolCollection.Remove(appPool);
+                serverManager.CommitChanges();
+                LogProcessInfo($"Application Pool [{appPoolName}] was removed");
+            }
+        }
+
         private void LogProcessInfo(string message)
         {
             _logger.LogInformation(message);
         }
 
-        private void LogProcessError(string message)
+        private void LogProcessWarning(string message)
         {
-            _logger.LogError("An error has occurred on [{name}] {message}", Name, message);
+            _logger.LogWarning(message);
         }
     }
 }
