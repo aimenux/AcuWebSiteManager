@@ -29,9 +29,9 @@ namespace Lib.Handlers.Database
             {
                 var server = new Server(serverName);
                 var database = new SmoDatabase(server, databaseName);
-                RunAction(() => server.KillAllProcesses(databaseName), $"Kill database {databaseName}");
-                RunAction(() => database.Refresh(), $"Refresh database {databaseName}");
-                RunAction(() => database.DropIfExists(), $"Drop database {databaseName}");
+                RunDatabaseAction(() => server.KillAllProcesses(databaseName), $"Kill database {databaseName}");
+                RunDatabaseAction(() => database.Refresh(), $"Refresh database {databaseName}");
+                RunDatabaseAction(() => database.DropIfExists(), $"Drop database {databaseName}");
                 LogDatabaseRemoved(serverName, databaseName);
             }
             catch (Exception ex)
@@ -50,7 +50,7 @@ namespace Lib.Handlers.Database
             _logger.LogError("An error has occurred on [{name}] {ex}", Name, ex);
         }
 
-        private void RunAction(Action action, string actionName, int seconds = 5)
+        private void RunDatabaseAction(Action action, string actionName, int seconds = 5)
         {
             var timeout = TimeSpan.FromSeconds(seconds);
             var task = Task.Run(action.Invoke);
