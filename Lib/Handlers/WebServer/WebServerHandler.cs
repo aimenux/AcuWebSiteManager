@@ -53,15 +53,10 @@ namespace Lib.Handlers.WebServer
 
         public void RemoveApplicationPool(string appPoolName)
         {
-            if (!CanRemoveApplicationPool(appPoolName))
-            {
-                return;
-            }
-
             using (var serverManager = new ServerManager())
             {
                 var appPool = serverManager.ApplicationPools[appPoolName];
-                if (appPool == null)
+                if (appPool == null || IsDefaultApplicationPool(appPoolName))
                 {
                     return;
                 }
@@ -94,6 +89,6 @@ namespace Lib.Handlers.WebServer
             _logger.LogWarning(message);
         }
 
-        private static bool CanRemoveApplicationPool(string appPoolName) => !string.Equals(appPoolName, @"DefaultAppPool", StringComparison.OrdinalIgnoreCase);
+        private static bool IsDefaultApplicationPool(string appPoolName) => !string.Equals(appPoolName, @"DefaultAppPool", StringComparison.OrdinalIgnoreCase);
     }
 }
