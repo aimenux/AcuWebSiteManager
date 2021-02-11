@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Lib.ChainOfResponsibilityPattern;
 using Lib.Models;
 using Microsoft.Extensions.Logging;
@@ -27,10 +28,10 @@ namespace Lib.Handlers.Database
             try
             {
                 var server = new Server(serverName);
-                server.KillAllProcesses(databaseName);
                 var database = new SmoDatabase(server, databaseName);
-                database.Refresh();
-                database.DropIfExists();
+                RunAction(() => server.KillAllProcesses(databaseName), $"Kill database {databaseName}");
+                RunAction(() => database.Refresh(), $"Refresh database {databaseName}");
+                RunAction(() => database.DropIfExists(), $"Drop database {databaseName}");
                 LogDatabaseRemoved(serverName, databaseName);
             }
             catch (Exception ex)
@@ -47,6 +48,16 @@ namespace Lib.Handlers.Database
         private void LogDatabaseException(Exception ex)
         {
             _logger.LogError("An error has occurred on [{name}] {ex}", Name, ex);
+        }
+
+        private void RunAction(Action action, string actionName, int seconds = 5)
+        {
+            var timeout = TimeSpan.FromSeconds(seconds);
+            var task = Task.Run(action.Invoke);
+            if (!task.Wait(timeout))
+            {
+                _logger.LogWarning("Action [{name}] has timeout after {timeout} seconds", actionName, seconds);
+            }
         }
     }
 }
