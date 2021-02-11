@@ -89,6 +89,6 @@ namespace Lib.Handlers.WebServer
             _logger.LogWarning(message);
         }
 
-        private static bool IsDefaultApplicationPool(string appPoolName) => !string.Equals(appPoolName, @"DefaultAppPool", StringComparison.OrdinalIgnoreCase);
+        private static bool IsDefaultApplicationPool(string appPoolName) => string.Equals(appPoolName, @"DefaultAppPool", StringComparison.OrdinalIgnoreCase);
     }
 }
