@@ -53,7 +53,6 @@ namespace App
                     services.AddTransient<IDiskHandler, DiskHandler>();
                     services.AddTransient<IConsoleHelper, ConsoleHelper>();
                     services.AddTransient<IRequestBuilder, RequestBuilder>();
-                    services.AddTransient<IProcessHandler, ProcessHandler>();
                     services.AddTransient<IPasswordHandler, PasswordHandler>();
                     services.AddTransient<IDatabaseHandler, DatabaseHandler>();
                     services.AddTransient<IWebServerHandler, WebServerHandler>();
@@ -62,6 +61,8 @@ namespace App
                     services.AddTransient<IDeleteSiteValidator, DeleteSiteValidator>();
                     services.AddTransient<ISerializationHandler, SerializationHandler>();
                     services.AddTransient<IDetailsReportingHandler, DetailsReportingHandler>();
+                    services.AddTransient<ICreateSiteProcessHandler, CreateSiteProcessHandler>();
+                    services.AddTransient<IAutoUpdateProcessHandler, AutoUpdateProcessHandler>();
                     services.Configure<Settings>(hostingContext.Configuration.GetSection(nameof(Settings)));
                 });
 

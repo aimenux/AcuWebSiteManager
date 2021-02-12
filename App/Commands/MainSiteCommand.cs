@@ -1,4 +1,5 @@
 ﻿using Lib.Helpers;
+using Lib.Models;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace App.Commands
@@ -6,7 +7,7 @@ namespace App.Commands
     [Command(Name = "MainSite", FullName = "Manage Acumatica Sites", Description = "Manage Acumatica Site (database, files).")]
     [HelpOption]
     [VersionOptionFromMember(MemberName = nameof(GetVersion))]
-    [Subcommand(typeof(CreateSiteCommand), typeof(DeleteSiteCommand), typeof(ListSitesCommand))]
+    [Subcommand(typeof(CreateSiteCommand), typeof(DeleteSiteCommand), typeof(ListSitesCommand), typeof(AutoUpdateCommand))]
     public class MainSiteCommand
     {
         private readonly IConsoleHelper _consoleHelper;
@@ -20,7 +21,7 @@ namespace App.Commands
 
         private void ShowHelp(CommandLineApplication app)
         {
-            const string title = @"AcuWebSiteManager";
+            const string title = Settings.ApplicationName;
             _consoleHelper.RenderTitle(title);
             app.ShowHelp();
         }

@@ -1,25 +1,18 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using Lib.ChainOfResponsibilityPattern;
-using Lib.Models;
 using Microsoft.Extensions.Logging;
 using SystemProcess = System.Diagnostics.Process;
 
 namespace Lib.Handlers.Process
 {
-    public class ProcessHandler : AbstractRequestHandler, IProcessHandler
+    public abstract class AbstractProcessHandler : AbstractRequestHandler, IProcessHandler
     {
         private readonly ILogger _logger;
 
-        public ProcessHandler(ILogger logger)
+        protected AbstractProcessHandler(ILogger logger)
         {
             _logger = logger;
-        }
-
-        public override void Handle(Request request)
-        {
-            RunProcess(request.ConfigExeFile, request.ConfigExeArguments);
-            base.Handle(request);
         }
 
         public void RunProcess(string name, string arguments)
@@ -48,23 +41,23 @@ namespace Lib.Handlers.Process
             process.WaitForExit();
         }
 
-        private void LogProcessOutput(string message)
+        protected virtual void LogProcessOutput(string message, params string[] keywords)
         {
-            var keywords = new[]
-            {
-                "Stage:", 
-                "Task ended: Users"
-            };
-
             if (string.IsNullOrWhiteSpace(message)) return;
-            var logLevel = keywords.Any(message.Contains) ? LogLevel.Information : LogLevel.Trace;
+            var logLevel = GetLogLevel(message, keywords);
             _logger.Log(logLevel, "An output was received from [{name}] {message}", Name, message);
         }
 
-        private void LogProcessError(string message)
+        protected virtual void LogProcessError(string message)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
             _logger.LogError("An error has occurred on [{name}] {message}", Name, message);
+        }
+
+        private static LogLevel GetLogLevel(string message, string[] keywords)
+        {
+            if (keywords == null || !keywords.Any()) return LogLevel.Information;
+            return keywords.Any(message.Contains) ? LogLevel.Information : LogLevel.Trace;
         }
     }
 }
