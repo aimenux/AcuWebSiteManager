@@ -62,7 +62,6 @@ namespace App
                     services.AddTransient<ISerializationHandler, SerializationHandler>();
                     services.AddTransient<IDetailsReportingHandler, DetailsReportingHandler>();
                     services.AddTransient<ICreateSiteProcessHandler, CreateSiteProcessHandler>();
-                    services.AddTransient<IAutoUpdateProcessHandler, AutoUpdateProcessHandler>();
                     services.Configure<Settings>(hostingContext.Configuration.GetSection(nameof(Settings)));
                 });
 
