@@ -20,7 +20,7 @@ namespace App.Commands
     {
         private readonly IRequestBuilder _builder;
         private readonly ICreateSiteValidator _requestValidator;
-        private readonly ICreateSiteProcessHandler _processHandler;
+        private readonly IProcessHandler _processHandler;
         private readonly IPasswordHandler _passwordHandler;
         private readonly IReportingHandler _reportingHandler;
         private readonly ISerializationHandler _serializationHandler;
@@ -29,7 +29,7 @@ namespace App.Commands
         public CreateSiteCommand(
             IRequestBuilder builder,
             ICreateSiteValidator requestValidator,
-            ICreateSiteProcessHandler processHandler,
+            IProcessHandler processHandler,
             IPasswordHandler passwordHandler,
             IReportingHandler reportingHandler,
             ISerializationHandler serializationHandler,

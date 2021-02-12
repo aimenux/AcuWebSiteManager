@@ -6,11 +6,11 @@ using SystemProcess = System.Diagnostics.Process;
 
 namespace Lib.Handlers.Process
 {
-    public abstract class AbstractProcessHandler : AbstractRequestHandler, IProcessHandler
+    public class ProcessHandler : AbstractRequestHandler, IProcessHandler
     {
         private readonly ILogger _logger;
 
-        protected AbstractProcessHandler(ILogger logger)
+        public ProcessHandler(ILogger logger)
         {
             _logger = logger;
         }
@@ -39,12 +39,13 @@ namespace Lib.Handlers.Process
             process.BeginErrorReadLine();
             process.BeginOutputReadLine();
             process.WaitForExit();
+            process.Close();
         }
 
         protected virtual void LogProcessOutput(string message, params string[] keywords)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
-            var logLevel = GetLogLevel(message, keywords);
+            var logLevel = GetLogLevelForMessage(message);
             _logger.Log(logLevel, "An output was received from [{name}] {message}", Name, message);
         }
 
@@ -54,9 +55,14 @@ namespace Lib.Handlers.Process
             _logger.LogError("An error has occurred on [{name}] {message}", Name, message);
         }
 
-        private static LogLevel GetLogLevel(string message, string[] keywords)
+        private static LogLevel GetLogLevelForMessage(string message)
         {
-            if (keywords == null || !keywords.Any()) return LogLevel.Information;
+            var keywords = new[]
+            {
+                "Stage:",
+                "Task ended: Users"
+            };
+
             return keywords.Any(message.Contains) ? LogLevel.Information : LogLevel.Trace;
         }
     }
