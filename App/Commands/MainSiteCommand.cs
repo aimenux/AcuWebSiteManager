@@ -18,11 +18,9 @@ namespace App.Commands
         }
 
         [Option("-h|--help", "Show help information.", CommandOptionType.NoValue)]
-        public bool Help { get; set; }
+        public bool ShowHelp { get; set; }
 
-        public void OnExecute(CommandLineApplication app) => ShowHelp(app);
-
-        private void ShowHelp(CommandLineApplication app)
+        public void OnExecute(CommandLineApplication app)
         {
             const string title = Settings.ApplicationName;
             _consoleHelper.RenderTitle(title);
