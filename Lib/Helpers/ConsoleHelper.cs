@@ -8,7 +8,9 @@ namespace Lib.Helpers
     {
         public void RenderTitle(string text)
         {
+            AnsiConsole.WriteLine();
             AnsiConsole.Render(new FigletText(text).LeftAligned());
+            AnsiConsole.WriteLine();
         }
 
         public void RenderTable(Request request)

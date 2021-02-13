@@ -5,9 +5,9 @@ using McMaster.Extensions.CommandLineUtils;
 namespace App.Commands
 {
     [Command(Name = "MainSite", FullName = "Manage Acumatica Sites", Description = "Manage Acumatica Site (database, files).")]
-    [HelpOption]
-    [VersionOptionFromMember(MemberName = nameof(GetVersion))]
     [Subcommand(typeof(CreateSiteCommand), typeof(DeleteSiteCommand), typeof(ListSitesCommand))]
+    [VersionOptionFromMember(MemberName = nameof(GetVersion))]
+    [SuppressDefaultHelpOption]
     public class MainSiteCommand
     {
         private readonly IConsoleHelper _consoleHelper;
@@ -16,6 +16,9 @@ namespace App.Commands
         {
             _consoleHelper = consoleHelper;
         }
+
+        [Option("-h|--help", "Show help information.", CommandOptionType.NoValue)]
+        public bool Help { get; set; }
 
         public void OnExecute(CommandLineApplication app) => ShowHelp(app);
 
