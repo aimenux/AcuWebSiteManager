@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Linq;
 using Lib.ChainOfResponsibilityPattern;
+using Lib.Models;
 using Microsoft.Extensions.Logging;
 using SystemProcess = System.Diagnostics.Process;
 
@@ -13,6 +14,12 @@ namespace Lib.Handlers.Process
         public ProcessHandler(ILogger logger)
         {
             _logger = logger;
+        }
+
+        public override void Handle(Request request)
+        {
+            RunProcess(request.ConfigExeFile, request.ConfigExeArguments);
+            base.Handle(request);
         }
 
         public void RunProcess(string name, string arguments)
@@ -46,13 +53,13 @@ namespace Lib.Handlers.Process
         {
             if (string.IsNullOrWhiteSpace(message)) return;
             var logLevel = GetLogLevelForMessage(message);
-            _logger.Log(logLevel, "An output was received from [{name}] {message}", Name, message);
+            _logger.Log(logLevel, "An output was received from [{name}] {message}", Name, TrimMessage(message));
         }
 
         protected virtual void LogProcessError(string message)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
-            _logger.LogError("An error has occurred on [{name}] {message}", Name, message);
+            _logger.LogError("An error has occurred on [{name}] {message}", Name, TrimMessage(message));
         }
 
         private static LogLevel GetLogLevelForMessage(string message)
@@ -64,6 +71,11 @@ namespace Lib.Handlers.Process
             };
 
             return keywords.Any(message.Contains) ? LogLevel.Information : LogLevel.Trace;
+        }
+
+        private static string TrimMessage(string message)
+        {
+            return message?.Trim(' ', '\n', '\r', '\t');
         }
     }
 }
