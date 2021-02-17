@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Dapper;
 using Lib.ChainOfResponsibilityPattern;
 using Lib.Models;
@@ -53,13 +52,8 @@ namespace Lib.Handlers.Password
 
         private static string GetSqlUpdate(Settings settings)
         {
-            var tenants = settings.Tenants ?? new List<int>();
-            if (!tenants.Any())
-            {
-                const int defaultTenantId = 2;
-                tenants.Add(defaultTenantId);
-            }
-
+            var defaultTenants = new List<int> { 2, 3 };
+            var tenants = settings.Tenants ?? defaultTenants;
             var ids = string.Join(", ", tenants);
             return $@"UPDATE [Users] SET 
                          [Password] = @UserPassword,
