@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Reflection;
 using System.Threading.Tasks;
 using App.Commands;
 using Lib.Builders;
@@ -33,7 +34,7 @@ namespace App
                 {
                     config.AddCommandLine(args);
                     config.AddEnvironmentVariables();
-                    config.SetBasePath(Directory.GetCurrentDirectory());
+                    config.SetBasePath(GetDirectoryPath());
                     config.AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
                 })
                 .ConfigureLogging((hostingContext, loggingBuilder) =>
@@ -65,15 +66,21 @@ namespace App
                     services.Configure<Settings>(hostingContext.Configuration.GetSection(nameof(Settings)));
                 });
 
+        public static string GetSettingFilePath() => Path.GetFullPath(Path.Combine(GetDirectoryPath(), @"appsettings.json"));
+
         private static void AddConsoleLogger(this ILoggingBuilder loggingBuilder)
         {
-            loggingBuilder.AddSimpleConsole(options =>
+            if (!File.Exists(GetSettingFilePath()))
             {
-                options.SingleLine = true;
-                options.IncludeScopes = true;
-                options.TimestampFormat = "[HH:mm:ss:fff] ";
-                options.ColorBehavior = LoggerColorBehavior.Enabled;
-            });
+                loggingBuilder.AddSimpleConsole(options =>
+                {
+                    options.SingleLine = true;
+                    options.IncludeScopes = true;
+                    options.UseUtcTimestamp = true;
+                    options.TimestampFormat = "[HH:mm:ss:fff] ";
+                    options.ColorBehavior = LoggerColorBehavior.Enabled;
+                });
+            }
         }
 
         private static void AddNonGenericLogger(this ILoggingBuilder loggingBuilder)
@@ -84,6 +91,18 @@ namespace App
                 var loggerFactory = serviceProvider.GetRequiredService<ILoggerFactory>();
                 return loggerFactory.CreateLogger(Settings.ApplicationName);
             });
+        }
+
+        private static string GetDirectoryPath()
+        {
+            try
+            {
+                return Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            }
+            catch
+            {
+                return Directory.GetCurrentDirectory();
+            }
         }
     }
 }

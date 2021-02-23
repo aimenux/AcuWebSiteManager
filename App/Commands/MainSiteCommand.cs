@@ -20,8 +20,18 @@ namespace App.Commands
         [Option("-h|--help", "Show help information.", CommandOptionType.NoValue)]
         public bool ShowHelp { get; set; }
 
+        [Option("-s|--settings", "Show settings information.", CommandOptionType.NoValue)]
+        public bool ShowSettings { get; set; }
+
         public void OnExecute(CommandLineApplication app)
         {
+            if (ShowSettings)
+            {
+                var filepath = Program.GetSettingFilePath();
+                _consoleHelper.RenderFile(filepath);
+                return;
+            }
+
             const string title = Settings.ApplicationName;
             _consoleHelper.RenderTitle(title);
             app.ShowHelp();

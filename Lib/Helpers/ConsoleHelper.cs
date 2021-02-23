@@ -1,5 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using Lib.Models;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using Spectre.Console;
 
 namespace Lib.Helpers
@@ -10,6 +13,23 @@ namespace Lib.Helpers
         {
             AnsiConsole.WriteLine();
             AnsiConsole.Render(new FigletText(text).LeftAligned());
+            AnsiConsole.WriteLine();
+        }
+
+        public void RenderFile(string filepath)
+        {
+            var name = Path.GetFileName(filepath);
+            var json = File.ReadAllText(filepath);
+            var formattedJson = JToken.Parse(json).ToString(Formatting.Indented);
+            var header = new Rule($"[yellow]({name})[/]");
+            header.Centered();
+            var footer = new Rule($"[yellow]({filepath})[/]");
+            footer.Centered();
+
+            AnsiConsole.WriteLine();
+            AnsiConsole.Render(header);
+            AnsiConsole.WriteLine(formattedJson);
+            AnsiConsole.Render(footer);
             AnsiConsole.WriteLine();
         }
 
@@ -26,8 +46,8 @@ namespace Lib.Helpers
             var siteMarkup = $"[green][link={link}]{site}[/][/]";
 
             var table = new Table()
-                .Border(TableBorder.Square)
                 .BorderColor(Color.White)
+                .Border(TableBorder.Square)
                 .AddColumn(new TableColumn("[u]Site[/]").Centered())
                 .AddColumn(new TableColumn("[u]Pool[/]").Centered())
                 .AddColumn(new TableColumn("[u]Server[/]").Centered())
@@ -44,8 +64,8 @@ namespace Lib.Helpers
         public void RenderTable(ICollection<SiteDetails> details)
         {
             var table = new Table()
-                .Border(TableBorder.Square)
                 .BorderColor(Color.White)
+                .Border(TableBorder.Square)
                 .Title($"[yellow]Found {details.Count} site(s)[/]")
                 .AddColumn(new TableColumn("[u]Site[/]").Centered())
                 .AddColumn(new TableColumn("[u]AppPool[/]").Centered())
