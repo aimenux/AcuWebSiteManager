@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Dapper;
 using Lib.ChainOfResponsibilityPattern;
+using Lib.Helpers;
 using Lib.Models;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Logging;
@@ -11,13 +12,15 @@ namespace Lib.Handlers.Password
 {
     public class PasswordHandler : AbstractRequestHandler, IPasswordHandler
     {
-        private readonly ILogger _logger;
+        private readonly IDatabaseHelper _databaseHelper;
         private readonly Settings _settings;
+        private readonly ILogger _logger;
 
-        public PasswordHandler(ILogger logger, IOptions<Settings> options)
+        public PasswordHandler(IDatabaseHelper databaseHelper, IOptions<Settings> options, ILogger logger)
         {
-            _logger = logger;
+            _databaseHelper = databaseHelper;
             _settings = options.Value;
+            _logger = logger;
         }
 
         public override void Handle(Request request)
@@ -43,11 +46,11 @@ namespace Lib.Handlers.Password
             }
         }
 
-        private static string GetConnectionString(Request request)
+        private string GetConnectionString(Request request)
         {
             var serverName = request.ServerName;
             var databaseName = request.DatabaseName;
-            return $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=SSPI;";
+            return _databaseHelper.GetConnectionString(serverName, databaseName);
         }
 
         private static string GetSqlUpdate(Settings settings)

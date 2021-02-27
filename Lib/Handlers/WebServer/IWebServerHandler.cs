@@ -1,10 +1,11 @@
 ﻿using Lib.ChainOfResponsibilityPattern;
+using Lib.Models;
 
 namespace Lib.Handlers.WebServer
 {
     public interface IWebServerHandler : IRequestHandler
     {
-        void RemoveSite(string appPoolName, string siteVirtualDirectoryName);
-        void RemoveApplicationPool(string appPoolName);
+        void RemoveSite(Request request);
+        void RemoveApplicationPool(Request request);
     }
 }

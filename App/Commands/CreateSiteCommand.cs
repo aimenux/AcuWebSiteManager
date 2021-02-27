@@ -19,7 +19,7 @@ namespace App.Commands
     public class CreateSiteCommand
     {
         private readonly IRequestBuilder _builder;
-        private readonly ICreateSiteValidator _requestValidator;
+        private readonly ICreateSiteValidator _validator;
         private readonly IProcessHandler _processHandler;
         private readonly IPasswordHandler _passwordHandler;
         private readonly IReportingHandler _reportingHandler;
@@ -28,7 +28,7 @@ namespace App.Commands
 
         public CreateSiteCommand(
             IRequestBuilder builder,
-            ICreateSiteValidator requestValidator,
+            ICreateSiteValidator validator,
             IProcessHandler processHandler,
             IPasswordHandler passwordHandler,
             IReportingHandler reportingHandler,
@@ -36,7 +36,7 @@ namespace App.Commands
             ILogger logger)
         {
             _builder = builder;
-            _requestValidator = requestValidator;
+            _validator = validator;
             _processHandler = processHandler;
             _passwordHandler = passwordHandler;
             _reportingHandler = reportingHandler;
@@ -59,8 +59,14 @@ namespace App.Commands
                 return;
             }
 
-            var request = _builder.Build(ConfigXmlFile, ConfigExeFile);
-            var result = _requestValidator.Validate(request);
+            var parameters = new Parameters
+            {
+                XmlExeFile = ConfigExeFile,
+                XmlConfigFile = ConfigXmlFile
+            };
+
+            var request = _builder.Build(parameters);
+            var result = _validator.Validate(request);
             if (!result.IsValid)
             {
                 _logger.LogValidationFailures(result);

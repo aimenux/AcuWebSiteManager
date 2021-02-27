@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using Lib.Models;
 using Microsoft.Extensions.Logging;
-using Microsoft.SqlServer.Management.Smo;
 using Microsoft.Web.Administration;
 using Request = Lib.Models.Request;
-using SmoDatabase = Microsoft.SqlServer.Management.Smo.Database;
 
 namespace Lib.Helpers
 {
@@ -29,14 +28,14 @@ namespace Lib.Helpers
                 {
                     var sites = serverManager.Sites;
                     details.AddRange(from site in sites
-                                   from app in site.Applications
-                                   from virDir in app.VirtualDirectories
-                                   orderby site.Name, app.ApplicationPoolName
-                                   where !virDir.PhysicalPath.Contains("%")
-                                   select new SiteDetails(site, app, virDir));
+                                     from app in site.Applications
+                                     from virDir in app.VirtualDirectories
+                                     orderby site.Name, app.ApplicationPoolName
+                                     where !virDir.PhysicalPath.Contains("%")
+                                     select new SiteDetails(site, app, virDir));
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 LogHelperException(ex);
             }
@@ -44,21 +43,21 @@ namespace Lib.Helpers
             return details;
         }
 
-        public bool IsSiteExists(Request request) => IsDatabaseExists(request) && IsVirtualDirectoryExists(request);
-
-        private static bool IsDatabaseExists(Request request)
+        public SiteDetails GetSiteDetails(string websiteName)
         {
-            try
-            {
-                var server = new Server(request.ServerName);
-                var _ = new SmoDatabase(server, request.DatabaseName);
-                return true;
-            }
-            catch
-            {
-                return false;
-            }
+            return GetSitesDetails().FirstOrDefault(x => IgnoreEquals(x.SiteFriendlyName, websiteName));
         }
+
+        public string GetSiteConfigXmlFile(string websiteName)
+        {
+            var site = GetSiteDetails(websiteName);
+            var path = site?.VirtualDirectory?.PhysicalPath;
+            if (path == null) return null;
+            var name = $"{site.SiteFriendlyName}.xml";
+            return Path.Combine(path, name);
+        }
+
+        public bool IsSiteExists(Request request) => IsVirtualDirectoryExists(request);
 
         private static bool IsVirtualDirectoryExists(Request request)
         {
@@ -78,6 +77,11 @@ namespace Lib.Helpers
             {
                 return false;
             }
+        }
+
+        private static bool IgnoreEquals(string str1, string str2)
+        {
+            return string.Equals(str1, str2, StringComparison.OrdinalIgnoreCase);
         }
 
         private void LogHelperException(Exception ex)

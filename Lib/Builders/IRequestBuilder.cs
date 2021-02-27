@@ -4,6 +4,6 @@ namespace Lib.Builders
 {
     public interface IRequestBuilder
     {
-        Request Build(string configXmlFile, string configExeFile = null);
+        Request Build(Parameters parameters);
     }
 }

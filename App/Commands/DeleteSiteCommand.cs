@@ -18,7 +18,7 @@ namespace App.Commands
     public class DeleteSiteCommand
     {
         private readonly IRequestBuilder _builder;
-        private readonly IDeleteSiteValidator _requestValidator;
+        private readonly IDeleteSiteValidator _validator;
         private readonly IWebServerHandler _webServerHandler;
         private readonly IDatabaseHandler _databaseHandler;
         private readonly IDiskHandler _diskHandler;
@@ -26,14 +26,14 @@ namespace App.Commands
 
         public DeleteSiteCommand(
             IRequestBuilder builder,
-            IDeleteSiteValidator requestValidator,
+            IDeleteSiteValidator validator,
             IWebServerHandler webServerHandler,
             IDatabaseHandler databaseHandler,
             IDiskHandler diskHandler,
             ILogger logger)
         {
             _builder = builder;
-            _requestValidator = requestValidator;
+            _validator = validator;
             _webServerHandler = webServerHandler;
             _databaseHandler = databaseHandler;
             _diskHandler = diskHandler;
@@ -55,8 +55,14 @@ namespace App.Commands
                 return;
             }
 
-            var request = _builder.Build(ConfigXmlFile, ConfigExeFile);
-            var result = _requestValidator.Validate(request);
+            var parameters = new Parameters
+            {
+                XmlExeFile = ConfigExeFile,
+                XmlConfigFile = ConfigXmlFile
+            };
+
+            var request = _builder.Build(parameters);
+            var result = _validator.Validate(request);
             if (!result.IsValid)
             {
                 _logger.LogValidationFailures(result);

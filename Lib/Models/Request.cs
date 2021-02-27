@@ -17,6 +17,8 @@ namespace Lib.Models
 
         public string DatabaseName { get; set; }
 
+        public string SwitchDatabaseName { get; set; }
+
         public string AppPoolName { get; set; }
 
         public string RootDirectory { get; set; }

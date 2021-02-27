@@ -10,17 +10,29 @@ namespace Lib.Builders
     public class RequestBuilder : IRequestBuilder
     {
         private readonly IXmlHelper _xmlHelper;
+        private readonly ISiteHelper _siteHelper;
 
-        public RequestBuilder(IXmlHelper xmlHelper)
+        public RequestBuilder(IXmlHelper xmlHelper, ISiteHelper siteHelper)
         {
             _xmlHelper = xmlHelper;
+            _siteHelper = siteHelper;
         }
 
-        public Request Build(string configXmlFile, string configExeFile = null)
+        public Request Build(Parameters parameters)
         {
+            var configExeFile = parameters.XmlExeFile;
+            var configXmlFile = parameters.XmlConfigFile;
+            var switchDatabaseName = parameters.SwitchDatabaseName;
+
+            if (string.IsNullOrWhiteSpace(configXmlFile))
+            {
+                configXmlFile = _siteHelper.GetSiteConfigXmlFile(parameters.WebSiteName);
+            }
+
             var request = new Request
             {
-                ConfigXmlFile = configXmlFile
+                ConfigXmlFile = configXmlFile,
+                SwitchDatabaseName = switchDatabaseName
             };
 
             if (!_xmlHelper.TryLoadXmlFile(configXmlFile, out var xmlDoc))

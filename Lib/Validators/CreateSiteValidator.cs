@@ -6,7 +6,7 @@ namespace Lib.Validators
 {
     public class CreateSiteValidator : AbstractSiteValidator, ICreateSiteValidator
     {
-        public CreateSiteValidator(ISiteHelper siteHelper)
+        public CreateSiteValidator(ISiteHelper siteHelper, IDatabaseHelper databaseHelper)
         {
             RuleFor(x => x.ConfigXmlFile)
                 .NotEmpty()
@@ -22,14 +22,17 @@ namespace Lib.Validators
                     RuleFor(x => x.Password).NotEmpty();
                     RuleFor(x => x.ServerName).NotEmpty();
                     RuleFor(x => x.AppPoolName).NotEmpty();
-                    RuleFor(x => x.DatabaseName).NotEmpty();
                     RuleFor(x => x.ConfigExeArguments).NotEmpty();
                     RuleFor(x => x.SiteDirectoryName).NotEmpty();
                     RuleForEach(x => x.DefaultDirectories).NotEmpty();
                     RuleForEach(x => x.AbsoluteDirectories).NotEmpty();
+                    RuleFor(x => x.DatabaseName)
+                        .NotEmpty()
+                        .Must((request, _) => !databaseHelper.IsDatabaseExists(request))
+                        .WithMessage(x => $"Database [{x.DatabaseName}] already exists");
                     RuleFor(x => x.SiteVirtualDirectoryName)
                         .NotEmpty()
-                        .Must((request, siteName) => !siteHelper.IsSiteExists(request))
+                        .Must((request, _) => !siteHelper.IsSiteExists(request))
                         .WithMessage(x => $"Site [{x.SiteVirtualDirectoryName}] already exists");
                 });
         }

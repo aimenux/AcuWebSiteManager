@@ -7,14 +7,16 @@ Providing net global tool in order to manage acumatica website creation and dele
 
 > In this repo, i m building a global tool that allows to create or delete [acumatica](https://www.acumatica.com/) websites.
 >
-> The tool is based on 3 sub commmands :
+> The tool is based on 4 sub commmands :
 > - Use sub command `CreateSite` to create site
 > - Use sub command `DeleteSite` to delete site
 > - Use sub command `ListSites` to list iis sites
+> - Use sub command `SwitchSite` to switch site to use another database
 >
 > To run code in debug or release mode, type the following commands in your favorite terminal : 
 > - `.\App.exe CreateSite -x [XmlConfigFile]`
 > - `.\App.exe DeleteSite -x [XmlConfigFile]`
+> - `.\App.exe SwitchSite -w [CurrentWebSite] -d [TargetDatabaseName]`
 > - `.\App.exe ListSites`
 >
 > To install, run, update, uninstall global tool from a local source path, type commands :
@@ -26,6 +28,7 @@ Providing net global tool in order to manage acumatica website creation and dele
 > - `AcuWebSiteManager DeleteSite -h`
 > - `AcuWebSiteManager CreateSite -x [XmlConfigFile]`
 > - `AcuWebSiteManager DeleteSite -x [XmlConfigFile]`
+> - `AcuWebSiteManager SwitchSite -w [CurrentWebSite] -d [TargetDatabaseName]`
 > - `dotnet tool update -g AcuWebSiteManager --ignore-failed-sources`
 > - `dotnet tool uninstall -g AcuWebSiteManager`
 >

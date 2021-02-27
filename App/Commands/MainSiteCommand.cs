@@ -5,7 +5,7 @@ using McMaster.Extensions.CommandLineUtils;
 namespace App.Commands
 {
     [Command(Name = "MainSite", FullName = "Manage Acumatica Sites", Description = "Manage Acumatica Site (database, files).")]
-    [Subcommand(typeof(CreateSiteCommand), typeof(DeleteSiteCommand), typeof(ListSitesCommand))]
+    [Subcommand(typeof(CreateSiteCommand), typeof(DeleteSiteCommand), typeof(SwitchSiteCommand), typeof(ListSitesCommand))]
     [VersionOptionFromMember(MemberName = nameof(GetVersion))]
     [SuppressDefaultHelpOption]
     public class MainSiteCommand
