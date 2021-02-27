@@ -14,10 +14,10 @@ Providing net global tool in order to manage acumatica website creation and dele
 > - Use sub command `SwitchSite` to switch site to use another database
 >
 > To run code in debug or release mode, type the following commands in your favorite terminal : 
+> - `.\App.exe ListSites`
 > - `.\App.exe CreateSite -x [XmlConfigFile]`
 > - `.\App.exe DeleteSite -x [XmlConfigFile]`
 > - `.\App.exe SwitchSite -w [CurrentWebSite] -d [TargetDatabaseName]`
-> - `.\App.exe ListSites`
 >
 > To install, run, update, uninstall global tool from a local source path, type commands :
 > - `dotnet tool install -g --configfile .\Nugets\local.config AcuWebSiteManager`
