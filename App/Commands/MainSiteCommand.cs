@@ -20,7 +20,7 @@ namespace App.Commands
         [Option("-h|--help", "Show help information.", CommandOptionType.NoValue)]
         public bool ShowHelp { get; set; }
 
-        [Option("-s|--settings", "Show settings information.", CommandOptionType.NoValue)]
+        [Option("-c|--config", "Show config information.", CommandOptionType.NoValue)]
         public bool ShowSettings { get; set; }
 
         public void OnExecute(CommandLineApplication app)

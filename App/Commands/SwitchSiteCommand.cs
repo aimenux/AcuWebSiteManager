@@ -35,7 +35,7 @@ namespace App.Commands
         [Option("-d|--db", "Database target name.", CommandOptionType.SingleValue)]
         public string DatabaseName { get; set; }
 
-        [Option("-w|--website", "WebSite source name.", CommandOptionType.SingleValue)]
+        [Option("-s|--site", "WebSite source name.", CommandOptionType.SingleValue)]
         public string WebSiteName { get; set; }
 
         public void OnExecute(CommandLineApplication app)
@@ -94,7 +94,7 @@ namespace App.Commands
 
         private void LogOptionalOptionsUndefined()
         {
-            _logger.LogError("Either define website name [-w option] or xml config file [-x option]");
+            _logger.LogError("Either define website name [-s option] or xml config file [-x option]");
         }
 
         private static string GetVersion() => typeof(SwitchSiteCommand).GetVersion();

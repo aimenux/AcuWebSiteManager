@@ -17,18 +17,18 @@ Providing net global tool in order to manage acumatica website creation and dele
 > - `.\App.exe ListSites`
 > - `.\App.exe CreateSite -x [XmlConfigFile]`
 > - `.\App.exe DeleteSite -x [XmlConfigFile]`
-> - `.\App.exe SwitchSite -w [CurrentWebSite] -d [TargetDatabaseName]`
+> - `.\App.exe SwitchSite -s [CurrentWebSite] -d [TargetDatabaseName]`
 >
 > To install, run, update, uninstall global tool from a local source path, type commands :
 > - `dotnet tool install -g --configfile .\Nugets\local.config AcuWebSiteManager`
 > - `AcuWebSiteManager -h`
-> - `AcuWebSiteManager -s`
+> - `AcuWebSiteManager -c`
 > - `AcuWebSiteManager ListSites`
 > - `AcuWebSiteManager CreateSite -h`
 > - `AcuWebSiteManager DeleteSite -h`
 > - `AcuWebSiteManager CreateSite -x [XmlConfigFile]`
 > - `AcuWebSiteManager DeleteSite -x [XmlConfigFile]`
-> - `AcuWebSiteManager SwitchSite -w [CurrentWebSite] -d [TargetDatabaseName]`
+> - `AcuWebSiteManager SwitchSite -s [CurrentWebSite] -d [TargetDatabaseName]`
 > - `dotnet tool update -g AcuWebSiteManager --ignore-failed-sources`
 > - `dotnet tool uninstall -g AcuWebSiteManager`
 >
