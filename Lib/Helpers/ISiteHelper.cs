@@ -7,7 +7,6 @@ namespace Lib.Helpers
     {
         bool IsSiteExists(Request request);
         ICollection<SiteDetails> GetSitesDetails();
-        SiteDetails GetSiteDetails(string websiteName);
         string GetSiteConfigXmlFile(string websiteName);
     }
 }

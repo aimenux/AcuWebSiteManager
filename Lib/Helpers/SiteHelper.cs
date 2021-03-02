@@ -43,11 +43,6 @@ namespace Lib.Helpers
             return details;
         }
 
-        public SiteDetails GetSiteDetails(string websiteName)
-        {
-            return GetSitesDetails().FirstOrDefault(x => IgnoreEquals(x.SiteFriendlyName, websiteName));
-        }
-
         public string GetSiteConfigXmlFile(string websiteName)
         {
             var site = GetSiteDetails(websiteName);
@@ -58,6 +53,13 @@ namespace Lib.Helpers
         }
 
         public bool IsSiteExists(Request request) => IsVirtualDirectoryExists(request);
+
+        private SiteDetails GetSiteDetails(string websiteName)
+        {
+            var sites = GetSitesDetails();
+            var site = sites.FirstOrDefault(x => IgnoreEquals(x.SiteFriendlyName, websiteName));
+            return site;
+        }
 
         private static bool IsVirtualDirectoryExists(Request request)
         {

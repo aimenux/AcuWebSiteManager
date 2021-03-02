@@ -1,6 +1,5 @@
 ﻿using Lib.Models;
-using Microsoft.SqlServer.Management.Smo;
-using SmoDatabase = Microsoft.SqlServer.Management.Smo.Database;
+using Microsoft.Data.SqlClient;
 
 namespace Lib.Helpers
 {
@@ -17,9 +16,12 @@ namespace Lib.Helpers
         {
             try
             {
-                var server = new Server(serverName);
-                var database = new SmoDatabase(server, databaseName);
-                return database.IsAccessible;
+                var connectionString = GetConnectionString(serverName, databaseName);
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    return true;
+                }
             }
             catch
             {
