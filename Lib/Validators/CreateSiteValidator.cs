@@ -4,7 +4,7 @@ using Lib.Helpers;
 
 namespace Lib.Validators
 {
-    public class CreateSiteValidator : AbstractSiteValidator, ICreateSiteValidator
+    public class CreateSiteValidator : AbstractValidator, ICreateSiteValidator
     {
         public CreateSiteValidator(ISiteHelper siteHelper, IDatabaseHelper databaseHelper)
         {

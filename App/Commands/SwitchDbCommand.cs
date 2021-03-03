@@ -10,17 +10,17 @@ using Microsoft.Extensions.Logging;
 
 namespace App.Commands
 {
-    [Command(Name = "SwitchSite", FullName = "Switch site database", Description = "Switch site to use another database.")]
+    [Command(Name = "SwitchDb", FullName = "Switch site database", Description = "Switch site to use another database.")]
     [VersionOptionFromMember(MemberName = nameof(GetVersion))]
     [HelpOption]
-    public class SwitchSiteCommand
+    public class SwitchDbCommand
     {
         private readonly IRequestBuilder _builder;
-        private readonly ISwitchSiteValidator _validator;
+        private readonly ISwitchDbValidator _validator;
         private readonly ISiteHandler _siteHandler;
         private readonly ILogger _logger;
 
-        public SwitchSiteCommand(IRequestBuilder builder, ISwitchSiteValidator validator, ISiteHandler siteHandler, ILogger logger)
+        public SwitchDbCommand(IRequestBuilder builder, ISwitchDbValidator validator, ISiteHandler siteHandler, ILogger logger)
         {
             _builder = builder;
             _validator = validator;
@@ -97,6 +97,6 @@ namespace App.Commands
             _logger.LogError("Either define website name [-s option] or xml config file [-x option]");
         }
 
-        private static string GetVersion() => typeof(SwitchSiteCommand).GetVersion();
+        private static string GetVersion() => typeof(SwitchDbCommand).GetVersion();
     }
 }

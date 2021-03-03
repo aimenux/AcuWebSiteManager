@@ -3,7 +3,7 @@ using Lib.Models;
 
 namespace Lib.Validators
 {
-    public interface ISwitchSiteValidator : IValidator<Request>
+    public interface ISwitchDbValidator : IValidator<Request>
     {
     }
 }

@@ -4,9 +4,9 @@ using Lib.Helpers;
 
 namespace Lib.Validators
 {
-    public class SwitchSiteValidator : AbstractSiteValidator, ISwitchSiteValidator
+    public class SwitchDbValidator : AbstractValidator, ISwitchDbValidator
     {
-        public SwitchSiteValidator(IDatabaseHelper databaseHelper)
+        public SwitchDbValidator(IDatabaseHelper databaseHelper)
         {
             RuleFor(x => x.ConfigXmlFile)
                 .NotEmpty()

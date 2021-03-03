@@ -5,6 +5,24 @@ namespace Lib.Helpers
 {
     public class DatabaseHelper : IDatabaseHelper
     {
+        public bool IsServerExists(string serverName)
+        {
+            try
+            {
+                const string databaseName = @"master";
+                var connectionString = GetConnectionString(serverName, databaseName);
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
         public bool IsDatabaseExists(Request request)
         {
             var serverName = request.ServerName;

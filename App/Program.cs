@@ -50,7 +50,9 @@ namespace App
                     services.AddTransient<ListSitesCommand>();
                     services.AddTransient<CreateSiteCommand>();
                     services.AddTransient<DeleteSiteCommand>();
-                    services.AddTransient<SwitchSiteCommand>();
+                    services.AddTransient<SwitchDbCommand>();
+                    services.AddTransient<ImportDbCommand>();
+                    services.AddTransient<ExportDbCommand>();
                     services.AddTransient<IXmlHelper, XmlHelper>();
                     services.AddTransient<ISiteHelper, SiteHelper>();
                     services.AddTransient<IFileHelper, FileHelper>();
@@ -64,10 +66,14 @@ namespace App
                     services.AddTransient<IDatabaseHandler, DatabaseHandler>();
                     services.AddTransient<IWebServerHandler, WebServerHandler>();
                     services.AddTransient<IReportingHandler, ReportingHandler>();
-                    services.AddTransient<ISwitchSiteValidator, SwitchSiteValidator>();
+                    services.AddTransient<ISwitchDbValidator, SwitchDbValidator>();
+                    services.AddTransient<IImportDbValidator, ImportDbValidator>();
+                    services.AddTransient<IExportDbValidator, ExportDbValidator>();
                     services.AddTransient<ICreateSiteValidator, CreateSiteValidator>();
                     services.AddTransient<IDeleteSiteValidator, DeleteSiteValidator>();
                     services.AddTransient<ISerializationHandler, SerializationHandler>();
+                    services.AddTransient<IImportDatabaseHandler, ImportDatabaseHandler>();
+                    services.AddTransient<IExportDatabaseHandler, ExportDatabaseHandler>();
                     services.AddTransient<IDetailsReportingHandler, DetailsReportingHandler>();
                     services.Configure<Settings>(hostingContext.Configuration.GetSection(nameof(Settings)));
                 });

@@ -19,6 +19,8 @@ namespace Lib.Models
 
         public string SwitchDatabaseName { get; set; }
 
+        public string BacPacFilePath { get; set; }
+
         public string AppPoolName { get; set; }
 
         public string RootDirectory { get; set; }

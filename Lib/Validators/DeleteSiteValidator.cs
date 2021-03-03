@@ -3,7 +3,7 @@ using FluentValidation;
 
 namespace Lib.Validators
 {
-    public class DeleteSiteValidator : AbstractSiteValidator, IDeleteSiteValidator
+    public class DeleteSiteValidator : AbstractValidator, IDeleteSiteValidator
     {
         public DeleteSiteValidator()
         {

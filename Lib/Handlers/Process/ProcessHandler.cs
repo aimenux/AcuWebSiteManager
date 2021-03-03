@@ -49,14 +49,14 @@ namespace Lib.Handlers.Process
             process.Close();
         }
 
-        protected virtual void LogProcessOutput(string message, params string[] keywords)
+        private void LogProcessOutput(string message, params string[] keywords)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
             var logLevel = GetLogLevelForMessage(message);
             _logger.Log(logLevel, "An output was received from [{name}] {message}", Name, TrimMessage(message));
         }
 
-        protected virtual void LogProcessError(string message)
+        private void LogProcessError(string message)
         {
             if (string.IsNullOrWhiteSpace(message)) return;
             _logger.LogError("An error has occurred on [{name}] {message}", Name, TrimMessage(message));

@@ -3,7 +3,7 @@ using Lib.Models;
 
 namespace Lib.Validators
 {
-    public abstract class AbstractSiteValidator : AbstractValidator<Request>
+    public abstract class AbstractValidator : AbstractValidator<Request>
     {
         protected bool IsValidXmlExtension(string file)
         {
