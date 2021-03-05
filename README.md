@@ -1,4 +1,4 @@
-![.NET 5](https://github.com/aimenux/AcuWebSiteManager/workflows/.NET%205/badge.svg)
+﻿![.NET 5](https://github.com/aimenux/AcuWebSiteManager/workflows/.NET%205/badge.svg)
 
 # AcuWebSiteManager
 ```
@@ -46,3 +46,9 @@ Providing net global tool in order to manage acumatica website creation and dele
 >
 
 **`Tools`** : vs19, net 5.0
+
+---
+
+<div style="display: flex; justify-content: space-between">
+  <a href="./XML-FILE.md"> ➡ See xml config sample </a>
+</div>
