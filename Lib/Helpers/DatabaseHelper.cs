@@ -5,12 +5,15 @@ namespace Lib.Helpers
 {
     public class DatabaseHelper : IDatabaseHelper
     {
-        public bool IsServerExists(string serverName)
+        public bool IsServerExists(Request request)
         {
             try
             {
                 const string databaseName = @"master";
-                var connectionString = GetConnectionString(serverName, databaseName);
+                var serverName = request.ServerName;
+                var databaseUserName = request.DatabaseUserName;
+                var databasePassword = request.DatabasePassword;
+                var connectionString = GetConnectionString(serverName, databaseName, databaseUserName, databasePassword);
                 using (var connection = new SqlConnection(connectionString))
                 {
                     connection.Open();
@@ -25,9 +28,19 @@ namespace Lib.Helpers
 
         public bool IsDatabaseExists(Request request)
         {
-            var serverName = request.ServerName;
-            var databaseName = request.DatabaseName;
-            return IsDatabaseExists(serverName, databaseName);
+            try
+            {
+                var connectionString = GetConnectionString(request);
+                using (var connection = new SqlConnection(connectionString))
+                {
+                    connection.Open();
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public bool IsDatabaseExists(string serverName, string databaseName)
@@ -47,9 +60,45 @@ namespace Lib.Helpers
             }
         }
 
+        public string GetConnectionString(Request request)
+        {
+            return GetConnectionString(request.ServerName, request.DatabaseName, request.DatabaseUserName, request.DatabasePassword);
+        }
+
         public string GetConnectionString(string serverName, string databaseName)
         {
-            return $"Data Source={serverName};Initial Catalog={databaseName};Integrated Security=SSPI;";
+            return GetConnectionString(serverName, databaseName, null, null);
+        }
+
+        private static string GetConnectionString(
+            string serverName,
+            string databaseName,
+            string databaseUserName,
+            string databasePassword)
+        {
+            if (databaseUserName == null || databasePassword == null)
+            {
+                var windowsLoginBuilder = new SqlConnectionStringBuilder
+                {
+                    DataSource = serverName,
+                    InitialCatalog = databaseName,
+                    IntegratedSecurity = true,
+                    ApplicationName = Settings.ApplicationName,
+                };
+
+                return windowsLoginBuilder.ConnectionString;
+            }
+
+            var sqlLoginBuilder = new SqlConnectionStringBuilder
+            {
+                DataSource = serverName,
+                UserID = databaseUserName,
+                Password = databasePassword,
+                InitialCatalog = databaseName,
+                ApplicationName = Settings.ApplicationName,
+            };
+
+            return sqlLoginBuilder.ConnectionString;
         }
     }
 }

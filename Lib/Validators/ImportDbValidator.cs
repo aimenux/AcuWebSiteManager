@@ -10,25 +10,30 @@ namespace Lib.Validators
         {
             RuleFor(x => x.ServerName)
                 .NotEmpty()
-                .Must((request, _) =>
-                {
-                    var serverName = request.ServerName;
-                    return databaseHelper.IsServerExists(serverName);
-                }).WithMessage((request, name) => $"Server [{name}] does not exist !");
+                .Must((request, _) => databaseHelper.IsServerExists(request))
+                .WithMessage((request, name) => $"Server [{name}] does not exist !");
 
             RuleFor(x => x.DatabaseName)
                 .NotEmpty()
-                .Must((request, _) =>
-                {
-                    var serverName = request.ServerName;
-                    var databaseName = request.DatabaseName;
-                    return !databaseHelper.IsDatabaseExists(serverName, databaseName);
-                }).WithMessage((request, name) => $"Database [{name}] already exists !");
+                .Must((request, _) => !databaseHelper.IsDatabaseExists(request))
+                .WithMessage((request, name) => $"Database [{name}] already exists !");
 
             RuleFor(x => x.BacPacFilePath)
                 .NotEmpty()
                 .Must(File.Exists)
                 .WithMessage(x => $"File [{x}] does not exist !");
+
+            When(x => x.DatabaseUserName != null, () =>
+            {
+                RuleFor(x => x.DatabaseUserName).NotEmpty();
+                RuleFor(x => x.DatabasePassword).NotEmpty();
+            });
+
+            When(x => x.DatabasePassword != null, () =>
+            {
+                RuleFor(x => x.DatabaseUserName).NotEmpty();
+                RuleFor(x => x.DatabasePassword).NotEmpty();
+            });
         }
     }
 }

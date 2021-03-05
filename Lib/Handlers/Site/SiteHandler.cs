@@ -59,7 +59,9 @@ namespace Lib.Handlers.Site
         {
             try
             {
-                var connectionString = GetConnectionString(request);
+                const string databaseName = @"master";
+                var serverName = request.ServerName;
+                var connectionString = _databaseHelper.GetConnectionString(serverName, databaseName);
                 var sqlAlterRole = GetSqlAlterServerRole(request);
                 using (var connection = new SqlConnection(connectionString))
                 {
@@ -70,13 +72,6 @@ namespace Lib.Handlers.Site
             {
                 LogSiteException(ex);
             }
-        }
-
-        private string GetConnectionString(Request request)
-        {
-            const string databaseName = @"master";
-            var serverName = request.ServerName;
-            return _databaseHelper.GetConnectionString(serverName, databaseName);
         }
 
         private static string GetSqlAlterServerRole(Request request)

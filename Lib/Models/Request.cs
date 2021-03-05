@@ -17,6 +17,12 @@ namespace Lib.Models
 
         public string DatabaseName { get; set; }
 
+        [JsonIgnore]
+        public string DatabaseUserName { get; set; }
+
+        [JsonIgnore]
+        public string DatabasePassword { get; set; }
+
         public string SwitchDatabaseName { get; set; }
 
         public string BacPacFilePath { get; set; }

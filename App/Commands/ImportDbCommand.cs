@@ -36,14 +36,22 @@ namespace App.Commands
         [Required]
         [Option("-f|--file", "BacPac file path source.", CommandOptionType.SingleValue)]
         public string BacPacFilePath { get; set; }
+        
+        [Option("-u|--user", "Database user name.", CommandOptionType.SingleValue)]
+        public string DatabaseUserName { get; set; }
 
-        public void OnExecute(CommandLineApplication app)
+        [Option("-p|--password", "Database user password.", CommandOptionType.SingleValue)]
+        public string DatabasePassword { get; set; }
+
+        public void OnExecute(CommandLineApplication _)
         {
             var request = new Request
             {
                 ServerName = ServerName,
                 DatabaseName = DatabaseName,
-                BacPacFilePath = BacPacFilePath
+                BacPacFilePath = BacPacFilePath,
+                DatabaseUserName = DatabaseUserName,
+                DatabasePassword = DatabasePassword
             };
 
             var result = _validator.Validate(request);
@@ -61,7 +69,7 @@ namespace App.Commands
 
         private void LogCommandInfo(Request request, TimeSpan elapsed)
         {
-            _logger.LogInformation("Database [{db}] was exported to bacpac file [{file}]: elapsed time [{elapsed}]",
+            _logger.LogInformation("Database [{db}] was imported from bacpac file [{file}]: elapsed time [{elapsed}]",
                 request.DatabaseName,
                 request.BacPacFilePath,
                 $"{elapsed:g}");

@@ -3,27 +3,32 @@ using Lib.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.SqlServer.Dac;
 using System.Threading;
+using Lib.Helpers;
 
 namespace Lib.Handlers.Database
 {
     public class ExportDatabaseHandler : AbstractRequestHandler, IExportDatabaseHandler
     {
         private readonly ILogger _logger;
+        private readonly IDatabaseHelper _helper;
 
-        public ExportDatabaseHandler(ILogger logger)
+        public ExportDatabaseHandler(ILogger logger, IDatabaseHelper helper)
         {
             _logger = logger;
+            _helper = helper;
         }
 
         public override void Handle(Request request)
         {
-            ExportToBacPacFile(request.ServerName, request.DatabaseName, request.BacPacFilePath);
+            ExportToBacPacFile(request);
             base.Handle(request);
         }
 
-        public void ExportToBacPacFile(string sourceServerName, string sourceDatabaseName, string targetBacPacFilePath, CancellationToken cancellationToken = default)
+        public void ExportToBacPacFile(Request request, CancellationToken cancellationToken = default)
         {
-            var connectionString = $@"Data Source={sourceServerName};Integrated Security=True";
+            var sourceDatabaseName = request.DatabaseName;
+            var targetBacPacFilePath = request.BacPacFilePath;
+            var connectionString = _helper.GetConnectionString(request);
             var services = new DacServices(connectionString);
             services.Message += (_, e) => LogMessage(e.Message?.Message);
             services.ExportBacpac(targetBacPacFilePath, sourceDatabaseName, cancellationToken: cancellationToken);

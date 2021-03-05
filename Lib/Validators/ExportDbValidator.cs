@@ -8,19 +8,29 @@ namespace Lib.Validators
         public ExportDbValidator(IDatabaseHelper databaseHelper)
         {
             RuleFor(x => x.ServerName)
-                .NotEmpty();
+                .NotEmpty()
+                .Must((request, _) => databaseHelper.IsServerExists(request))
+                .WithMessage((request, name) => $"Server [{name}] does not exist !");
 
             RuleFor(x => x.DatabaseName)
                 .NotEmpty()
-                .Must((request, _) =>
-                {
-                    var serverName = request.ServerName;
-                    var databaseName = request.DatabaseName;
-                    return databaseHelper.IsDatabaseExists(serverName, databaseName);
-                }).WithMessage((request, name) => $"Database [{name}] does not exist !");
+                .Must((request, _) => databaseHelper.IsDatabaseExists(request))
+                .WithMessage((request, name) => $"Database [{name}] does not exist !");
 
             RuleFor(x => x.BacPacFilePath)
                 .NotEmpty();
+
+            When(x => x.DatabaseUserName != null, () =>
+            {
+                RuleFor(x => x.DatabaseUserName).NotEmpty();
+                RuleFor(x => x.DatabasePassword).NotEmpty();
+            });
+
+            When(x => x.DatabasePassword != null, () =>
+            {
+                RuleFor(x => x.DatabaseUserName).NotEmpty();
+                RuleFor(x => x.DatabasePassword).NotEmpty();
+            });
         }
     }
 }

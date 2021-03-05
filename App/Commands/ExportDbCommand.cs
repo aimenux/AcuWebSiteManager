@@ -37,13 +37,21 @@ namespace App.Commands
         [Option("-f|--file", "BacPac file path target.", CommandOptionType.SingleValue)]
         public string BacPacFilePath { get; set; }
 
-        public void OnExecute(CommandLineApplication app)
+        [Option("-u|--user", "Database user name.", CommandOptionType.SingleValue)]
+        public string DatabaseUserName { get; set; }
+
+        [Option("-p|--password", "Database user password.", CommandOptionType.SingleValue)]
+        public string DatabasePassword { get; set; }
+
+        public void OnExecute(CommandLineApplication _)
         {
             var request = new Request
             {
                 ServerName = ServerName,
                 DatabaseName = DatabaseName,
-                BacPacFilePath = BacPacFilePath
+                BacPacFilePath = BacPacFilePath,
+                DatabaseUserName = DatabaseUserName,
+                DatabasePassword = DatabasePassword
             };
 
             var result = _validator.Validate(request);

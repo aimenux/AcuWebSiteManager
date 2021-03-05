@@ -1,10 +1,11 @@
 ﻿using Lib.ChainOfResponsibilityPattern;
 using System.Threading;
+using Lib.Models;
 
 namespace Lib.Handlers.Database
 {
     public interface IImportDatabaseHandler : IRequestHandler
     {
-        void ImportBacPacFile(string sourceBacPacFilePath, string sourceServerName, string targetDatabaseName, CancellationToken cancellationToken = default);
+        void ImportBacPacFile(Request request, CancellationToken cancellationToken = default);
     }
 }
