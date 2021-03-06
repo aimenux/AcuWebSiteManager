@@ -59,9 +59,9 @@ AcuWebSiteManager provides some others command in order to manipulate databases
 
 You find bellow a complete example of xml file (the format is specific to acumatica)
 >
-> :pushpin: Only the tag `upass` does not exist in the default acumatica xml file (this tag is custom to AcuWebSiteManager tool)
+> :pushpin: Only the tag `upass` does not exist in the default acumatica xml file (this tag is custom to `AcuWebSiteManager tool`)
 >
-> :pushpin: The tag `upass` is optional, if the tag `upass` is missed AcuWebSiteManager tool will use `Acumatica` as default password
+> :pushpin: The tag `upass` is optional, if the tag `upass` is missed `AcuWebSiteManager tool` will use `Acumatica` as default password
 >
 
 ```xml
