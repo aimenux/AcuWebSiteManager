@@ -3,12 +3,14 @@
 You can install Acumatica sites via their installer then their wizard. This way present some disadvantages :
 >
 > :one: If you are creating multiples sites with the same configuration always, wizard can be boring and taking a lot of time to put the same infos again and again.
+>
 > :two: When you delete acumatica site, multiple things are not properly deleted (database, files, app-pools, etc.)
 >
 
 AcuWebSiteManager is global tool tackling those issues :
 >
 > :one: Edit site infos once (through xml file) and install multiple times without editing infos everytime
+>
 > :two: Remove properly acumatica site whenever you want (all files, database, app-pool are removed)
 >
 
@@ -17,11 +19,15 @@ First of all you need to install AcuWebSiteManager : `dotnet tool install -g Acu
 Second you could use :
 >
 > :zap: either your acumatica installation path and acumatica wizard to build xml file adapted to your usage
+>
 > :zap: or follow the below steps :
 >
 >> :white_check_mark: Download [20R2-200.zip archive](https://dev.azure.com/aimenux/AcuDemos/_git/AcuAssets?path=%2FAssets%2F20R2-200.zip) (containing installation files for 20R2-200)
+>>
 >> :white_check_mark: Unzip archive in some folder on your disk (for example C:\Acumatica\20R2-200)
+>>
 >> :white_check_mark: Edit 20R2-200.xml and modify values for tags :
+>
 
 ```xml
 <Root>
@@ -38,18 +44,25 @@ Second you could use :
 Now, that you have acumatica installation files for some version (20R2-200, etc.) and you have xml file prepared, you can run the following commands :
 >
 > :pushpin: To create instance site tape AcuWebSiteManager CreateSite -x "C:\Acumatica\20R2-200\20R2-200.xml"
+>
 > :pushpin: To delete instance site tape AcuWebSiteManager DeleteSite -x "C:\Acumatica\20R2-200\20R2-200.xml"
+>
 > :pushpin: To list instance sites tape AcuWebSiteManager ListSites"
+>
 
 AcuWebSiteManager provides some others command in order to manipulate databases
 >
 > :pushpin: To export database to bacpac file tape AcuWebSiteManager ExportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"
+>
 > :pushpin: To import database from bacpac file tape AcuWebSiteManager ImportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"
+>
 
 You find bellow a complete example of xml file (the format is specific to acumatica)
 >
 > :pushpin: Only the tag upass does not exist in the default acumatica xml file (this tag is custom to AcuWebSiteManager tool)
+>
 > :pushpin: The tag upass is optional, if the tag upass is missed AcuWebSiteManager tool will use Acumatica as default password
+>
 
 ```xml
 <Root>
