@@ -50,5 +50,5 @@ Providing net global tool in order to manage acumatica website creation and dele
 ---
 
 <div style="display: flex; justify-content: space-between">
-  <a href="./XML-FILE.md"> ➡ See xml config sample </a>
+  <a href="./INSTALLATION-GUIDE.md"> ➡ See installation guide </a>
 </div>
