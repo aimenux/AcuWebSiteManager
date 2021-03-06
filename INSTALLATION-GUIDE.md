@@ -43,25 +43,25 @@ Second you could use :
 
 Now, that you have acumatica installation files for some version (20R2-200, etc.) and you have xml file prepared, you can run the following commands :
 >
-> :pushpin: To create instance site tape AcuWebSiteManager CreateSite -x "C:\Acumatica\20R2-200\20R2-200.xml"
+> :pushpin: To create instance site tape `AcuWebSiteManager CreateSite -x "C:\Acumatica\20R2-200\20R2-200.xml"`
 >
-> :pushpin: To delete instance site tape AcuWebSiteManager DeleteSite -x "C:\Acumatica\20R2-200\20R2-200.xml"
+> :pushpin: To delete instance site tape `AcuWebSiteManager DeleteSite -x "C:\Acumatica\20R2-200\20R2-200.xml"`
 >
-> :pushpin: To list instance sites tape AcuWebSiteManager ListSites"
+> :pushpin: To list instance sites tape `AcuWebSiteManager ListSites`
 >
 
 AcuWebSiteManager provides some others command in order to manipulate databases
 >
-> :pushpin: To export database to bacpac file tape AcuWebSiteManager ExportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"
+> :pushpin: To export database to bacpac file tape `AcuWebSiteManager ExportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"`
 >
-> :pushpin: To import database from bacpac file tape AcuWebSiteManager ImportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"
+> :pushpin: To import database from bacpac file tape `AcuWebSiteManager ImportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"`
 >
 
 You find bellow a complete example of xml file (the format is specific to acumatica)
 >
-> :pushpin: Only the tag upass does not exist in the default acumatica xml file (this tag is custom to AcuWebSiteManager tool)
+> :pushpin: Only the tag `upass` does not exist in the default acumatica xml file (this tag is custom to AcuWebSiteManager tool)
 >
-> :pushpin: The tag upass is optional, if the tag upass is missed AcuWebSiteManager tool will use Acumatica as default password
+> :pushpin: The tag `upass` is optional, if the tag `upass` is missed AcuWebSiteManager tool will use `Acumatica` as default password
 >
 
 ```xml
