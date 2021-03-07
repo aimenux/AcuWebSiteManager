@@ -50,12 +50,14 @@ Now, that you have acumatica installation files for some version (20R2-200, etc.
 > :pushpin: To list instance sites tape `AcuWebSiteManager ListSites`
 >
 
-AcuWebSiteManager provides some others command in order to manipulate databases
+AcuWebSiteManager provides some others commands in order to manipulate databases
 >
 > :pushpin: To export database to bacpac file tape `AcuWebSiteManager ExportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"`
 >
 > :pushpin: To import database from bacpac file tape `AcuWebSiteManager ImportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"`
 >
+
+####  Note : You should run commands in administrator terminal mode in order to give the tool read/write permissions to iis server, disk and sql server.
 
 You find bellow a complete example of xml file (the format is specific to acumatica)
 >
