@@ -57,7 +57,14 @@ AcuWebSiteManager provides some others commands in order to manipulate databases
 > :pushpin: To import database from bacpac file tape `AcuWebSiteManager ImportDb -s "SERVER-NAME" -d "DATABASE-NAME" -f "BACPAC-FILE-PATH"`
 >
 
-####  Note : You should run commands in administrator terminal mode in order to give the tool read/write permissions to iis server, disk and sql server.
+####  Note : You should run commands in administrator terminal mode in order to give the tool read/write permissions to :
+>
+> #### :pushpin: iis server
+>
+> #### :pushpin: hard disk
+>
+> #### :pushpin: sql server
+>
 
 You find bellow a complete example of xml file (the format is specific to acumatica)
 >
