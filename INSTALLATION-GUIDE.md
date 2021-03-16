@@ -4,10 +4,10 @@ You can install Acumatica sites via their installer then their wizard. This way 
 >
 > :one: If you are creating multiples sites with the same configuration always, wizard can be boring and taking a lot of time to put the same infos again and again.
 >
-> :two: When you delete acumatica site, multiple things are not properly deleted (database, files, app-pools, etc.)
+> :two: When you delete acumatica site, multiple artefacts are not properly deleted (database, files, app-pool, etc.)
 >
 
-AcuWebSiteManager is global tool tackling those issues :
+AcuWebSiteManager is a global tool tackling those issues :
 >
 > :one: Edit site infos once (through xml file) and install multiple times without editing infos everytime
 >
