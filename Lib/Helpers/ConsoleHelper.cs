@@ -12,7 +12,7 @@ namespace Lib.Helpers
         public void RenderTitle(string text)
         {
             AnsiConsole.WriteLine();
-            AnsiConsole.Render(new FigletText(text).LeftAligned());
+            AnsiConsole.Write(new FigletText(text).LeftAligned());
             AnsiConsole.WriteLine();
         }
 
@@ -27,9 +27,9 @@ namespace Lib.Helpers
             footer.Centered();
 
             AnsiConsole.WriteLine();
-            AnsiConsole.Render(header);
+            AnsiConsole.Write(header);
             AnsiConsole.WriteLine(formattedJson);
-            AnsiConsole.Render(footer);
+            AnsiConsole.Write(footer);
             AnsiConsole.WriteLine();
         }
 
@@ -57,7 +57,7 @@ namespace Lib.Helpers
                 .AddRow(siteMarkup, pool, server, database, password, directory);
 
             AnsiConsole.WriteLine();
-            AnsiConsole.Render(table);
+            AnsiConsole.Write(table);
             AnsiConsole.WriteLine();
         }
 
@@ -82,7 +82,7 @@ namespace Lib.Helpers
             }
 
             AnsiConsole.WriteLine();
-            AnsiConsole.Render(table);
+            AnsiConsole.Write(table);
             AnsiConsole.WriteLine();
         }
     }

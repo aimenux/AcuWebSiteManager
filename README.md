@@ -45,7 +45,7 @@ Providing net global tool in order to manage acumatica website creation and dele
 > ![ListSitesScreen](Screenshots/ListSitesScreen.png)
 >
 
-**`Tools`** : vs19, net 5.0
+**`Tools`** : vs19, net 6.0
 
 ---
 
