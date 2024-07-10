@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using Lib.Models;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -9,10 +10,15 @@ namespace Lib.Helpers
 {
     public class ConsoleHelper : IConsoleHelper
     {
+        public ConsoleHelper()
+        {
+            System.Console.OutputEncoding = Encoding.UTF8;
+        }
+        
         public void RenderTitle(string text)
         {
             AnsiConsole.WriteLine();
-            AnsiConsole.Write(new FigletText(text).LeftAligned());
+            AnsiConsole.Write(new FigletText(text));
             AnsiConsole.WriteLine();
         }
 
